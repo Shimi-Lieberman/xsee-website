@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-navy: #0B1C3D;
+  --color-accent-blue: #3B82F6;
+  --color-alert-orange: #F97316;
+  --color-threat-red: #EF4444;
+  --color-detection-green: #22C55E;
+  --color-soft-violet: #8B5CF6;
+  --color-bg-white: #FFFFFF;
+  --color-bg-gray: #F8FAFB;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0F172A;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter, Inter, system-ui, sans-serif);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* Section gradient transitions — cinematic */
+.section-gradient-hero {
+  background: linear-gradient(
+    180deg,
+    #0B1C3D 0%,
+    #0B1C3D 78%,
+    rgba(11, 28, 61, 0.97) 92%,
+    #f1f5f9 100%
+  );
+}
+.section-gradient-light {
+  background: linear-gradient(180deg, #f8fafb 0%, #ffffff 100%);
+}
+
+/* Dark → soft blue fade → white (section transitions) */
+.section-fade-dark-to-light {
+  background: linear-gradient(
+    180deg,
+    #0B1C3D 0%,
+    rgba(11, 28, 61, 0.98) 85%,
+    rgba(59, 130, 246, 0.04) 95%,
+    #f1f5f9 100%
+  );
+}
+
+/* Premium card hover — cyber glow (use with border-slate-200) */
+.card-hover-glow:hover {
+  border-color: rgb(96 165 250);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.12);
+}
