@@ -131,34 +131,50 @@ function CloudTopology() {
 
 const STEP_LABELS = ["Lateral Movement", "Privilege Escalation", "Data Access"];
 
+const SEGMENT_GRADIENTS = [
+  "linear-gradient(90deg, #ff7a00, #ef4444)",
+  "linear-gradient(90deg, #ef4444, #8b5cf6)",
+  "linear-gradient(90deg, #8b5cf6, #ef4444)",
+];
+
+const SEGMENT_UNDERLINE_COLORS = ["#ff7a00", "#ef4444", "#8b5cf6"];
+
 const pathNodes = [
   {
     id: "internet",
     label: "Internet",
+    role: "Entry",
     icon: Globe,
     color: "#3B82F6",
-    glow: "0 0 20px rgba(59,130,255,0.25)",
+    glow: "0 0 24px rgba(59,130,255,0.22)",
+    glowHover: "0 0 32px rgba(59,130,255,0.38)",
   },
   {
     id: "bastion",
     label: "Bastion Host",
+    role: "Compute",
     icon: Server,
     color: "#ff7a00",
-    glow: "0 0 20px rgba(255,80,40,0.25)",
+    glow: "0 0 24px rgba(255,122,0,0.22)",
+    glowHover: "0 0 32px rgba(255,122,0,0.38)",
   },
   {
     id: "iam",
     label: "IAM Escalation",
+    role: "Identity",
     icon: KeyRound,
     color: "#8B5CF6",
-    glow: "0 0 20px rgba(139,92,246,0.25)",
+    glow: "0 0 24px rgba(139,92,246,0.22)",
+    glowHover: "0 0 32px rgba(139,92,246,0.38)",
   },
   {
     id: "db",
     label: "Internal DB",
+    role: "Crown Jewel",
     icon: Crown,
     color: "#EF4444",
-    glow: "0 0 30px rgba(255,70,70,0.45)",
+    glow: "0 0 32px rgba(239,68,68,0.4)",
+    glowHover: "0 0 44px rgba(239,68,68,0.55)",
     crownJewel: true,
   },
 ];
@@ -174,126 +190,183 @@ function FloatingProductPreview() {
         ease: "easeInOut",
       }}
     >
-      <div
-        className="relative overflow-hidden rounded-2xl border"
+      <motion.div
+        className="relative overflow-hidden rounded-[20px] border"
         style={{
-          background: "linear-gradient(180deg, #0a1628 0%, #091427 100%)",
-          borderColor: "rgba(120,150,255,0.12)",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
+          background: "linear-gradient(180deg, #07152b 0%, #08182f 100%)",
+          borderColor: "rgba(80,120,255,0.18)",
+          boxShadow: "0 18px 50px rgba(0,0,0,0.35)",
         }}
+        whileHover={{
+          boxShadow: "0 22px 56px rgba(0,0,0,0.4)",
+        }}
+        transition={{ duration: 0.25 }}
       >
-        <div className="border-b px-5 py-3" style={{ borderColor: "rgba(120,150,255,0.1)" }}>
-          <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
+        {/* Header */}
+        <div
+          className="flex items-center gap-2 border-b py-3.5"
+          style={{
+            borderColor: "rgba(80,120,255,0.12)",
+            paddingLeft: 32,
+            paddingRight: 32,
+          }}
+        >
+          <span className="h-2 w-2 rounded-full bg-[#EF4444]" />
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-200">
             Top Active Attack Path
           </h3>
         </div>
-        <div className="overflow-hidden p-8" style={{ padding: 32 }}>
-          {/* Radial glow: constrained to card, no overflow */}
+
+        {/* Content: path + strip */}
+        <div
+          className="overflow-hidden px-8 py-7"
+          style={{ padding: "28px 32px" }}
+        >
+          {/* Background depth: radial + horizontal haze */}
           <div
-            className="pointer-events-none absolute inset-0 opacity-20"
+            className="pointer-events-none absolute inset-0"
             style={{
-              background: "radial-gradient(circle at center, rgba(255,80,0,0.35) 0%, transparent 70%)",
+              background: "radial-gradient(circle at 50% 45%, rgba(255,100,40,0.08) 0%, transparent 65%)",
             }}
           />
-          {/* Attack path container: centered, max width, contained */}
           <div
-            className="attack-path-container relative mx-auto w-full max-w-[900px]"
-            style={{ margin: "0 auto" }}
-          >
-            <div className="relative flex flex-col items-stretch md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-12 lg:gap-20">
+            className="pointer-events-none absolute inset-0 opacity-60"
+            style={{
+              background: "linear-gradient(180deg, transparent 35%, rgba(255,100,40,0.03) 50%, transparent 65%)",
+            }}
+          />
+
+          {/* Attack path container */}
+          <div className="attack-path-container relative mx-auto w-full max-w-[900px]">
+            <div className="relative flex flex-col items-center md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-8 lg:gap-12">
               {pathNodes.map((node, i) => (
                 <React.Fragment key={node.id}>
                   <div className="flex flex-shrink-0 flex-col items-center">
                     <motion.div
-                      className="flex h-14 w-14 items-center justify-center rounded-full border-2"
+                      className="flex h-14 w-14 items-center justify-center rounded-full border-2 md:h-[68px] md:w-[68px]"
                       style={{
                         borderColor: node.color,
-                        background: "rgba(10,20,40,0.6)",
-                        boxShadow: node.crownJewel
-                          ? "0 0 30px rgba(255,70,70,0.45)"
-                          : node.glow,
+                        background: "rgba(8,24,47,0.85)",
+                        boxShadow: node.glow,
                       }}
                       whileHover={{
-                        scale: 1.08,
-                        boxShadow: node.crownJewel
-                          ? "0 0 40px rgba(255,70,70,0.55)"
-                          : node.glow.replace("0.25)", "0.45)"),
+                        scale: 1.05,
+                        y: -2,
+                        boxShadow: node.crownJewel ? node.glowHover : node.glowHover,
                       }}
                       transition={{ duration: 0.2 }}
                     >
-                      <node.icon className="h-6 w-6" style={{ color: node.color }} />
+                      <node.icon
+                        className="h-6 w-6 md:h-7 md:w-7"
+                        style={{ color: node.color }}
+                      />
                     </motion.div>
-                    <span
-                      className="mt-2 max-w-[72px] truncate text-center text-[10px] font-medium"
-                      style={{ color: "rgba(255,255,255,0.7)" }}
-                    >
-                      {node.crownJewel ? "Crown Jewel" : node.label}
+                    <span className="mt-2 max-w-[80px] truncate text-center text-[11px] font-medium text-slate-300">
+                      {node.label}
                     </span>
+                    {node.role && (
+                      <span
+                        className={`mt-0.5 text-[10px] ${node.crownJewel ? "text-amber-400/90" : "text-slate-500"}`}
+                      >
+                        {node.role}
+                      </span>
+                    )}
                   </div>
                   {i < pathNodes.length - 1 && (
-                    <MiniPathConnector index={i} stepLabel={STEP_LABELS[i]} />
+                    <MiniPathConnector
+                      index={i}
+                      stepLabel={STEP_LABELS[i]}
+                      gradient={SEGMENT_GRADIENTS[i]}
+                      underlineColor={SEGMENT_UNDERLINE_COLORS[i]}
+                    />
                   )}
                 </React.Fragment>
               ))}
             </div>
           </div>
-          {/* Metrics strip */}
+
+          {/* Bottom intelligence strip */}
           <div
-            className="mt-6 flex flex-wrap items-center gap-6 border-t pt-6"
-            style={{ borderColor: "rgba(120,150,255,0.1)" }}
+            className="mt-6 flex flex-wrap items-center gap-6 border-t pt-6 md:justify-between"
+            style={{ borderColor: "rgba(80,120,255,0.12)" }}
           >
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[#22C55E]" />
               <span className="text-xs text-slate-400">
-                Confidence: <span className="font-semibold text-slate-300">92%</span>
+                Confidence: <span className="font-semibold text-white">92%</span>
               </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[#F97316]" />
               <span className="text-xs text-slate-400">
-                Detection Gap: <span className="font-semibold text-slate-300">38%</span>
+                Detection Gap: <span className="font-semibold text-white">38%</span>
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <span
-                className="rounded-full border px-3 py-1.5 text-xs font-medium text-[#22C55E]"
-                style={{
-                  background: "rgba(50,200,120,0.15)",
-                  borderColor: "rgba(50,200,120,0.35)",
-                }}
-              >
-                Fix Available
-              </span>
-            </div>
+            <span
+              className="rounded-full border px-3.5 py-2 text-xs font-medium"
+              style={{
+                background: "rgba(34,197,94,0.16)",
+                borderColor: "rgba(34,197,94,0.35)",
+                color: "#22C55E",
+                padding: "8px 14px",
+              }}
+            >
+              Fix Available
+            </span>
           </div>
         </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
 
-function MiniPathConnector({ stepLabel }: { index: number; stepLabel: string }) {
+function MiniPathConnector({
+  stepLabel,
+  gradient,
+  underlineColor,
+}: {
+  index: number;
+  stepLabel: string;
+  gradient: string;
+  underlineColor: string;
+}) {
   return (
-    <div className="flex min-w-[60px] flex-1 flex-col items-center justify-end py-2 md:min-h-14 md:py-0">
-      <span
-        className="mb-1 text-[12px] leading-tight"
-        style={{ color: "rgba(255,255,255,0.65)" }}
-      >
+    <div className="flex min-w-[48px] flex-1 flex-col items-center justify-end py-2 md:min-h-[72px] md:min-w-[60px] md:py-0">
+      <span className="mb-1 text-center text-xs text-slate-400">
         {stepLabel}
       </span>
-      <div className="relative h-[3px] w-full overflow-hidden rounded" style={{ borderRadius: 4 }}>
+      <div
+        className="mb-1.5 h-0.5 w-8 rounded-full opacity-70"
+        style={{ background: underlineColor }}
+      />
+      <div
+        className="relative h-[3px] w-full overflow-hidden rounded"
+        style={{ borderRadius: 4 }}
+      >
         <div
           className="absolute inset-0 rounded"
           style={{
             height: 3,
             borderRadius: 4,
-            background: "linear-gradient(90deg, #ff3b3b, #ff7a00, #ffb347)",
+            background: gradient,
+            boxShadow: "0 0 10px rgba(239,68,68,0.2)",
+          }}
+        />
+        {/* Blurred trail */}
+        <motion.div
+          className="absolute left-0 top-1/2 h-3 w-6 -translate-y-1/2 rounded-full bg-white/20 blur-sm"
+          animate={{ x: [0, 64] }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "linear",
           }}
         />
         <motion.div
-          className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-[#ffb347]"
-          style={{ boxShadow: "0 0 12px rgba(255,183,71,0.8)" }}
-          animate={{ x: [0, 56] }}
+          className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-white"
+          style={{ boxShadow: "0 0 14px rgba(255,200,150,0.9)" }}
+          animate={{ x: [0, 64] }}
           transition={{
             duration: 3,
             repeat: Infinity,
