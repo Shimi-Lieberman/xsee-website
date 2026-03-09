@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
@@ -186,50 +187,55 @@ function FloatingProductPreview() {
             Top Active Attack Path
           </h3>
         </div>
-        <div className="px-10 py-8" style={{ padding: "32px 40px" }}>
-          {/* Radial depth behind path */}
+        <div className="overflow-hidden p-8" style={{ padding: 32 }}>
+          {/* Radial glow: constrained to card, no overflow */}
           <div
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[180px] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-100"
+            className="pointer-events-none absolute inset-0 opacity-20"
             style={{
-              background: "radial-gradient(circle at center, rgba(255,80,0,0.10) 0%, transparent 70%)",
+              background: "radial-gradient(circle at center, rgba(255,80,0,0.35) 0%, transparent 70%)",
             }}
           />
-          {/* Attack path: centered, even spacing — line aligned with node centers */}
-          <div className="relative flex items-end justify-center gap-0">
-            {pathNodes.map((node, i) => (
-              <div key={node.id} className="flex flex-shrink-0 items-end">
-                <div className="flex flex-col items-center">
-                  <motion.div
-                    className="flex h-14 w-14 items-center justify-center rounded-full border-2"
-                    style={{
-                      borderColor: node.color,
-                      background: "rgba(10,20,40,0.6)",
-                      boxShadow: node.crownJewel
-                        ? "0 0 30px rgba(255,70,70,0.45)"
-                        : node.glow,
-                    }}
-                    whileHover={{
-                      scale: 1.08,
-                      boxShadow: node.crownJewel
-                        ? "0 0 40px rgba(255,70,70,0.55)"
-                        : node.glow.replace("0.25)", "0.45)"),
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <node.icon className="h-6 w-6" style={{ color: node.color }} />
-                  </motion.div>
-                  <span
-                    className="mt-2 max-w-[72px] truncate text-center text-[10px] font-medium"
-                    style={{ color: "rgba(255,255,255,0.7)" }}
-                  >
-                    {node.crownJewel ? "Crown Jewel" : node.label}
-                  </span>
-                </div>
-                {i < pathNodes.length - 1 && (
-                  <MiniPathConnector index={i} stepLabel={STEP_LABELS[i]} />
-                )}
-              </div>
-            ))}
+          {/* Attack path container: centered, max width, contained */}
+          <div
+            className="attack-path-container relative mx-auto w-full max-w-[900px]"
+            style={{ margin: "0 auto" }}
+          >
+            <div className="relative flex flex-col items-stretch md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-12 lg:gap-20">
+              {pathNodes.map((node, i) => (
+                <React.Fragment key={node.id}>
+                  <div className="flex flex-shrink-0 flex-col items-center">
+                    <motion.div
+                      className="flex h-14 w-14 items-center justify-center rounded-full border-2"
+                      style={{
+                        borderColor: node.color,
+                        background: "rgba(10,20,40,0.6)",
+                        boxShadow: node.crownJewel
+                          ? "0 0 30px rgba(255,70,70,0.45)"
+                          : node.glow,
+                      }}
+                      whileHover={{
+                        scale: 1.08,
+                        boxShadow: node.crownJewel
+                          ? "0 0 40px rgba(255,70,70,0.55)"
+                          : node.glow.replace("0.25)", "0.45)"),
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <node.icon className="h-6 w-6" style={{ color: node.color }} />
+                    </motion.div>
+                    <span
+                      className="mt-2 max-w-[72px] truncate text-center text-[10px] font-medium"
+                      style={{ color: "rgba(255,255,255,0.7)" }}
+                    >
+                      {node.crownJewel ? "Crown Jewel" : node.label}
+                    </span>
+                  </div>
+                  {i < pathNodes.length - 1 && (
+                    <MiniPathConnector index={i} stepLabel={STEP_LABELS[i]} />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
           </div>
           {/* Metrics strip */}
           <div
@@ -268,7 +274,7 @@ function FloatingProductPreview() {
 
 function MiniPathConnector({ stepLabel }: { index: number; stepLabel: string }) {
   return (
-    <div className="flex h-14 w-16 flex-shrink-0 flex-col items-center justify-end sm:w-20">
+    <div className="flex min-w-[60px] flex-1 flex-col items-center justify-end py-2 md:min-h-14 md:py-0">
       <span
         className="mb-1 text-[12px] leading-tight"
         style={{ color: "rgba(255,255,255,0.65)" }}
