@@ -105,9 +105,9 @@ export default function ProductStoryScroll() {
           </p>
         </div>
 
-        <div className="mt-20 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
-          {/* Left: scrollable steps */}
-          <div className="space-y-24">
+        <div className="mt-20 grid grid-cols-1 items-center gap-12 lg:grid-cols-[520px_1fr] lg:gap-[80px]">
+          {/* Left: step explanation */}
+          <div className="min-w-0 space-y-24">
             {STEPS.map((step, i) => (
               <div
                 key={step.step}
@@ -142,8 +142,8 @@ export default function ProductStoryScroll() {
             ))}
           </div>
 
-          {/* Right: sticky visualization */}
-          <div className="lg:sticky lg:top-28 lg:self-start">
+          {/* Right: attack graph — constrained and anchored */}
+          <div className="lg:sticky lg:top-28 lg:self-start w-full max-w-[620px] lg:ml-auto min-w-0">
             <StoryViz activeStep={activeStep} />
           </div>
         </div>
@@ -171,7 +171,7 @@ function StoryViz({ activeStep }: { activeStep: number }) {
   }, [activeStep]);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-slate-700/50 bg-[#0B1C3D] shadow-xl">
+    <div className="relative w-full overflow-hidden rounded-2xl border border-slate-700/50 bg-[#0B1C3D] shadow-xl">
       <div
         className="absolute inset-0 opacity-[0.06]"
         style={{
@@ -182,9 +182,10 @@ function StoryViz({ activeStep }: { activeStep: number }) {
           backgroundSize: "24px 24px",
         }}
       />
-      <div className="relative aspect-square min-h-[320px] p-6">
+      <div className="relative flex min-h-[320px] w-full items-center justify-center overflow-hidden p-10">
+        <div className="relative aspect-square w-full flex-shrink-0">
         <svg
-          className="absolute inset-0 h-full w-full p-6"
+          className="absolute inset-0 h-full w-full"
           viewBox="0 0 100 100"
           preserveAspectRatio="xMidYMid meet"
         >
@@ -331,6 +332,7 @@ function StoryViz({ activeStep }: { activeStep: number }) {
             </span>
           </motion.div>
         )}
+        </div>
       </div>
     </div>
   );
