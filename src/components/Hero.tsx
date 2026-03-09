@@ -128,11 +128,38 @@ function CloudTopology() {
   );
 }
 
+const STEP_LABELS = ["Lateral Movement", "Privilege Escalation", "Data Access"];
+
 const pathNodes = [
-  { id: "internet", label: "Internet", icon: Globe, color: NODE_COLORS.internet },
-  { id: "bastion", label: "Bastion Host", icon: Server, color: NODE_COLORS.bastion },
-  { id: "iam", label: "IAM Escalation", icon: KeyRound, color: NODE_COLORS.iam },
-  { id: "db", label: "Internal DB", icon: Crown, color: NODE_COLORS.db, crownJewel: true },
+  {
+    id: "internet",
+    label: "Internet",
+    icon: Globe,
+    color: "#3B82F6",
+    glow: "0 0 20px rgba(59,130,255,0.25)",
+  },
+  {
+    id: "bastion",
+    label: "Bastion Host",
+    icon: Server,
+    color: "#ff7a00",
+    glow: "0 0 20px rgba(255,80,40,0.25)",
+  },
+  {
+    id: "iam",
+    label: "IAM Escalation",
+    icon: KeyRound,
+    color: "#8B5CF6",
+    glow: "0 0 20px rgba(139,92,246,0.25)",
+  },
+  {
+    id: "db",
+    label: "Internal DB",
+    icon: Crown,
+    color: "#EF4444",
+    glow: "0 0 30px rgba(255,70,70,0.45)",
+    crownJewel: true,
+  },
 ];
 
 function FloatingProductPreview() {
@@ -147,66 +174,89 @@ function FloatingProductPreview() {
       }}
     >
       <div
-        className="overflow-hidden rounded-xl border border-slate-700 bg-[#0B1C3D]/95 shadow-[0_30px_80px_rgba(0,0,0,0.5)] ring-1 ring-white/5"
+        className="relative overflow-hidden rounded-2xl border"
         style={{
-          boxShadow:
-            "0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05), 0 0 40px rgba(59,130,246,0.08)",
+          background: "linear-gradient(180deg, #0a1628 0%, #091427 100%)",
+          borderColor: "rgba(120,150,255,0.12)",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
         }}
       >
-        <div className="border-b border-slate-700/80 px-4 py-3">
+        <div className="border-b px-5 py-3" style={{ borderColor: "rgba(120,150,255,0.1)" }}>
           <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-300">
             Top Active Attack Path
           </h3>
         </div>
-        <div className="p-4">
-          {/* Mini attack path: nodes + connectors in one row */}
-          <div className="flex items-end justify-center gap-0">
+        <div className="px-10 py-8" style={{ padding: "32px 40px" }}>
+          {/* Radial depth behind path */}
+          <div
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[180px] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-100"
+            style={{
+              background: "radial-gradient(circle at center, rgba(255,80,0,0.10) 0%, transparent 70%)",
+            }}
+          />
+          {/* Attack path: centered, even spacing — line aligned with node centers */}
+          <div className="relative flex items-end justify-center gap-0">
             {pathNodes.map((node, i) => (
-              <div key={node.id} className="flex flex-shrink-0 items-center">
+              <div key={node.id} className="flex flex-shrink-0 items-end">
                 <div className="flex flex-col items-center">
                   <motion.div
-                    className={`flex items-center justify-center rounded-full border-2 bg-[#0B1C3D] ${
-                      node.crownJewel ? "h-10 w-10" : "h-9 w-9"
-                    }`}
+                    className="flex h-14 w-14 items-center justify-center rounded-full border-2"
                     style={{
                       borderColor: node.color,
+                      background: "rgba(10,20,40,0.6)",
                       boxShadow: node.crownJewel
-                        ? "0 0 16px rgba(239,68,68,0.45)"
-                        : `0 0 10px ${node.color}50`,
+                        ? "0 0 30px rgba(255,70,70,0.45)"
+                        : node.glow,
                     }}
+                    whileHover={{
+                      scale: 1.08,
+                      boxShadow: node.crownJewel
+                        ? "0 0 40px rgba(255,70,70,0.55)"
+                        : node.glow.replace("0.25)", "0.45)"),
+                    }}
+                    transition={{ duration: 0.2 }}
                   >
-                    <node.icon
-                      className={node.crownJewel ? "h-4 w-4" : "h-3.5 w-3.5"}
-                      style={{ color: node.color }}
-                    />
+                    <node.icon className="h-6 w-6" style={{ color: node.color }} />
                   </motion.div>
-                  <span className="mt-1 max-w-[64px] truncate text-center text-[9px] text-slate-500">
-                    {node.label}
+                  <span
+                    className="mt-2 max-w-[72px] truncate text-center text-[10px] font-medium"
+                    style={{ color: "rgba(255,255,255,0.7)" }}
+                  >
+                    {node.crownJewel ? "Crown Jewel" : node.label}
                   </span>
                 </div>
                 {i < pathNodes.length - 1 && (
-                  <MiniPathConnector index={i} />
+                  <MiniPathConnector index={i} stepLabel={STEP_LABELS[i]} />
                 )}
               </div>
             ))}
           </div>
-          {/* Metrics row */}
-          <div className="mt-4 flex flex-wrap gap-3 border-t border-slate-700/80 pt-4">
-            <div className="flex items-center gap-1.5">
+          {/* Metrics strip */}
+          <div
+            className="mt-6 flex flex-wrap items-center gap-6 border-t pt-6"
+            style={{ borderColor: "rgba(120,150,255,0.1)" }}
+          >
+            <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[#22C55E]" />
               <span className="text-xs text-slate-400">
                 Confidence: <span className="font-semibold text-slate-300">92%</span>
               </span>
             </div>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[#F97316]" />
               <span className="text-xs text-slate-400">
-                Detection gap: <span className="font-semibold text-slate-300">38%</span>
+                Detection Gap: <span className="font-semibold text-slate-300">38%</span>
               </span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <span className="rounded bg-[#22C55E]/20 px-1.5 py-0.5 text-[10px] font-medium text-[#22C55E]">
-                Fix available
+            <div className="flex items-center gap-2">
+              <span
+                className="rounded-full border px-3 py-1.5 text-xs font-medium text-[#22C55E]"
+                style={{
+                  background: "rgba(50,200,120,0.15)",
+                  borderColor: "rgba(50,200,120,0.35)",
+                }}
+              >
+                Fix Available
               </span>
             </div>
           </div>
@@ -216,27 +266,36 @@ function FloatingProductPreview() {
   );
 }
 
-function MiniPathConnector({ index }: { index: number }) {
+function MiniPathConnector({ stepLabel }: { index: number; stepLabel: string }) {
   return (
-    <div className="relative h-0.5 w-8 flex-shrink-0 sm:w-10">
-      <div
-        className="absolute inset-0 rounded-full"
-        style={{
-          background: `linear-gradient(90deg, ${pathNodes[index].color}, ${pathNodes[index + 1].color})`,
-          boxShadow: "0 0 8px rgba(239,68,68,0.35)",
-        }}
-      />
-      <motion.div
-        className="absolute left-0 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#EF4444]"
-        style={{ boxShadow: "0 0 6px #EF4444" }}
-        animate={{ x: [0, 24] }}
-        transition={{
-          duration: 2.5,
-          repeat: Infinity,
-          repeatType: "loop",
-          delay: index * 0.3,
-        }}
-      />
+    <div className="flex h-14 w-16 flex-shrink-0 flex-col items-center justify-end sm:w-20">
+      <span
+        className="mb-1 text-[12px] leading-tight"
+        style={{ color: "rgba(255,255,255,0.65)" }}
+      >
+        {stepLabel}
+      </span>
+      <div className="relative h-[3px] w-full overflow-hidden rounded" style={{ borderRadius: 4 }}>
+        <div
+          className="absolute inset-0 rounded"
+          style={{
+            height: 3,
+            borderRadius: 4,
+            background: "linear-gradient(90deg, #ff3b3b, #ff7a00, #ffb347)",
+          }}
+        />
+        <motion.div
+          className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-[#ffb347]"
+          style={{ boxShadow: "0 0 12px rgba(255,183,71,0.8)" }}
+          animate={{ x: [0, 56] }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: "loop",
+            ease: "linear",
+          }}
+        />
+      </div>
     </div>
   );
 }
