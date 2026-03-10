@@ -44,7 +44,7 @@ export default function Nav() {
             alt="XSEE — Trust nothing. Prove everything."
             width={180}
             height={48}
-            className="h-9 w-auto object-contain object-left sm:h-12"
+            className="h-9 w-auto object-contain object-left sm:h-12 bg-transparent"
             priority
           />
         </Link>

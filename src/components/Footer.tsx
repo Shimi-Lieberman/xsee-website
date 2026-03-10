@@ -33,7 +33,7 @@ export default function Footer() {
                 alt="XSEE — Trust nothing. Prove everything."
                 width={200}
                 height={60}
-                className="h-14 w-auto object-contain object-left sm:h-[60px]"
+                className="h-14 w-auto object-contain object-left sm:h-[60px] bg-transparent"
               />
             </Link>
             <p className="mt-3 text-[15px] leading-relaxed text-[#94A3B8]">

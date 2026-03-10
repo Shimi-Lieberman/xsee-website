@@ -40,10 +40,7 @@ export default function Hero() {
                 alt="XSEE — Trust nothing. Prove everything."
                 width={280}
                 height={105}
-                className="h-24 w-auto object-contain object-left sm:h-[105px]"
-                style={{
-                  filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.3))",
-                }}
+                className="h-24 w-auto object-contain object-left sm:h-[105px] bg-transparent"
                 priority
               />
             </Link>
