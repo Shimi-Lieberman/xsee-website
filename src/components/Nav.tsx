@@ -40,11 +40,12 @@ export default function Nav() {
           aria-label="XSEE Home"
         >
           <Image
-            src="/xsee-logo-transparent.png"
+            src="/xsee-logo-black-transparent.png"
             alt="XSEE — Trust nothing. Prove everything."
             width={180}
             height={48}
             className="h-9 w-auto object-contain object-left sm:h-12 bg-transparent"
+            style={{ filter: "invert(48%) sepia(79%) saturate(1000%) hue-rotate(86deg) brightness(95%) contrast(101%)" }}
             priority
           />
         </Link>

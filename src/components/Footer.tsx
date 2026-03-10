@@ -29,11 +29,12 @@ export default function Footer() {
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo-transparent.png"
+                src="/xsee-logo-black-transparent.png"
                 alt="XSEE — Trust nothing. Prove everything."
                 width={200}
                 height={60}
                 className="h-14 w-auto object-contain object-left sm:h-[60px] bg-transparent"
+                style={{ filter: "invert(48%) sepia(79%) saturate(1000%) hue-rotate(86deg) brightness(95%) contrast(101%)" }}
               />
             </Link>
             <p className="mt-3 text-[15px] leading-relaxed text-[#94A3B8]">

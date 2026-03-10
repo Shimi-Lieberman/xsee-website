@@ -36,11 +36,12 @@ export default function Hero() {
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo-transparent.png"
+                src="/xsee-logo-black-transparent.png"
                 alt="XSEE — Trust nothing. Prove everything."
                 width={280}
                 height={105}
                 className="h-24 w-auto object-contain object-left sm:h-[105px] bg-transparent"
+                style={{ filter: "invert(48%) sepia(79%) saturate(1000%) hue-rotate(86deg) brightness(95%) contrast(101%)" }}
                 priority
               />
             </Link>
