@@ -129,21 +129,25 @@ function CloudTopology() {
   );
 }
 
-const STEP_LABELS = ["Lateral Movement", "Privilege Escalation", "Data Access"];
+const STEP_LABELS = [
+  "Initial Access",
+  "Lateral Movement",
+  "Privilege Escalation / Data Access",
+];
 
 const SEGMENT_GRADIENTS = [
-  "linear-gradient(90deg, #ff7a00, #ef4444)",
-  "linear-gradient(90deg, #ef4444, #8b5cf6)",
+  "linear-gradient(90deg, #3B82F6, #ff7a00)",
+  "linear-gradient(90deg, #ff7a00, #8b5cf6)",
   "linear-gradient(90deg, #8b5cf6, #ef4444)",
 ];
 
-const SEGMENT_UNDERLINE_COLORS = ["#ff7a00", "#ef4444", "#8b5cf6"];
+const SEGMENT_UNDERLINE_COLORS = ["#3B82F6", "#ff7a00", "#8b5cf6"];
 
 const pathNodes = [
   {
     id: "internet",
     label: "Internet",
-    role: "Entry",
+    subtitle: "Entry Point",
     icon: Globe,
     color: "#3B82F6",
     glow: "0 0 24px rgba(59,130,255,0.22)",
@@ -152,7 +156,7 @@ const pathNodes = [
   {
     id: "bastion",
     label: "Bastion Host",
-    role: "Compute",
+    subtitle: "Lateral Access",
     icon: Server,
     color: "#ff7a00",
     glow: "0 0 24px rgba(255,122,0,0.22)",
@@ -160,8 +164,8 @@ const pathNodes = [
   },
   {
     id: "iam",
-    label: "IAM Escalation",
-    role: "Identity",
+    label: "IAM Privilege",
+    subtitle: "Escalation",
     icon: KeyRound,
     color: "#8B5CF6",
     glow: "0 0 24px rgba(139,92,246,0.22)",
@@ -170,7 +174,7 @@ const pathNodes = [
   {
     id: "db",
     label: "Internal DB",
-    role: "Crown Jewel",
+    subtitle: "Crown Jewel",
     icon: Crown,
     color: "#EF4444",
     glow: "0 0 32px rgba(239,68,68,0.4)",
@@ -191,84 +195,99 @@ function FloatingProductPreview() {
       }}
     >
       <motion.div
-        className="relative overflow-hidden rounded-[20px] border"
+        className="relative overflow-hidden rounded-[24px] border"
         style={{
-          background: "linear-gradient(180deg, #07152b 0%, #08182f 100%)",
-          borderColor: "rgba(80,120,255,0.18)",
-          boxShadow: "0 18px 50px rgba(0,0,0,0.35)",
+          background: "linear-gradient(180deg, #070d18 0%, #0b1320 100%)",
+          borderColor: "rgba(255,255,255,0.08)",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
         }}
         whileHover={{
-          boxShadow: "0 22px 56px rgba(0,0,0,0.4)",
+          boxShadow: "0 32px 88px rgba(0,0,0,0.5)",
         }}
         transition={{ duration: 0.25 }}
       >
         {/* Header */}
         <div
-          className="flex items-center gap-2 border-b py-3.5"
+          className="flex items-center gap-2 border-b py-4"
           style={{
-            borderColor: "rgba(80,120,255,0.12)",
+            borderColor: "rgba(255,255,255,0.06)",
             paddingLeft: 32,
             paddingRight: 32,
           }}
         >
           <span className="h-2 w-2 rounded-full bg-[#EF4444]" />
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-200">
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-100">
             Top Active Attack Path
           </h3>
         </div>
 
         {/* Content: path + strip */}
         <div
-          className="overflow-hidden px-8 py-7"
-          style={{ padding: "28px 32px" }}
+          className="relative overflow-hidden px-8 py-8"
+          style={{ padding: "32px 40px" }}
         >
-          {/* Background depth: radial + horizontal haze */}
+          {/* Subtle orange/red glow around path area */}
           <div
             className="pointer-events-none absolute inset-0"
             style={{
-              background: "radial-gradient(circle at 50% 45%, rgba(255,100,40,0.08) 0%, transparent 65%)",
+              background: "radial-gradient(ellipse 90% 60% at 50% 45%, rgba(255,80,40,0.06) 0%, transparent 60%)",
             }}
           />
           <div
-            className="pointer-events-none absolute inset-0 opacity-60"
+            className="pointer-events-none absolute inset-0 opacity-50"
             style={{
-              background: "linear-gradient(180deg, transparent 35%, rgba(255,100,40,0.03) 50%, transparent 65%)",
+              background: "linear-gradient(180deg, transparent 30%, rgba(239,68,68,0.03) 50%, transparent 70%)",
             }}
           />
 
           {/* Attack path container */}
           <div className="attack-path-container relative mx-auto w-full max-w-[900px]">
-            <div className="relative flex flex-col items-center md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-8 lg:gap-12">
+            <div className="relative flex flex-col items-center md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-10 lg:gap-14">
               {pathNodes.map((node, i) => (
                 <React.Fragment key={node.id}>
                   <div className="flex flex-shrink-0 flex-col items-center">
                     <motion.div
-                      className="flex h-14 w-14 items-center justify-center rounded-full border-2 md:h-[68px] md:w-[68px]"
+                      className="flex h-16 w-16 items-center justify-center rounded-full border-2 md:h-[72px] md:w-[72px]"
                       style={{
                         borderColor: node.color,
-                        background: "rgba(8,24,47,0.85)",
-                        boxShadow: node.glow,
+                        background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(7,13,24,0.95) 100%)",
+                        boxShadow: node.crownJewel ? undefined : node.glow,
                       }}
+                      animate={
+                        node.crownJewel
+                          ? {
+                              boxShadow: [
+                                "0 0 32px rgba(239,68,68,0.4)",
+                                "0 0 44px rgba(239,68,68,0.55)",
+                                "0 0 32px rgba(239,68,68,0.4)",
+                              ],
+                            }
+                          : undefined
+                      }
+                      transition={
+                        node.crownJewel
+                          ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+                          : { duration: 0.2 }
+                      }
                       whileHover={{
                         scale: 1.05,
                         y: -2,
-                        boxShadow: node.crownJewel ? node.glowHover : node.glowHover,
+                        boxShadow: node.glowHover,
                       }}
-                      transition={{ duration: 0.2 }}
                     >
                       <node.icon
-                        className="h-6 w-6 md:h-7 md:w-7"
+                        className="h-7 w-7 md:h-8 md:w-8"
                         style={{ color: node.color }}
                       />
                     </motion.div>
-                    <span className="mt-2 max-w-[80px] truncate text-center text-[11px] font-medium text-slate-300">
+                    <span className="mt-2.5 max-w-[90px] text-center text-sm font-medium text-slate-200">
                       {node.label}
                     </span>
-                    {node.role && (
+                    {node.subtitle && (
                       <span
-                        className={`mt-0.5 text-[10px] ${node.crownJewel ? "text-amber-400/90" : "text-slate-500"}`}
+                        className={`mt-0.5 text-xs ${node.crownJewel ? "text-amber-400/90" : "text-slate-500"}`}
                       >
-                        {node.role}
+                        {node.subtitle}
                       </span>
                     )}
                   </div>
@@ -285,10 +304,9 @@ function FloatingProductPreview() {
             </div>
           </div>
 
-          {/* Bottom intelligence strip */}
+          {/* Bottom signal strip */}
           <div
-            className="mt-6 flex flex-wrap items-center gap-6 border-t pt-6 md:justify-between"
-            style={{ borderColor: "rgba(80,120,255,0.12)" }}
+            className="mt-8 flex flex-wrap items-center gap-6 border-t border-white/[0.06] pt-6 md:justify-between"
           >
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[#22C55E]" />
@@ -299,19 +317,19 @@ function FloatingProductPreview() {
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[#F97316]" />
               <span className="text-xs text-slate-400">
-                Detection Gap: <span className="font-semibold text-white">38%</span>
+                Detection gap: <span className="font-semibold text-white">38%</span>
               </span>
             </div>
             <span
-              className="rounded-full border px-3.5 py-2 text-xs font-medium"
+              className="rounded-full border text-xs font-medium"
               style={{
-                background: "rgba(34,197,94,0.16)",
+                background: "rgba(34,197,94,0.14)",
                 borderColor: "rgba(34,197,94,0.35)",
                 color: "#22C55E",
                 padding: "8px 14px",
               }}
             >
-              Fix Available
+              Fix available
             </span>
           </div>
         </div>
@@ -352,6 +370,22 @@ function MiniPathConnector({
             boxShadow: "0 0 10px rgba(239,68,68,0.2)",
           }}
         />
+        {/* Tiny signal particles along the line */}
+        {[0.2, 0.5, 0.8].map((t) => (
+          <motion.div
+            key={t}
+            className="absolute left-0 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-white/60"
+            style={{ boxShadow: "0 0 6px rgba(255,255,255,0.5)" }}
+            animate={{ x: ["0%", "100%"] }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              repeatType: "loop",
+              ease: "linear",
+              delay: t * 0.8,
+            }}
+          />
+        ))}
         {/* Blurred trail */}
         <motion.div
           className="absolute left-0 top-1/2 h-3 w-6 -translate-y-1/2 rounded-full bg-white/20 blur-sm"
