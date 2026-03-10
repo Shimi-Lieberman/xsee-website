@@ -10,8 +10,7 @@ import {
   KeyRound,
   Crown,
 } from "lucide-react";
-import HeroNetworkViz from "@/components/background/HeroNetworkViz";
-import AttackPulseOverlay from "@/components/background/AttackPulseOverlay";
+import HeroAttackPathViz from "@/components/background/HeroAttackPathViz";
 
 const NODE_COLORS = {
   internet: "#F97316",
@@ -25,9 +24,8 @@ export default function Hero() {
   return (
     <section className="brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0B1C3D] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
       <div className="absolute inset-0 z-0">
-        <HeroNetworkViz />
+        <HeroAttackPathViz />
       </div>
-      <AttackPulseOverlay />
       <CloudTopology />
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:justify-between">

@@ -231,6 +231,45 @@ body {
 .animate-hero-edge-pulse { animation: hero-edge-pulse 5s ease-in-out infinite; }
 .animate-hero-edge-fade { animation: hero-edge-fade 6s ease-in-out infinite; }
 
+/* Hero attack path viz — node drift, attack pulse */
+@keyframes hero-node-drift {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+@keyframes hero-edge-soft {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+@keyframes hero-attack-path-pulse {
+  0%, 90%, 100% { opacity: 0.6; }
+  45%, 55% { opacity: 1; }
+}
+@keyframes hero-attack-node-pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+@keyframes hero-attack-pulse-travel {
+  0% { stroke-dashoffset: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; stroke-dashoffset: -100; }
+  100% { opacity: 0; stroke-dashoffset: -100; }
+}
+.animate-hero-node-drift {
+  animation: hero-node-drift 8s ease-in-out infinite;
+}
+.animate-hero-edge-soft {
+  animation: hero-edge-soft 6s ease-in-out infinite;
+}
+.animate-hero-attack-path-pulse {
+  animation: hero-attack-path-pulse 6s ease-in-out infinite;
+}
+.animate-hero-attack-node-pulse {
+  animation: hero-attack-node-pulse 2.5s ease-in-out infinite;
+}
+.animate-hero-attack-pulse-travel {
+  animation: hero-attack-pulse-travel 6s ease-in-out infinite;
+}
+
 /* Brand stripes — inspired by XSEE logo shield (diagonal, subtle, premium) */
 @keyframes brand-stripes-move {
   0% { background-position: 0 0; }
