@@ -8,6 +8,7 @@ import HowItWorks from "@/components/HowItWorks";
 import ProofEvidence from "@/components/ProofEvidence";
 import AttackPathStory from "@/components/AttackPathStory";
 import CloudAttackGraph from "@/components/CloudAttackGraph";
+import CloudEnvironmentMap from "@/components/CloudEnvironmentMap";
 import SixEngines from "@/components/SixEngines";
 import PlatformShowcase from "@/components/PlatformShowcase";
 import SecurityBrain from "@/components/SecurityBrain";
@@ -27,6 +28,7 @@ export default function Home() {
       <main>
         <Hero />
         <HowBreachesHappen />
+        <CloudEnvironmentMap />
         <ProductStoryScroll />
         <TrustBar />
         <ProblemSolution />

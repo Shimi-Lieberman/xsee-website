@@ -270,6 +270,35 @@ body {
   animation: hero-attack-pulse-travel 6s ease-in-out infinite;
 }
 
+/* Cloud Environment Map — node drift, line pulse, attack path */
+@keyframes cloud-map-node-drift {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+@keyframes cloud-map-attack-node-pulse {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
+}
+@keyframes cloud-map-edge-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
+}
+@keyframes cloud-map-attack-line-pulse {
+  0%, 90%, 100% { opacity: 0.65; }
+  45%, 55% { opacity: 1; }
+}
+@keyframes cloud-map-pulse-travel {
+  0% { stroke-dashoffset: 0; opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; stroke-dashoffset: -100; }
+  100% { opacity: 0; stroke-dashoffset: -100; }
+}
+.cloud-map-node { animation: cloud-map-node-drift 7s ease-in-out infinite; }
+.cloud-map-attack-node { animation: cloud-map-attack-node-pulse 2.5s ease-in-out infinite; }
+.cloud-map-edge-line { animation: cloud-map-edge-pulse 5s ease-in-out infinite; }
+.cloud-map-attack-line { animation: cloud-map-attack-line-pulse 5s ease-in-out infinite; }
+.cloud-map-pulse-travel { animation: cloud-map-pulse-travel 7s ease-in-out infinite; }
+
 /* Brand stripes — inspired by XSEE logo shield (diagonal, subtle, premium) */
 @keyframes brand-stripes-move {
   0% { background-position: 0 0; }
