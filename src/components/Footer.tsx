@@ -1,10 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   const productLinks = [
-    { href: "#", label: "Overview" },
+    { href: "#product", label: "Overview" },
     { href: "#pricing", label: "Pricing" },
-    { href: "#", label: "Security" },
+    { href: "#security", label: "Security" },
   ];
   const companyLinks = [
     { href: "#", label: "About" },
@@ -22,8 +23,18 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-20">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-1">
-            <Link href="/" className="text-2xl font-bold text-white">
-              XSEE
+            <Link
+              href="/"
+              className="inline-block focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#0B1C3D] rounded-lg"
+              aria-label="XSEE Home"
+            >
+              <Image
+                src="/xsee-logo.png"
+                alt="XSEE — Trust nothing. Prove everything."
+                width={180}
+                height={48}
+                className="h-10 w-auto object-contain object-left sm:h-11"
+              />
             </Link>
             <p className="mt-3 text-[15px] leading-relaxed text-[#94A3B8]">
               Cloud Attack Intelligence Platform
@@ -39,7 +50,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[15px] text-[#64748B] transition-colors hover:text-white"
+                    className="link-underline text-[15px] text-[#64748B] transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -57,7 +68,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[15px] text-[#64748B] transition-colors hover:text-white"
+                    className="link-underline text-[15px] text-[#64748B] transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -75,7 +86,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[15px] text-[#64748B] transition-colors hover:text-white"
+                    className="link-underline text-[15px] text-[#64748B] transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -92,14 +103,14 @@ export default function Footer() {
           <div className="flex gap-6 text-sm">
             <Link
               href="#"
-              className="text-[#64748B] transition-colors hover:text-white"
+              className="link-underline text-[#64748B] transition-colors hover:text-white"
             >
               Privacy Policy
             </Link>
             <span className="text-[#64748B]">·</span>
             <Link
               href="#"
-              className="text-[#64748B] transition-colors hover:text-white"
+              className="link-underline text-[#64748B] transition-colors hover:text-white"
             >
               Terms of Service
             </Link>

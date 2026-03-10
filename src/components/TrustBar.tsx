@@ -18,7 +18,7 @@ export default function TrustBar() {
     >
       <SectionFadeIn className="mx-auto max-w-4xl text-center">
         <p className="text-lg font-medium text-white/95">
-          Built for modern cloud security teams.
+          Built for AWS, DevOps, and security teams.
         </p>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-slate-400">
           {TRUST_MARKERS.map((label) => (

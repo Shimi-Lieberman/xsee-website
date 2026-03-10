@@ -112,9 +112,8 @@ export default function CompetitiveDiff() {
         </SectionFadeIn>
 
         <SectionFadeIn>
-          <p className="mt-10 text-center text-lg font-semibold text-slate-900">
-            Other tools show you what could happen. XSEE proves what will happen
-            — and fixes it.
+          <p className="mt-10 text-center text-lg font-medium text-slate-600">
+            XSEE validates attack paths with L2 (exploit-level) evidence and provides Terraform, CLI, or CloudFormation remediation.
           </p>
         </SectionFadeIn>
       </div>

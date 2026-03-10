@@ -72,13 +72,12 @@ export default function ProblemSolution() {
       <div className="mx-auto max-w-7xl">
         <SectionFadeIn>
           <h2 className="text-center text-4xl font-semibold tracking-tight text-slate-900">
-            Security teams are drowning in alerts.
+            Why Cloud Breaches Happen
           </h2>
         </SectionFadeIn>
         <SectionFadeIn>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-600">
-            XSEE compresses thousands of signals into a single verified attack
-            path.
+            Security teams drown in alerts. XSEE compresses thousands of signals into a single verified attack path.
           </p>
         </SectionFadeIn>
 
@@ -86,7 +85,7 @@ export default function ProblemSolution() {
         <div className="mt-16 overflow-x-auto pb-4">
           <div className="flex min-w-max items-stretch justify-center gap-4 px-2 md:gap-6 lg:gap-8">
             {/* Step 1 — Alert chaos */}
-            <PipelineStage title="Alert chaos" className="min-w-[180px] max-w-[200px]">
+            <PipelineStage title="Alert overload" className="min-w-[180px] max-w-[200px]">
               <div className="relative flex h-[140px] items-center justify-center">
                 {ALERT_CARDS.map((card, i) => (
                   <motion.div

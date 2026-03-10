@@ -48,7 +48,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <section id="contact" className="bg-slate-50 py-28 px-6">
+      <section id="contact" className="section-base bg-slate-50">
         <SectionFadeIn className="mx-auto max-w-xl text-center">
           <div className="flex justify-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#22C55E]/10">
@@ -63,7 +63,7 @@ export default function ContactForm() {
           </p>
           <button
             onClick={() => setStatus("idle")}
-            className="mt-6 font-medium text-[#3B82F6] hover:underline"
+            className="link-underline mt-6 font-medium text-[#3B82F6]"
           >
             Submit another request
           </button>
@@ -73,7 +73,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section id="contact" className="bg-slate-50 py-28 px-6">
+    <section id="contact" className="section-base bg-slate-50">
       <div className="mx-auto max-w-xl">
         <SectionFadeIn>
           <h2 className="text-center text-3xl font-bold text-[#0F172A] sm:text-4xl">
@@ -231,11 +231,11 @@ export default function ContactForm() {
 
         <p className="mt-8 text-center text-sm text-slate-500">
           Or:{" "}
-          <a href="#" className="font-medium text-[#3B82F6] hover:underline">
+          <a href="#" className="link-underline font-medium text-[#3B82F6]">
             Book a Call →
           </a>{" "}
           <span className="text-[#CBD5E1]">|</span>{" "}
-          <a href="#" className="font-medium text-[#3B82F6] hover:underline">
+          <a href="#" className="link-underline font-medium text-[#3B82F6]">
             Join Waitlist →
           </a>
         </p>

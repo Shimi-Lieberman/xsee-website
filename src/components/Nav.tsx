@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Nav() {
@@ -17,6 +18,7 @@ export default function Nav() {
   const navLinks = [
     { href: "#product", label: "Product" },
     { href: "#pricing", label: "Pricing" },
+    { href: "#security", label: "Security" },
     { href: "#contact", label: "Contact" },
   ];
 
@@ -34,11 +36,17 @@ export default function Nav() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className={`text-xl font-bold transition-colors ${
-            scrolled ? "text-[#0F172A]" : "text-white"
-          }`}
+          className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:ring-offset-2 rounded-lg"
+          aria-label="XSEE Home"
         >
-          XSEE
+          <Image
+            src="/xsee-logo.png"
+            alt="XSEE — Trust nothing. Prove everything."
+            width={140}
+            height={36}
+            className="h-8 w-auto object-contain object-left sm:h-9"
+            priority
+          />
         </Link>
 
         {/* Desktop */}
@@ -58,7 +66,7 @@ export default function Nav() {
           ))}
           <Link
             href="#contact"
-            className="rounded-xl bg-[#3B82F6] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_8px_rgba(59,130,246,0.35)] transition-all duration-300 hover:bg-[#2563EB] hover:shadow-[0_4px_12px_rgba(59,130,246,0.4)]"
+            className="btn-enterprise btn-enterprise-primary rounded-xl bg-[#3B82F6] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_2px_8px_rgba(59,130,246,0.35)] hover:bg-[#2563EB]"
           >
             Request Demo
           </Link>

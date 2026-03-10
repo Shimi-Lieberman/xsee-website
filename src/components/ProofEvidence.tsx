@@ -1,93 +1,39 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import SectionFadeIn from "./SectionFadeIn";
 
 const METRICS = [
   {
-    value: 1.2,
-    suffix: "M+",
-    label: "Assets analyzed",
-    description: "Cloud resources mapped and continuously monitored.",
+    display: "L1+L2",
+    label: "Validation model",
+    description: "Graph-level (L1) and exploit-level (L2) validation with AWS API evidence per hop.",
     color: "#3B82F6",
   },
   {
-    value: 240,
-    suffix: "K+",
-    label: "Attack paths discovered",
-    description: "Validated paths from entry to crown jewel.",
+    display: "AWS API",
+    label: "Evidence per path",
+    description: "Each hop backed by IAM, EC2, network, and resource API calls—not assumptions.",
     color: "#22C55E",
   },
   {
-    value: 18,
-    suffix: "B+",
-    label: "Security signals processed",
-    description: "Events correlated into actionable intelligence.",
+    display: "3 formats",
+    label: "Remediation",
+    description: "Terraform, AWS CLI, or CloudFormation. Copy-paste, review, apply.",
     color: "#F97316",
   },
   {
-    value: 6.3,
-    suffix: "M+",
-    label: "Simulation scenarios executed",
-    description: "Exploit simulations with detection gap analysis.",
+    display: "% gap",
+    label: "Detection gap",
+    description: "Simulation reveals what your SIEM/EDR would miss. Measurable, auditable.",
     color: "#8B5CF6",
   },
 ];
 
-function easeOutCubic(t: number): number {
-  return 1 - Math.pow(1 - t, 3);
-}
-
-function CountUp({
-  target,
-  suffix,
-  decimals = 1,
-  duration = 1350,
-  inView,
-}: {
-  target: number;
-  suffix: string;
-  decimals?: number;
-  duration?: number;
-  inView: boolean;
-}) {
-  const [display, setDisplay] = useState("0");
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    if (!inView || hasAnimated.current) return;
-    hasAnimated.current = true;
-    const start = performance.now();
-    let rafId: number;
-
-    const tick = (now: number) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutCubic(progress);
-      const current = eased * target;
-      const formatted =
-        decimals >= 1
-          ? current.toFixed(decimals)
-          : Math.round(current).toString();
-      setDisplay(formatted + suffix);
-      if (progress < 1) rafId = requestAnimationFrame(tick);
-    };
-
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, [inView, target, suffix, decimals, duration]);
-
-  return <span>{display}</span>;
-}
-
 export default function ProofEvidence() {
-  const sectionRef = useRef(null);
-  const inView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   return (
     <section
-      ref={sectionRef}
       className="bg-[#0B1C3D] py-28 px-6"
       style={{
         boxShadow: "inset 0 0 80px rgba(0,0,0,0.15)",
@@ -96,12 +42,12 @@ export default function ProofEvidence() {
       <div className="mx-auto max-w-7xl">
         <SectionFadeIn>
           <h2 className="text-center text-4xl font-semibold tracking-tight text-white">
-            Evidence-Driven Security Intelligence
+            Evidence-Based Validation
           </h2>
         </SectionFadeIn>
         <SectionFadeIn>
           <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
-            XSEE proves cloud risk using real infrastructure evidence.
+            Every path is validated with AWS API evidence—not inferred. Exploit-level proof, measurable detection gaps, and actionable remediation.
           </p>
         </SectionFadeIn>
 
@@ -148,18 +94,12 @@ export default function ProofEvidence() {
                 }}
               />
               <p
-                className="text-4xl font-bold tabular-nums tracking-tight text-white sm:text-5xl"
+                className="text-3xl font-bold tabular-nums tracking-tight text-white sm:text-4xl"
                 style={{
                   textShadow: `0 0 40px ${metric.color}30`,
                 }}
               >
-                <CountUp
-                  inView={inView}
-                  target={metric.value}
-                  suffix={metric.suffix}
-                  decimals={metric.value >= 100 ? 0 : 1}
-                  duration={1350}
-                />
+                {metric.display}
               </p>
               <p className="mt-2 text-base font-semibold text-slate-200">
                 {metric.label}

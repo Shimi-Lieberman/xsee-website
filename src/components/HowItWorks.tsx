@@ -9,7 +9,7 @@ const steps = [
     title: "Discover",
     subtitle: " & Validate",
     description:
-      "Connect your AWS account. XSEE discovers attack paths and validates each hop with real AWS API evidence.",
+      "Connect your AWS account. XSEE discovers attack paths and validates each hop with L1 (graph) and L2 (exploit-level) AWS API evidence.",
     icon: Search,
     color: "#3B82F6",
   },

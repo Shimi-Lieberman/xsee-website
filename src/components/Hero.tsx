@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Globe,
@@ -9,7 +10,7 @@ import {
   KeyRound,
   Crown,
 } from "lucide-react";
-import LivingCloudGraph from "@/components/background/LivingCloudGraph";
+import HeroNetworkViz from "@/components/background/HeroNetworkViz";
 import AttackPulseOverlay from "@/components/background/AttackPulseOverlay";
 
 const NODE_COLORS = {
@@ -22,32 +23,39 @@ const NODE_COLORS = {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden bg-[#0B1C3D] px-6 pt-32 pb-28">
+    <section className="relative min-h-[90vh] overflow-hidden bg-[#0B1C3D] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
       <div className="absolute inset-0 z-0">
-        <LivingCloudGraph />
+        <HeroNetworkViz />
       </div>
       <AttackPulseOverlay />
       <CloudTopology />
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
-            <p
-              className="text-2xl font-bold tracking-[0.15em] text-white"
-              style={{ letterSpacing: "0.15em" }}
+            <Link
+              href="/"
+              className="inline-block focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#0B1C3D] rounded-lg"
+              aria-label="XSEE Home"
             >
-              XSEE
-            </p>
-            <h1 className="mt-4 text-5xl font-bold leading-[1.1] tracking-tight text-white md:text-6xl">
-              Cloud Attack Intelligence Platform
+              <Image
+                src="/xsee-logo.png"
+                alt="XSEE — Trust nothing. Prove everything."
+                width={200}
+                height={52}
+                className="h-12 w-auto object-contain object-left sm:h-14"
+                priority
+              />
+            </Link>
+            <h1 className="mt-4 text-hero-title tracking-tight text-white sm:mt-6">
+              See How Attackers Can Breach Your Cloud — Before They Do
             </h1>
-            <p className="mt-6 text-lg text-slate-400">
-              Discover real cloud attack paths. Prove they&apos;re exploitable.
-              Fix them before attackers do.
+            <p className="mt-5 text-body-lg text-slate-400 sm:mt-6 sm:text-xl">
+              XSEE discovers real attack paths in your AWS environment and validates each step with API evidence—not assumptions.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link
                 href="#contact"
-                className="flex h-12 min-w-[180px] items-center justify-center rounded-xl bg-[#3B82F6] px-6 text-base font-semibold text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#2563EB] hover:shadow-[0_8px_24px_rgba(59,130,246,0.45)]"
+                className="btn-enterprise btn-enterprise-primary flex h-12 min-w-[180px] items-center justify-center rounded-xl bg-[#3B82F6] px-6 text-base font-semibold text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#2563EB]"
               >
                 Request Demo
               </Link>
@@ -76,7 +84,7 @@ const TOPOLOGY_NODES = [
 
 function CloudTopology() {
   return (
-    <div className="pointer-events-none absolute inset-0 opacity-[0.07]">
+    <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]">
       {/* Grid */}
       <div
         className="absolute inset-0"

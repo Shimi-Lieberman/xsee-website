@@ -14,7 +14,7 @@ import SectionFadeIn from "./SectionFadeIn";
 const engines = [
   {
     title: "Attack Path Discovery",
-    description: "L1+L2 validated paths with AWS evidence.",
+    description: "Graph-level (L1) and exploit-level (L2) validation. Each hop backed by AWS API evidence.",
     tag: "Graph Engine",
     icon: Route,
     color: "#3B82F6",
@@ -42,7 +42,7 @@ const engines = [
   },
   {
     title: "AI Security Analyst",
-    description: "Ask anything. Get evidence-backed answers.",
+    description: "Query your cloud inventory and attack graph. Answers cite AWS resources and path evidence.",
     tag: "AI Engine",
     icon: Bot,
     color: "#0891B2",
@@ -58,12 +58,17 @@ const engines = [
 
 export default function SixEngines() {
   return (
-    <section className="bg-white py-28 px-6">
-      <div className="mx-auto max-w-7xl">
+    <section className="section-base bg-white">
+      <div className="container-content mx-auto">
         <SectionFadeIn>
-          <h2 className="text-center text-4xl font-semibold tracking-tight text-slate-900">
-            Six Engines. One Intelligence Platform.
+          <h2 className="text-center text-section-title tracking-tight text-slate-900">
+            Attack Path Intelligence Platform
           </h2>
+        </SectionFadeIn>
+        <SectionFadeIn>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-500">
+            Six engines. One platform. Attack paths validated with exploit-level proof, remediation in Terraform/CLI/CloudFormation.
+          </p>
         </SectionFadeIn>
 
         <motion.div

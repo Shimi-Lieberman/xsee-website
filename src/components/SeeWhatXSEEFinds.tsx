@@ -180,6 +180,9 @@ export default function SeeWhatXSEEFinds() {
                     "0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04), 0 0 30px rgba(59,130,246,0.06)",
                 }}
               >
+                <p className="mb-4 text-xs font-medium uppercase tracking-wider text-slate-500">
+                  Example output (illustrative)
+                </p>
                 <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
                   <div className="rounded-lg border border-slate-700/80 bg-[#0B1C3D]/60 px-4 py-3">
                     <p className="text-2xl font-bold text-white">842</p>
