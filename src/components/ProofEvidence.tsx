@@ -34,7 +34,7 @@ export default function ProofEvidence() {
 
   return (
     <section
-      className="bg-[#0B1C3D] py-28 px-6"
+      className="brand-stripes-bg relative overflow-hidden bg-[#0B1C3D] py-28 px-6"
       style={{
         boxShadow: "inset 0 0 80px rgba(0,0,0,0.15)",
       }}

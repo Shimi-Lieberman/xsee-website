@@ -93,7 +93,7 @@ export default function ProductStoryScroll() {
   }, []);
 
   return (
-    <section className="bg-[#0B1C3D] py-28 px-6">
+    <section className="brand-stripes-bg relative bg-[#0B1C3D] py-28 px-6 overflow-hidden">
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
           <h2 className="text-4xl font-semibold tracking-tight text-white">

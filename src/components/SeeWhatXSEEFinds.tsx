@@ -70,7 +70,7 @@ export default function SeeWhatXSEEFinds() {
   }, []);
 
   return (
-    <section className="bg-[#0B1C3D] py-28 px-6">
+    <section className="brand-stripes-bg relative overflow-hidden bg-[#0B1C3D] py-28 px-6">
       <div className="mx-auto max-w-4xl">
         <SectionFadeIn>
           <h2 className="text-center text-4xl font-semibold tracking-tight text-white">

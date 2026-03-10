@@ -23,7 +23,7 @@ const NODE_COLORS = {
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden bg-[#0B1C3D] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
+    <section className="brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0B1C3D] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
       <div className="absolute inset-0 z-0">
         <HeroNetworkViz />
       </div>

@@ -69,7 +69,7 @@ export default function AttackPathStory() {
     <section
       id="attack-path-intelligence"
       ref={containerRef}
-      className="bg-[#0B1C3D] py-28 px-6"
+      className="brand-stripes-bg relative overflow-hidden bg-[#0B1C3D] py-28 px-6"
     >
       <div className="mx-auto max-w-7xl">
         <div className="text-center">
