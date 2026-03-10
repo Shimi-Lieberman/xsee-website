@@ -9,6 +9,8 @@ import {
   KeyRound,
   Crown,
 } from "lucide-react";
+import LivingCloudGraph from "@/components/background/LivingCloudGraph";
+import AttackPulseOverlay from "@/components/background/AttackPulseOverlay";
 
 const NODE_COLORS = {
   internet: "#F97316",
@@ -21,6 +23,10 @@ const NODE_COLORS = {
 export default function Hero() {
   return (
     <section className="relative min-h-[90vh] overflow-hidden bg-[#0B1C3D] px-6 pt-32 pb-28">
+      <div className="absolute inset-0 z-0">
+        <LivingCloudGraph />
+      </div>
+      <AttackPulseOverlay />
       <CloudTopology />
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:justify-between">
