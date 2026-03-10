@@ -135,14 +135,6 @@ const STEP_LABELS = [
   "Privilege Escalation / Data Access",
 ];
 
-const SEGMENT_GRADIENTS = [
-  "linear-gradient(90deg, #3B82F6, #ff7a00)",
-  "linear-gradient(90deg, #ff7a00, #8b5cf6)",
-  "linear-gradient(90deg, #8b5cf6, #ef4444)",
-];
-
-const SEGMENT_UNDERLINE_COLORS = ["#3B82F6", "#ff7a00", "#8b5cf6"];
-
 const pathNodes = [
   {
     id: "internet",
@@ -240,9 +232,10 @@ function FloatingProductPreview() {
             }}
           />
 
-          {/* Attack path container */}
+          {/* Attack path: nodes + labels, then one continuous glowing line */}
           <div className="attack-path-container relative mx-auto w-full max-w-[900px]">
-            <div className="relative flex flex-col items-center md:flex-row md:flex-nowrap md:items-center md:justify-between md:gap-10 lg:gap-14">
+            {/* Row 1: nodes and step labels */}
+            <div className="relative flex flex-col items-center md:flex-row md:flex-nowrap md:items-end md:justify-between md:gap-8 lg:gap-12">
               {pathNodes.map((node, i) => (
                 <React.Fragment key={node.id}>
                   <div className="flex flex-shrink-0 flex-col items-center">
@@ -292,15 +285,31 @@ function FloatingProductPreview() {
                     )}
                   </div>
                   {i < pathNodes.length - 1 && (
-                    <MiniPathConnector
-                      index={i}
-                      stepLabel={STEP_LABELS[i]}
-                      gradient={SEGMENT_GRADIENTS[i]}
-                      underlineColor={SEGMENT_UNDERLINE_COLORS[i]}
-                    />
+                    <StepLabelOnly label={STEP_LABELS[i]} />
                   )}
                 </React.Fragment>
               ))}
+            </div>
+            {/* Row 2: one continuous attack signal line + single pulse */}
+            <div className="relative mt-4 w-full overflow-hidden rounded-[3px]" style={{ height: 3 }}>
+              <div
+                className="absolute inset-0 rounded-[3px]"
+                style={{
+                  background: "linear-gradient(90deg, #ef4444, #f97316)",
+                  boxShadow: "0 0 16px rgba(239,68,68,0.35)",
+                }}
+              />
+              <motion.div
+                className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-white"
+                style={{ boxShadow: "0 0 12px rgba(255,200,150,0.9)" }}
+                animate={{ x: ["0%", "100%"] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  ease: "linear",
+                }}
+              />
             </div>
           </div>
 
@@ -338,77 +347,12 @@ function FloatingProductPreview() {
   );
 }
 
-function MiniPathConnector({
-  stepLabel,
-  gradient,
-  underlineColor,
-}: {
-  index: number;
-  stepLabel: string;
-  gradient: string;
-  underlineColor: string;
-}) {
+function StepLabelOnly({ label }: { label: string }) {
   return (
-    <div className="flex min-w-[48px] flex-1 flex-col items-center justify-end py-2 md:min-h-[72px] md:min-w-[60px] md:py-0">
-      <span className="mb-1 text-center text-xs text-slate-400">
-        {stepLabel}
+    <div className="flex min-w-[40px] flex-1 items-end justify-center pb-1 md:min-w-[56px]">
+      <span className="text-center text-xs text-slate-400">
+        {label}
       </span>
-      <div
-        className="mb-1.5 h-0.5 w-8 rounded-full opacity-70"
-        style={{ background: underlineColor }}
-      />
-      <div
-        className="relative h-[3px] w-full overflow-hidden rounded"
-        style={{ borderRadius: 4 }}
-      >
-        <div
-          className="absolute inset-0 rounded"
-          style={{
-            height: 3,
-            borderRadius: 4,
-            background: gradient,
-            boxShadow: "0 0 10px rgba(239,68,68,0.2)",
-          }}
-        />
-        {/* Tiny signal particles along the line */}
-        {[0.2, 0.5, 0.8].map((t) => (
-          <motion.div
-            key={t}
-            className="absolute left-0 top-1/2 h-1 w-1 -translate-y-1/2 rounded-full bg-white/60"
-            style={{ boxShadow: "0 0 6px rgba(255,255,255,0.5)" }}
-            animate={{ x: ["0%", "100%"] }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "linear",
-              delay: t * 0.8,
-            }}
-          />
-        ))}
-        {/* Blurred trail */}
-        <motion.div
-          className="absolute left-0 top-1/2 h-3 w-6 -translate-y-1/2 rounded-full bg-white/20 blur-sm"
-          animate={{ x: [0, 64] }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "linear",
-          }}
-        />
-        <motion.div
-          className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-white"
-          style={{ boxShadow: "0 0 14px rgba(255,200,150,0.9)" }}
-          animate={{ x: [0, 64] }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            repeatType: "loop",
-            ease: "linear",
-          }}
-        />
-      </div>
     </div>
   );
 }
