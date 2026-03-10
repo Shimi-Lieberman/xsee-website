@@ -29,11 +29,11 @@ export default function Footer() {
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo.png"
+                src="/xsee-logo-transparent.png"
                 alt="XSEE — Trust nothing. Prove everything."
-                width={180}
-                height={48}
-                className="h-10 w-auto object-contain object-left sm:h-11"
+                width={200}
+                height={60}
+                className="h-14 w-auto object-contain object-left sm:h-[60px]"
               />
             </Link>
             <p className="mt-3 text-[15px] leading-relaxed text-[#94A3B8]">

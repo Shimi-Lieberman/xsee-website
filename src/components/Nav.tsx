@@ -33,18 +33,18 @@ export default function Nav() {
           : undefined
       }
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between pl-5 pr-4 sm:pl-6 sm:pr-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:ring-offset-2 rounded-lg"
+          className="flex items-center transition-transform duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:ring-offset-2 rounded-lg"
           aria-label="XSEE Home"
         >
           <Image
-            src="/xsee-logo.png"
+            src="/xsee-logo-transparent.png"
             alt="XSEE — Trust nothing. Prove everything."
-            width={140}
-            height={36}
-            className="h-8 w-auto object-contain object-left sm:h-9"
+            width={180}
+            height={48}
+            className="h-9 w-auto object-contain object-left sm:h-12"
             priority
           />
         </Link>
