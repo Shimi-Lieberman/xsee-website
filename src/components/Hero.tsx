@@ -132,7 +132,7 @@ function CloudTopology() {
 const STEP_LABELS = [
   "Initial Access",
   "Lateral Movement",
-  "Privilege Escalation / Data Access",
+  "Privilege Escalation",
 ];
 
 const pathNodes = [
@@ -157,7 +157,7 @@ const pathNodes = [
   {
     id: "iam",
     label: "IAM Privilege",
-    subtitle: "Escalation",
+    subtitle: "Privilege Escalation",
     icon: KeyRound,
     color: "#8B5CF6",
     glow: "0 0 24px rgba(139,92,246,0.22)",
@@ -232,66 +232,72 @@ function FloatingProductPreview() {
             }}
           />
 
-          {/* Attack path: nodes + labels, then one continuous glowing line */}
+          {/* Attack path: evenly spaced nodes, step labels above line, one continuous glowing line */}
           <div className="attack-path-container relative mx-auto w-full max-w-[900px]">
-            {/* Row 1: nodes and step labels */}
-            <div className="relative flex flex-col items-center md:flex-row md:flex-nowrap md:items-end md:justify-between md:gap-8 lg:gap-12">
-              {pathNodes.map((node, i) => (
-                <React.Fragment key={node.id}>
-                  <div className="flex flex-shrink-0 flex-col items-center">
-                    <motion.div
-                      className="flex h-16 w-16 items-center justify-center rounded-full border-2 md:h-[72px] md:w-[72px]"
-                      style={{
-                        borderColor: node.color,
-                        background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(7,13,24,0.95) 100%)",
-                        boxShadow: node.crownJewel ? undefined : node.glow,
-                      }}
-                      animate={
-                        node.crownJewel
-                          ? {
-                              boxShadow: [
-                                "0 0 32px rgba(239,68,68,0.4)",
-                                "0 0 44px rgba(239,68,68,0.55)",
-                                "0 0 32px rgba(239,68,68,0.4)",
-                              ],
-                            }
-                          : undefined
-                      }
-                      transition={
-                        node.crownJewel
-                          ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
-                          : { duration: 0.2 }
-                      }
-                      whileHover={{
-                        scale: 1.05,
-                        y: -2,
-                        boxShadow: node.glowHover,
-                      }}
+            {/* Row 1: nodes evenly spaced */}
+            <div className="flex justify-between gap-4">
+              {pathNodes.map((node) => (
+                <div key={node.id} className="flex flex-shrink-0 flex-col items-center">
+                  <motion.div
+                    className="flex h-16 w-16 items-center justify-center rounded-full border-2 md:h-[72px] md:w-[72px]"
+                    style={{
+                      borderColor: node.color,
+                      background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(7,13,24,0.95) 100%)",
+                      boxShadow: node.crownJewel ? undefined : node.glow,
+                    }}
+                    animate={
+                      node.crownJewel
+                        ? {
+                            boxShadow: [
+                              "0 0 32px rgba(239,68,68,0.4)",
+                              "0 0 44px rgba(239,68,68,0.55)",
+                              "0 0 32px rgba(239,68,68,0.4)",
+                            ],
+                          }
+                        : undefined
+                    }
+                    transition={
+                      node.crownJewel
+                        ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+                        : { duration: 0.2 }
+                    }
+                    whileHover={{
+                      scale: 1.05,
+                      y: -2,
+                      boxShadow: node.glowHover,
+                    }}
+                  >
+                    <node.icon
+                      className="h-7 w-7 md:h-8 md:w-8"
+                      style={{ color: node.color }}
+                    />
+                  </motion.div>
+                  <span className="mt-2.5 max-w-[90px] text-center text-sm font-medium text-slate-200">
+                    {node.label}
+                  </span>
+                  {node.subtitle && (
+                    <span
+                      className={`mt-0.5 text-xs ${node.crownJewel ? "text-amber-400/90" : "text-slate-500"}`}
                     >
-                      <node.icon
-                        className="h-7 w-7 md:h-8 md:w-8"
-                        style={{ color: node.color }}
-                      />
-                    </motion.div>
-                    <span className="mt-2.5 max-w-[90px] text-center text-sm font-medium text-slate-200">
-                      {node.label}
+                      {node.subtitle}
                     </span>
-                    {node.subtitle && (
-                      <span
-                        className={`mt-0.5 text-xs ${node.crownJewel ? "text-amber-400/90" : "text-slate-500"}`}
-                      >
-                        {node.subtitle}
-                      </span>
-                    )}
-                  </div>
-                  {i < pathNodes.length - 1 && (
-                    <StepLabelOnly label={STEP_LABELS[i]} />
                   )}
-                </React.Fragment>
+                </div>
               ))}
             </div>
-            {/* Row 2: one continuous attack signal line + single pulse */}
-            <div className="relative mt-4 w-full overflow-hidden rounded-[3px]" style={{ height: 3 }}>
+            {/* Step labels above line segments: Internet→Bastion | Bastion→IAM | IAM→DB */}
+            <div className="mt-4 flex w-full">
+              {STEP_LABELS.map((label) => (
+                <div
+                  key={label}
+                  className="flex-1 text-center text-xs text-slate-400"
+                >
+                  {label}
+                </div>
+              ))}
+            </div>
+            {/* One continuous attack signal line + pulse (live replay feel) */}
+            <div className="relative mt-1 w-full overflow-hidden rounded-[3px]" style={{ height: 3 }}>
               <div
                 className="absolute inset-0 rounded-[3px]"
                 style={{
@@ -313,7 +319,7 @@ function FloatingProductPreview() {
             </div>
           </div>
 
-          {/* Bottom signal strip */}
+          {/* Metrics row: status indicators + Fix available */}
           <div
             className="mt-8 flex flex-wrap items-center gap-6 border-t border-white/[0.06] pt-6 md:justify-between"
           >
@@ -326,11 +332,12 @@ function FloatingProductPreview() {
             <div className="flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-[#F97316]" />
               <span className="text-xs text-slate-400">
-                Detection gap: <span className="font-semibold text-white">38%</span>
+                Detection Gap: <span className="font-semibold text-white">38%</span>
               </span>
             </div>
-            <span
-              className="rounded-full border text-xs font-medium"
+            <button
+              type="button"
+              className="rounded-full border text-xs font-medium transition-colors hover:opacity-90"
               style={{
                 background: "rgba(34,197,94,0.14)",
                 borderColor: "rgba(34,197,94,0.35)",
@@ -339,20 +346,10 @@ function FloatingProductPreview() {
               }}
             >
               Fix available
-            </span>
+            </button>
           </div>
         </div>
       </motion.div>
     </motion.div>
-  );
-}
-
-function StepLabelOnly({ label }: { label: string }) {
-  return (
-    <div className="flex min-w-[40px] flex-1 items-end justify-center pb-1 md:min-w-[56px]">
-      <span className="text-center text-xs text-slate-400">
-        {label}
-      </span>
-    </div>
   );
 }
