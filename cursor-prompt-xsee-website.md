@@ -141,7 +141,7 @@ footer a:hover { color: #22c55e; }
 
 ---
 
-## Logo instances — use xsee-logo.png everywhere
+## Logo instances — use xsee-logo.svg everywhere
 
 | Location | Specs |
 |----------|-------|

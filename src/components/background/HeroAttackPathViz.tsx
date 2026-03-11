@@ -6,14 +6,14 @@ import { useState, useEffect } from "react";
 
 const MOBILE_BREAKPOINT = 768;
 
-/* Semantic nodes: Internet, IAM Role, EC2, Database (crown jewel) */
+/* Semantic nodes — safe zone 14–86, balanced with spacing. */
 const NODES = [
-  { id: "internet", cx: 12, cy: 42, label: "Internet" },
-  { id: "iam", cx: 32, cy: 28, label: "IAM Role" },
-  { id: "ec2", cx: 52, cy: 48, label: "EC2" },
-  { id: "db", cx: 88, cy: 52, label: "Database" },
-  { id: "lb", cx: 48, cy: 22, label: "Load Balancer" },
-  { id: "s3", cx: 24, cy: 72, label: "S3" },
+  { id: "internet", cx: 24, cy: 76, label: "Internet" },
+  { id: "iam", cx: 32, cy: 26, label: "IAM Role" },
+  { id: "ec2", cx: 52, cy: 50, label: "EC2" },
+  { id: "db", cx: 76, cy: 24, label: "Database" },
+  { id: "lb", cx: 48, cy: 56, label: "Load Balancer" },
+  { id: "s3", cx: 26, cy: 70, label: "S3" },
 ];
 
 /* Connections: [fromIdx, toIdx]. Attack path: Internet → IAM → EC2 → Database */
@@ -138,8 +138,8 @@ export default function HeroAttackPathViz() {
                 y1={n1.cy}
                 x2={n2.cx}
                 y2={n2.cy}
-                stroke={attack ? "url(#attack-path-grad)" : "rgba(148,163,184,0.18)"}
-                strokeWidth={attack ? 1.2 : 0.6}
+                stroke={attack ? "url(#attack-path-grad)" : "rgba(148,163,184,0.12)"}
+                strokeWidth={attack ? 1.35 : 0.5}
                 strokeLinecap="round"
                 className={
                   attack
@@ -190,10 +190,10 @@ export default function HeroAttackPathViz() {
           const onAttackPath = attackIndices.includes(i);
           return (
             <g key={node.id}>
-              <circle
+                <circle
                 cx={node.cx}
                 cy={node.cy}
-                r={onAttackPath ? 2.2 : 1.6}
+                r={onAttackPath ? 2.1 : 1.5}
                 fill={
                   onAttackPath
                     ? "rgba(239,68,68,0.5)"

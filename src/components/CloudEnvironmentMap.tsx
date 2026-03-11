@@ -5,19 +5,20 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import SectionFadeIn from "./SectionFadeIn";
+import { LABEL_OFFSET_Y } from "@/lib/graphLayout";
 
 const MOBILE_BREAKPOINT = 768;
 
-/* Full topology: 8 nodes */
+/* Full topology: 8 nodes — safe zone, balanced with spacing. */
 const NODES = [
-  { id: "internet", label: "Internet", cx: 15, cy: 50 },
-  { id: "iam", label: "IAM Role", cx: 32, cy: 28 },
-  { id: "ec2", label: "EC2", cx: 52, cy: 45 },
-  { id: "db", label: "Database", cx: 88, cy: 50 },
-  { id: "lb", label: "Load Balancer", cx: 38, cy: 62 },
-  { id: "s3", label: "S3 Bucket", cx: 22, cy: 78 },
-  { id: "sg", label: "Security Group", cx: 68, cy: 72 },
-  { id: "vpc", label: "VPC", cx: 50, cy: 22 },
+  { id: "internet", label: "Internet", cx: 22, cy: 76 },
+  { id: "iam", label: "IAM Role", cx: 30, cy: 26 },
+  { id: "ec2", label: "EC2", cx: 52, cy: 48 },
+  { id: "db", label: "Database", cx: 80, cy: 50 },
+  { id: "lb", label: "Load Balancer", cx: 38, cy: 64 },
+  { id: "s3", label: "S3 Bucket", cx: 22, cy: 84 },
+  { id: "sg", label: "Security Group", cx: 68, cy: 70 },
+  { id: "vpc", label: "VPC", cx: 50, cy: 20 },
 ];
 
 /* Connections: [fromIdx, toIdx] — network access, permissions, dependencies */
@@ -38,13 +39,13 @@ const EDGES: [number, number][] = [
 /* Attack path: Internet → IAM Role → EC2 → Database */
 const ATTACK_PATH = [0, 1, 2, 3];
 
-/* Mobile: 5 nodes — Internet, IAM, EC2, Database, Load Balancer */
+/* Mobile: 5 nodes — safe zone, simplified, spaced */
 const MOBILE_NODES = [
-  { id: "internet", label: "Internet", cx: 12, cy: 55 },
-  { id: "iam", label: "IAM", cx: 35, cy: 30 },
-  { id: "ec2", label: "EC2", cx: 55, cy: 50 },
-  { id: "db", label: "Database", cx: 90, cy: 55 },
-  { id: "lb", label: "Load Balancer", cx: 35, cy: 75 },
+  { id: "internet", label: "Internet", cx: 20, cy: 76 },
+  { id: "iam", label: "IAM", cx: 32, cy: 30 },
+  { id: "ec2", label: "EC2", cx: 52, cy: 52 },
+  { id: "db", label: "Database", cx: 80, cy: 76 },
+  { id: "lb", label: "Load Balancer", cx: 32, cy: 66 },
 ];
 const MOBILE_EDGES: [number, number][] = [
   [0, 1],
@@ -156,8 +157,8 @@ export default function CloudEnvironmentMap() {
                     y1={n1.cy}
                     x2={n2.cx}
                     y2={n2.cy}
-                    stroke={attack ? "url(#cloud-map-attack-grad)" : "rgba(148,163,184,0.2)"}
-                    strokeWidth={attack ? 1.4 : 0.6}
+                    stroke={attack ? "url(#cloud-map-attack-grad)" : "rgba(148,163,184,0.14)"}
+                    strokeWidth={attack ? 1.5 : 0.5}
                     strokeLinecap="round"
                     className={attack ? "cloud-map-attack-line" : "cloud-map-edge-line"}
                     style={attack ? { filter: "url(#cloud-map-attack-glow)" } : undefined}
@@ -198,8 +199,8 @@ export default function CloudEnvironmentMap() {
                   <circle
                     cx={node.cx}
                     cy={node.cy}
-                    r={onPath ? 2.5 : 1.8}
-                    fill={onPath ? "rgba(239,68,68,0.6)" : "rgba(96,165,250,0.5)"}
+                    r={onPath ? 2.6 : 1.7}
+                    fill={onPath ? "rgba(239,68,68,0.65)" : "rgba(96,165,250,0.45)"}
                     style={{
                       filter: onPath ? "url(#cloud-map-attack-glow)" : "url(#cloud-map-node-glow)",
                     }}
@@ -208,11 +209,11 @@ export default function CloudEnvironmentMap() {
                   {/* Node labels — visible on hover or always for key nodes on desktop */}
                   <text
                     x={node.cx}
-                    y={node.cy + (isMobile ? 5 : 4.2)}
+                    y={node.cy + LABEL_OFFSET_Y}
                     textAnchor="middle"
-                    className="fill-slate-400 font-medium"
+                    className="fill-slate-300 font-medium"
                     style={{
-                      fontSize: isMobile ? 3.5 : 3,
+                      fontSize: isMobile ? 3.6 : 3.2,
                       pointerEvents: "none",
                     }}
                   >

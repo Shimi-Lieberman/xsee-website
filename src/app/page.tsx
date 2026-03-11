@@ -1,6 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import HowBreachesHappen from "@/components/HowBreachesHappen";
+import AttackPathStoryScroll from "@/components/AttackPathStoryScroll";
 import ProductStoryScroll from "@/components/ProductStoryScroll";
 import TrustBar from "@/components/TrustBar";
 import ProblemSolution from "@/components/ProblemSolution";
@@ -8,7 +8,6 @@ import HowItWorks from "@/components/HowItWorks";
 import ProofEvidence from "@/components/ProofEvidence";
 import AttackPathStory from "@/components/AttackPathStory";
 import CloudAttackGraph from "@/components/CloudAttackGraph";
-import CloudEnvironmentMap from "@/components/CloudEnvironmentMap";
 import SixEngines from "@/components/SixEngines";
 import PlatformShowcase from "@/components/PlatformShowcase";
 import SecurityBrain from "@/components/SecurityBrain";
@@ -27,8 +26,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <HowBreachesHappen />
-        <CloudEnvironmentMap />
+        <AttackPathStoryScroll />
         <ProductStoryScroll />
         <TrustBar />
         <ProblemSolution />

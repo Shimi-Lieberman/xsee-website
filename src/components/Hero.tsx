@@ -33,19 +33,19 @@ const CINEMATIC_NODES = [
 
 export default function Hero() {
   return (
-    <section className="hero brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0B1220] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
+    <section className="hero brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0B1220] px-4 py-24 sm:px-6 sm:py-28">
       <div className="absolute inset-0 z-0">
         <HeroAttackPathViz />
       </div>
       <CloudTopology />
-      <div className="relative z-10 mx-auto max-w-7xl">
+      <div className="relative z-10 flex min-h-[calc(90vh-80px)] flex-col justify-center mx-auto max-w-7xl">
         <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <h1 className="text-hero-title tracking-tight text-white w-full">
-              Understand Your Cloud Attack Paths
+              See Every Cloud Attack Path Before It Becomes a Breach
             </h1>
             <p className="mt-5 text-body-lg text-slate-400 sm:mt-6 sm:text-xl">
-              Xsee reveals how attackers move through your cloud infrastructure.
+              Xsee continuously maps your cloud environment, identifies attack paths, and proves your security posture in real time.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link

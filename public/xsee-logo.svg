@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 44" fill="none" width="160" height="44">
+  <!-- Emblem: simple shield/badge shape -->
+  <path d="M8 6v14l20 12 20-12V6L28 2 8 6z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  <!-- Wordmark -->
+  <text x="56" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="currentColor">XSEE</text>
+</svg>

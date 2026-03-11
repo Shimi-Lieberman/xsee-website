@@ -50,6 +50,66 @@
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
+/* Nav CTA — enterprise primary button */
+.btn-nav-cta {
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.btn-nav-cta:hover {
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
+}
+
+/* Header — premium height, flex layout for logo + nav alignment */
+.header-inner {
+  min-height: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo container — header logo 40–56px, full lockup visible, preserve aspect ratio */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 44px;
+  height: 56px;
+  min-width: 160px;
+  max-width: 260px;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .logo-container {
+    height: 48px;
+    min-height: 40px;
+    min-width: 140px;
+    max-width: 220px;
+  }
+  .logo-container img,
+  .logo-container svg {
+    height: 44px !important;
+    max-height: 52px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    object-position: left center;
+  }
+}
+
+@media (min-width: 768px) {
+  .logo-container img,
+  .logo-container svg {
+    height: 48px !important;
+    max-height: 56px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    object-position: left center;
+  }
+}
+
 /* Cards: hover elevation, shadow increase */
 .card-enterprise {
   transition: transform var(--transition-micro) ease, box-shadow var(--transition-micro) ease, border-color var(--transition-micro) ease;

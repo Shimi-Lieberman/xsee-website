@@ -6,8 +6,20 @@ Two variants for consistent SaaS branding across the website and platform.
 
 | Variant | File | Use for |
 |--------|------|--------|
-| **Full logo** | `public/xsee-logo.png` | Reports, launch screens, login pages, report cover pages |
-| **Icon** | `public/xsee-icon.png` | Navbar, sidebar, favicon, compact UI |
+| **Full logo** | `public/xsee-logo.svg` | **Deprecated.** Use Logo Light / Logo Dark. |
+| **Logo Light** | `public/xsee-logo-light.svg` | White/light: navbar (scrolled), reports, login, print |
+| **Logo Dark** | `public/xsee-logo-dark.png` | Dark: navbar (over hero), hero, footer |
+| **Icon** | `public/xsee-icon.png` | Footer, sidebar, favicon |
+
+### Replacing the navbar logo (`xsee-logo.svg`)
+
+To avoid clipping and ensure the full logo is visible:
+
+- **Format:** SVG (recommended) or PNG.
+- **Content:** Emblem + “XSEE” wordmark (optionally include a tagline; navbar can show emblem + wordmark only).
+- **ViewBox:** Set the SVG `viewBox` so all important content is inside it. The navbar reserves **160–220px width** and **44–52px height**; the image uses `object-fit: contain`, so the full viewBox is visible if nothing is drawn outside it.
+- **Background:** Transparent. Use `currentColor` for the logo so it adapts to light/dark nav.
+- If only part shows: check the SVG `viewBox` includes all art and there is no `overflow="hidden"` clipping content.
 
 ## Usage by surface
 
@@ -46,13 +58,9 @@ Date
   `convert public/xsee-icon.png -resize 32x32 public/favicon.ico`).
 
 ## Global rules
-- Do not stretch the logo (use fixed height + `width: auto` / `object-contain`).
-- Do not add backgrounds behind it.
-- Do not duplicate logos in the same section.
-- Do not place logo on light boxes (prefer dark or transparent).
-- Keep transparent background.
+- Use Logo Light on white/light backgrounds; Logo Dark on dark backgrounds. Do not stretch; use `object-fit: contain`. Scale properly on desktop, tablet, mobile. No plain text "XSEE" fallback in header; always render the logo image. Keep transparent background.
 
 ## Result
-- **Icon:** navbar, sidebar, favicon, compact UI.
-- **Full logo:** reports, login, launch screens.
-- **Hero:** no logo — headline and subtext only.
+- **Light:** navbar (scrolled), reports, login (light), print.
+- **Dark:** navbar (over hero), hero, footer area, launch screen.
+- **Icon:** footer, sidebar, favicon.

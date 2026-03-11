@@ -38,8 +38,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className={`${inter.variable} antialiased font-sans`}>{children}</body>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject attributes on body after SSR */}
+      <body className={`${inter.variable} antialiased font-sans`} suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

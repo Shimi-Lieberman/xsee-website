@@ -21,11 +21,11 @@ const ALERT_CARDS = [
 ];
 
 const PIPELINE_NODES = [
-  { id: "internet", label: "Internet", icon: Globe, x: 50, y: 88, color: "#F97316" },
-  { id: "lb", label: "Load Balancer", icon: Loader2, x: 50, y: 68, color: "#3B82F6" },
-  { id: "ec2", label: "EC2", icon: Server, x: 38, y: 48, color: "#3B82F6" },
-  { id: "iam", label: "IAM Role", icon: KeyRound, x: 62, y: 48, color: "#8B5CF6" },
-  { id: "db", label: "Database", icon: Database, x: 50, y: 12, color: "#EF4444" },
+  { id: "internet", label: "Internet", icon: Globe, x: 50, y: 81, color: "#F97316" },
+  { id: "lb", label: "Load Balancer", icon: Loader2, x: 50, y: 62, color: "#3B82F6" },
+  { id: "ec2", label: "EC2", icon: Server, x: 30, y: 44, color: "#3B82F6" },
+  { id: "iam", label: "IAM Role", icon: KeyRound, x: 70, y: 44, color: "#8B5CF6" },
+  { id: "db", label: "Database", icon: Database, x: 50, y: 19, color: "#EF4444" },
 ];
 
 const PATH_NODES = [
@@ -189,9 +189,10 @@ export default function ProblemSolution() {
 
             {/* Step 3 — Attack graph */}
             <PipelineStage title="Attack graph" className="min-w-[200px] max-w-[240px]">
-              <div className="relative h-[140px] w-full">
+              <div className="relative flex h-[140px] w-full items-center justify-center overflow-visible p-3">
+                <div className="relative aspect-square h-full max-h-[116px] w-full max-w-[116px] overflow-visible">
                 <svg
-                  className="absolute inset-0 h-full w-full"
+                  className="block h-full w-full overflow-visible"
                   viewBox="0 0 100 100"
                   preserveAspectRatio="xMidYMid meet"
                 >
@@ -218,7 +219,7 @@ export default function ProblemSolution() {
                         x2={n2.x}
                         y2={n2.y}
                         stroke="url(#psGraphGrad)"
-                        strokeWidth="1.2"
+                        strokeWidth="1.1"
                         strokeLinecap="round"
                         initial={{ opacity: 0 }}
                         animate={
@@ -254,16 +255,17 @@ export default function ProblemSolution() {
                       className="flex h-8 w-8 items-center justify-center rounded-lg border-2 bg-white shadow-sm"
                       style={{
                         borderColor: node.color,
-                        boxShadow: `0 0 10px ${node.color}30`,
+                        boxShadow: `0 0 8px ${node.color}25`,
                       }}
                     >
                       <node.icon className="h-3.5 w-3.5" style={{ color: node.color }} />
                     </div>
-                    <span className="mt-0.5 text-[8px] font-medium text-slate-600">
+                    <span className="mt-1 text-[8px] font-medium tracking-tight text-slate-600">
                       {node.label}
                     </span>
                   </motion.div>
                 ))}
+                </div>
               </div>
             </PipelineStage>
 

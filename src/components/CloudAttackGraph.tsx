@@ -13,13 +13,13 @@ import {
 } from "lucide-react";
 
 const NODE_LIST = [
-  { id: "internet", label: "Internet", icon: Globe, x: 50, y: 80 },
-  { id: "lb", label: "Load Balancer", icon: Loader2, x: 50, y: 60 },
-  { id: "ec2", label: "EC2", icon: Server, x: 35, y: 40 },
-  { id: "iam", label: "IAM Role", icon: KeyRound, x: 65, y: 40 },
-  { id: "sg", label: "Security Group", icon: Shield, x: 25, y: 55 },
-  { id: "s3", label: "S3", icon: HardDrive, x: 75, y: 55 },
-  { id: "rds", label: "RDS", icon: Database, x: 50, y: 20 },
+  { id: "internet", label: "Internet", icon: Globe, x: 50, y: 81 },
+  { id: "lb", label: "Load Balancer", icon: Loader2, x: 50, y: 62 },
+  { id: "ec2", label: "EC2", icon: Server, x: 30, y: 42 },
+  { id: "iam", label: "IAM Role", icon: KeyRound, x: 70, y: 42 },
+  { id: "sg", label: "Security Group", icon: Shield, x: 20, y: 56 },
+  { id: "s3", label: "S3", icon: HardDrive, x: 80, y: 56 },
+  { id: "rds", label: "RDS", icon: Database, x: 50, y: 19 },
 ];
 
 const ATTACK_PATH_IDS = ["internet", "lb", "ec2", "iam", "rds"];
@@ -63,7 +63,7 @@ export default function CloudAttackGraph() {
           className="relative mx-auto mt-16 overflow-hidden rounded-2xl border border-slate-200 bg-[#0B1C3D] p-8 shadow-xl md:p-12"
         >
           <div
-            className="absolute inset-0 opacity-[0.06]"
+            className="absolute inset-0 opacity-[0.04]"
             style={{
               backgroundImage: `
                 linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
@@ -72,11 +72,12 @@ export default function CloudAttackGraph() {
               backgroundSize: "32px 32px",
             }}
           />
-          <div className="relative aspect-[1.8] min-h-[320px] w-full">
+          <div className="relative flex min-h-[320px] w-full items-center justify-center overflow-visible p-8 md:p-12">
+            <div className="relative aspect-[1.8] w-full max-w-4xl overflow-visible">
             <svg
-              className="absolute inset-0 h-full w-full"
+              className="block h-full w-full overflow-visible"
               viewBox="0 0 100 100"
-              preserveAspectRatio="none"
+              preserveAspectRatio="xMidYMid meet"
             >
               {/* All edges - subtle */}
               {PATH_EDGES.map(([a, b], i) => {
@@ -91,8 +92,8 @@ export default function CloudAttackGraph() {
                     y1={n1.y}
                     x2={n2.x}
                     y2={n2.y}
-                    stroke={isAttackPath ? "rgba(59,130,246,0.25)" : "rgba(255,255,255,0.08)"}
-                    strokeWidth={isAttackPath ? 0.8 : 0.4}
+                    stroke={isAttackPath ? "rgba(59,130,246,0.3)" : "rgba(255,255,255,0.06)"}
+                    strokeWidth={isAttackPath ? 0.9 : 0.35}
                   />
                 );
               })}
@@ -108,8 +109,8 @@ export default function CloudAttackGraph() {
                     x2={n2.x}
                     y2={n2.y}
                     stroke="url(#attackPathGrad)"
-                    strokeWidth={1.2}
-                    opacity={0.9}
+                    strokeWidth={1.35}
+                    opacity={0.92}
                   />
                 );
               })}
@@ -141,8 +142,8 @@ export default function CloudAttackGraph() {
                   }}
                 >
                   <motion.div
-                    className={`flex h-11 w-11 items-center justify-center rounded-xl border-2 bg-[#0B1C3D] ${
-                      onAttackPath ? "border-[#3B82F6]" : "border-slate-600"
+                    className={`flex h-11 w-11 items-center justify-center rounded-xl border-2 bg-[#0B1C3D] shadow-inner ${
+                      onAttackPath ? "border-[#3B82F6]" : "border-slate-600/80"
                     }`}
                     style={{
                       boxShadow: onAttackPath
@@ -159,12 +160,13 @@ export default function CloudAttackGraph() {
                       style={{ color: onAttackPath ? "#3B82F6" : "#94A3B8" }}
                     />
                   </motion.div>
-                  <span className="mt-1 text-[10px] font-medium text-slate-400">
+                  <span className="mt-2 text-[10px] font-medium tracking-tight text-slate-300">
                     {node.label}
                   </span>
                 </motion.div>
               );
             })}
+          </div>
           </div>
         </motion.div>
       </div>
