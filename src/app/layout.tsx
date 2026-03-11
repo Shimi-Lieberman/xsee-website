@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     "See how attackers can breach your cloud — before they do. XSEE continuously discovers real attack paths and proves they're exploitable.",
   icons: {
     icon: [
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/xsee-logo-final.png", sizes: "any", type: "image/png" },
+      { url: "/xsee-icon.png", sizes: "32x32", type: "image/png" },
+      { url: "/xsee-icon.png", sizes: "any", type: "image/png" },
     ],
     apple: "/apple-touch-icon.png",
   },

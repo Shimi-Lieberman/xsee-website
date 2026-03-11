@@ -2,27 +2,38 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Globe,
-  Server,
-  KeyRound,
-  Crown,
-} from "lucide-react";
+import { Globe, Server, Database } from "lucide-react";
 import HeroAttackPathViz from "@/components/background/HeroAttackPathViz";
 
-const NODE_COLORS = {
-  internet: "#F97316",
-  loadBalancer: "#3B82F6",
-  bastion: "#3B82F6",
-  iam: "#8B5CF6",
-  db: "#EF4444",
-};
+const CINEMATIC_NODES = [
+  {
+    id: "internet",
+    label: "Internet",
+    subtitle: "Entry Point",
+    icon: Globe,
+    glow: "0 0 28px rgba(59,130,246,0.5), 0 0 40px rgba(239,68,68,0.25)",
+  },
+  {
+    id: "bastion",
+    label: "Bastion Host",
+    subtitle: "EC2 Instance",
+    icon: Server,
+    glow: "0 0 28px rgba(255,140,0,0.55), 0 0 42px rgba(255,100,0,0.3)",
+  },
+  {
+    id: "db",
+    label: "Internal DB",
+    subtitle: "Crown Jewel",
+    icon: Database,
+    glow: "0 0 32px rgba(255,193,7,0.6), 0 0 48px rgba(255,160,0,0.35)",
+    crownJewel: true,
+  },
+];
 
 export default function Hero() {
   return (
-    <section className="brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0F172A] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
+    <section className="hero brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0B1220] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
       <div className="absolute inset-0 z-0">
         <HeroAttackPathViz />
       </div>
@@ -30,28 +41,11 @@ export default function Hero() {
       <div className="relative z-10 mx-auto max-w-7xl">
         <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
-            <Link
-              href="/"
-              className="flex justify-center sm:justify-start focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#0F172A] rounded-lg"
-              aria-label="XSEE Home"
-            >
-              <Image
-                src="/xsee-logo.png"
-                alt="XSEE — Cloud Attack Intelligence"
-                width={240}
-                height={90}
-                className="h-[70px] w-auto object-contain sm:h-[90px] bg-transparent"
-                style={{
-                  filter: "drop-shadow(0 0 12px rgba(59,130,246,0.35))",
-                }}
-                priority
-              />
-            </Link>
-            <h1 className="mt-5 text-hero-title tracking-tight text-white sm:mt-7 w-full">
+            <h1 className="text-hero-title tracking-tight text-white w-full">
               Understand Your Cloud Attack Paths
             </h1>
             <p className="mt-5 text-body-lg text-slate-400 sm:mt-6 sm:text-xl">
-              XSEE reveals how attackers move through your cloud infrastructure.
+              Xsee reveals how attackers move through your cloud infrastructure.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link
@@ -86,7 +80,6 @@ const TOPOLOGY_NODES = [
 function CloudTopology() {
   return (
     <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.04]">
-      {/* Grid */}
       <div
         className="absolute inset-0"
         style={{
@@ -97,27 +90,15 @@ function CloudTopology() {
           backgroundSize: "100px 100px",
         }}
       />
-      {/* Faint nodes with slow drift */}
       {TOPOLOGY_NODES.map((node, i) => (
         <motion.div
           key={i}
           className="absolute h-2 w-2 rounded-full bg-white"
-          style={{
-            left: `${node.x}%`,
-            top: `${node.y}%`,
-          }}
-          animate={{
-            opacity: [0.4, 0.8, 0.4],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 3 + (i % 3),
-            repeat: Infinity,
-            delay: i * 0.3,
-          }}
+          style={{ left: `${node.x}%`, top: `${node.y}%` }}
+          animate={{ opacity: [0.4, 0.8, 0.4], scale: [1, 1.2, 1] }}
+          transition={{ duration: 3 + (i % 3), repeat: Infinity, delay: i * 0.3 }}
         />
       ))}
-      {/* Subtle connection lines (SVG) */}
       <svg className="absolute inset-0 h-full w-full">
         <defs>
           <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -144,129 +125,60 @@ function CloudTopology() {
   );
 }
 
-const STEP_LABELS = [
-  "Initial Access",
-  "Lateral Movement",
-  "Privilege Escalation",
-];
-
-const pathNodes = [
-  {
-    id: "internet",
-    label: "Internet",
-    subtitle: "Entry Point",
-    icon: Globe,
-    color: "#3B82F6",
-    glow: "0 0 24px rgba(59,130,255,0.22)",
-    glowHover: "0 0 32px rgba(59,130,255,0.38)",
-  },
-  {
-    id: "bastion",
-    label: "Bastion Host",
-    subtitle: "Lateral Access",
-    icon: Server,
-    color: "#ff7a00",
-    glow: "0 0 24px rgba(255,122,0,0.22)",
-    glowHover: "0 0 32px rgba(255,122,0,0.38)",
-  },
-  {
-    id: "iam",
-    label: "IAM Privilege",
-    subtitle: "Privilege Escalation",
-    icon: KeyRound,
-    color: "#8B5CF6",
-    glow: "0 0 24px rgba(139,92,246,0.22)",
-    glowHover: "0 0 32px rgba(139,92,246,0.38)",
-  },
-  {
-    id: "db",
-    label: "Internal DB",
-    subtitle: "Crown Jewel",
-    icon: Crown,
-    color: "#EF4444",
-    glow: "0 0 32px rgba(239,68,68,0.4)",
-    glowHover: "0 0 44px rgba(239,68,68,0.55)",
-    crownJewel: true,
-  },
-];
-
 function FloatingProductPreview() {
   return (
     <motion.div
-      className="w-full max-w-md"
-      animate={{ y: [0, -6, 0] }}
-      transition={{
-        duration: 6,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
+      className="w-full max-w-[1100px] mx-auto"
+      animate={{ y: [0, -4, 0] }}
+      transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
     >
-      <motion.div
-        className="relative overflow-hidden rounded-[24px] border"
+      <div
+        className="relative overflow-hidden rounded-[18px] border"
         style={{
-          background: "linear-gradient(180deg, #070d18 0%, #0b1320 100%)",
-          borderColor: "rgba(255,255,255,0.08)",
-          boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
+          background: "rgba(10,14,28,0.8)",
+          borderColor: "rgba(255,140,0,0.35)",
+          boxShadow: "0 0 30px rgba(255,100,0,0.2)",
         }}
-        whileHover={{
-          boxShadow: "0 32px 88px rgba(0,0,0,0.5)",
-        }}
-        transition={{ duration: 0.25 }}
       >
         {/* Header */}
         <div
-          className="flex items-center gap-2 border-b py-4"
-          style={{
-            borderColor: "rgba(255,255,255,0.06)",
-            paddingLeft: 32,
-            paddingRight: 32,
-          }}
+          className="flex items-center gap-2 border-b py-4 px-6"
+          style={{ borderColor: "rgba(255,140,0,0.2)" }}
         >
-          <span className="h-2 w-2 rounded-full bg-[#EF4444]" />
-          <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-100">
+          <span
+            className="h-2 w-2 rounded-full flex-shrink-0"
+            style={{ background: "#EF4444", boxShadow: "0 0 8px rgba(239,68,68,0.8)" }}
+          />
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-white/90">
             Top Active Attack Path
           </h3>
         </div>
 
-        {/* Content: path + strip */}
-        <div
-          className="relative overflow-hidden px-8 py-8"
-          style={{ padding: "32px 40px" }}
-        >
-          {/* Subtle orange/red glow around path area */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background: "radial-gradient(ellipse 90% 60% at 50% 45%, rgba(255,80,40,0.06) 0%, transparent 60%)",
-            }}
-          />
-          <div
-            className="pointer-events-none absolute inset-0 opacity-50"
-            style={{
-              background: "linear-gradient(180deg, transparent 30%, rgba(239,68,68,0.03) 50%, transparent 70%)",
-            }}
-          />
-
-          {/* Attack path: evenly spaced nodes, step labels above line, one continuous glowing line */}
-          <div className="attack-path-container relative mx-auto w-full max-w-[900px]">
-            {/* Row 1: nodes evenly spaced */}
-            <div className="flex justify-between gap-4">
-              {pathNodes.map((node) => (
-                <div key={node.id} className="flex flex-shrink-0 flex-col items-center">
+        {/* Main: path viz + risk panel */}
+        <div className="flex flex-col lg:flex-row lg:items-stretch">
+          {/* Attack path visualization */}
+          <div className="flex-1 p-6 lg:p-8">
+            {/* Nodes: stack on mobile, row on desktop */}
+            <div className="flex flex-col items-center gap-6 lg:flex-row lg:justify-between lg:gap-4">
+              {CINEMATIC_NODES.map((node) => (
+                <div
+                  key={node.id}
+                  className="flex flex-col items-center flex-shrink-0"
+                >
                   <motion.div
-                    className="flex h-16 w-16 items-center justify-center rounded-full border-2 md:h-[72px] md:w-[72px]"
+                    className="flex h-14 w-14 items-center justify-center rounded-full border-2 md:h-16 md:w-16"
                     style={{
-                      borderColor: node.color,
-                      background: "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(7,13,24,0.95) 100%)",
-                      boxShadow: node.crownJewel ? undefined : node.glow,
+                      borderColor: node.crownJewel ? "rgba(255,193,7,0.9)" : "rgba(255,140,0,0.6)",
+                      background: "rgba(10,14,28,0.9)",
+                      boxShadow: node.glow,
                     }}
                     animate={
                       node.crownJewel
                         ? {
                             boxShadow: [
-                              "0 0 32px rgba(239,68,68,0.4)",
-                              "0 0 44px rgba(239,68,68,0.55)",
-                              "0 0 32px rgba(239,68,68,0.4)",
+                              "0 0 32px rgba(255,193,7,0.6), 0 0 48px rgba(255,160,0,0.35)",
+                              "0 0 40px rgba(255,193,7,0.75), 0 0 56px rgba(255,160,0,0.45)",
+                              "0 0 32px rgba(255,193,7,0.6), 0 0 48px rgba(255,160,0,0.35)",
                             ],
                           }
                         : undefined
@@ -274,97 +186,119 @@ function FloatingProductPreview() {
                     transition={
                       node.crownJewel
                         ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
-                        : { duration: 0.2 }
+                        : undefined
                     }
-                    whileHover={{
-                      scale: 1.05,
-                      y: -2,
-                      boxShadow: node.glowHover,
-                    }}
                   >
                     <node.icon
-                      className="h-7 w-7 md:h-8 md:w-8"
-                      style={{ color: node.color }}
+                      className="h-6 w-6 md:h-7 md:w-7 text-white/90"
+                      strokeWidth={1.8}
                     />
                   </motion.div>
-                  <span className="mt-2.5 max-w-[90px] text-center text-sm font-medium text-slate-200">
+                  <span className="mt-2 text-center text-sm font-medium text-white">
                     {node.label}
                   </span>
-                  {node.subtitle && (
-                    <span
-                      className={`mt-0.5 text-xs ${node.crownJewel ? "text-amber-400/90" : "text-slate-500"}`}
-                    >
-                      {node.subtitle}
-                    </span>
-                  )}
+                  <span
+                    className={`mt-0.5 text-xs ${node.crownJewel ? "text-amber-400/90" : "text-slate-400"}`}
+                  >
+                    {node.subtitle}
+                  </span>
                 </div>
               ))}
             </div>
-            {/* Step labels above line segments: Internet→Bastion | Bastion→IAM | IAM→DB */}
-            <div className="mt-4 flex w-full">
-              {STEP_LABELS.map((label) => (
-                <div
-                  key={label}
-                  className="flex-1 text-center text-xs text-slate-400"
-                >
-                  {label}
-                </div>
-              ))}
-            </div>
-            {/* One continuous attack signal line + pulse (live replay feel) */}
-            <div className="relative mt-1 w-full overflow-hidden rounded-[3px]" style={{ height: 3 }}>
+
+            {/* Glowing attack line — single segment; on mobile simplified between stacked nodes */}
+            <div className="mt-6 flex items-center justify-center">
               <div
-                className="absolute inset-0 rounded-[3px]"
+                className="relative h-1 w-full max-w-[320px] lg:max-w-none rounded-full overflow-hidden"
                 style={{
-                  background: "linear-gradient(90deg, #ef4444, #f97316)",
-                  boxShadow: "0 0 16px rgba(239,68,68,0.35)",
+                  background: "linear-gradient(90deg, #ef4444 0%, #f97316 50%, #ff8c00 100%)",
+                  boxShadow: "0 0 20px rgba(255,100,0,0.5)",
                 }}
-              />
-              <motion.div
-                className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-white"
-                style={{ boxShadow: "0 0 12px rgba(255,200,150,0.9)" }}
-                animate={{ x: ["0%", "100%"] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  ease: "linear",
-                }}
-              />
+              >
+                <motion.div
+                  className="absolute left-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full bg-white"
+                  style={{ boxShadow: "0 0 14px rgba(255,255,255,0.95)" }}
+                  animate={{ x: ["0%", "100%"] }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    ease: "easeInOut",
+                  }}
+                />
+              </div>
             </div>
           </div>
 
-          {/* Metrics row: status indicators + Fix available */}
+          {/* Risk panel — right side */}
           <div
-            className="mt-8 flex flex-wrap items-center gap-6 border-t border-white/[0.06] pt-6 md:justify-between"
+            className="border-t lg:border-t-0 lg:border-l px-6 py-5 lg:py-8 lg:px-6 lg:min-w-[200px]"
+            style={{ borderColor: "rgba(255,140,0,0.2)" }}
           >
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#22C55E]" />
-              <span className="text-xs text-slate-400">
-                Confidence: <span className="font-semibold text-white">92%</span>
-              </span>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-4 lg:grid-cols-1 lg:gap-y-5 text-sm">
+              <div>
+                <span className="text-slate-400 text-xs uppercase tracking-wider">Risk</span>
+                <p className="font-semibold text-red-400 mt-0.5">CRITICAL</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-xs uppercase tracking-wider">Data Sensitivity</span>
+                <p className="font-semibold text-white mt-0.5">HIGH</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-xs uppercase tracking-wider">Records</span>
+                <p className="font-semibold text-white mt-0.5">2.4M</p>
+              </div>
+              <div>
+                <span className="text-slate-400 text-xs uppercase tracking-wider">Blast Radius</span>
+                <p className="font-semibold text-white mt-0.5">4 resources</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[#F97316]" />
-              <span className="text-xs text-slate-400">
-                Detection Gap: <span className="font-semibold text-white">38%</span>
-              </span>
-            </div>
-            <button
-              type="button"
-              className="rounded-full border text-xs font-medium transition-colors hover:opacity-90"
-              style={{
-                background: "rgba(34,197,94,0.14)",
-                borderColor: "rgba(34,197,94,0.35)",
-                color: "#22C55E",
-                padding: "8px 14px",
-              }}
-            >
-              Fix available
-            </button>
           </div>
         </div>
-      </motion.div>
+
+        {/* Bottom metrics — pills */}
+        <div
+          className="flex flex-wrap items-center gap-3 border-t px-6 py-4"
+          style={{ borderColor: "rgba(255,140,0,0.2)" }}
+        >
+          <span
+            className="rounded-full px-3 py-1 text-xs font-semibold"
+            style={{
+              background: "rgba(239,68,68,0.2)",
+              border: "1px solid rgba(239,68,68,0.5)",
+              color: "#fca5a5",
+            }}
+          >
+            EXPLOITABLE
+          </span>
+          <span className="text-slate-400 text-xs">
+            Confidence: <span className="font-semibold text-white">85%</span>
+          </span>
+          <span className="text-slate-400 text-xs">
+            Detection: <span className="font-semibold text-white">0%</span>
+          </span>
+          <span className="text-slate-400 text-xs">
+            Hops: <span className="font-semibold text-white">3</span>
+          </span>
+          <span className="text-slate-400 text-xs">
+            Blast: <span className="font-semibold text-white">4 resources</span>
+          </span>
+        </div>
+
+        {/* Button — right side */}
+        <div className="flex justify-end px-6 pb-6">
+          <Link
+            href="#how-it-works"
+            className="inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:opacity-90"
+            style={{
+              background: "rgba(255,140,0,0.2)",
+              border: "1px solid rgba(255,140,0,0.4)",
+            }}
+          >
+            View in Explorer →
+          </Link>
+        </div>
+      </div>
     </motion.div>
   );
 }

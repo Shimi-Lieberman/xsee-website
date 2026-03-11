@@ -122,6 +122,10 @@ body {
 }
 
 /* Section layout — generous vertical rhythm */
+.hero {
+  margin-top: 80px;
+}
+
 .section-base {
   padding-top: var(--section-padding-y-sm);
   padding-bottom: var(--section-padding-y-sm);
@@ -298,6 +302,16 @@ body {
 .cloud-map-edge-line { animation: cloud-map-edge-pulse 5s ease-in-out infinite; }
 .cloud-map-attack-line { animation: cloud-map-attack-line-pulse 5s ease-in-out infinite; }
 .cloud-map-pulse-travel { animation: cloud-map-pulse-travel 7s ease-in-out infinite; }
+
+/* Hero attack path card — traveling pulse on line */
+@keyframes attackPulse {
+  0% { transform: translateX(0); opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0.5; }
+}
+.animate-attack-pulse {
+  animation: attackPulse 2.5s ease-in-out infinite;
+}
 
 /* Brand stripes — inspired by XSEE logo shield (diagonal, subtle, premium) */
 @keyframes brand-stripes-move {

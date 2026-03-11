@@ -40,11 +40,11 @@ export default function Nav() {
           aria-label="XSEE Home"
         >
           <Image
-            src="/xsee-logo.png"
-            alt="XSEE — Cloud Attack Intelligence"
-            width={160}
-            height={40}
-            className="h-8 w-auto object-contain object-left sm:h-10 bg-transparent"
+            src="/xsee-icon.png"
+            alt="Xsee"
+            width={36}
+            height={36}
+            className="h-9 w-auto object-contain object-left bg-transparent"
             priority
           />
         </Link>

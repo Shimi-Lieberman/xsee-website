@@ -29,11 +29,11 @@ export default function Footer() {
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo.png"
-                alt="XSEE — Cloud Attack Intelligence"
-                width={160}
-                height={48}
-                className="h-8 w-auto object-contain object-left sm:h-9 bg-transparent"
+                src="/xsee-icon.png"
+                alt="XSEE"
+                width={32}
+                height={32}
+                className="h-8 w-auto object-contain object-left bg-transparent"
               />
             </Link>
             <p className="mt-4 text-[15px] leading-relaxed text-[#94A3B8]">
@@ -100,9 +100,9 @@ export default function Footer() {
           <div className="flex flex-col items-center sm:items-start gap-2">
             <Link href="/" className="inline-block" aria-label="XSEE Home">
               <Image
-                src="/xsee-logo.png"
+                src="/xsee-icon.png"
                 alt="XSEE"
-                width={120}
+                width={32}
                 height={32}
                 className="h-8 w-auto object-contain bg-transparent"
               />
