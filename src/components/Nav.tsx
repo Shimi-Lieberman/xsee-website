@@ -6,28 +6,29 @@ export default function Nav() {
       <div className="container">
         <div className="nav-inner">
           <Link href="#" className="nav-logo">
-            <svg
-              viewBox="0 0 30 30"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-[30px] w-[30px] flex-shrink-0"
-            >
-              <path
-                d="M15 2L4 7.5V15C4 21.3 8.9 27.1 15 29C21.1 27.1 26 21.3 26 15V7.5L15 2Z"
-                stroke="#3B82F6"
-                strokeWidth={1.5}
-                fill="rgba(37,99,235,0.1)"
-              />
-              <path
-                d="M10 15L14 19L20 11"
-                stroke="#3B82F6"
-                strokeWidth={1.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <div className="logo-icon">
+              <svg
+                viewBox="0 0 30 30"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 2L4 7.5V15C4 21.3 8.9 27.1 15 29C21.1 27.1 26 21.3 26 15V7.5L15 2Z"
+                  stroke="#3B82F6"
+                  strokeWidth={1.5}
+                  fill="rgba(37,99,235,0.1)"
+                />
+                <path
+                  d="M10 15L14 19L20 11"
+                  stroke="#3B82F6"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
             <span className="logo-wordmark">
-              X<em>SEE</em>
+              X<em style={{ WebkitTextFillColor: "transparent", background: "linear-gradient(90deg,var(--sky-light),var(--blue-light))", WebkitBackgroundClip: "text", backgroundClip: "text" }}>SEE</em>
             </span>
           </Link>
           <nav className="nav-links">
@@ -53,7 +54,7 @@ export default function Nav() {
               All Systems Operational
             </div>
             <Link href="#contact" className="btn btn-secondary btn-sm">
-              Request Demo
+              Free Report
             </Link>
             <Link
               href="https://app.xsee.io"

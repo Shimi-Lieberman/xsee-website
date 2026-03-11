@@ -25,15 +25,24 @@ export default function Home() {
       <main>
         <Hero />
         <TrustStrip />
+        <div className="sec-transition sec-dark-to-light" />
         <ProblemSolution />
         <StatsBand />
+        <div className="sec-transition sec-light-to-tint" />
         <HowItWorks />
+        <div className="sec-transition sec-dark-to-light" />
         <EnginesGrid />
+        <div className="sec-transition sec-light-to-dark" />
         <ComparisonTable />
+        <div className="sec-transition sec-dark-to-light" />
         <Testimonials />
+        <div className="sec-transition sec-light-to-tint" />
         <Pricing />
+        <div className="sec-warm-line" />
         <CTABanner />
+        <div className="sec-transition sec-dark-to-light" />
         <ContactForm />
+        <div className="sec-transition sec-light-to-dark" />
         <Footer />
       </main>
     </>

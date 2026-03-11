@@ -4,13 +4,12 @@ export default function AnnouncementBar() {
   return (
     <div className="announcement-bar">
       <div className="ann-inner">
-        <span className="ann-badge">New</span>
+        <span className="ann-badge-warm">New</span>
         <span className="ann-text">
-          XseeCyber L3 — Runtime exploit simulation with detection gap analysis is
-          now live.
+          XSEE is now in early access — the first platform that proves which exposures actually lead to a breach.
         </span>
-        <Link href="#engines" className="ann-link">
-          Learn more →
+        <Link href="#contact" className="ann-link">
+          Request access →
         </Link>
       </div>
     </div>

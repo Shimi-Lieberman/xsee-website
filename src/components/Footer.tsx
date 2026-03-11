@@ -2,15 +2,15 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="sec-navy">
       <div className="container">
         <div className="footer-grid">
-          <div>
+          <div className="footer-brand">
             <div className="footer-wordmark">
               X<em>SEE</em>
             </div>
             <p className="footer-tagline">
-              Cloud Attack Intelligence Platform. Discover real attack paths.
+              Cloud Exposure Intelligence. Discover real attack paths.
               Prove exploitability. Fix what matters.
             </p>
             <div className="footer-status">

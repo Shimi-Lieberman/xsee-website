@@ -96,19 +96,17 @@ const ENGINES = [
 
 export default function EnginesGrid() {
   return (
-    <section className="section" id="engines">
+    <section className="section sec-light" id="engines">
       <div className="container">
         <div className="section-head reveal">
           <span className="eyebrow">Platform Architecture</span>
           <h2 className="display-lg">
-            Six independent engines.
+            Six engines. One answer:
             <br />
-            One intelligence platform.
+            <span style={{ color: "var(--sky-light)" }}>can they reach your data?</span>
           </h2>
           <p>
-            Each engine is purpose-built, production-grade, and independently
-            deployable — connected by a shared evidence layer that keeps every
-            finding auditable.
+            Every engine feeds the same question — is this exposure actually reachable? Together they replace the CNAPP → BAS → exposure management stack with a single closed loop.
           </p>
           <div className="section-rule" />
         </div>
@@ -116,7 +114,7 @@ export default function EnginesGrid() {
           {ENGINES.map((e, i) => (
             <div
               key={e.num}
-              className="engine-card reveal"
+              className={`engine-card reveal ${i === 2 ? "engine-warm" : ""} ${i === 4 ? "engine-orange" : ""}`}
               style={{ transitionDelay: i * 0.07 + "s" }}
             >
               <div className="engine-status">Active</div>

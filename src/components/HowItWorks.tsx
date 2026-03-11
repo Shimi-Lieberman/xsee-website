@@ -1,46 +1,44 @@
 const STEPS = [
   {
     n: "01",
-    title: "Cloud Discovery",
-    desc: "Scans EC2, IAM, S3, VPCs, and Security Groups across your AWS environment. Builds a live relationship-mapped asset inventory in minutes.",
+    title: "Infrastructure Discovery",
+    desc: "Scans every cloud asset — EC2, IAM roles, S3 buckets, VPCs, Lambda, EKS, RDS. Maps identities, permissions, and network relationships into a queryable inventory.",
   },
   {
     n: "02",
-    title: "Attack Graph Construction",
-    desc: "Every resource, permission, and network edge assembled into a queryable graph. No black boxes — every relationship is visible and traversable.",
+    title: "Live Attack Graph",
+    desc: "Assembles every resource, identity, permission, and network edge into a directed attack graph. Shows exactly how an attacker could move — hop by hop — through your environment.",
   },
   {
     n: "03",
-    title: "L2 Live Validation",
-    desc: "Each candidate path is validated with real AWS API calls. XSEE produces a cryptographic evidence package per hop — not theory, but proof.",
+    title: "Exploit Validation",
+    desc: "Each candidate path is tested with live AWS API calls. XSEE produces a cryptographic evidence package per hop — not \"this could happen\" but documented proof it will.",
   },
   {
     n: "04",
-    title: "XseeCyber Simulation",
-    desc: "Simulates the full attack chain step by step. Measures detection gap — what your current tooling would and wouldn't catch at each stage.",
+    title: "Attack Simulation",
+    desc: "Replays the full attack chain step by step. Measures your detection coverage at each stage — showing exactly where your SIEM, GuardDuty, and XDR go blind.",
   },
   {
     n: "05",
-    title: "Remediate & Verify",
-    desc: "Three copy-paste fix strategies per path. Re-run simulation to prove defenses hold. Closed loop, every time, with a full audit trail.",
+    title: "Fix the Choke Point",
+    desc: "XSEE identifies the single control change that collapses the most attack paths. Apply it, re-simulate, and get a timestamped proof-of-closure for your audit trail.",
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section className="section section-alt" id="how">
+    <section className="section sec-blue-tint" id="how">
       <div className="container">
         <div className="section-head reveal">
-          <span className="eyebrow">Intelligence Loop</span>
+          <span className="eyebrow">How It Works</span>
           <h2 className="display-lg">
-            From scan to verified fix
+            From cloud scan to
             <br />
-            in one closed loop
+            verified proof in 30 minutes
           </h2>
           <p>
-            Connect your AWS account. XSEE runs the full cycle — discovery,
-            validation, simulation, remediation, verification — without leaving
-            the platform.
+            Connect your AWS account with read-only access. XSEE discovers, graphs, validates, and closes the loop — without touching your infrastructure or slowing a single workload.
           </p>
           <div className="section-rule" />
         </div>
@@ -63,37 +61,28 @@ export default function HowItWorks() {
           <div className="reveal-right">
             <div className="terminal">
               <div className="term-bar">
-                <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
+                <div className="term-dots">
+                  <div className="term-dot" style={{ background: "#FF5F57" }} />
+                  <div className="term-dot" style={{ background: "#FEBC2E" }} />
+                  <div className="term-dot" style={{ background: "#28C840" }} />
                 </div>
                 <span className="term-title">xsee-cli — live scan — aws/eu-central-1</span>
-                <div className="term-indicator">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
-                  Scanning
-                </div>
+                <div className="term-indicator">Scanning</div>
               </div>
               <div className="term-output" id="termOutput">
                 <span className="term-cursor" />
               </div>
               <div className="term-footer">
                 <div className="tf-cell">
-                  <div className="tf-num" style={{ color: "var(--blue-light)" }}>
-                    847
-                  </div>
+                  <div className="tf-num" style={{ color: "var(--sky-light)" }}>847</div>
                   <div className="tf-lbl">Assets</div>
                 </div>
                 <div className="tf-cell">
-                  <div className="tf-num" style={{ color: "var(--red)" }}>
-                    3
-                  </div>
+                  <div className="tf-num" style={{ color: "var(--orange-light)" }}>3</div>
                   <div className="tf-lbl">Critical</div>
                 </div>
                 <div className="tf-cell">
-                  <div className="tf-num" style={{ color: "var(--green)" }}>
-                    1
-                  </div>
+                  <div className="tf-num" style={{ color: "var(--yellow-light)" }}>1</div>
                   <div className="tf-lbl">Optimal Fix</div>
                 </div>
               </div>

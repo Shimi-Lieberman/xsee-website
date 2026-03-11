@@ -2,19 +2,18 @@ import Link from "next/link";
 
 export default function CTABanner() {
   return (
-    <section className="cta-section">
+    <section className="cta-section sec-deepblack">
       <div className="container">
-        <div className="cta-box reveal-scale">
+        <div className="cta-box cta-box-warm reveal-scale">
           <div className="cta-mesh" />
-          <span className="eyebrow">See It In Action</span>
+          <span className="eyebrow">Free Attack Path Report</span>
           <h2 className="display-lg">
-            Find your first proven
+            See which exposures in
             <br />
-            attack path today.
+            your cloud lead to a breach.
           </h2>
           <p>
-            Connect your AWS account. XSEE discovers, validates, and shows you
-            exactly what to fix — in under 30 minutes. You keep the full report.
+            Connect your AWS account with read-only access. In 30 minutes XSEE delivers a validated attack graph, ranked by blast radius — with the exact fix to close each path. Yours to keep.
           </p>
           <div className="cta-actions">
             <Link href="#contact" className="btn btn-primary btn-lg">

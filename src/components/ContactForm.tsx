@@ -10,8 +10,8 @@ const CARDS = [
         <path d="M9 2L3 9h5l-1 5 6-7H8L9 2Z" stroke="#3B82F6" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" fill="rgba(59,130,246,0.1)" />
       </svg>
     ),
-    title: "30-minute live demo",
-    desc: "Real scan on your environment, not a pre-recorded walkthrough.",
+    title: "Real scan, not a demo",
+    desc: "We run live analysis on your actual AWS environment — not a staged walkthrough.",
   },
   {
     icon: (
@@ -21,8 +21,8 @@ const CARDS = [
         <circle cx={8} cy={11} r={1} fill="#3B82F6" />
       </svg>
     ),
-    title: "Read-only IAM access",
-    desc: "Zero changes to your infrastructure. Fully auditable permissions.",
+    title: "Zero infrastructure changes",
+    desc: "Read-only IAM role — no agents, no code deployment, nothing installed.",
   },
   {
     icon: (
@@ -33,8 +33,8 @@ const CARDS = [
         <line x1={5} y1={10.5} x2={8.5} y2={10.5} stroke="#3B82F6" strokeWidth={1.2} strokeLinecap="round" />
       </svg>
     ),
-    title: "Full report delivered",
-    desc: "You keep the attack path report regardless of next steps.",
+    title: "You keep the report",
+    desc: "Validated attack graph + ranked exposures + fix recommendations. Yours, no strings.",
   },
 ];
 
@@ -69,7 +69,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <section className="section section-alt" id="contact">
+      <section className="section sec-light" id="contact">
         <div className="container">
           <div className="reveal mx-auto max-w-xl text-center">
             <h2 className="display-lg mb-4">Thanks!</h2>
@@ -88,7 +88,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section className="section section-alt" id="contact">
+    <section className="section sec-light" id="contact">
       <div className="container">
         <div className="contact-grid">
           <div className="reveal-left">
@@ -96,14 +96,12 @@ export default function ContactForm() {
               Request Demo
             </span>
             <h2 className="display-lg mb-3.5">
-              See XSEE on your
+              Get your free
               <br />
-              own environment.
+              breach path report.
             </h2>
             <p className="mb-8">
-              We&apos;ll connect your AWS account, run a live scan, and walk you
-              through every discovered attack path — in 30 minutes. You keep the
-              full report regardless of next steps.
+              We connect to your AWS account with read-only IAM access, run a full attack graph analysis, and show you the exact paths that reach your crown-jewel assets. You keep the validated report — no commitment required.
             </p>
             <div className="contact-points">
               {CARDS.map((c) => (
@@ -119,8 +117,8 @@ export default function ContactForm() {
           </div>
           <div className="reveal-right">
             <div className="form-box">
-              <h3 className="form-title">Request a Demo</h3>
-              <p className="form-sub">We&apos;ll respond within one business day.</p>
+              <h3 className="form-title">Request Your Free Report</h3>
+              <p className="form-sub">We&apos;ll reach out within one business day to schedule the scan.</p>
               <form onSubmit={handleSubmit} className="form-fields">
                 <div className="form-row">
                   <div className="form-group">
@@ -229,7 +227,7 @@ export default function ContactForm() {
                     className="text-center font-[var(--font-mono)] text-[10px] text-[var(--text-muted)] tracking-wider"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    No commitment · Response within 24 hours · Read-only AWS access
+                    No commitment · Read-only IAM · Report delivered in 30 min
                   </p>
                 </div>
               </form>

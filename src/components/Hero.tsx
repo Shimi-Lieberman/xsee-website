@@ -38,15 +38,18 @@ const PATHS = [
 export default function Hero() {
   return (
     <section className="hero">
-      <div className="hero-mesh" />
+      <div className="hero-mesh">
+        <div className="glow-sky" />
+        <div className="glow-yellow" />
+      </div>
       <div className="hero-noise" />
       <div className="hero-grid-bg" />
       <div className="container">
         <div className="hero-body">
           <div className="hero-left">
             <div className="hero-eyebrow">
-              <span className="badge badge-blue badge-dot eyebrow">
-                Cloud Attack Intelligence Platform
+              <span className="badge badge-dot eyebrow" style={{ background: "rgba(14,165,233,0.1)", color: "var(--sky-light)", borderColor: "rgba(14,165,233,0.25)" }}>
+                Cloud Exposure Intelligence
               </span>
             </div>
             <h1 className="display-xl hero-headline">
@@ -54,11 +57,11 @@ export default function Hero() {
               <span className="blue">
                 proves every
                 <br />
-                attack path is real.
+                <span className="warm-word">attack path</span> is real.
               </span>
             </h1>
             <p className="hero-sub">
-              Other tools tell you what <strong>could</strong> happen. XSEE validates what <strong>will</strong> happen — with live AWS API evidence, exploit simulation, and a verified fix. Close the loop before attackers move.
+              Your scanner found 4,000 alerts. <strong>Three of them lead to your crown jewels.</strong> XSEE builds a live attack graph of your cloud, proves which exposures are genuinely exploitable, and shows exactly which fix breaks the most paths.
             </p>
             <div className="hero-ctas">
               <Link href="#contact" className="btn btn-primary btn-lg">
@@ -70,18 +73,18 @@ export default function Hero() {
             </div>
             <div className="hero-social-proof">
               <div className="sp-stat">
-                <div className="sp-num">6<span>×</span></div>
-                <div className="sp-lbl">Intel engines</div>
+                <div className="sp-num" style={{ color: "var(--sky-light)" }}>6<span style={{ color: "var(--sky)" }}>×</span></div>
+                <div className="sp-lbl">Attack engines</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat">
-                <div className="sp-num">L1–L3</div>
-                <div className="sp-lbl">Validation depth</div>
+                <div className="sp-num" style={{ color: "var(--yellow-light)" }}>L1–L3</div>
+                <div className="sp-lbl">Proof layers</div>
               </div>
               <div className="sp-sep" />
-              <div className="sp-stat">
+              <div className="sp-stat warm">
                 <div className="sp-num">92<span>%</span></div>
-                <div className="sp-lbl">Exploit confidence</div>
+                <div className="sp-lbl">Avg. path confidence</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat">
@@ -91,9 +94,9 @@ export default function Hero() {
             </div>
           </div>
           <div className="hero-right">
-            <div className="app-frame">
+            <div className="app-frame app-frame-warm">
               <div className="af-bar">
-                <div className="flex gap-1.5">
+                <div className="af-dots">
                   <div className="af-dot" style={{ background: "#FF5F57" }} />
                   <div className="af-dot" style={{ background: "#FEBC2E" }} />
                   <div className="af-dot" style={{ background: "#28C840" }} />
@@ -116,26 +119,26 @@ export default function Hero() {
                 <div className="af-main">
                   <div className="af-metrics">
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#EF4444" }}>14</div>
+                      <div className="af-mval" style={{ color: "var(--sky)" }}>14</div>
                       <div className="af-mlbl">Attack Paths</div>
                     </div>
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#EF4444" }}>3</div>
+                      <div className="af-mval" style={{ color: "var(--red)" }}>3</div>
                       <div className="af-mlbl">Critical</div>
                     </div>
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#F59E0B" }}>92%</div>
+                      <div className="af-mval" style={{ color: "var(--orange)" }}>92%</div>
                       <div className="af-mlbl">Exploitable</div>
                     </div>
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#10B981" }}>1</div>
+                      <div className="af-mval" style={{ color: "var(--yellow)" }}>1</div>
                       <div className="af-mlbl">Optimal Fix</div>
                     </div>
                   </div>
                   <div className="af-header">
                     <div>
                       <div className="af-title">Attack Path Explorer</div>
-                      <div className="af-sub">14 paths discovered · 3 validated · eu-central-1 · 847 assets</div>
+                      <div className="af-sub">14 paths discovered &nbsp;·&nbsp; 3 validated &nbsp;·&nbsp; eu-central-1 &nbsp;·&nbsp; 847 assets</div>
                     </div>
                     <div className="af-filter">⊟ Filter</div>
                   </div>
@@ -156,7 +159,7 @@ export default function Hero() {
                           <div className="af-ptitle">{p.title}</div>
                           <div className="af-psub">{p.sub}</div>
                         </div>
-                        <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <div className="af-pmeta">
                           <span className="af-hops">{p.hops}</span>
                           {p.validated && <span className="af-validated">L2 Validated</span>}
                         </div>

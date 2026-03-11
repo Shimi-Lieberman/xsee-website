@@ -63,18 +63,17 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <section className="section section-alt" id="pricing">
+    <section className="section sec-blue-tint" id="pricing">
       <div className="container">
         <div className="section-head reveal">
           <span className="eyebrow">Pricing</span>
           <h2 className="display-lg">
-            Transparent pricing.
+            Know your breach risk
             <br />
-            All engines. No feature gating.
+            from day one.
           </h2>
           <p>
-            Every plan includes all 6 intelligence engines. 14-day free trial on
-            all plans. No credit card required.
+            Every plan includes the full six-engine platform. No gating, no &quot;enterprise add-ons&quot; for core proof capabilities. 14-day free trial, no credit card required.
           </p>
           <div className="section-rule" />
         </div>
@@ -85,7 +84,7 @@ export default function Pricing() {
               className={`pricing-card reveal-${i === 0 ? "left" : i === 1 ? "scale" : "right"} ${plan.featured ? "featured" : ""}`}
             >
               {plan.featured && (
-                <div className="pricing-badge">Most Popular</div>
+                <div className="pricing-badge pricing-badge-warm">Most Popular</div>
               )}
               <div className="pricing-tier">{plan.tier}</div>
               <h3>{plan.title}</h3>

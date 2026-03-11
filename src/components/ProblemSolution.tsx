@@ -1,9 +1,9 @@
 export default function ProblemSolution() {
   return (
-    <section className="section" id="problem">
+    <section className="section sec-light" id="problem">
       <div className="container">
         <div className="section-head reveal">
-          <span className="eyebrow">The Problem</span>
+          <span className="eyebrow chip-warm">The Problem</span>
           <h2 className="display-lg">
             Security tools generate noise.
             <br />
@@ -22,35 +22,30 @@ export default function ProblemSolution() {
               <span className="ps-tag-line" />
               Without XSEE
             </div>
-            <h3>Alert fatigue with zero context on real risk</h3>
+            <h3>4,000 alerts. No idea which three matter.</h3>
             <p>
-              You see thousands of misconfigurations and no clear path to what
-              matters. Engineering time burns on false priorities while real
-              exposures sit unaddressed.
+              Wiz, Orca, Prisma — they all tell you what could go wrong. Nobody proves what will. Your team spends weeks triaging alerts ranked by CVSS scores that bear no relationship to your actual blast radius.
             </p>
             <ul className="ps-list">
               <li>
                 <span className="ps-icon">✕</span>
-                Thousands of findings ranked by theoretical severity, not actual
-                exploitability
+                Thousands of findings ranked by theoretical CVSS, not real exploitability
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                No proof that any discovered path can be traversed by a real
-                attacker
+                No proof any discovered path actually reaches crown-jewel assets
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                Engineers burn days triaging false positives and vendor noise
+                Security teams burn sprints on findings that don&apos;t chain to a breach
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                No visibility into multi-hop attack chains or blast radius
+                Invisible multi-hop paths: IAM → EC2 → S3 → data exfil
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                Fixes applied blind — no before/after validation to prove
-                closure
+                Fixes applied blind — no verification that defenses actually hold
               </li>
             </ul>
           </div>
@@ -59,33 +54,30 @@ export default function ProblemSolution() {
               <span className="ps-tag-line" />
               With XSEE
             </div>
-            <h3>Three proven paths. One fix. Verified closed.</h3>
+            <h3>Stop guessing. Prove the breach.</h3>
             <p>
-              XSEE compresses thousands of signals into the attack paths that
-              will actually succeed — each one validated with live AWS API
-              evidence and ranked by true blast radius.
+              XSEE builds a live attack graph of your entire cloud — assets, identities, permissions, network edges — then validates which paths actually reach your critical data. Three findings. Real evidence. One fix that breaks them all.
             </p>
             <ul className="ps-list">
               <li>
                 <span className="ps-icon">✓</span>
-                L2 live validation — real AWS API calls produce a cryptographic
-                evidence package per hop
+                Live attack graph — every asset, identity, permission and network edge mapped
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                XseeCyber simulation maps exact detection gaps per attack chain
+                Validated exploitability — real AWS API calls prove each hop is traversable
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                AI-ranked priority based on real exploitability, not CVSS theory
+                Crown-jewel reach — only surfaces paths that terminate at sensitive data
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                Copy-paste Terraform, CLI, and CloudFormation fixes per path
+                Choke-point fix — one change that collapses 6 attack paths simultaneously
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                Re-simulate after remediation to prove defenses actually hold
+                Verified closed — re-simulate post-fix to prove the breach path is gone
               </li>
             </ul>
           </div>

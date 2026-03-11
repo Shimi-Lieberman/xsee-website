@@ -1,18 +1,21 @@
 const TESTIMONIALS = [
   {
-    quote: "We had 2,000 Wiz findings and no idea where to start. XSEE showed us the 3 that actually mattered — with proof. We fixed one SG rule and eliminated 6 attack paths in an afternoon.",
+    quote: "We had 1,800 Wiz findings and zero confidence about what to fix first. XSEE showed us the 3 paths that actually reached our database. One security group change, six attack paths gone, done before lunch.",
+    strong: "3 paths that actually reached our database",
     name: "Marcus T.",
     role: "Head of Security · SaaS Startup · AWS",
     initials: "MT",
   },
   {
-    quote: "The validation evidence package is what sold our CTO. Not \"this could be exploited\" — here's the actual AWS API response proving it is. That's a completely different conversation.",
+    quote: "The evidence package changed every conversation. Our CTO's question was always \"can you prove it?\" — XSEE answered that with actual AWS API responses per hop. That's not a finding, that's a case file.",
+    strong: "actual AWS API responses per hop",
     name: "Sarah K.",
     role: "Cloud Security Engineer · Fintech",
     initials: "SK",
   },
   {
-    quote: "XseeCyber is unlike anything I've seen in cloud security. A full simulation showing exactly how an attacker moves — and where your detection completely misses it. Game-changing.",
+    quote: "The attack simulation showed us our GuardDuty coverage had a complete blind spot across lateral movement in EKS. We'd been paying for detection that wouldn't have fired on the path that mattered most.",
+    strong: "complete blind spot across lateral movement in EKS",
     name: "David R.",
     role: "DevSecOps Lead · Scale-up",
     initials: "DR",
@@ -21,10 +24,10 @@ const TESTIMONIALS = [
 
 export default function Testimonials() {
   return (
-    <section className="section" id="testimonials">
+    <section className="section sec-light" id="testimonials">
       <div className="container">
         <div className="section-head reveal">
-          <span className="eyebrow">Early Adopters</span>
+          <span className="eyebrow chip-warm">Early Adopters</span>
           <h2 className="display-lg">What security teams say</h2>
           <div className="section-rule" />
         </div>
@@ -37,29 +40,11 @@ export default function Testimonials() {
             >
               <div className="testi-stars">★★★★★</div>
               <p className="testi-quote">
-                {t.quote.includes("3 that actually mattered") ? (
-                  <>
-                    {t.quote.split("3 that actually mattered")[0]}
-                    <strong>3 that actually mattered</strong>
-                    {t.quote.split("3 that actually mattered")[1]}
-                  </>
-                ) : t.quote.includes("actual AWS API response proving it is") ? (
-                  <>
-                    {t.quote.split("actual AWS API response proving it is")[0]}
-                    <strong>actual AWS API response proving it is</strong>
-                    {t.quote.split("actual AWS API response proving it is")[1]}
-                  </>
-                ) : t.quote.includes("full simulation showing exactly how an attacker moves") ? (
-                  <>
-                    {t.quote.split("full simulation showing exactly how an attacker moves")[0]}
-                    <strong>full simulation showing exactly how an attacker moves</strong>
-                    {t.quote.split("full simulation showing exactly how an attacker moves")[1]}
-                  </>
-                ) : (
-                  t.quote
-                )}
+                {t.quote.split(t.strong)[0]}
+                <strong>{t.strong}</strong>
+                {t.quote.split(t.strong)[1]}
               </p>
-              <div className="flex items-center gap-3">
+              <div className="testi-author">
                 <div className="testi-av">{t.initials}</div>
                 <div>
                   <div className="testi-name">{t.name}</div>

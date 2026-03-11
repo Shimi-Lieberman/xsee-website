@@ -22,9 +22,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://xsee.io"),
-  title: "XSEE — Cloud Attack Intelligence Platform",
+  title: "XSEE — Cloud Exposure Intelligence",
   description:
-    "The only platform that proves every attack path is real. Live AWS API evidence, exploit simulation, and verified fix.",
+    "The only platform that proves which exposures in your cloud lead to a breach. Live attack graph, validated proof, verified fix.",
   icons: {
     icon: [
       { url: "/xsee-icon.png", sizes: "32x32", type: "image/png" },
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "XSEE — Cloud Attack Intelligence Platform",
-    description: "The only platform that proves every attack path is real.",
+    title: "XSEE — Cloud Exposure Intelligence",
+    description: "The only platform that proves which exposures lead to a breach.",
     images: ["/og-image.png"],
   },
 };
