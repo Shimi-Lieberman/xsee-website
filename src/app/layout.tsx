@@ -1,14 +1,22 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#16a34a",
+  themeColor: "#040B18",
 };
 
-const inter = Inter({
-  variable: "--font-inter",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
   display: "swap",
 });
 
@@ -16,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://xsee.io"),
   title: "XSEE — Cloud Attack Intelligence Platform",
   description:
-    "See how attackers can breach your cloud — before they do. XSEE continuously discovers real attack paths and proves they're exploitable.",
+    "The only platform that proves every attack path is real. Live AWS API evidence, exploit simulation, and verified fix.",
   icons: {
     icon: [
       { url: "/xsee-icon.png", sizes: "32x32", type: "image/png" },
@@ -26,11 +34,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "XSEE — Cloud Attack Intelligence Platform",
-    description:
-      "See how attackers can breach your cloud — before they do. Attack path intelligence, not just another scanner.",
+    description: "The only platform that proves every attack path is real.",
     images: ["/og-image.png"],
   },
 };
+
+const fontVariables = [plusJakarta.variable, ibmPlexMono.variable].join(" ");
 
 export default function RootLayout({
   children,
@@ -38,9 +47,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      {/* suppressHydrationWarning: browser extensions (e.g. Grammarly) inject attributes on body after SSR */}
-      <body className={`${inter.variable} antialiased font-sans`} suppressHydrationWarning>
+    <html lang="en" className={fontVariables} suppressHydrationWarning>
+      <body
+        className={`${fontVariables} antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
+        suppressHydrationWarning
+      >
         {children}
       </body>
     </html>

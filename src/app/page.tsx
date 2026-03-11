@@ -1,48 +1,38 @@
+import ScrollProgressBar from "@/components/ScrollProgressBar";
+import GlobalScripts from "@/components/GlobalScripts";
 import Nav from "@/components/Nav";
+import AnnouncementBar from "@/components/AnnouncementBar";
 import Hero from "@/components/Hero";
-import AttackPathStoryScroll from "@/components/AttackPathStoryScroll";
-import ProductStoryScroll from "@/components/ProductStoryScroll";
-import TrustBar from "@/components/TrustBar";
+import TrustStrip from "@/components/TrustStrip";
 import ProblemSolution from "@/components/ProblemSolution";
+import StatsBand from "@/components/StatsBand";
 import HowItWorks from "@/components/HowItWorks";
-import ProofEvidence from "@/components/ProofEvidence";
-import AttackPathStory from "@/components/AttackPathStory";
-import CloudAttackGraph from "@/components/CloudAttackGraph";
-import SixEngines from "@/components/SixEngines";
-import PlatformShowcase from "@/components/PlatformShowcase";
-import SecurityBrain from "@/components/SecurityBrain";
-import AttackSimulation from "@/components/AttackSimulation";
-import CompetitiveDiff from "@/components/CompetitiveDiff";
-import DemoMoment from "@/components/DemoMoment";
+import EnginesGrid from "@/components/EnginesGrid";
+import ComparisonTable from "@/components/ComparisonTable";
+import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
-import SecurityArchitecture from "@/components/SecurityArchitecture";
-import SeeWhatXSEEFinds from "@/components/SeeWhatXSEEFinds";
+import CTABanner from "@/components/CTABanner";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
+      <ScrollProgressBar />
+      <GlobalScripts />
       <Nav />
+      <AnnouncementBar />
       <main>
         <Hero />
-        <AttackPathStoryScroll />
-        <ProductStoryScroll />
-        <TrustBar />
+        <TrustStrip />
         <ProblemSolution />
+        <StatsBand />
         <HowItWorks />
-        <ProofEvidence />
-        <AttackPathStory />
-        <CloudAttackGraph />
-        <SixEngines />
-        <PlatformShowcase />
-        <SecurityBrain />
-        <AttackSimulation />
-        <CompetitiveDiff />
-        <DemoMoment />
+        <EnginesGrid />
+        <ComparisonTable />
+        <Testimonials />
         <Pricing />
-        <SecurityArchitecture />
-        <SeeWhatXSEEFinds />
+        <CTABanner />
         <ContactForm />
         <Footer />
       </main>

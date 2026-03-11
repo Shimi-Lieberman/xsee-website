@@ -1,145 +1,134 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Check } from "lucide-react";
-import SectionFadeIn from "./SectionFadeIn";
 
-const plans = [
+const PLANS = [
   {
-    name: "Starter",
-    badge: "For evaluation",
-    description: "For small teams evaluating XSEE",
-    price: "$499/mo",
-    features: [
+    tier: "// Starter",
+    title: "For Small Teams",
+    desc: "Evaluate XSEE on a single AWS account with the full platform.",
+    price: "$499",
+    per: "/month",
+    feats: [
       "1 AWS account",
-      "6 engines included",
-      "Community support",
-      "100 assets",
+      "Up to 100 assets",
+      "All 6 intelligence engines",
+      "L2 validated attack paths",
+      "XseeCyber simulation",
+      "AI security analyst",
     ],
-    cta: "Request Demo",
-    ctaLink: "#contact",
-    highlighted: false,
-    enterprise: false,
+    dim: ["Operational Playbooks", "Priority support"],
+    cta: "Start Free Trial",
+    featured: false,
   },
   {
-    name: "Professional",
-    badge: "Most Popular",
-    description: "For growing teams",
-    price: "$1,499/mo",
-    features: [
-      "Up to 5 accounts",
-      "6 engines included",
+    tier: "// Professional",
+    title: "For Growing Teams",
+    desc: "Full platform for teams managing multiple AWS environments.",
+    price: "$1,499",
+    per: "/month",
+    feats: [
+      "Up to 5 AWS accounts",
+      "Up to 1,000 assets",
+      "All 6 intelligence engines",
+      "XseeCyber live mode",
+      "AI security analyst",
+      "Operational Playbooks",
       "Priority support",
-      "1,000 assets",
-      "Playbooks",
-      "AI analyst",
+      "Annual discount available",
     ],
-    cta: "Request Demo",
-    ctaLink: "#contact",
-    highlighted: true,
-    enterprise: false,
+    dim: [],
+    cta: "Start Free Trial →",
+    featured: true,
   },
   {
-    name: "Enterprise",
-    badge: "Full Platform",
-    description: "For large orgs",
+    tier: "// Enterprise",
+    title: "For Large Orgs",
+    desc: "Unlimited scale, dedicated support, and self-hosted option.",
     price: "Contact us",
-    features: [
-      "Unlimited accounts",
-      "6 engines included",
-      "Dedicated support",
-      "Unlimited assets",
-      "Playbooks",
-      "AI analyst",
-      "Custom reports",
-      "SSO / SAML",
-      "Self-hosted option",
+    per: "",
+    feats: [
+      "Unlimited accounts & assets",
+      "All 6 intelligence engines",
+      "Custom reporting & dashboards",
+      "SSO / SAML integration",
+      "Self-hosted deployment",
+      "Dedicated customer engineer",
+      "SLA guarantee",
+      "Custom integrations",
     ],
+    dim: [],
     cta: "Contact Sales",
-    ctaLink: "#contact",
-    highlighted: false,
-    enterprise: true,
+    featured: false,
   },
 ];
 
 export default function Pricing() {
   return (
-    <section
-      id="pricing"
-      className="bg-white py-28 px-6"
-    >
-      <div className="mx-auto max-w-7xl">
-        <SectionFadeIn>
-          <h2 className="text-center text-4xl font-semibold tracking-tight text-slate-900">
-            Pricing
+    <section className="section section-alt" id="pricing">
+      <div className="container">
+        <div className="section-head reveal">
+          <span className="eyebrow">Pricing</span>
+          <h2 className="display-lg">
+            Transparent pricing.
+            <br />
+            All engines. No feature gating.
           </h2>
-        </SectionFadeIn>
-
-        <div className="mt-20 grid gap-8 md:grid-cols-3">
-          {plans.map((plan) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
-              whileHover={plan.highlighted ? undefined : { y: -4 }}
-              className={`flex flex-col rounded-xl border p-8 shadow-sm transition-all duration-300 ${
-                plan.highlighted
-                  ? "relative z-10 scale-[1.02] border-2 border-[#3B82F6] bg-white shadow-xl ring-4 ring-[#3B82F6]/20"
-                    : plan.enterprise
-                    ? "border-slate-200 bg-gradient-to-b from-slate-50 to-white hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.15),0_0_24px_rgba(139,92,246,0.08)]"
-                    : "border-slate-200 bg-white hover:-translate-y-1 hover:border-slate-300 hover:shadow-xl"
-              }`}
+          <p>
+            Every plan includes all 6 intelligence engines. 14-day free trial on
+            all plans. No credit card required.
+          </p>
+          <div className="section-rule" />
+        </div>
+        <div className="pricing-grid">
+          {PLANS.map((plan, i) => (
+            <div
+              key={plan.tier}
+              className={`pricing-card reveal-${i === 0 ? "left" : i === 1 ? "scale" : "right"} ${plan.featured ? "featured" : ""}`}
             >
-              <span
-                className={`inline-block w-fit rounded-full px-3 py-1 text-xs font-semibold ${
-                  plan.highlighted
-                    ? "bg-[#3B82F6] text-white"
-                    : "bg-slate-100 text-slate-600"
-                }`}
-              >
-                {plan.badge}
-              </span>
-              <h3 className="mt-4 text-xl font-semibold text-slate-900">
-                {plan.name}
-              </h3>
-              <p className="mt-1 text-sm text-slate-500">{plan.description}</p>
-              <p className="mt-6 text-2xl font-bold text-slate-900">
-                {plan.price}
-              </p>
-              <ul className="mt-6 flex-1 space-y-3">
-                {plan.features.map((f) => (
-                  <li
-                    key={f}
-                    className="flex items-center gap-3 text-lg text-slate-500"
-                  >
-                    <Check className="h-5 w-5 flex-shrink-0 text-[#22C55E]" />
+              {plan.featured && (
+                <div className="pricing-badge">Most Popular</div>
+              )}
+              <div className="pricing-tier">{plan.tier}</div>
+              <h3>{plan.title}</h3>
+              <p className="pricing-desc">{plan.desc}</p>
+              <div className="pricing-amount">
+                <span
+                  className="pricing-num"
+                  style={
+                    plan.price === "Contact us"
+                      ? { fontSize: "28px", lineHeight: "1.2" }
+                      : undefined
+                  }
+                >
+                  {plan.price}
+                </span>
+                {plan.per && (
+                  <span className="pricing-per">{plan.per}</span>
+                )}
+              </div>
+              <ul className="pricing-feats">
+                {plan.feats.map((f) => (
+                  <li key={f}>{f}</li>
+                ))}
+                {plan.dim.map((f) => (
+                  <li key={f} className="dim">
                     {f}
                   </li>
                 ))}
               </ul>
               <Link
-                href={plan.ctaLink}
-                className={`mt-8 flex h-12 w-full items-center justify-center rounded-xl text-base font-semibold transition-all duration-300 ${
-                  plan.highlighted
-                    ? "bg-[#3B82F6] text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 hover:bg-[#2563EB] hover:shadow-[0_8px_24px_rgba(59,130,246,0.45)]"
-                    : "border border-slate-200 text-slate-900 hover:-translate-y-0.5 hover:border-slate-300 hover:bg-slate-50"
-                }`}
+                href="#contact"
+                className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
+                style={{ width: "100%", justifyContent: "center" }}
               >
                 {plan.cta}
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
-
-        <SectionFadeIn>
-          <p className="mt-12 text-center text-lg text-slate-500">
-            All plans include 14-day free trial · Annual billing available (20%
-            discount)
-          </p>
-        </SectionFadeIn>
+        <p className="pricing-note">
+          14-day free trial · No credit card required · Annual billing: 20%
+          discount
+        </p>
       </div>
     </section>
   );

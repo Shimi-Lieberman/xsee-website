@@ -1,109 +1,104 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Search, Wrench, ShieldCheck, ChevronRight } from "lucide-react";
-import SectionFadeIn from "./SectionFadeIn";
-
-const steps = [
+const STEPS = [
   {
-    title: "Discover",
-    subtitle: " & Validate",
-    description:
-      "Connect your AWS account. XSEE discovers attack paths and validates each hop with L1 (graph) and L2 (exploit-level) AWS API evidence.",
-    icon: Search,
-    color: "#3B82F6",
+    n: "01",
+    title: "Cloud Discovery",
+    desc: "Scans EC2, IAM, S3, VPCs, and Security Groups across your AWS environment. Builds a live relationship-mapped asset inventory in minutes.",
   },
   {
-    title: "Remediate",
-    subtitle: " & Track",
-    description:
-      "Three remediation strategies per path. Copy-paste Terraform. Track progress with Playbooks.",
-    icon: Wrench,
-    color: "#F97316",
+    n: "02",
+    title: "Attack Graph Construction",
+    desc: "Every resource, permission, and network edge assembled into a queryable graph. No black boxes — every relationship is visible and traversable.",
   },
   {
-    title: "Simulate",
-    subtitle: " & Verify",
-    description:
-      "Run the attack again. Prove defenses work. Measure detection gaps. Show before/after proof.",
-    icon: ShieldCheck,
-    color: "#22C55E",
+    n: "03",
+    title: "L2 Live Validation",
+    desc: "Each candidate path is validated with real AWS API calls. XSEE produces a cryptographic evidence package per hop — not theory, but proof.",
+  },
+  {
+    n: "04",
+    title: "XseeCyber Simulation",
+    desc: "Simulates the full attack chain step by step. Measures detection gap — what your current tooling would and wouldn't catch at each stage.",
+  },
+  {
+    n: "05",
+    title: "Remediate & Verify",
+    desc: "Three copy-paste fix strategies per path. Re-run simulation to prove defenses hold. Closed loop, every time, with a full audit trail.",
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section
-      id="how-it-works"
-      className="bg-white py-28 px-6"
-    >
-      <div className="mx-auto max-w-7xl">
-        <SectionFadeIn>
-          <h2 className="text-center text-4xl font-semibold tracking-tight text-slate-900">
-            How XSEE Works
+    <section className="section section-alt" id="how">
+      <div className="container">
+        <div className="section-head reveal">
+          <span className="eyebrow">Intelligence Loop</span>
+          <h2 className="display-lg">
+            From scan to verified fix
+            <br />
+            in one closed loop
           </h2>
-        </SectionFadeIn>
-
-        <div className="mt-20 flex flex-col items-stretch gap-8 md:flex-row md:items-center md:gap-0">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="flex flex-1 flex-col items-center md:flex-row"
-            >
-              <motion.div
-                whileHover={{
-                  y: -4,
-                  borderColor: "rgb(96 165 250)",
-                  boxShadow: "0 0 20px rgba(59,130,246,0.12)",
-                }}
-                className="flex w-full max-w-sm flex-col rounded-xl border border-slate-200 bg-white p-8 shadow-sm transition-all duration-300 md:max-w-none"
+          <p>
+            Connect your AWS account. XSEE runs the full cycle — discovery,
+            validation, simulation, remediation, verification — without leaving
+            the platform.
+          </p>
+          <div className="section-rule" />
+        </div>
+        <div className="how-grid">
+          <div className="steps reveal-left">
+            {STEPS.map((step, i) => (
+              <div
+                key={step.n}
+                className={`step ${i === 0 ? "active" : ""}`}
+                data-step={i}
               >
-                <motion.div
-                  className="flex h-12 w-12 items-center justify-center rounded-xl"
-                  style={{
-                    backgroundColor: `${step.color}18`,
-                    boxShadow: `0 0 0 0 ${step.color}40`,
-                  }}
-                  whileHover={{
-                    boxShadow: `0 0 20px ${step.color}40`,
-                    scale: 1.05,
-                  }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <step.icon className="h-6 w-6" style={{ color: step.color }} />
-                </motion.div>
-                <h3 className="mt-5 text-xl font-semibold text-slate-900">
-                  {step.title}
-                  <span className="text-slate-500">{step.subtitle}</span>
-                </h3>
-                <p className="mt-3 text-lg text-slate-500">{step.description}</p>
-              </motion.div>
-              {i < steps.length - 1 && (
-                <div className="hidden flex-shrink-0 px-3 md:flex md:items-center">
-                  <motion.div
-                    className="h-px w-8 bg-gradient-to-r from-slate-200 to-slate-300"
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                  />
-                  <motion.div
-                    animate={{ opacity: [0.6, 1, 0.6] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  >
-                    <ChevronRight className="h-7 w-7 text-slate-400" />
-                  </motion.div>
-                  <motion.div
-                    className="h-px w-8 bg-gradient-to-r from-slate-300 to-slate-200"
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                  />
+                <div className="step-n">{step.n}</div>
+                <div className="step-content">
+                  <h3>{step.title}</h3>
+                  <p>{step.desc}</p>
                 </div>
-              )}
-            </motion.div>
-          ))}
+              </div>
+            ))}
+          </div>
+          <div className="reveal-right">
+            <div className="terminal">
+              <div className="term-bar">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#FF5F57" }} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#FEBC2E" }} />
+                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#28C840" }} />
+                </div>
+                <span className="term-title">xsee-cli — live scan — aws/eu-central-1</span>
+                <div className="term-indicator">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--green)]" />
+                  Scanning
+                </div>
+              </div>
+              <div className="term-output" id="termOutput">
+                <span className="term-cursor" />
+              </div>
+              <div className="term-footer">
+                <div className="tf-cell">
+                  <div className="tf-num" style={{ color: "var(--blue-light)" }}>
+                    847
+                  </div>
+                  <div className="tf-lbl">Assets</div>
+                </div>
+                <div className="tf-cell">
+                  <div className="tf-num" style={{ color: "var(--red)" }}>
+                    3
+                  </div>
+                  <div className="tf-lbl">Critical</div>
+                </div>
+                <div className="tf-cell">
+                  <div className="tf-num" style={{ color: "var(--green)" }}>
+                    1
+                  </div>
+                  <div className="tf-lbl">Optimal Fix</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
