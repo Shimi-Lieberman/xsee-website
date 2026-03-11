@@ -36,16 +36,18 @@ export default function Hero() {
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo-black-transparent.png"
+                src="/xsee-logo-final.png"
                 alt="XSEE — Trust nothing. Prove everything."
-                width={280}
-                height={105}
-                className="h-24 w-auto object-contain object-left sm:h-[105px] bg-transparent"
-                style={{ filter: "invert(48%) sepia(79%) saturate(1000%) hue-rotate(86deg) brightness(95%) contrast(101%)" }}
+                width={320}
+                height={120}
+                className="h-[100px] w-auto object-contain object-left sm:h-[120px] bg-transparent"
+                style={{
+                  filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.2))",
+                }}
                 priority
               />
             </Link>
-            <h1 className="mt-4 text-hero-title tracking-tight text-white sm:mt-6">
+            <h1 className="mt-5 text-hero-title tracking-tight text-white sm:mt-7">
               See How Attackers Can Breach Your Cloud — Before They Do
             </h1>
             <p className="mt-5 text-body-lg text-slate-400 sm:mt-6 sm:text-xl">

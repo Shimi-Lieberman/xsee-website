@@ -36,16 +36,15 @@ export default function Nav() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between pl-5 pr-4 sm:pl-6 sm:pr-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center transition-transform duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:ring-offset-2 rounded-lg"
+          className="flex shrink-0 items-center transition-transform duration-200 hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-[#3B82F6]/30 focus:ring-offset-2 rounded-lg mr-2 md:mr-4"
           aria-label="XSEE Home"
         >
           <Image
-            src="/xsee-logo-black-transparent.png"
+            src="/xsee-logo-final.png"
             alt="XSEE — Trust nothing. Prove everything."
-            width={180}
-            height={48}
-            className="h-9 w-auto object-contain object-left sm:h-12 bg-transparent"
-            style={{ filter: "invert(48%) sepia(79%) saturate(1000%) hue-rotate(86deg) brightness(95%) contrast(101%)" }}
+            width={200}
+            height={52}
+            className="h-9 w-auto object-contain object-left sm:h-[48px] bg-transparent"
             priority
           />
         </Link>

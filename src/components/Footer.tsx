@@ -29,15 +29,15 @@ export default function Footer() {
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo-black-transparent.png"
+                src="/xsee-logo-final.png"
                 alt="XSEE — Trust nothing. Prove everything."
-                width={200}
-                height={60}
-                className="h-14 w-auto object-contain object-left sm:h-[60px] bg-transparent"
-                style={{ filter: "invert(48%) sepia(79%) saturate(1000%) hue-rotate(86deg) brightness(95%) contrast(101%)" }}
+                width={220}
+                height={64}
+                className="h-12 w-auto object-contain object-left sm:h-14 bg-transparent"
+                style={{ filter: "drop-shadow(0 1px 6px rgba(0,0,0,0.2))" }}
               />
             </Link>
-            <p className="mt-3 text-[15px] leading-relaxed text-[#94A3B8]">
+            <p className="mt-4 text-[15px] leading-relaxed text-[#94A3B8]">
               Cloud Attack Intelligence Platform
             </p>
           </div>
