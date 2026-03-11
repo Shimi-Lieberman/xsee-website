@@ -22,7 +22,7 @@ const NODE_COLORS = {
 
 export default function Hero() {
   return (
-    <section className="brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0B1C3D] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
+    <section className="brand-stripes-bg relative min-h-[90vh] overflow-hidden bg-[#0F172A] px-4 pt-28 pb-24 sm:px-6 sm:pt-32 sm:pb-28">
       <div className="absolute inset-0 z-0">
         <HeroAttackPathViz />
       </div>
@@ -32,26 +32,26 @@ export default function Hero() {
           <div className="max-w-2xl">
             <Link
               href="/"
-              className="inline-block focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#0B1C3D] rounded-lg"
+              className="flex justify-center sm:justify-start focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-[#0F172A] rounded-lg"
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo-final.png"
-                alt="XSEE — Trust nothing. Prove everything."
-                width={320}
-                height={120}
-                className="h-[100px] w-auto object-contain object-left sm:h-[120px] bg-transparent"
+                src="/xsee-logo.png"
+                alt="XSEE — Cloud Attack Intelligence"
+                width={240}
+                height={90}
+                className="h-[70px] w-auto object-contain sm:h-[90px] bg-transparent"
                 style={{
-                  filter: "drop-shadow(0 2px 10px rgba(0,0,0,0.2))",
+                  filter: "drop-shadow(0 0 12px rgba(59,130,246,0.35))",
                 }}
                 priority
               />
             </Link>
-            <h1 className="mt-5 text-hero-title tracking-tight text-white sm:mt-7">
-              See How Attackers Can Breach Your Cloud — Before They Do
+            <h1 className="mt-5 text-hero-title tracking-tight text-white sm:mt-7 w-full">
+              Understand Your Cloud Attack Paths
             </h1>
             <p className="mt-5 text-body-lg text-slate-400 sm:mt-6 sm:text-xl">
-              XSEE discovers real attack paths in your AWS environment and validates each step with API evidence—not assumptions.
+              XSEE reveals how attackers move through your cloud infrastructure.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link

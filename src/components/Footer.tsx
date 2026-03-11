@@ -29,12 +29,11 @@ export default function Footer() {
               aria-label="XSEE Home"
             >
               <Image
-                src="/xsee-logo-final.png"
-                alt="XSEE — Trust nothing. Prove everything."
-                width={220}
-                height={64}
-                className="h-12 w-auto object-contain object-left sm:h-14 bg-transparent"
-                style={{ filter: "drop-shadow(0 1px 6px rgba(0,0,0,0.2))" }}
+                src="/xsee-logo.png"
+                alt="XSEE — Cloud Attack Intelligence"
+                width={160}
+                height={48}
+                className="h-8 w-auto object-contain object-left sm:h-9 bg-transparent"
               />
             </Link>
             <p className="mt-4 text-[15px] leading-relaxed text-[#94A3B8]">
@@ -98,9 +97,20 @@ export default function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between border-t border-white/10 pt-8 sm:flex-row sm:items-center gap-4">
-          <p className="text-sm text-[#475569]">
-            © 2026 XSEE. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center sm:items-start gap-2">
+            <Link href="/" className="inline-block" aria-label="XSEE Home">
+              <Image
+                src="/xsee-logo.png"
+                alt="XSEE"
+                width={120}
+                height={32}
+                className="h-8 w-auto object-contain bg-transparent"
+              />
+            </Link>
+            <p className="text-sm text-[#475569]">
+              © 2026 XSEE. All rights reserved.
+            </p>
+          </div>
           <div className="flex gap-6 text-sm">
             <Link
               href="#"
