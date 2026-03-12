@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     "The only platform that proves which exposures in your cloud lead to a breach. Live attack graph, validated proof, verified fix.",
   icons: {
     icon: [
-      { url: "/xsee-icon.png", sizes: "32x32", type: "image/png" },
-      { url: "/xsee-icon.png", sizes: "any", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.svg", sizes: "any", type: "image/svg+xml" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: "/favicon.svg",
   },
   openGraph: {
     title: "XSEE — Cloud Exposure Intelligence",
