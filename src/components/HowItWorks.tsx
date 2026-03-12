@@ -46,13 +46,13 @@ const SCAN_LINES = [
   "→ 1 SG rule change eliminates 6 attack vectors · verified",
 ];
 
-const NODES: { id: string; cx: number; cy: number; label: string; crown?: boolean }[] = [
-  { id: "hn-internet", cx: 65, cy: 120, label: "Internet" },
-  { id: "hn-lb", cx: 160, cy: 200, label: "Load Balancer" },
-  { id: "hn-ec2", cx: 270, cy: 255, label: "EC2 Instance" },
-  { id: "hn-sg", cx: 370, cy: 300, label: "Security Group" },
-  { id: "hn-iam", cx: 450, cy: 330, label: "IAM Role" },
-  { id: "hn-rds", cx: 510, cy: 370, label: "RDS / Crown Jewel", crown: true },
+const NODES: { id: string; cx: number; cy: number; label: string; sublabel: string; crown?: boolean }[] = [
+  { id: "hn-internet", cx: 65, cy: 120, label: "Internet", sublabel: "ENTRY POINT" },
+  { id: "hn-lb", cx: 160, cy: 200, label: "Load Balancer", sublabel: "AWS ALB" },
+  { id: "hn-ec2", cx: 270, cy: 255, label: "EC2 Instance", sublabel: "COMPUTE" },
+  { id: "hn-sg", cx: 370, cy: 300, label: "Security Group", sublabel: "NETWORK" },
+  { id: "hn-iam", cx: 450, cy: 330, label: "IAM Role", sublabel: "IDENTITY" },
+  { id: "hn-rds", cx: 510, cy: 370, label: "RDS / Crown Jewel", sublabel: "CROWN JEWEL", crown: true },
 ];
 
 const EDGES: { id: string; x1: number; y1: number; x2: number; y2: number }[] = [
@@ -62,6 +62,69 @@ const EDGES: { id: string; x1: number; y1: number; x2: number; y2: number }[] = 
   { id: "he-sg-iam", x1: 370, y1: 300, x2: 450, y2: 330 },
   { id: "he-iam-rds", x1: 450, y1: 330, x2: 510, y2: 370 },
 ];
+
+function NodeIcon({ nodeId, color }: { nodeId: string; color: string }) {
+  const c = color;
+  const scale = 0.8;
+  switch (nodeId) {
+    case "hn-internet":
+      return (
+        <g transform={`scale(${scale})`} stroke={c} fill="none" strokeWidth={1.5}>
+          <circle r={10} />
+          <ellipse rx={4} ry={10} />
+          <line x1={-10} y1={0} x2={10} y2={0} />
+          <line x1={0} y1={-10} x2={0} y2={10} />
+        </g>
+      );
+    case "hn-lb":
+      return (
+        <g transform={`scale(${scale})`} stroke={c} fill={c} strokeWidth={1.5}>
+          <rect x={-3} y={-10} width={6} height={5} rx={1} />
+          <rect x={-10} y={5} width={6} height={5} rx={1} />
+          <rect x={4} y={5} width={6} height={5} rx={1} />
+          <line x1={0} y1={-5} x2={-7} y2={5} />
+          <line x1={0} y1={-5} x2={7} y2={5} />
+        </g>
+      );
+    case "hn-ec2":
+      return (
+        <g transform={`scale(${scale})`} stroke={c} fill="none" strokeWidth={1.5}>
+          <rect x={-9} y={-10} width={18} height={7} rx={1.5} />
+          <rect x={-9} y={1} width={18} height={7} rx={1.5} />
+          <circle cx={6} cy={-6.5} r={1.5} fill={c} />
+          <circle cx={6} cy={4.5} r={1.5} fill={c} />
+        </g>
+      );
+    case "hn-sg":
+      return (
+        <g transform={`scale(${scale})`} stroke={c} fill="none" strokeWidth={1.5}>
+          <path d="M 0 -10 L -8 -6 L -8 2 C -8 7 -4 10 0 11 C 4 10 8 7 8 2 L 8 -6 Z" />
+          <polyline points="-3,0 -1,3 4,-3" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      );
+    case "hn-iam":
+      return (
+        <g transform={`scale(${scale})`} stroke={c} fill="none" strokeWidth={1.5}>
+          <circle cx={-3} cy={-2} r={5} />
+          <line x1={2} y1={-2} x2={10} y2={-2} />
+          <line x1={7} y1={-2} x2={7} y2={2} />
+          <line x1={10} y1={-2} x2={10} y2={2} />
+        </g>
+      );
+    case "hn-rds":
+      return (
+        <g transform={`scale(${scale})`} stroke={c} fill="none" strokeWidth={1.5}>
+          <ellipse cx={0} cy={-6} rx={7} ry={2.5} />
+          <line x1={-7} y1={-6} x2={-7} y2={5} />
+          <line x1={7} y1={-6} x2={7} y2={5} />
+          <ellipse cx={0} cy={5} rx={7} ry={2.5} />
+          <path d="M -5 -9 L -3 -7 L 0 -11 L 3 -7 L 5 -9" stroke="#F59E0B" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      );
+    default:
+      return null;
+  }
+}
 
 export default function HowItWorks() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -190,8 +253,9 @@ export default function HowItWorks() {
                   const active = config.activeNodes.includes(node.id);
                   const dim = config.dimNodes?.includes(node.id);
                   const showShield = config.shieldOn === node.id;
-                  const fill = dim ? "#1E293B" : active ? config.color : "#1E293B";
-                  const stroke = dim ? "#334155" : active ? config.color : "#334155";
+                  const circleFill = dim ? "#1E293B" : active ? `${config.color}33` : "#1E293B";
+                  const circleStroke = dim ? "#334155" : active ? config.color : "#334155";
+                  const iconColor = dim ? "#64748B" : active ? config.color : "#64748B";
                   const opacity = dim ? 0.5 : 1;
                   const pulse = currentStep === 3 && node.id === "hn-rds";
 
@@ -200,24 +264,16 @@ export default function HowItWorks() {
                       <circle
                         cx={node.cx}
                         cy={node.cy}
-                        r={22}
-                        fill={fill}
-                        stroke={stroke}
+                        r={24}
+                        fill={circleFill}
+                        stroke={circleStroke}
                         strokeWidth={active ? 2.5 : 1}
                         className={active ? "active" : ""}
                         style={active ? { filter: `drop-shadow(0 0 8px ${config.color})` } : undefined}
                       />
-                      {node.crown && (
-                        <text
-                          x={node.cx}
-                          y={node.cy + 5}
-                          textAnchor="middle"
-                          fill="rgba(255,255,255,0.9)"
-                          fontSize={12}
-                        >
-                          👑
-                        </text>
-                      )}
+                      <g transform={`translate(${node.cx}, ${node.cy})`} style={{ color: iconColor }}>
+                        <NodeIcon nodeId={node.id} color={iconColor} />
+                      </g>
                       {showShield && (
                         <g transform={`translate(${node.cx - 14}, ${node.cy - 14})`}>
                           <path
@@ -234,13 +290,14 @@ export default function HowItWorks() {
                       )}
                       <text
                         x={node.cx}
-                        y={node.cy + 38}
+                        y={node.cy + 42}
                         textAnchor="middle"
-                        fill="#94A3B8"
+                        fill={dim ? "#64748B" : active ? config.color : "#64748B"}
                         fontSize={9}
                         fontFamily="var(--font-mono)"
+                        letterSpacing="0.06em"
                       >
-                        {node.label}
+                        {node.sublabel}
                       </text>
                     </g>
                   );
