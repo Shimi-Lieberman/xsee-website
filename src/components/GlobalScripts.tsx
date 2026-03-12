@@ -136,17 +136,6 @@ export default function GlobalScripts() {
   }, []);
 
   useEffect(() => {
-    document.querySelectorAll(".step").forEach((step) => {
-      const h = () => {
-        document.querySelectorAll(".step").forEach((s) => s.classList.remove("active"));
-        step.classList.add("active");
-      };
-      step.addEventListener("click", h);
-      return () => step.removeEventListener("click", h);
-    });
-  }, []);
-
-  useEffect(() => {
     document.querySelectorAll(".engine-card").forEach((card) => {
       const mm = (e: Event) => {
         const ev = e as MouseEvent;
