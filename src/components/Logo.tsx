@@ -1,9 +1,10 @@
 /**
  * XSEE logo: eagle head + circuit traces (brand blue).
- * Transparent background — works on dark (#040B18) and light sections.
+ * Traced from reference — flat crown, hooked beak, circuit-style E's, donut dots.
+ * Transparent background.
  */
 export default function Logo({ className, height = 36 }: { className?: string; height?: number }) {
-  const aspect = 180 / 110;
+  const aspect = 320 / 110;
   const width = Math.round(height * aspect);
 
   return (
@@ -11,74 +12,109 @@ export default function Logo({ className, height = 36 }: { className?: string; h
       className={className}
       width={width}
       height={height}
-      viewBox="0 0 180 110"
+      viewBox="0 0 320 110"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
       <defs>
-        <linearGradient id="logo-gradient" x1="0" y1="0" x2="180" y2="110" gradientUnits="userSpaceOnUse">
+        <linearGradient id="logo-gradient" x1="0" y1="0" x2="320" y2="110" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#93C5FD" />
           <stop offset="40%" stopColor="#3B82F6" />
           <stop offset="100%" stopColor="#1D4ED8" />
         </linearGradient>
-        <linearGradient id="logo-trace" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-          <stop offset="0%" stopColor="#93C5FD" />
-          <stop offset="100%" stopColor="#3B82F6" />
-        </linearGradient>
       </defs>
-      {/* Eagle head — profile facing right: sharp crown, hooked beak, angular jaw (#2563EB) */}
+      {/* Eagle head outline — flat crown, hooked beak, angular jaw */}
       <path
-        d="M 12 78 L 18 60 L 24 44 L 30 30 L 38 18 L 48 10 L 58 12 L 66 22 L 66 34 L 60 48 L 52 62 L 42 74 L 28 82 L 18 85 L 12 78 Z"
+        d="M 85 35 L 145 30 C 160 30 170 38 168 50 L 175 55 C 176 62 172 68 166 67 L 158 65 C 150 72 138 76 125 74 L 100 70 C 88 66 82 58 82 48 Z"
         stroke="#2563EB"
-        strokeWidth="2.2"
+        strokeWidth="2.5"
         fill="none"
         strokeLinejoin="round"
       />
-      {/* Crown peaks — angular crown */}
-      <path d="M 30 30 L 36 14 L 42 24" stroke="#2563EB" strokeWidth="1.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      {/* Beak — hooked, pointing right */}
-      <path d="M 48 16 L 62 10 L 68 22" stroke="#2563EB" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-      <path d="M 54 42 L 64 54" stroke="#2563EB" strokeWidth="1.3" fill="none" strokeLinecap="round" />
-      {/* Internal circuit traces within head — around eye and jaw */}
-      <path d="M 42 28 L 52 24 L 56 32" stroke="url(#logo-trace)" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.9" />
-      <path d="M 50 48 L 56 56" stroke="url(#logo-trace)" strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.9" />
-      {/* Red eye */}
-      <circle cx="52" cy="36" r="3" fill="#EF4444" />
-      {/* PCB circuit traces — horizontal rows extending LEFT from back of head */}
-      <g stroke="url(#logo-trace)" strokeWidth="1.2" fill="none" strokeLinecap="round">
-        <line x1="26" y1="38" x2="6" y2="38" />
-        <line x1="26" y1="46" x2="4" y2="46" />
-        <line x1="26" y1="54" x2="6" y2="54" />
-        <line x1="24" y1="62" x2="4" y2="62" />
-        <line x1="24" y1="70" x2="6" y2="70" />
-        <line x1="22" y1="78" x2="5" y2="78" />
-        <line x1="20" y1="32" x2="10" y2="26" />
-        <line x1="20" y1="32" x2="10" y2="38" />
+      {/* Beak detail */}
+      <path d="M 158 58 C 162 60 166 62 165 66" stroke="#2563EB" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      {/* Red eye + pupil + highlight */}
+      <circle cx="152" cy="42" r="5" fill="#EF4444" />
+      <circle cx="152" cy="42" r="2" fill="#040B18" />
+      <circle cx="153.5" cy="40.5" r="1" fill="white" fillOpacity="0.7" />
+      {/* Circuit traces — rows going LEFT from back of head */}
+      <g stroke="#3B82F6" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="85" y1="35" x2="55" y2="35" />
+        <line x1="55" y1="35" x2="20" y2="35" />
+        <line x1="55" y1="35" x2="55" y2="28" />
+        <line x1="55" y1="28" x2="15" y2="28" />
+        <line x1="83" y1="44" x2="50" y2="44" />
+        <line x1="50" y1="44" x2="18" y2="44" />
+        <line x1="35" y1="44" x2="35" y2="54" />
+        <line x1="35" y1="54" x2="12" y2="54" />
+        <line x1="82" y1="53" x2="48" y2="53" />
+        <line x1="48" y1="53" x2="16" y2="53" />
+        <line x1="28" y1="53" x2="28" y2="63" />
+        <line x1="28" y1="63" x2="8" y2="63" />
+        <line x1="84" y1="62" x2="52" y2="62" />
+        <line x1="52" y1="62" x2="20" y2="62" />
+        <line x1="90" y1="68" x2="55" y2="80" />
+        <line x1="55" y1="80" x2="20" y2="80" />
+        <line x1="38" y1="80" x2="38" y2="90" />
       </g>
-      <g fill="none" stroke="#60A5FA" strokeWidth="1.2">
-        <circle cx="6" cy="38" r="2" />
-        <circle cx="4" cy="46" r="2" />
-        <circle cx="6" cy="54" r="2" />
-        <circle cx="4" cy="62" r="2" />
-        <circle cx="6" cy="70" r="2" />
-        <circle cx="5" cy="78" r="2" />
-        <circle cx="10" cy="26" r="1.5" />
-        <circle cx="10" cy="38" r="1.5" />
-      </g>
-      {/* Wordmark XSEE — gradient, bold sans-serif */}
+      {/* Donut dots — outer #60A5FA, inner hole #040B18 */}
+      {[
+        [20, 35],
+        [15, 28],
+        [18, 44],
+        [12, 54],
+        [16, 53],
+        [8, 63],
+        [20, 62],
+        [20, 80],
+        [38, 90],
+      ].map(([x, y], i) => (
+        <g key={i}>
+          <circle cx={x} cy={y} r="3" fill="#60A5FA" />
+          <circle cx={x} cy={y} r="1.2" fill="#040B18" />
+        </g>
+      ))}
+      {/* X — gradient text */}
       <text
-        x="112"
-        y="62"
+        x="195"
+        y="58"
         textAnchor="middle"
-        fontFamily="system-ui, -apple-system, 'Segoe UI', sans-serif"
+        fontFamily="system-ui, -apple-system, sans-serif"
         fontWeight="800"
-        fontSize="30"
-        letterSpacing="-0.03em"
+        fontSize="32"
+        letterSpacing="-0.02em"
         fill="url(#logo-gradient)"
       >
-        XSEE
+        X
       </text>
+      {/* S — gradient text */}
+      <text
+        x="222"
+        y="58"
+        textAnchor="middle"
+        fontFamily="system-ui, -apple-system, sans-serif"
+        fontWeight="800"
+        fontSize="32"
+        letterSpacing="-0.02em"
+        fill="url(#logo-gradient)"
+      >
+        S
+      </text>
+      {/* E (first) — circuit-trace style: vertical bar + 3 horizontal bars */}
+      <g stroke="url(#logo-gradient)" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="238" y1="33" x2="238" y2="77" />
+        <line x1="238" y1="33" x2="265" y2="33" />
+        <line x1="238" y1="55" x2="261" y2="55" />
+        <line x1="238" y1="77" x2="265" y2="77" />
+      </g>
+      {/* E (second) — circuit-trace style */}
+      <g stroke="url(#logo-gradient)" strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="268" y1="33" x2="268" y2="77" />
+        <line x1="268" y1="33" x2="295" y2="33" />
+        <line x1="268" y1="55" x2="291" y2="55" />
+        <line x1="268" y1="77" x2="295" y2="77" />
+      </g>
     </svg>
   );
 }

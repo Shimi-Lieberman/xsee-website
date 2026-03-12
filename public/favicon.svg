@@ -1,38 +1,57 @@
 <svg width="32" height="32" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="36" height="36" rx="8" fill="#040B18"/>
   <defs>
-    <linearGradient id="f-eagle" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+    <linearGradient id="f-logo" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
       <stop offset="0%" stop-color="#93C5FD"/>
-      <stop offset="40%" stop-color="#3B82F6"/>
+      <stop offset="50%" stop-color="#3B82F6"/>
       <stop offset="100%" stop-color="#1D4ED8"/>
     </linearGradient>
-    <linearGradient id="f-trace" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#93C5FD"/>
-      <stop offset="100%" stop-color="#3B82F6"/>
-    </linearGradient>
   </defs>
-  <!-- Eagle head — scaled for 36x36: profile right, sharp crown, hooked beak, angular jaw (#2563EB) -->
-  <path d="M 2 27 L 5 21 L 8 15 L 10 10 L 13 6 L 16 6 L 19 9 L 19 12 L 17 16 L 15 20 L 12 24 L 8 27 L 5 28 L 2 27 Z" stroke="#2563EB" stroke-width="0.85" fill="none" stroke-linejoin="round"/>
-  <path d="M 10 10 L 12 5 L 14 8" stroke="#2563EB" stroke-width="0.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M 16 7 L 20 5 L 22 9" stroke="#2563EB" stroke-width="0.6" fill="none" stroke-linecap="round"/>
-  <path d="M 17 15 L 21 18" stroke="#2563EB" stroke-width="0.5" fill="none" stroke-linecap="round"/>
-  <path d="M 14 10 L 17 9 L 18 12" stroke="url(#f-trace)" stroke-width="0.4" fill="none" stroke-linecap="round"/>
-  <circle cx="16" cy="12" r="1" fill="#EF4444"/>
-  <!-- PCB circuit traces — horizontal rows left from back of head -->
-  <g stroke="url(#f-trace)" stroke-width="0.5" fill="none" stroke-linecap="round">
-    <line x1="7" y1="13" x2="2" y2="13"/>
-    <line x1="7" y1="17" x2="1" y2="17"/>
-    <line x1="7" y1="21" x2="2" y2="21"/>
-    <line x1="6" y1="25" x2="1" y2="25"/>
-    <line x1="6" y1="10" x2="2" y2="8"/>
-    <line x1="6" y1="10" x2="2" y2="12"/>
-  </g>
-  <g fill="none" stroke="#60A5FA" stroke-width="0.5">
-    <circle cx="2" cy="13" r="0.8"/>
-    <circle cx="1" cy="17" r="0.8"/>
-    <circle cx="2" cy="21" r="0.8"/>
-    <circle cx="1" cy="25" r="0.8"/>
-    <circle cx="2" cy="8" r="0.6"/>
-    <circle cx="2" cy="12" r="0.6"/>
+  <g transform="translate(4, 10) scale(0.18)">
+    <!-- Eagle head outline -->
+    <path d="M 85 35 L 145 30 C 160 30 170 38 168 50 L 175 55 C 176 62 172 68 166 67 L 158 65 C 150 72 138 76 125 74 L 100 70 C 88 66 82 58 82 48 Z" stroke="#2563EB" stroke-width="2.5" fill="none" stroke-linejoin="round"/>
+    <path d="M 158 58 C 162 60 166 62 165 66" stroke="#2563EB" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <circle cx="152" cy="42" r="5" fill="#EF4444"/>
+    <circle cx="152" cy="42" r="2" fill="#040B18"/>
+    <circle cx="153.5" cy="40.5" r="1" fill="white" fill-opacity="0.7"/>
+    <!-- Circuit traces -->
+    <g stroke="#3B82F6" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="85" y1="35" x2="55" y2="35"/>
+      <line x1="55" y1="35" x2="20" y2="35"/>
+      <line x1="55" y1="35" x2="55" y2="28"/>
+      <line x1="55" y1="28" x2="15" y2="28"/>
+      <line x1="83" y1="44" x2="50" y2="44"/>
+      <line x1="50" y1="44" x2="18" y2="44"/>
+      <line x1="35" y1="44" x2="35" y2="54"/>
+      <line x1="35" y1="54" x2="12" y2="54"/>
+      <line x1="82" y1="53" x2="48" y2="53"/>
+      <line x1="48" y1="53" x2="16" y2="53"/>
+      <line x1="28" y1="53" x2="28" y2="63"/>
+      <line x1="28" y1="63" x2="8" y2="63"/>
+      <line x1="84" y1="62" x2="52" y2="62"/>
+      <line x1="52" y1="62" x2="20" y2="62"/>
+      <line x1="90" y1="68" x2="55" y2="80"/>
+      <line x1="55" y1="80" x2="20" y2="80"/>
+      <line x1="38" y1="80" x2="38" y2="90"/>
+    </g>
+    <!-- Donut dots -->
+    <circle cx="20" cy="35" r="3" fill="#60A5FA"/>
+    <circle cx="20" cy="35" r="1.2" fill="#040B18"/>
+    <circle cx="15" cy="28" r="3" fill="#60A5FA"/>
+    <circle cx="15" cy="28" r="1.2" fill="#040B18"/>
+    <circle cx="18" cy="44" r="3" fill="#60A5FA"/>
+    <circle cx="18" cy="44" r="1.2" fill="#040B18"/>
+    <circle cx="12" cy="54" r="3" fill="#60A5FA"/>
+    <circle cx="12" cy="54" r="1.2" fill="#040B18"/>
+    <circle cx="16" cy="53" r="3" fill="#60A5FA"/>
+    <circle cx="16" cy="53" r="1.2" fill="#040B18"/>
+    <circle cx="8" cy="63" r="3" fill="#60A5FA"/>
+    <circle cx="8" cy="63" r="1.2" fill="#040B18"/>
+    <circle cx="20" cy="62" r="3" fill="#60A5FA"/>
+    <circle cx="20" cy="62" r="1.2" fill="#040B18"/>
+    <circle cx="20" cy="80" r="3" fill="#60A5FA"/>
+    <circle cx="20" cy="80" r="1.2" fill="#040B18"/>
+    <circle cx="38" cy="90" r="3" fill="#60A5FA"/>
+    <circle cx="38" cy="90" r="1.2" fill="#040B18"/>
   </g>
 </svg>
