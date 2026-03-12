@@ -58,35 +58,8 @@ export default function HowItWorks() {
               </div>
             ))}
           </div>
-          <div className="reveal-right">
-            <div className="terminal">
-              <div className="term-bar">
-                <div className="term-dots">
-                  <div className="term-dot" style={{ background: "#FF5F57" }} />
-                  <div className="term-dot" style={{ background: "#FEBC2E" }} />
-                  <div className="term-dot" style={{ background: "#28C840" }} />
-                </div>
-                <span className="term-title">xsee-cli — live scan — aws/eu-central-1</span>
-                <div className="term-indicator">Scanning</div>
-              </div>
-              <div className="term-output" id="termOutput">
-                <span className="term-cursor" />
-              </div>
-              <div className="term-footer">
-                <div className="tf-cell">
-                  <div className="tf-num" style={{ color: "var(--sky-light)" }}>847</div>
-                  <div className="tf-lbl">Assets</div>
-                </div>
-                <div className="tf-cell">
-                  <div className="tf-num" style={{ color: "var(--orange-light)" }}>3</div>
-                  <div className="tf-lbl">Critical</div>
-                </div>
-                <div className="tf-cell">
-                  <div className="tf-num" style={{ color: "var(--yellow-light)" }}>1</div>
-                  <div className="tf-lbl">Optimal Fix</div>
-                </div>
-              </div>
-            </div>
+          <div className="reveal-right" aria-hidden>
+            {/* Terminal moved to TerminalSection; #how anchor preserved for nav */}
           </div>
         </div>
       </div>

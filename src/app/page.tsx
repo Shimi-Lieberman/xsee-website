@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import TrustStrip from "@/components/TrustStrip";
 import ProblemSolution from "@/components/ProblemSolution";
 import StatsBand from "@/components/StatsBand";
+import TerminalSection from "@/components/TerminalSection";
 import HowItWorks from "@/components/HowItWorks";
 import EnginesGrid from "@/components/EnginesGrid";
 import ComparisonTable from "@/components/ComparisonTable";
@@ -28,7 +29,8 @@ export default function Home() {
         <div className="sec-transition sec-dark-to-light" />
         <ProblemSolution />
         <StatsBand />
-        <div className="sec-transition sec-light-to-tint" />
+        <TerminalSection />
+        <div className="sec-transition sec-tint-to-dark" style={{ background: "linear-gradient(to bottom,#040B18,#040B18)" }} />
         <HowItWorks />
         <div className="sec-transition sec-dark-to-light" />
         <EnginesGrid />

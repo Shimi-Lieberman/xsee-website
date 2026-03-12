@@ -47,8 +47,22 @@ export default function Hero() {
       <div className="container">
         <div className="hero-body">
           <div className="hero-left">
+            <div className="hero-proof-strip">
+              <div className="hps-item">
+                <div className="hps-dot" style={{ background: "var(--green)" }} />
+                Early Access Open
+              </div>
+              <div className="hps-item">
+                <div className="hps-dot" style={{ background: "var(--sky)" }} />
+                Read-only · No agents · No code deployed
+              </div>
+              <div className="hps-item">
+                <div className="hps-dot" style={{ background: "var(--yellow)" }} />
+                Report delivered in 30 min
+              </div>
+            </div>
             <div className="hero-eyebrow">
-              <span className="badge badge-dot eyebrow" style={{ background: "rgba(14,165,233,0.1)", color: "var(--sky-light)", borderColor: "rgba(14,165,233,0.25)" }}>
+              <span className="badge badge-dot eyebrow" style={{ background: "rgba(74,222,128,0.08)", color: "var(--brand)", borderColor: "rgba(74,222,128,0.22)" }}>
                 Cloud Exposure Intelligence
               </span>
             </div>

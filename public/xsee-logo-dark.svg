@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" fill="none" width="200" height="56">
-  <!-- Dark background version: white text, green shield, high contrast -->
-  <path d="M10 8v16l22 14 22-14V8L32 4 10 8z" stroke="#16a34a" stroke-width="1.5" fill="rgba(22,163,74,0.2)" stroke-linejoin="round"/>
-  <text x="58" y="38" font-family="system-ui, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#ffffff">XSEE</text>
-  <text x="58" y="52" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="500" fill="rgba(255,255,255,0.85)" letter-spacing="0.08em">TRUST NOTHING. PROVE EVERYTHING.</text>
-</svg>

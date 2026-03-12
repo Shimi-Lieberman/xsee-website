@@ -141,16 +141,9 @@ footer a:hover { color: #22c55e; }
 
 ---
 
-## Logo instances — use xsee-logo.svg everywhere
+## Logo
 
-| Location | Specs |
-|----------|-------|
-| Nav | 32px height, green glow drop-shadow |
-| Hero | 320px width, green glow |
-| CTA | 200px width |
-| Footer | 36px height |
-
-The logo is horizontal: green shield + "XSEE" + tagline. Works directly on light backgrounds. No container needed.
+The site uses the current temporary logo only: inline SVG (shield + check) and wordmark "XSEE" in the Nav and Footer. Do not reintroduce legacy logo image files (xsee-logo.svg, xsee-logo-light.svg, xsee-logo-dark.*).
 
 ---
 

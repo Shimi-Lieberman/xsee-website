@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 44" fill="none" width="160" height="44">
-  <!-- Light-mode: green shield + black wordmark (for white backgrounds) -->
-  <path d="M8 6v14l20 12 20-12V6L28 2 8 6z" stroke="#16a34a" stroke-width="1.5" fill="rgba(22,163,74,0.12)" stroke-linejoin="round"/>
-  <text x="56" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#0F172A">XSEE</text>
-</svg>
