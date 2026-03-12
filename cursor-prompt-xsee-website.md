@@ -128,7 +128,7 @@ Rename `.gold` to `.green`:
 ## Footer hover
 
 ```css
-footer a:hover { color: #22c55e; }
+footer a:hover { color: var(--brand); }
 ```
 
 ---
@@ -136,7 +136,7 @@ footer a:hover { color: #22c55e; }
 ## Nav brand text
 
 ```css
-.nav-brand { color: #22c55e; }
+.nav-brand { color: var(--brand); }
 ```
 
 ---

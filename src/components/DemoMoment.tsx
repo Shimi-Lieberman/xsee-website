@@ -130,7 +130,7 @@ function AttackPathDemo() {
         </div>
         <button
           type="button"
-          className="rounded-lg bg-[#22C55E] px-4 py-2 text-sm font-semibold text-white shadow-[0_2px_8px_rgba(34,197,94,0.35)] transition-all hover:bg-[#16A34A] hover:shadow-[0_4px_12px_rgba(34,197,94,0.4)]"
+          className="rounded-lg bg-[#3B82F6] px-4 py-2 text-sm font-semibold text-white shadow-[0_2px_8px_rgba(59,130,246,0.35)] transition-all hover:bg-[#1D4ED8] hover:shadow-[0_4px_12px_rgba(59,130,246,0.4)]"
         >
           Fix Available
         </button>

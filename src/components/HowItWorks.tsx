@@ -35,7 +35,7 @@ const STEP_CONFIG = [
   { status: "LIVE VALIDATED", color: "#F97316", activeNodes: ["hn-internet", "hn-lb", "hn-ec2"], activeEdges: ["he-inet-lb", "he-lb-ec2"] },
   { status: "ESCALATION", color: "#EAB308", activeNodes: ["hn-internet", "hn-lb", "hn-ec2", "hn-sg", "hn-iam"], activeEdges: ["he-inet-lb", "he-lb-ec2", "he-ec2-sg", "he-sg-iam"] },
   { status: "BREACH CONFIRMED", color: "#EF4444", activeNodes: ["hn-internet", "hn-lb", "hn-ec2", "hn-sg", "hn-iam", "hn-rds"], activeEdges: ["he-inet-lb", "he-lb-ec2", "he-ec2-sg", "he-sg-iam", "he-iam-rds"] },
-  { status: "REMEDIATED ✓", color: "#22C55E", activeNodes: ["hn-internet", "hn-lb", "hn-ec2"], activeEdges: ["he-inet-lb", "he-lb-ec2"], dimNodes: ["hn-sg", "hn-iam", "hn-rds"], shieldOn: "hn-sg" },
+  { status: "REMEDIATED ✓", color: "#2563EB", activeNodes: ["hn-internet", "hn-lb", "hn-ec2"], activeEdges: ["he-inet-lb", "he-lb-ec2"], dimNodes: ["hn-sg", "hn-iam", "hn-rds"], shieldOn: "hn-sg" },
 ];
 
 const SCAN_LINES = [
@@ -212,7 +212,7 @@ export default function HowItWorks() {
               <div className="hiw-chrome-dots">
                 <div className="hiw-chrome-dot" style={{ background: "#EF4444" }} />
                 <div className="hiw-chrome-dot" style={{ background: "#F59E0B" }} />
-                <div className="hiw-chrome-dot" style={{ background: "#22C55E" }} />
+                <div className="hiw-chrome-dot" style={{ background: "#2563EB" }} />
               </div>
               <div className="hiw-chrome-title">XSEE · Attack Intelligence Graph</div>
               <div
@@ -278,12 +278,12 @@ export default function HowItWorks() {
                         <g transform={`translate(${node.cx - 14}, ${node.cy - 14})`}>
                           <path
                             d="M14 2L4 6v8c0 5.2 4.2 9.8 10 11.5 5.8-1.7 10-6.3 10-11.5V6L14 2z"
-                            fill="rgba(34,197,94,0.2)"
-                            stroke="#22C55E"
+                            fill="rgba(37,99,235,0.2)"
+                            stroke="#2563EB"
                             strokeWidth={1.5}
                             strokeLinejoin="round"
                           />
-                          <text x={14} y={14} textAnchor="middle" fill="#22C55E" fontSize={10} fontWeight="bold">
+                          <text x={14} y={14} textAnchor="middle" fill="#2563EB" fontSize={10} fontWeight="bold">
                             ✓
                           </text>
                         </g>

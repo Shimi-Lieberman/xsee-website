@@ -24,7 +24,7 @@ const engines = [
     description: "3 strategies per path. Terraform, CLI, CloudForm.",
     tag: "Remediation Engine",
     icon: Wrench,
-    color: "#22C55E",
+    color: "#2563EB",
   },
   {
     title: "Intelligent Correlation",

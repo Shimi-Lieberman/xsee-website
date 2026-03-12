@@ -14,7 +14,7 @@ const METRICS = [
     display: "AWS API",
     label: "Evidence per path",
     description: "Each hop backed by IAM, EC2, network, and resource API calls—not assumptions.",
-    color: "#22C55E",
+    color: "#2563EB",
   },
   {
     display: "3 formats",

@@ -7,22 +7,7 @@ export default function Nav() {
       <div className="container">
         <div className="nav-inner">
           <Link href="#" className="nav-logo">
-            <div className="logo-icon">
-              <Logo />
-            </div>
-            <span className="logo-wordmark">
-              <em
-                style={{
-                  WebkitTextFillColor: "transparent",
-                  background: "linear-gradient(135deg,#86EFAC 0%,#4ADE80 40%,#16A34A 100%)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  fontStyle: "normal",
-                }}
-              >
-                XSEE
-              </em>
-            </span>
+            <Logo height={32} />
           </Link>
           <nav className="nav-links">
             <Link href="#how" className="nav-link">

@@ -43,7 +43,7 @@ function Cell({
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
         >
-          <Check className="mx-auto h-6 w-6 text-[#22C55E]" />
+          <Check className="mx-auto h-6 w-6 text-[#2563EB]" />
         </motion.span>
       </td>
     );

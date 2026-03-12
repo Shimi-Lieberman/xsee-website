@@ -227,8 +227,8 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
                 <stop offset="100%" stopColor="rgba(239,68,68,0.9)" />
               </linearGradient>
               <linearGradient id={safeGradId} x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(34,197,94,0.6)" />
-                <stop offset="100%" stopColor="rgba(34,197,94,0.9)" />
+                <stop offset="0%" stopColor="rgba(37,99,235,0.6)" />
+                <stop offset="100%" stopColor="rgba(37,99,235,0.9)" />
               </linearGradient>
             </defs>
             {INFRA_EDGES.map(([a, b], i) => {
@@ -259,14 +259,14 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
             {INFRA_NODES.map((node, i) => {
               const onPath = ATTACK_PATH_SET.has(i);
               const fill = showPrevention && onPath
-                ? "rgba(34,197,94,0.75)"
+                ? "rgba(37,99,235,0.75)"
                 : showAttackPath && onPath
                   ? "rgba(239,68,68,0.85)"
                   : showInfra
                     ? "rgba(96,165,250,0.3)"
                     : "rgba(148,163,184,0.18)";
               const stroke = showPrevention && onPath
-                ? "rgba(34,197,94,0.95)"
+                ? "rgba(37,99,235,0.95)"
                 : showAttackPath && onPath
                   ? "rgba(239,68,68,1)"
                   : "rgba(148,163,184,0.35)";

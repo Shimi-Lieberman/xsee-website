@@ -37,13 +37,13 @@
   --red-dim: rgba(239, 68, 68, 0.12);
   --green: #10B981;
   --green-dim: rgba(16, 185, 129, 0.12);
-  /* XSEE brand green (logo) */
-  --brand: #4ADE80;
-  --brand-mid: #22C55E;
-  --brand-deep: #16A34A;
-  --brand-dim: rgba(74, 222, 128, 0.1);
-  --brand-border: rgba(74, 222, 128, 0.22);
-  --brand-glow: rgba(74, 222, 128, 0.35);
+  /* XSEE brand blue (logo) */
+  --brand: #3B82F6;
+  --brand-mid: #2563EB;
+  --brand-deep: #1D4ED8;
+  --brand-dim: rgba(59, 130, 246, 0.1);
+  --brand-border: rgba(59, 130, 246, 0.22);
+  --brand-glow: rgba(59, 130, 246, 0.35);
   --warm-grad: linear-gradient(135deg, #F59E0B, #EA6C0A);
   --amber-border: rgba(245, 158, 11, 0.28);
   --orange-border: rgba(234, 108, 10, 0.28);
@@ -293,14 +293,14 @@ section { position: relative; }
 .step[data-step="1"].active::before { background: #F97316; }
 .step[data-step="2"].active::before { background: #EAB308; }
 .step[data-step="3"].active::before { background: #EF4444; }
-.step[data-step="4"].active::before { background: #22C55E; }
+.step[data-step="4"].active::before { background: #2563EB; }
 .step:hover:not(.active) { background: rgba(255,255,255,0.02); }
 .step-n { font-family: var(--font-mono); font-size: 11px; color: var(--blue-light); width: 22px; flex-shrink: 0; padding-top: 2px; font-weight: 500; }
 .step-content h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; letter-spacing: -0.01em; }
 .step-content p { font-size: 13px; line-height: 1.6; }
 /* How It Works — graph card (right column) */
 .hiw-graph-wrap { position: sticky; top: 120px; width: 100%; }
-.hiw-graph-card { background: #0D1117; border: 1px solid rgba(74,222,128,0.15); border-radius: 16px; overflow: hidden; padding: 0; }
+.hiw-graph-card { background: #0D1117; border: 1px solid rgba(59,130,246,0.15); border-radius: 16px; overflow: hidden; padding: 0; }
 .hiw-chrome { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: rgba(0,0,0,0.3); border-bottom: 1px solid rgba(255,255,255,0.06); }
 .hiw-chrome-dots { display: flex; gap: 6px; }
 .hiw-chrome-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -340,8 +340,8 @@ section { position: relative; }
 /* Terminal section (standalone Live Intelligence block) */
 .sec-terminal { background: #040B18; padding: 100px 0; overflow: hidden; }
 .term-wrap { max-width: 860px; margin: 0 auto; padding: 0 32px; }
-.term-window { background: #0D1117; border: 1px solid rgba(74,222,128,0.18); border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 1px rgba(74,222,128,0.08), 0 24px 64px rgba(0,0,0,0.7), 0 0 80px rgba(74,222,128,0.06); }
-.term-chrome { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: #161B22; border-bottom: 1px solid rgba(74,222,128,0.1); }
+.term-window { background: #0D1117; border: 1px solid rgba(59,130,246,0.18); border-radius: 14px; overflow: hidden; box-shadow: 0 0 0 1px rgba(59,130,246,0.08), 0 24px 64px rgba(0,0,0,0.7), 0 0 80px rgba(59,130,246,0.06); }
+.term-chrome { display: flex; align-items: center; gap: 10px; padding: 12px 18px; background: #161B22; border-bottom: 1px solid rgba(59,130,246,0.1); }
 .term-dots { display: flex; gap: 6px; }
 .term-dot.red { background: #FF5F57; }
 .term-dot.yellow { background: #FEBC2E; }
@@ -352,7 +352,7 @@ section { position: relative; }
 .term-body { padding: 20px 24px; height: 340px; overflow-y: auto; scroll-behavior: smooth; font-family: var(--font-mono); font-size: 12px; line-height: 1.8; }
 .term-body::-webkit-scrollbar { width: 4px; }
 .term-body::-webkit-scrollbar-track { background: transparent; }
-.term-body::-webkit-scrollbar-thumb { background: rgba(74,222,128,0.2); border-radius: 2px; }
+.term-body::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.2); border-radius: 2px; }
 .term-body .tl { display: flex; gap: 12px; align-items: baseline; opacity: 0; transform: translateX(-8px); animation: termLineIn 0.25s ease forwards; }
 @keyframes termLineIn { to { opacity: 1; transform: translateX(0); } }
 .term-body .term-cursor { background: var(--brand); margin-left: 4px; width: 8px; height: 14px; border-radius: 1px; }

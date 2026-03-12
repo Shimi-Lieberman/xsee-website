@@ -195,8 +195,8 @@ function StoryViz({ activeStep }: { activeStep: number }) {
                 <stop offset="100%" stopColor="#EF4444" />
               </linearGradient>
               <linearGradient id="storyBlockedGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#22C55E" />
-                <stop offset="100%" stopColor="#16A34A" />
+                <stop offset="0%" stopColor="#2563EB" />
+                <stop offset="100%" stopColor="#1D4ED8" />
               </linearGradient>
             </defs>
 
@@ -209,7 +209,7 @@ function StoryViz({ activeStep }: { activeStep: number }) {
               const pathD = `M ${n1.x} ${n1.y} L ${n2.x} ${n2.y}`;
               const strokeColor = isAttackEdge
                 ? isPrevention
-                  ? "rgba(34,197,94,0.3)"
+                  ? "rgba(37,99,235,0.3)"
                   : showAttackPath
                     ? "url(#storyAttackGrad)"
                     : "rgba(255,255,255,0.12)"
@@ -298,14 +298,14 @@ function StoryViz({ activeStep }: { activeStep: number }) {
                   animate={{
                     opacity: isOnPath && showAttackPath && !isPrevention ? [0.9, 1, 0.9] : 1,
                     borderColor: remediated
-                      ? "#22C55E"
+                      ? "#2563EB"
                       : isOnPath && showAttackPath && !isPrevention
                         ? "#EF4444"
                         : isOnPath && showAttackPath
-                          ? "#22C55E"
+                          ? "#2563EB"
                           : "#475569",
                     boxShadow: remediated
-                      ? "0 0 16px rgba(34,197,94,0.45)"
+                      ? "0 0 16px rgba(37,99,235,0.45)"
                       : isOnPath && showAttackPath && !isPrevention
                         ? "0 0 16px rgba(239,68,68,0.45)"
                         : "0 0 6px rgba(255,255,255,0.05)",
@@ -318,17 +318,17 @@ function StoryViz({ activeStep }: { activeStep: number }) {
                   }}
                 >
                   {remediated ? (
-                    <ShieldCheck className="h-5 w-5 text-[#22C55E] sm:h-6 sm:w-6" />
+                    <ShieldCheck className="h-5 w-5 text-[#2563EB] sm:h-6 sm:w-6" />
                   ) : (
                     <node.icon
                       className="h-4 w-4 sm:h-5 sm:w-5"
                       style={{
                         color: remediated
-                          ? "#22C55E"
+                          ? "#2563EB"
                           : isOnPath && showAttackPath && !isPrevention
                             ? "#EF4444"
                             : isOnPath && showAttackPath
-                              ? "#22C55E"
+                              ? "#2563EB"
                               : node.color,
                       }}
                     />
@@ -346,10 +346,10 @@ function StoryViz({ activeStep }: { activeStep: number }) {
               initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.15 }}
-              className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#22C55E]/15 px-3 py-2 ring-1 ring-[#22C55E]/30"
+              className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#2563EB]/15 px-3 py-2 ring-1 ring-[#2563EB]/30"
             >
-              <ShieldCheck className="h-3.5 w-3.5 text-[#22C55E]" />
-              <span className="text-[10px] font-semibold tracking-tight text-[#22C55E]">
+              <ShieldCheck className="h-3.5 w-3.5 text-[#2563EB]" />
+              <span className="text-[10px] font-semibold tracking-tight text-[#2563EB]">
                 Attack Path Neutralized
               </span>
             </motion.div>

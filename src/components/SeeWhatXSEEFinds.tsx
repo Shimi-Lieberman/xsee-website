@@ -129,7 +129,7 @@ export default function SeeWhatXSEEFinds() {
                 <div className="flex items-center gap-2 border-b border-slate-700/80 px-4 py-3">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#EF4444]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[#F97316]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#22C55E]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#2563EB]" />
                   <span className="ml-2 text-xs text-slate-500">
                     xsee scan —provider {cloud}
                   </span>
@@ -145,7 +145,7 @@ export default function SeeWhatXSEEFinds() {
                       transition={{ duration: 0.2 }}
                       className="flex items-center gap-2 py-0.5"
                     >
-                      <span className="text-[#22C55E]">$</span>
+                      <span className="text-[#2563EB]">$</span>
                       <span className="text-slate-300">{line}</span>
                       {currentLineIndex === i && (
                         <motion.span

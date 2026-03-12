@@ -62,7 +62,7 @@ export default function Hero() {
               </div>
             </div>
             <div className="hero-eyebrow">
-              <span className="badge badge-dot eyebrow" style={{ background: "rgba(74,222,128,0.08)", color: "var(--brand)", borderColor: "rgba(74,222,128,0.22)" }}>
+              <span className="badge badge-dot eyebrow" style={{ background: "rgba(59,130,246,0.08)", color: "var(--brand)", borderColor: "rgba(59,130,246,0.22)" }}>
                 Cloud Exposure Intelligence
               </span>
             </div>

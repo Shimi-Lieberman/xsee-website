@@ -162,8 +162,8 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
               <stop offset="100%" stopColor="#EF4444" />
             </linearGradient>
             <linearGradient id="remediationGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#22C55E" />
-              <stop offset="100%" stopColor="#16A34A" />
+              <stop offset="0%" stopColor="#2563EB" />
+              <stop offset="100%" stopColor="#1D4ED8" />
             </linearGradient>
           </defs>
           {/* All edges - faint */}
@@ -263,14 +263,14 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
                 className="flex h-12 w-12 items-center justify-center rounded-xl border-2 bg-[#0B1C3D] shadow-inner"
                 animate={{
                   borderColor: isRemediated
-                    ? "#22C55E"
+                    ? "#2563EB"
                     : isCrownJewel
                       ? "#EF4444"
                       : isActive
                         ? "#3B82F6"
                         : "#475569",
                   boxShadow: isRemediated
-                    ? "0 0 24px rgba(34,197,94,0.5)"
+                    ? "0 0 24px rgba(37,99,235,0.5)"
                     : isCrownJewel
                       ? "0 0 28px rgba(239,68,68,0.6)"
                       : isActive
@@ -282,7 +282,7 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
                 <node.icon
                   className="h-6 w-6"
                   style={{
-                    color: isRemediated ? "#22C55E" : isCrownJewel ? "#EF4444" : isActive ? "#3B82F6" : "#64748B",
+                    color: isRemediated ? "#2563EB" : isCrownJewel ? "#EF4444" : isActive ? "#3B82F6" : "#64748B",
                   }}
                 />
               </motion.div>
@@ -298,10 +298,10 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
           <motion.div
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#22C55E]/15 px-3 py-2 ring-1 ring-[#22C55E]/30"
+            className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2 rounded-full bg-[#2563EB]/15 px-3 py-2 ring-1 ring-[#2563EB]/30"
           >
-            <ShieldCheck className="h-3.5 w-3.5 text-[#22C55E]" />
-            <span className="text-[10px] font-semibold tracking-tight text-[#22C55E]">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#2563EB]" />
+            <span className="text-[10px] font-semibold tracking-tight text-[#2563EB]">
               Remediation applied
             </span>
           </motion.div>
@@ -328,9 +328,9 @@ function LinePulse({
   return (
     <motion.circle
       r="1.5"
-      fill={green ? "#22C55E" : "#EF4444"}
+      fill={green ? "#2563EB" : "#EF4444"}
       style={{
-        filter: green ? "drop-shadow(0 0 3px #22C55E)" : "drop-shadow(0 0 3px #EF4444)",
+        filter: green ? "drop-shadow(0 0 3px #2563EB)" : "drop-shadow(0 0 3px #EF4444)",
       }}
       initial={{ cx: from.x, cy: from.y }}
       animate={{ cx: [from.x, to.x], cy: [from.y, to.y] }}
