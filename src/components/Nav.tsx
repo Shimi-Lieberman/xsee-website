@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Logo from "@/components/Logo";
 
 export default function Nav() {
   return (
@@ -7,7 +6,7 @@ export default function Nav() {
       <div className="container">
         <div className="nav-inner">
           <Link href="#" className="nav-logo">
-            <Logo height={32} />
+            <span style={{ fontWeight: 800, fontSize: "18px", letterSpacing: "-0.02em", color: "#ffffff" }}>XSEE</span>
           </Link>
           <nav className="nav-links">
             <Link href="#how" className="nav-link">
