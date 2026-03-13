@@ -8,7 +8,6 @@ export default function Nav() {
           <Link href="#" className="nav-logo">
             <img
               src="/logo-primary-transparent.svg"
-              onError={(e) => console.error("Logo failed to load:", e)}
               height={36}
               style={{ height: "36px", width: "auto" }}
               alt="XSEE"
