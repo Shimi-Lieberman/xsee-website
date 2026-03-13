@@ -6,7 +6,13 @@ export default function Nav() {
       <div className="container">
         <div className="nav-inner">
           <Link href="#" className="nav-logo">
-            <span style={{ fontWeight: 800, fontSize: "18px", letterSpacing: "-0.02em", color: "#ffffff" }}>XSEE</span>
+            <img
+              src="/logo-primary-transparent.svg"
+              onError={(e) => console.error("Logo failed to load:", e)}
+              height={36}
+              style={{ height: "36px", width: "auto" }}
+              alt="XSEE"
+            />
           </Link>
           <nav className="nav-links">
             <Link href="#how" className="nav-link">
