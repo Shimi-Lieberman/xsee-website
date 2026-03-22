@@ -2,7 +2,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+Create `.env.local` in the project root with the following variables:
+
+```env
+# Required for the AI chat widget
+ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Optional: Database (Neon) for demo requests / free scan
+DATABASE_URL=postgresql://...
+
+# Optional: Email (SES) for contact form
+# SES_SMTP_HOST, SES_SMTP_PORT, SES_SMTP_USER, SES_SMTP_PASS, SES_FROM_EMAIL
+```
+
+Then run the development server:
 
 ```bash
 npm run dev

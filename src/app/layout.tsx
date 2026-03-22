@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import "./xsee-elite.css";
+import ChatWidget from "@/components/ChatWidget";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -64,6 +65,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         {children}
+        <ChatWidget />
       </body>
     </html>
   );
