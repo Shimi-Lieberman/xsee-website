@@ -142,30 +142,42 @@ export default function Footer() {
             <p className="footer-contact-success">Thanks! We&apos;ll get back to you soon.</p>
           ) : (
             <form onSubmit={handleContactSubmit} className="footer-contact-form">
-              <input
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                disabled={status === "loading"}
-                className="footer-contact-input"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={status === "loading"}
-                className="footer-contact-input"
-              />
-              <textarea
-                placeholder="Message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                disabled={status === "loading"}
-                rows={2}
-                className="footer-contact-input footer-contact-textarea"
-              />
+              <div className="footer-contact-field">
+                <label htmlFor="footer-name" className="footer-contact-label">Name</label>
+                <input
+                  id="footer-name"
+                  type="text"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  disabled={status === "loading"}
+                  className="footer-contact-input"
+                />
+              </div>
+              <div className="footer-contact-field">
+                <label htmlFor="footer-email" className="footer-contact-label">Email</label>
+                <input
+                  id="footer-email"
+                  type="email"
+                  placeholder="you@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={status === "loading"}
+                  className="footer-contact-input"
+                />
+              </div>
+              <div className="footer-contact-field">
+                <label htmlFor="footer-message" className="footer-contact-label">Message</label>
+                <textarea
+                  id="footer-message"
+                  placeholder="How can we help?"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  disabled={status === "loading"}
+                  rows={2}
+                  className="footer-contact-input footer-contact-textarea"
+                />
+              </div>
               <button type="submit" disabled={status === "loading"} className="footer-contact-btn">
                 {status === "loading" ? "Sending..." : "Send"}
               </button>

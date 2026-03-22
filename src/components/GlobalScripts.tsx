@@ -75,17 +75,19 @@ export default function GlobalScripts() {
             const target = +((el as HTMLElement).dataset.target ?? 0);
             const dur = 1600;
             const start = performance.now();
+            const formatter = target >= 1000 ? (n: number) => n.toLocaleString() : (n: number) => String(n);
             const tick = (now: number) => {
               const p = Math.min((now - start) / dur, 1);
               const ease = 1 - Math.pow(1 - p, 3);
-              (el as HTMLElement).textContent = String(Math.round(ease * target));
+              const val = Math.round(ease * target);
+              (el as HTMLElement).textContent = formatter(val);
               if (p < 1) requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
           });
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.1, rootMargin: "0px 0px 80px 0px" }
     );
     document.querySelectorAll(".stat-cell").forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -199,7 +201,7 @@ export default function GlobalScripts() {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.15, rootMargin: "0px 0px 80px 0px" }
     );
     const statsSection = document.querySelector(".shock-stats-section");
     if (statsSection) statsObserver.observe(statsSection);
