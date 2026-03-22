@@ -11,6 +11,7 @@ export default function Nav() {
               width={114}
               height={36}
               alt="XSEE"
+              style={{ background: "transparent" }}
             />
           </Link>
           <nav className="nav-links">
