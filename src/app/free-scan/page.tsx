@@ -129,7 +129,8 @@ export default function FreeScanPage() {
               <h3 className="form-title">Request your free scan</h3>
               {status === "success" ? (
                 <p className="free-scan-success">
-                  Scan queued — you&apos;ll receive your report at <strong>{formData.email}</strong> within 30 minutes.
+                  Your scan is queued — you&apos;ll receive your Breach Proof Report at{" "}
+                  <strong>{formData.email}</strong> within 30 minutes.
                 </p>
               ) : (
                 <form onSubmit={handleSubmit} className="form-fields">
