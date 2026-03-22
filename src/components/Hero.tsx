@@ -47,33 +47,35 @@ export default function Hero() {
       <div className="container">
         <div className="hero-body">
           <div className="hero-left">
-            <div className="hero-proof-strip">
-              <div className="hps-item">
-                <div className="hps-dot" style={{ background: "var(--green)" }} />
-                Early Access Open
+            <div className="hero-top-block">
+              <div className="hero-proof-strip">
+                <div className="hps-item">
+                  <div className="hps-dot" style={{ background: "var(--green)" }} />
+                  Early Access Open
+                </div>
+                <div className="hps-item">
+                  <div className="hps-dot" style={{ background: "var(--sky)" }} />
+                  Read-only · No agents · No code deployed
+                </div>
+                <div className="hps-item">
+                  <div className="hps-dot" style={{ background: "var(--yellow)" }} />
+                  Report delivered in 30 min
+                </div>
               </div>
-              <div className="hps-item">
-                <div className="hps-dot" style={{ background: "var(--sky)" }} />
-                Read-only · No agents · No code deployed
+              <div className="hero-eyebrow">
+                <span className="badge badge-dot eyebrow" style={{ background: "rgba(255,255,255,0.1)", color: "#e2e8f0", borderColor: "rgba(255,255,255,0.25)" }}>
+                  Cloud Exposure Intelligence
+                </span>
               </div>
-              <div className="hps-item">
-                <div className="hps-dot" style={{ background: "var(--yellow)" }} />
-                Report delivered in 30 min
-              </div>
-            </div>
-            <div className="hero-eyebrow">
-              <span className="badge badge-dot eyebrow" style={{ background: "rgba(59,130,246,0.08)", color: "var(--brand)", borderColor: "rgba(59,130,246,0.22)" }}>
-                Cloud Exposure Intelligence
-              </span>
-            </div>
-            <h1 className="display-xl hero-headline">
+              <h1 className="display-xl hero-headline">
               The only platform that{" "}
               <span className="blue">
                 proves every
                 <br />
-                <span className="warm-word">attack path</span> is real.
+                <span className="warm-word">attack path</span>               is real.
               </span>
-            </h1>
+              </h1>
+            </div>
             <p className="hero-sub">
               Your scanner found 4,000 alerts. <strong>Three of them lead to your crown jewels.</strong> XSEE builds a live attack graph of your cloud, proves which exposures are genuinely exploitable, and shows exactly which fix breaks the most paths.
             </p>

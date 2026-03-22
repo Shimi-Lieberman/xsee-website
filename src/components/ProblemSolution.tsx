@@ -27,25 +27,25 @@ export default function ProblemSolution() {
               Wiz, Orca, Prisma — they all tell you what could go wrong. Nobody proves what will. Your team spends weeks triaging alerts ranked by CVSS scores that bear no relationship to your actual blast radius.
             </p>
             <ul className="ps-list">
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✕</span>
-                4,000 alerts with no priority signal
+                <span className="ps-item-text">4,000 alerts with no priority signal</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✕</span>
-                CVSS scores disconnected from real blast radius
+                <span className="ps-item-text">CVSS scores disconnected from real blast radius</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✕</span>
-                Weeks of manual triage
+                <span className="ps-item-text">Weeks of manual triage</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✕</span>
-                No proof of exploitability
+                <span className="ps-item-text">No proof of exploitability</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✕</span>
-                Fix anything, fix nothing
+                <span className="ps-item-text">Fix anything, fix nothing</span>
               </li>
             </ul>
           </div>
@@ -59,25 +59,25 @@ export default function ProblemSolution() {
               XSEE builds a live attack graph of your entire cloud — assets, identities, permissions, network edges — then validates which paths actually reach your critical data. Three findings. Real evidence. One fix that breaks them all.
             </p>
             <ul className="ps-list">
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✓</span>
-                3 validated paths to your crown jewels
+                <span className="ps-item-text">3 validated paths to your crown jewels</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✓</span>
-                Live AWS API evidence per hop
+                <span className="ps-item-text">Live AWS API evidence per hop</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✓</span>
-                Results in under 30 minutes
+                <span className="ps-item-text">Results in under 30 minutes</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✓</span>
-                Cryptographic proof package per finding
+                <span className="ps-item-text">Cryptographic proof package per finding</span>
               </li>
-              <li>
+              <li className="ps-item">
                 <span className="ps-icon">✓</span>
-                One fix that eliminates the most risk
+                <span className="ps-item-text">One fix that eliminates the most risk</span>
               </li>
             </ul>
           </div>
