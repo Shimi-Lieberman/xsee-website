@@ -40,6 +40,7 @@ const CARDS = [
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [apiError, setApiError] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -52,18 +53,24 @@ export default function ContactForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("loading");
+    setApiError("");
     try {
       const res = await fetch("/api/demo-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      if (res.ok) {
+      const data = await res.json();
+      if (res.ok && data.success) {
         setStatus("success");
         setFormData({ fullName: "", email: "", company: "", cloudProvider: "", assetCount: "", message: "" });
-      } else setStatus("error");
+      } else {
+        setStatus("error");
+        setApiError(data.error ?? "Something went wrong. Please try again or email demo@xsee.io directly.");
+      }
     } catch {
       setStatus("error");
+      setApiError("Something went wrong. Please try again or email demo@xsee.io directly.");
     }
   }
 
@@ -208,10 +215,9 @@ export default function ContactForm() {
                     }
                   />
                 </div>
-                {status === "error" && (
+                {status === "error" && apiError && (
                   <p className="text-sm text-[var(--red)]">
-                    Something went wrong. Please try again or email demo@xsee.io
-                    directly.
+                    {apiError}
                   </p>
                 )}
                 <div className="form-submit flex flex-col gap-2.5 mt-1">

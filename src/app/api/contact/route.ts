@@ -5,9 +5,8 @@ import { isValidEmail } from "@/lib/validation";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const name = (body.fullName ?? body.name ?? "").trim();
+    const name = (body.name ?? "").trim();
     const email = (body.email ?? "").trim();
-    const company = (body.company ?? "").trim();
     const message = (body.message ?? "").trim();
 
     if (!name) {
@@ -19,25 +18,20 @@ export async function POST(request: Request) {
     if (!isValidEmail(email)) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
     }
-    if (!company) {
-      return NextResponse.json({ error: "Company is required" }, { status: 400 });
+    if (!message) {
+      return NextResponse.json({ error: "Message is required" }, { status: 400 });
     }
-
-    const extra =
-      body.cloudProvider || body.assetCount
-        ? `Cloud: ${body.cloudProvider ?? "-"}, Assets: ${body.assetCount ?? "-"}\n\n${message}`
-        : message;
 
     const sql = getSql();
     await sql`
-      INSERT INTO demo_requests (name, email, company, message)
-      VALUES (${name}, ${email}, ${company}, ${extra})
+      INSERT INTO contact_submissions (name, email, message)
+      VALUES (${name}, ${email}, ${message})
     `;
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("Demo request error:", err);
+    console.error("Contact error:", err);
     return NextResponse.json(
-      { error: "Failed to submit demo request" },
+      { error: "Failed to send message" },
       { status: 500 }
     );
   }

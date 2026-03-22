@@ -1,6 +1,66 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Footer() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [error, setError] = useState("");
+
+  async function handleContactSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const n = name.trim();
+    const eVal = email.trim();
+    const m = message.trim();
+    if (!n) {
+      setError("Name is required");
+      setStatus("error");
+      return;
+    }
+    if (!eVal) {
+      setError("Email is required");
+      setStatus("error");
+      return;
+    }
+    if (!EMAIL_REGEX.test(eVal)) {
+      setError("Invalid email format");
+      setStatus("error");
+      return;
+    }
+    if (!m) {
+      setError("Message is required");
+      setStatus("error");
+      return;
+    }
+    setError("");
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: n, email: eVal, message: m }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setStatus("success");
+        setName("");
+        setEmail("");
+        setMessage("");
+      } else {
+        setStatus("error");
+        setError(data.error ?? "Something went wrong");
+      }
+    } catch {
+      setStatus("error");
+      setError("Something went wrong");
+    }
+  }
+
   return (
     <footer className="sec-navy">
       <div className="container">
@@ -69,6 +129,45 @@ export default function Footer() {
               </li>
             </ul>
           </div>
+        </div>
+        <div className="footer-contact">
+          <h4 className="footer-contact-title">Get in touch</h4>
+          {status === "success" ? (
+            <p className="footer-contact-success">Thanks! We&apos;ll get back to you soon.</p>
+          ) : (
+            <form onSubmit={handleContactSubmit} className="footer-contact-form">
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={status === "loading"}
+                className="footer-contact-input"
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status === "loading"}
+                className="footer-contact-input"
+              />
+              <textarea
+                placeholder="Message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                disabled={status === "loading"}
+                rows={2}
+                className="footer-contact-input footer-contact-textarea"
+              />
+              <button type="submit" disabled={status === "loading"} className="btn btn-secondary btn-sm">
+                {status === "loading" ? "Sending..." : "Send"}
+              </button>
+              {status === "error" && error && (
+                <p className="footer-contact-err">{error}</p>
+              )}
+            </form>
+          )}
         </div>
         <div className="footer-bottom">
           <p className="footer-copy">© {new Date().getFullYear()} XSEE. All rights reserved.</p>
