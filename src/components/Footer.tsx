@@ -66,9 +66,14 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <div className="footer-wordmark">
-              X<em>SEE</em>
-            </div>
+            <img
+              src="/logo-primary-transparent.svg"
+              alt="XSEE"
+              className="footer-logo"
+              width={100}
+              height={32}
+              style={{ background: "transparent" }}
+            />
             <p className="footer-tagline">
               Cloud Exposure Intelligence. Discover real attack paths.
               Prove exploitability. Fix what matters.
@@ -160,7 +165,7 @@ export default function Footer() {
                 rows={2}
                 className="footer-contact-input footer-contact-textarea"
               />
-              <button type="submit" disabled={status === "loading"} className="btn btn-secondary btn-sm">
+              <button type="submit" disabled={status === "loading"} className="footer-contact-btn">
                 {status === "loading" ? "Sending..." : "Send"}
               </button>
               {status === "error" && error && (
