@@ -79,7 +79,7 @@ export default function Hero() {
             </p>
             <div className="hero-ctas">
               <Link href="#contact" className="btn btn-primary btn-lg">
-                Request Demo →
+                Free Report →
               </Link>
               <Link href="#how" className="btn btn-secondary btn-lg">
                 See How It Works

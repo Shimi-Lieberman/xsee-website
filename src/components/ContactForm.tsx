@@ -10,7 +10,7 @@ const CARDS = [
         <path d="M9 2L3 9h5l-1 5 6-7H8L9 2Z" stroke="#3B82F6" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" fill="rgba(59,130,246,0.1)" />
       </svg>
     ),
-    title: "Real scan, not a demo",
+    title: "Live environment analysis",
     desc: "We run live analysis on your actual AWS environment — not a staged walkthrough.",
   },
   {
@@ -21,7 +21,7 @@ const CARDS = [
         <circle cx={8} cy={11} r={1} fill="#3B82F6" />
       </svg>
     ),
-    title: "Zero infrastructure changes",
+    title: "Zero-touch access",
     desc: "Read-only IAM role — no agents, no code deployment, nothing installed.",
   },
   {
@@ -33,7 +33,7 @@ const CARDS = [
         <line x1={5} y1={10.5} x2={8.5} y2={10.5} stroke="#3B82F6" strokeWidth={1.2} strokeLinecap="round" />
       </svg>
     ),
-    title: "You keep the report",
+    title: "Full report delivered",
     desc: "Validated attack graph + ranked exposures + fix recommendations. Yours, no strings.",
   },
 ];

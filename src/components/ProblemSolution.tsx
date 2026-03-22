@@ -29,23 +29,23 @@ export default function ProblemSolution() {
             <ul className="ps-list">
               <li>
                 <span className="ps-icon">✕</span>
-                Thousands of findings ranked by theoretical CVSS, not real exploitability
+                4,000 alerts with no priority signal
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                No proof any discovered path actually reaches crown-jewel assets
+                CVSS scores disconnected from real blast radius
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                Security teams burn sprints on findings that don&apos;t chain to a breach
+                Weeks of manual triage
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                Invisible multi-hop paths: IAM → EC2 → S3 → data exfil
+                No proof of exploitability
               </li>
               <li>
                 <span className="ps-icon">✕</span>
-                Fixes applied blind — no verification that defenses actually hold
+                Fix anything, fix nothing
               </li>
             </ul>
           </div>
@@ -61,23 +61,23 @@ export default function ProblemSolution() {
             <ul className="ps-list">
               <li>
                 <span className="ps-icon">✓</span>
-                Live attack graph — every asset, identity, permission and network edge mapped
+                3 validated paths to your crown jewels
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                Validated exploitability — real AWS API calls prove each hop is traversable
+                Live AWS API evidence per hop
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                Crown-jewel reach — only surfaces paths that terminate at sensitive data
+                Results in under 30 minutes
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                Choke-point fix — one change that collapses 6 attack paths simultaneously
+                Cryptographic proof package per finding
               </li>
               <li>
                 <span className="ps-icon">✓</span>
-                Verified closed — re-simulate post-fix to prove the breach path is gone
+                One fix that eliminates the most risk
               </li>
             </ul>
           </div>
