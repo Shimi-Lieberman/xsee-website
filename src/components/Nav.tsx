@@ -8,8 +8,8 @@ export default function Nav() {
           <Link href="#" className="nav-logo">
             <img
               src="/logo-primary-transparent.svg"
+              width={114}
               height={36}
-              style={{ height: "36px", width: "auto" }}
               alt="XSEE"
             />
           </Link>
