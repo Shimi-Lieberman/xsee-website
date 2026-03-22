@@ -162,7 +162,7 @@ section { position: relative; }
 .ann-err { color: var(--red); font-size: 12px; width: 100%; text-align: center; margin-top: 4px; }
 
 /* ━━━ HERO ━━━ */
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 32px 0 80px; position: relative; overflow: hidden; }
+.hero { display: flex; flex-direction: column; justify-content: flex-start; padding: 16px 0 80px; margin-top: -90px; position: relative; overflow: hidden; }
 .hero-mesh { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .hero-mesh::before { content: ""; position: absolute; top: -20%; left: 30%; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 60%); animation: meshFloat 12s ease-in-out infinite; }
 .hero-mesh::after { content: ""; position: absolute; top: 30%; right: -10%; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(249,115,22,0.09) 0%, transparent 65%); animation: meshFloat 16s ease-in-out infinite reverse; }
@@ -456,7 +456,7 @@ section { position: relative; }
 .c-point:hover { border-color: rgba(37,99,235,0.2); background: var(--bg-raised); }
 .c-ico { width: 38px; height: 38px; border-radius: var(--r-md); flex-shrink: 0; background: var(--blue-dim); border: 1px solid var(--blue-border); display: flex; align-items: center; justify-content: center; transition: transform 0.25s var(--ease); }
 .c-point:hover .c-ico { transform: scale(1.08) rotate(-3deg); }
-.c-ttl { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+.c-ttl { font-size: 14px; font-weight: 600; margin-bottom: 3px; color: #0f172a; }
 .c-dsc { font-size: 12px; color: var(--text-muted); }
 .form-box { background: var(--bg-surface); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--r-xl); padding: 40px; position: relative; overflow: hidden; }
 .form-box::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(37,99,235,0.5), transparent); }
