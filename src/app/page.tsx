@@ -26,6 +26,70 @@ export default function Home() {
       <main>
         <Hero />
         <TrustStrip />
+        <section className="shock-stats-section">
+          <p
+            style={{
+              position: "relative",
+              zIndex: 1,
+              textAlign: "center",
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: "0.15em",
+              textTransform: "uppercase",
+              color: "#475569",
+              marginBottom: 48,
+            }}
+          >
+            THE REALITY OF CLOUD SECURITY
+          </p>
+
+          <div className="shock-stats-grid reveal-on-scroll">
+            <div className="shock-stat-cell">
+              <div className="shock-stat-number">
+                <span id="stat-alerts">4,000</span>
+              </div>
+              <p className="shock-stat-label">
+                alerts your scanner found
+              </p>
+              <p className="shock-stat-fine">
+                3 actually reach your crown jewels
+              </p>
+            </div>
+            <div className="shock-stat-cell">
+              <div className="shock-stat-number">
+                <span id="stat-undetected">92</span>
+                <span className="shock-stat-suffix">%</span>
+              </div>
+              <p className="shock-stat-label">
+                of attack paths go undetected by GuardDuty
+              </p>
+              <p className="shock-stat-fine">
+                Source: XSEE validation data
+              </p>
+            </div>
+            <div className="shock-stat-cell">
+              <div className="shock-stat-number">
+                &lt;30
+                <span className="shock-stat-suffix">m</span>
+              </div>
+              <p className="shock-stat-label">
+                to find your first validated breach path
+              </p>
+              <p className="shock-stat-fine">
+                Average across XSEE environments
+              </p>
+            </div>
+          </div>
+
+          <div className="shock-cta-wrap">
+            <p className="shock-cta-headline">
+              See which 3 of your alerts actually matter.
+            </p>
+            <a href="#contact" className="shock-cta-btn">
+              Get Free Risk Assessment →
+            </a>
+          </div>
+        </section>
         <div className="sec-transition sec-dark-to-light" />
         <ProblemSolution />
         <StatsBand />

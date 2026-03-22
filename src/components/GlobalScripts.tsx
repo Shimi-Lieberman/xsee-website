@@ -160,6 +160,57 @@ export default function GlobalScripts() {
   }, []);
 
   useEffect(() => {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((el) => {
+          if (el.isIntersecting) el.target.classList.add("in-view");
+        });
+      },
+      { threshold: 0.15 }
+    );
+    document.querySelectorAll(".reveal-on-scroll").forEach((el) => revealObserver.observe(el));
+
+    const countUp = (
+      id: string,
+      target: number,
+      duration: number,
+      formatter?: (n: number) => string
+    ) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const value = Math.round(ease * target);
+        el.textContent = formatter ? formatter(value) : value.toString();
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            countUp("stat-alerts", 4000, 1800, (n) => n.toLocaleString());
+            countUp("stat-undetected", 92, 1600);
+            statsObserver.disconnect();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    const statsSection = document.querySelector(".shock-stats-section");
+    if (statsSection) statsObserver.observe(statsSection);
+
+    return () => {
+      revealObserver.disconnect();
+      statsObserver.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
     const paths = document.querySelectorAll(".af-path");
     if (!paths.length) return;
     const id = setInterval(() => {

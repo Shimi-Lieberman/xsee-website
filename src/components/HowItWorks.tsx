@@ -185,7 +185,7 @@ export default function HowItWorks() {
 
       <div className="how-grid">
         <div className="hiw-steps">
-          <div className="steps reveal-left">
+          <div className="steps reveal-left reveal-on-scroll">
             {STEPS.map((step, i) => (
               <div
                 key={step.n}
@@ -206,7 +206,7 @@ export default function HowItWorks() {
           </div>
         </div>
 
-        <div className="hiw-graph-wrap reveal-right">
+        <div className="hiw-graph-wrap reveal-right reveal-on-scroll">
           <div className="hiw-graph-card">
             <div className="hiw-chrome">
               <div className="hiw-chrome-dots">

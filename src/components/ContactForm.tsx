@@ -111,8 +111,8 @@ export default function ContactForm() {
               We connect to your AWS account with read-only IAM access, run a full attack graph analysis, and show you the exact paths that reach your crown-jewel assets. You keep the validated report — no commitment required.
             </p>
             <div className="contact-points">
-              {CARDS.map((c) => (
-                <div key={c.title} className="c-point">
+              {CARDS.map((c, i) => (
+                <div key={c.title} className={`c-point reveal-on-scroll ${i === 1 ? "reveal-delay-1" : i === 2 ? "reveal-delay-2" : ""}`}>
                   <div className="c-ico">{c.icon}</div>
                   <div>
                     <div className="c-ttl">{c.title}</div>
@@ -124,7 +124,7 @@ export default function ContactForm() {
           </div>
           <div className="reveal-right">
             <div className="form-box">
-              <h3 className="form-title">Request Your Free Report</h3>
+              <h3 className="form-title">Request Your Free Risk Assessment</h3>
               <p className="form-sub">We&apos;ll reach out within one business day to schedule the scan.</p>
               <form onSubmit={handleSubmit} className="form-fields">
                 <div className="form-row">

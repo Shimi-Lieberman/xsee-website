@@ -81,7 +81,7 @@ export default function Pricing() {
           {PLANS.map((plan, i) => (
             <div
               key={plan.tier}
-              className={`pricing-card reveal-${i === 0 ? "left" : i === 1 ? "scale" : "right"} ${plan.featured ? "featured" : ""}`}
+              className={`pricing-card reveal-on-scroll ${i === 0 ? "" : i === 1 ? "reveal-delay-1" : "reveal-delay-2"} ${plan.featured ? "featured" : ""}`}
             >
               {plan.featured && (
                 <div className="pricing-badge pricing-badge-warm">Most Popular</div>

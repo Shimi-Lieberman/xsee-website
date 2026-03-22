@@ -36,12 +36,16 @@ export default function Nav() {
             </Link>
           </nav>
           <div className="nav-actions">
+            <Link href="/under-attack" className="nav-emergency">
+              <span className="nav-emergency-dot" />
+              Under Attack?
+            </Link>
             <div className="nav-status-pill">
               <div className="nav-status-dot" />
               All Systems Operational
             </div>
             <Link href="#contact" className="btn btn-secondary btn-sm">
-              Free Report
+              Free Risk Assessment
             </Link>
             <Link
               href="https://app.xsee.io"

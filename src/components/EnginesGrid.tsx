@@ -114,7 +114,7 @@ export default function EnginesGrid() {
           {ENGINES.map((e, i) => (
             <div
               key={e.num}
-              className={`engine-card reveal ${i === 2 ? "engine-warm" : ""} ${i === 4 ? "engine-orange" : ""}`}
+              className={`engine-card reveal reveal-on-scroll ${i === 2 ? "engine-warm" : ""} ${i === 4 ? "engine-orange" : ""}`}
               style={{ transitionDelay: i * 0.07 + "s" }}
             >
               <div className="engine-status">Active</div>

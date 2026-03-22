@@ -6,7 +6,7 @@ export default function CTABanner() {
       <div className="container">
         <div className="cta-box cta-box-warm reveal-scale">
           <div className="cta-mesh" />
-          <span className="eyebrow">Free Attack Path Report</span>
+          <span className="eyebrow">Free Risk Assessment</span>
           <h2 className="display-lg">
             See which exposures in
             <br />
