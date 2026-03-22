@@ -24,6 +24,9 @@ export default function Nav() {
             <Link href="#compare" className="nav-link">
               Why XSEE
             </Link>
+            <Link href="/free-scan" className="nav-link">
+              Free Scan
+            </Link>
             <Link href="#pricing" className="nav-link">
               Pricing
             </Link>
