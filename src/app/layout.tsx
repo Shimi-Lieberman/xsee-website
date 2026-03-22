@@ -1,10 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#040B18",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: "#050d1a",
 };
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-sans",
@@ -39,7 +49,7 @@ export const metadata: Metadata = {
   },
 };
 
-const fontVariables = [plusJakarta.variable, ibmPlexMono.variable].join(" ");
+const fontVariables = [inter.variable, plusJakarta.variable, ibmPlexMono.variable].join(" ");
 
 export default function RootLayout({
   children,

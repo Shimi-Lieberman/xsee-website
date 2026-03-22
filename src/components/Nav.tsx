@@ -1,12 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Nav() {
   return (
     <nav id="nav">
       <div className="container">
         <div className="nav-inner">
-          <Link href="#" className="nav-logo">
-            <img
+          <Link href="/" className="nav-logo">
+            <Image
               src="/logo-primary-transparent.svg"
               width={114}
               height={36}
