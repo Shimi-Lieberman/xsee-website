@@ -92,7 +92,7 @@ export default function CloudAttackGraph() {
                     y1={n1.y}
                     x2={n2.x}
                     y2={n2.y}
-                    stroke={isAttackPath ? "rgba(59,130,246,0.3)" : "rgba(255,255,255,0.06)"}
+                    stroke={isAttackPath ? "rgba(255, 27, 141,0.3)" : "rgba(255,255,255,0.06)"}
                     strokeWidth={isAttackPath ? 0.9 : 0.35}
                   />
                 );
@@ -116,7 +116,7 @@ export default function CloudAttackGraph() {
               })}
               <defs>
                 <linearGradient id="attackPathGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#3B82F6" />
+                  <stop offset="0%" stopColor="#FF1B8D" />
                   <stop offset="50%" stopColor="#8B5CF6" />
                   <stop offset="100%" stopColor="#EF4444" />
                 </linearGradient>
@@ -143,21 +143,21 @@ export default function CloudAttackGraph() {
                 >
                   <motion.div
                     className={`flex h-11 w-11 items-center justify-center rounded-xl border-2 bg-[#0B1C3D] shadow-inner ${
-                      onAttackPath ? "border-[#3B82F6]" : "border-slate-600/80"
+                      onAttackPath ? "border-[#FF1B8D]" : "border-slate-600/80"
                     }`}
                     style={{
                       boxShadow: onAttackPath
-                        ? "0 0 16px rgba(59,130,246,0.4)"
+                        ? "0 0 16px rgba(255, 27, 141,0.4)"
                         : "0 0 8px rgba(255,255,255,0.08)",
                     }}
                     whileHover={{
                       scale: 1.1,
-                      boxShadow: "0 0 24px rgba(59,130,246,0.5)",
+                      boxShadow: "0 0 24px rgba(255, 27, 141,0.5)",
                     }}
                   >
                     <node.icon
                       className="h-5 w-5"
-                      style={{ color: onAttackPath ? "#3B82F6" : "#94A3B8" }}
+                      style={{ color: onAttackPath ? "#FF1B8D" : "#94A3B8" }}
                     />
                   </motion.div>
                   <span className="mt-2 text-[10px] font-medium tracking-tight text-slate-300">

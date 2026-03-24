@@ -36,9 +36,9 @@
        box-shadow:0 20px 48px rgba(0,0,0,0.15); }
 }
 @keyframes glow-pulse {
-  0%,100% { box-shadow:0 0 20px rgba(37,99,235,0.3); }
-  50%     { box-shadow:0 0 40px rgba(37,99,235,0.6),
-                       0 0 80px rgba(37,99,235,0.2); }
+  0%,100% { box-shadow:0 0 20px rgba(255, 27, 141,0.3); }
+  50%     { box-shadow:0 0 40px rgba(255, 27, 141,0.6),
+                       0 0 80px rgba(255, 27, 141,0.2); }
 }
 @keyframes emergency-pulse {
   0%,100% { box-shadow:0 0 0 0 rgba(239,68,68,0.4); }
@@ -86,7 +86,7 @@
   background: linear-gradient(
     135deg,
     #F8FAFC 0%,
-    #3B82F6 40%,
+    #FF1B8D 40%,
     #F97316 70%,
     #F8FAFC 100%
   );
@@ -146,7 +146,7 @@
   height: 400px;
   background: radial-gradient(
     ellipse,
-    rgba(37,99,235,0.08) 0%,
+    rgba(255, 27, 141,0.08) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -182,7 +182,7 @@
 }
 .shock-stat-cell:nth-child(1)::before { background: #EF4444; }
 .shock-stat-cell:nth-child(2)::before { background: #F97316; }
-.shock-stat-cell:nth-child(3)::before { background: #2563EB; }
+.shock-stat-cell:nth-child(3)::before { background: #D4006E; }
 .shock-stat-number {
   font-size: clamp(48px, 6vw, 72px);
   font-weight: 900;
@@ -192,7 +192,7 @@
 }
 .shock-stat-cell:nth-child(1) .shock-stat-number { color: #EF4444; }
 .shock-stat-cell:nth-child(2) .shock-stat-number { color: #F97316; }
-.shock-stat-cell:nth-child(3) .shock-stat-number { color: #2563EB; }
+.shock-stat-cell:nth-child(3) .shock-stat-number { color: #D4006E; }
 .shock-stat-suffix {
   font-size: 28px;
   font-weight: 700;
@@ -229,20 +229,20 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  background: linear-gradient(135deg, #D4006E, #D4006E);
   color: white;
   border-radius: 12px;
   padding: 15px 32px;
   font-size: 15px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 0 32px rgba(37,99,235,0.4);
+  box-shadow: 0 0 32px rgba(255, 27, 141,0.4);
   transition: all 0.2s ease;
   animation: glow-pulse 3s ease-in-out infinite;
 }
 .shock-cta-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 48px rgba(37,99,235,0.6),
+  box-shadow: 0 0 48px rgba(255, 27, 141,0.6),
               0 8px 24px rgba(0,0,0,0.3);
 }
 
@@ -342,7 +342,7 @@
   font-size: 80px;
   font-weight: 900;
   line-height: 1;
-  color: #2563EB;
+  color: #D4006E;
   opacity: 0.3;
   font-family: Georgia, serif;
 }
@@ -376,8 +376,8 @@
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: rgba(37,99,235,0.2);
-  border: 1px solid rgba(37,99,235,0.3);
+  background: rgba(255, 27, 141,0.2);
+  border: 1px solid rgba(255, 27, 141,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -403,7 +403,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+  background: linear-gradient(135deg, #D4006E 0%, #D4006E 100%);
   color: white !important;
   border-radius: 12px;
   padding: 14px 28px;
@@ -412,7 +412,7 @@
   text-decoration: none;
   border: none;
   cursor: pointer;
-  box-shadow: 0 0 24px rgba(37,99,235,0.35),
+  box-shadow: 0 0 24px rgba(255, 27, 141,0.35),
               0 4px 12px rgba(0,0,0,0.2);
   transition: all 0.2s ease;
   position: relative;
@@ -431,7 +431,7 @@
 }
 .btn-primary-elite:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 40px rgba(37,99,235,0.55),
+  box-shadow: 0 0 40px rgba(255, 27, 141,0.55),
               0 8px 24px rgba(0,0,0,0.3);
 }
 .btn-primary-elite:active {
@@ -441,16 +441,16 @@
 /* ── Pricing Card Elite ── */
 .pricing-card-popular {
   position: relative;
-  border: 2px solid #2563EB !important;
-  box-shadow: 0 0 40px rgba(37,99,235,0.2),
-              0 0 80px rgba(37,99,235,0.08) !important;
+  border: 2px solid #D4006E !important;
+  box-shadow: 0 0 40px rgba(255, 27, 141,0.2),
+              0 0 80px rgba(255, 27, 141,0.08) !important;
 }
 .pricing-popular-badge {
   position: absolute;
   top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  background: linear-gradient(135deg, #D4006E, #D4006E);
   color: white;
   font-size: 11px;
   font-weight: 700;
@@ -459,16 +459,16 @@
   padding: 4px 16px;
   border-radius: 20px;
   white-space: nowrap;
-  box-shadow: 0 0 16px rgba(37,99,235,0.4);
+  box-shadow: 0 0 16px rgba(255, 27, 141,0.4);
 }
 
 /* ── Comparison Table ── */
 .compare-table-check { color: #10B981; font-weight: 700; }
 .compare-table-x     { color: #EF4444; opacity: 0.5; }
 .compare-table-xsee-col {
-  background: rgba(37,99,235,0.04);
-  border-left: 2px solid rgba(37,99,235,0.2);
-  border-right: 2px solid rgba(37,99,235,0.2);
+  background: rgba(255, 27, 141,0.04);
+  border-left: 2px solid rgba(255, 27, 141,0.2);
+  border-right: 2px solid rgba(255, 27, 141,0.2);
 }
 
 /* ── How It Works Steps ── */
@@ -476,8 +476,8 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(37,99,235,0.1);
-  border: 1px solid rgba(37,99,235,0.3);
+  background: rgba(255, 27, 141,0.1);
+  border: 1px solid rgba(255, 27, 141,0.3);
   color: #60A5FA;
   font-size: 12px;
   font-weight: 800;
@@ -491,8 +491,8 @@
   flex: 1;
   background: linear-gradient(
     to bottom,
-    rgba(37,99,235,0.3),
-    rgba(37,99,235,0.05)
+    rgba(255, 27, 141,0.3),
+    rgba(255, 27, 141,0.05)
   );
   margin: 4px auto;
 }

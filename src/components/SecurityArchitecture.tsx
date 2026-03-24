@@ -63,7 +63,7 @@ export default function SecurityArchitecture() {
               whileHover={{ y: -2 }}
               className="group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:border-slate-300 hover:shadow-md"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#3B82F6]/10 text-[#3B82F6] transition-colors group-hover:bg-[#3B82F6]/15">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#FF1B8D]/10 text-[#FF1B8D] transition-colors group-hover:bg-[#FF1B8D]/15">
                 <item.icon className="h-5 w-5" />
               </div>
               <h3 className="mt-4 text-lg font-semibold text-slate-900">

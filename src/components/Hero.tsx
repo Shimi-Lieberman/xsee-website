@@ -8,7 +8,7 @@ const SIDEBAR_ICONS = [
     <rect x={8} y={8} width={5} height={5} rx={1} stroke="currentColor" strokeWidth={1.2} />
   </svg>,
   <svg key="f" width={14} height={14} viewBox="0 0 14 14" fill="none">
-    <path d="M7 1L2 3.2V7C2 10.1 4.2 12.9 7 14C9.8 12.9 12 10.1 12 7V3.2L7 1Z" stroke="currentColor" strokeWidth={1.2} fill="rgba(59,130,246,0.15)" />
+    <path d="M7 1L2 3.2V7C2 10.1 4.2 12.9 7 14C9.8 12.9 12 10.1 12 7V3.2L7 1Z" stroke="currentColor" strokeWidth={1.2} fill="rgba(255,27,141,0.15)" />
     <polyline points="4.5,7 6.2,8.8 9.5,5.5" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" strokeLinejoin="round" />
   </svg>,
   <svg key="p" width={14} height={14} viewBox="0 0 14 14" fill="none">
@@ -72,7 +72,8 @@ export default function Hero() {
               <span className="blue">
                 proves every
                 <br />
-                <span className="warm-word">attack path</span>               is real.
+                <span className="hero-accent-path">attack path</span>{" "}
+                is real.
               </span>
               </h1>
             </div>

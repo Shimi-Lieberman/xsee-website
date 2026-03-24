@@ -7,7 +7,7 @@ const CARDS = [
   {
     icon: (
       <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <path d="M9 2L3 9h5l-1 5 6-7H8L9 2Z" stroke="#3B82F6" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" fill="rgba(59,130,246,0.1)" />
+        <path d="M9 2L3 9h5l-1 5 6-7H8L9 2Z" stroke="#FF1B8D" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" fill="rgba(255, 27, 141,0.1)" />
       </svg>
     ),
     title: "Live environment analysis",
@@ -16,9 +16,9 @@ const CARDS = [
   {
     icon: (
       <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <rect x={3} y={7.5} width={10} height={7} rx={1.5} stroke="#3B82F6" strokeWidth={1.3} />
-        <path d="M5.5 7.5V5a2.5 2.5 0 015 0v2.5" stroke="#3B82F6" strokeWidth={1.3} strokeLinecap="round" />
-        <circle cx={8} cy={11} r={1} fill="#3B82F6" />
+        <rect x={3} y={7.5} width={10} height={7} rx={1.5} stroke="#FF1B8D" strokeWidth={1.3} />
+        <path d="M5.5 7.5V5a2.5 2.5 0 015 0v2.5" stroke="#FF1B8D" strokeWidth={1.3} strokeLinecap="round" />
+        <circle cx={8} cy={11} r={1} fill="#FF1B8D" />
       </svg>
     ),
     title: "Zero-touch access",
@@ -27,10 +27,10 @@ const CARDS = [
   {
     icon: (
       <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <rect x={2.5} y={2.5} width={11} height={11} rx={1.5} stroke="#3B82F6" strokeWidth={1.3} />
-        <line x1={5} y1={5.5} x2={11} y2={5.5} stroke="#3B82F6" strokeWidth={1.2} strokeLinecap="round" />
-        <line x1={5} y1={8} x2={11} y2={8} stroke="#3B82F6" strokeWidth={1.2} strokeLinecap="round" />
-        <line x1={5} y1={10.5} x2={8.5} y2={10.5} stroke="#3B82F6" strokeWidth={1.2} strokeLinecap="round" />
+        <rect x={2.5} y={2.5} width={11} height={11} rx={1.5} stroke="#FF1B8D" strokeWidth={1.3} />
+        <line x1={5} y1={5.5} x2={11} y2={5.5} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
+        <line x1={5} y1={8} x2={11} y2={8} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
+        <line x1={5} y1={10.5} x2={8.5} y2={10.5} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
       </svg>
     ),
     title: "Full report delivered",

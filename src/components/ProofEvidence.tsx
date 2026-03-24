@@ -8,13 +8,13 @@ const METRICS = [
     display: "L1+L2",
     label: "Validation model",
     description: "Graph-level (L1) and exploit-level (L2) validation with AWS API evidence per hop.",
-    color: "#3B82F6",
+    color: "#FF1B8D",
   },
   {
     display: "AWS API",
     label: "Evidence per path",
     description: "Each hop backed by IAM, EC2, network, and resource API calls—not assumptions.",
-    color: "#2563EB",
+    color: "#D4006E",
   },
   {
     display: "3 formats",

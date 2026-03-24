@@ -43,7 +43,7 @@ function Cell({
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
         >
-          <Check className="mx-auto h-6 w-6 text-[#2563EB]" />
+          <Check className="mx-auto h-6 w-6 text-[#D4006E]" />
         </motion.span>
       </td>
     );
@@ -84,7 +84,7 @@ export default function CompetitiveDiff() {
                   <th className="border-b border-slate-200 px-5 py-5 text-left text-sm font-semibold text-slate-900">
                     Feature
                   </th>
-                  <th className="border-b border-slate-200 px-5 py-5 text-center text-lg font-bold text-[#3B82F6]">
+                  <th className="border-b border-slate-200 px-5 py-5 text-center text-lg font-bold text-[#FF1B8D]">
                     XSEE
                   </th>
                   <th className="border-b border-slate-200 px-5 py-5 text-center text-sm font-semibold text-slate-500">
@@ -101,7 +101,7 @@ export default function CompetitiveDiff() {
                     <td className="border-b border-slate-100 px-5 py-4 text-base text-slate-900">
                       {row.feature}
                     </td>
-                    <Cell value={row.xsee} className="bg-[#3B82F6]/[0.08] px-5 py-4 shadow-[inset_0_0_0_1px_rgba(59,130,246,0.12)]" />
+                    <Cell value={row.xsee} className="bg-[#FF1B8D]/[0.08] px-5 py-4 shadow-[inset_0_0_0_1px_rgba(255, 27, 141,0.12)]" />
                     <Cell value={row.wiz} className="px-5 py-4" />
                     <Cell value={row.prisma} className="px-5 py-4" />
                   </tr>

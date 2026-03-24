@@ -120,11 +120,11 @@ export default function AttackPathStoryScroll() {
                   animate={{
                     borderColor:
                       activeStep === i
-                        ? "rgba(59,130,246,0.5)"
+                        ? "rgba(255, 27, 141,0.5)"
                         : "rgba(148,163,184,0.18)",
                     boxShadow:
                       activeStep === i
-                        ? "0 0 20px rgba(59,130,246,0.15)"
+                        ? "0 0 20px rgba(255, 27, 141,0.15)"
                         : "0 1px 8px rgba(0,0,0,0.2)",
                     opacity: activeStep === i ? 1 : 0.72,
                   }}
@@ -134,7 +134,7 @@ export default function AttackPathStoryScroll() {
                     <span
                       className={`flex h-6 w-6 shrink-0 items-center justify-center rounded text-xs font-bold ${
                         activeStep === i
-                          ? "bg-[#3B82F6] text-white"
+                          ? "bg-[#FF1B8D] text-white"
                           : "bg-slate-700/50 text-slate-400"
                       }`}
                     >
@@ -227,8 +227,8 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
                 <stop offset="100%" stopColor="rgba(239,68,68,0.9)" />
               </linearGradient>
               <linearGradient id={safeGradId} x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="rgba(37,99,235,0.6)" />
-                <stop offset="100%" stopColor="rgba(37,99,235,0.9)" />
+                <stop offset="0%" stopColor="rgba(255, 27, 141,0.6)" />
+                <stop offset="100%" stopColor="rgba(255, 27, 141,0.9)" />
               </linearGradient>
             </defs>
             {INFRA_EDGES.map(([a, b], i) => {
@@ -259,14 +259,14 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
             {INFRA_NODES.map((node, i) => {
               const onPath = ATTACK_PATH_SET.has(i);
               const fill = showPrevention && onPath
-                ? "rgba(37,99,235,0.75)"
+                ? "rgba(255, 27, 141,0.75)"
                 : showAttackPath && onPath
                   ? "rgba(239,68,68,0.85)"
                   : showInfra
                     ? "rgba(96,165,250,0.3)"
                     : "rgba(148,163,184,0.18)";
               const stroke = showPrevention && onPath
-                ? "rgba(37,99,235,0.95)"
+                ? "rgba(255, 27, 141,0.95)"
                 : showAttackPath && onPath
                   ? "rgba(239,68,68,1)"
                   : "rgba(148,163,184,0.35)";

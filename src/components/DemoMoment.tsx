@@ -24,8 +24,8 @@ const ATTACK_PATH_NODES = [
     title: "Internet",
     subtitle: "Entry Point",
     icon: Globe,
-    color: "#3B82F6",
-    glow: "0 0 20px rgba(59,130,246,0.35)",
+    color: "#FF1B8D",
+    glow: "0 0 20px rgba(255, 27, 141,0.35)",
   },
   {
     id: "bastion",
@@ -130,7 +130,7 @@ function AttackPathDemo() {
         </div>
         <button
           type="button"
-          className="rounded-lg bg-[#3B82F6] px-4 py-2 text-sm font-semibold text-white shadow-[0_2px_8px_rgba(59,130,246,0.35)] transition-all hover:bg-[#1D4ED8] hover:shadow-[0_4px_12px_rgba(59,130,246,0.4)]"
+          className="rounded-lg bg-[#FF1B8D] px-4 py-2 text-sm font-semibold text-white shadow-[0_2px_8px_rgba(255, 27, 141,0.35)] transition-all hover:bg-[#D4006E] hover:shadow-[0_4px_12px_rgba(255, 27, 141,0.4)]"
         >
           Fix Available
         </button>
@@ -161,7 +161,7 @@ export default function DemoMoment() {
           </p>
           <Link
             href="#contact"
-            className="mt-10 inline-flex h-12 items-center justify-center rounded-xl bg-[#3B82F6] px-8 text-base font-semibold text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(59,130,246,0.45)]"
+            className="mt-10 inline-flex h-12 items-center justify-center rounded-xl bg-[#FF1B8D] px-8 text-base font-semibold text-white shadow-[0_4px_14px_rgba(255, 27, 141,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(255, 27, 141,0.45)]"
           >
             Request Demo
           </Link>
@@ -238,16 +238,16 @@ export default function DemoMoment() {
                 >
                   <div className="flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
                     <motion.div
-                      className="h-4 w-4 rounded-full border-2 border-[#3B82F6] bg-white"
+                      className="h-4 w-4 rounded-full border-2 border-[#FF1B8D] bg-white"
                       animate={{
                         boxShadow:
                           activeCallout === callout.id
-                            ? "0 0 20px rgba(59,130,246,0.6)"
+                            ? "0 0 20px rgba(255, 27, 141,0.6)"
                             : "0 2px 8px rgba(0,0,0,0.1)",
                       }}
                     />
                     {activeCallout === callout.id && (
-                      <div className="h-2 w-px bg-[#3B82F6]/60" />
+                      <div className="h-2 w-px bg-[#FF1B8D]/60" />
                     )}
                     <span
                       className={`mt-2 whitespace-nowrap rounded-lg px-3 py-1.5 text-sm font-medium text-white shadow-lg ${
@@ -257,7 +257,7 @@ export default function DemoMoment() {
                         backgroundColor: "#0B1C3D",
                         boxShadow:
                           activeCallout === callout.id
-                            ? "0 0 16px rgba(59,130,246,0.3)"
+                            ? "0 0 16px rgba(255, 27, 141,0.3)"
                             : undefined,
                       }}
                     >

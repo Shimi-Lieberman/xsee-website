@@ -17,14 +17,14 @@ const engines = [
     description: "Graph-level (L1) and exploit-level (L2) validation. Each hop backed by AWS API evidence.",
     tag: "Graph Engine",
     icon: Route,
-    color: "#3B82F6",
+    color: "#FF1B8D",
   },
   {
     title: "Smart Remediation",
     description: "3 strategies per path. Terraform, CLI, CloudForm.",
     tag: "Remediation Engine",
     icon: Wrench,
-    color: "#2563EB",
+    color: "#D4006E",
   },
   {
     title: "Intelligent Correlation",

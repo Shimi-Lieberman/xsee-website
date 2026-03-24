@@ -174,7 +174,7 @@ export default function UnderAttackPage() {
             <div style={{ textAlign: "center" }}>
               <div
                 className="ua-step-icon"
-                style={{ background: "rgba(37,99,235,0.2)", color: "#93C5FD" }}
+                style={{ background: "rgba(255, 27, 141, 0.2)", color: "#FDA4D0" }}
               >
                 3
               </div>

@@ -44,14 +44,14 @@ export default function Nav() {
               <div className="nav-status-dot" />
               All Systems Operational
             </div>
-            <Link href="#contact" className="btn btn-secondary btn-sm">
+            <Link href="#contact" className="btn btn-primary btn-sm">
               Free Risk Assessment
             </Link>
             <Link
               href="https://app.xsee.io"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-primary btn-sm"
+              className="btn btn-secondary btn-sm"
             >
               Launch App →
             </Link>

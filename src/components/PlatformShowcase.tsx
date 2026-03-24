@@ -82,7 +82,7 @@ function MockAttackPath() {
         {[
           { label: "Internet", color: "#F97316" },
           { label: "IAM", color: "#8B5CF6" },
-          { label: "EC2", color: "#3B82F6" },
+          { label: "EC2", color: "#FF1B8D" },
           { label: "DB", color: "#EF4444" },
         ].map((node) => (
           <div
@@ -110,7 +110,7 @@ function MockCloudGraph() {
       <svg viewBox="0 0 200 120" className="h-full w-full max-w-[320px]">
         <defs>
           <linearGradient id="edgeGrad" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.4} />
+            <stop offset="0%" stopColor="#FF1B8D" stopOpacity={0.4} />
             <stop offset="100%" stopColor="#8B5CF6" stopOpacity={0.4} />
           </linearGradient>
         </defs>
@@ -118,7 +118,7 @@ function MockCloudGraph() {
         <line x1="100" y1="60" x2="160" y2="40" stroke="url(#edgeGrad)" strokeWidth="1" />
         <line x1="100" y1="60" x2="160" y2="80" stroke="url(#edgeGrad)" strokeWidth="1" />
         <circle cx="40" cy="60" r="8" fill="#F97316" opacity={0.9} />
-        <circle cx="100" cy="60" r="10" fill="#3B82F6" opacity={0.9} />
+        <circle cx="100" cy="60" r="10" fill="#FF1B8D" opacity={0.9} />
         <circle cx="160" cy="40" r="8" fill="#8B5CF6" opacity={0.9} />
         <circle cx="160" cy="80" r="8" fill="#EF4444" opacity={0.9} />
       </svg>
@@ -154,7 +154,7 @@ function MockMonitoring() {
           whileInView={{ height: `${h}%` }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: i * 0.05 }}
-          className="w-6 rounded-t bg-[#3B82F6]/20"
+          className="w-6 rounded-t bg-[#FF1B8D]/20"
         />
       ))}
     </div>
@@ -198,7 +198,7 @@ export default function PlatformShowcase() {
                 <div
                   className={`flex flex-col justify-center ${isReversed ? "md:col-start-2" : ""}`}
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#3B82F6]/10 text-[#3B82F6]">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#FF1B8D]/10 text-[#FF1B8D]">
                     <feature.icon className="h-5 w-5" />
                   </div>
                   <h3 className="mt-4 text-subsection-title tracking-tight text-slate-900">

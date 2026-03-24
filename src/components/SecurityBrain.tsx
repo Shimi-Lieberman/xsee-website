@@ -76,7 +76,7 @@ export default function SecurityBrain() {
               }}
             >
               <div
-                className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#3B82F6]/10 text-[#3B82F6] transition-colors duration-300 group-hover:bg-[#3B82F6]/15"
+                className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#FF1B8D]/10 text-[#FF1B8D] transition-colors duration-300 group-hover:bg-[#FF1B8D]/15"
               >
                 <module.icon className="h-5 w-5" strokeWidth={1.75} />
               </div>

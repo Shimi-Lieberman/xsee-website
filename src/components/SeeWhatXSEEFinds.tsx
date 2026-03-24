@@ -16,7 +16,7 @@ const TERMINAL_LINES = [
 
 const PATH_NODES = [
   { id: "internet", label: "Internet", icon: Globe, color: "#F97316" },
-  { id: "bastion", label: "Bastion", icon: Server, color: "#3B82F6" },
+  { id: "bastion", label: "Bastion", icon: Server, color: "#FF1B8D" },
   { id: "iam", label: "IAM", icon: KeyRound, color: "#8B5CF6" },
   { id: "db", label: "Production DB", icon: Crown, color: "#EF4444" },
 ];
@@ -99,7 +99,7 @@ export default function SeeWhatXSEEFinds() {
               disabled={phase === "scanning"}
               className={`rounded-xl border-2 px-8 py-4 text-lg font-semibold uppercase tracking-wider transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60 ${
                 cloud === provider && phase !== "idle"
-                  ? "border-[#3B82F6] bg-[#3B82F6]/20 text-white shadow-[0_0_24px_rgba(59,130,246,0.3)]"
+                  ? "border-[#FF1B8D] bg-[#FF1B8D]/20 text-white shadow-[0_0_24px_rgba(255, 27, 141,0.3)]"
                   : "border-slate-600 bg-[#0B1C3D]/80 text-slate-300 hover:border-slate-500 hover:bg-slate-800/50 hover:text-white"
               }`}
             >
@@ -123,13 +123,13 @@ export default function SeeWhatXSEEFinds() {
                 className="overflow-hidden rounded-xl border border-slate-700 bg-[#0B1C3D]/95 font-mono text-sm shadow-[0_20px_60px_rgba(0,0,0,0.4)]"
                 style={{
                   boxShadow:
-                    "0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04), 0 0 30px rgba(59,130,246,0.06)",
+                    "0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04), 0 0 30px rgba(255, 27, 141,0.06)",
                 }}
               >
                 <div className="flex items-center gap-2 border-b border-slate-700/80 px-4 py-3">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#EF4444]" />
                   <span className="h-2.5 w-2.5 rounded-full bg-[#F97316]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#2563EB]" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#D4006E]" />
                   <span className="ml-2 text-xs text-slate-500">
                     xsee scan —provider {cloud}
                   </span>
@@ -145,7 +145,7 @@ export default function SeeWhatXSEEFinds() {
                       transition={{ duration: 0.2 }}
                       className="flex items-center gap-2 py-0.5"
                     >
-                      <span className="text-[#2563EB]">$</span>
+                      <span className="text-[#D4006E]">$</span>
                       <span className="text-slate-300">{line}</span>
                       {currentLineIndex === i && (
                         <motion.span
@@ -177,7 +177,7 @@ export default function SeeWhatXSEEFinds() {
                 className="overflow-hidden rounded-xl border border-slate-700 bg-[#0B1C3D]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.4)] sm:p-8"
                 style={{
                   boxShadow:
-                    "0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04), 0 0 30px rgba(59,130,246,0.06)",
+                    "0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04), 0 0 30px rgba(255, 27, 141,0.06)",
                 }}
               >
                 <p className="mb-4 text-xs font-medium uppercase tracking-wider text-slate-500">
@@ -247,7 +247,7 @@ export default function SeeWhatXSEEFinds() {
                   <div className="flex flex-wrap justify-center gap-4">
                     <Link
                       href="#contact"
-                      className="inline-flex h-12 min-w-[180px] items-center justify-center rounded-xl bg-[#3B82F6] px-6 text-base font-semibold text-white shadow-[0_4px_14px_rgba(59,130,246,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#2563EB] hover:shadow-[0_8px_24px_rgba(59,130,246,0.45)]"
+                      className="inline-flex h-12 min-w-[180px] items-center justify-center rounded-xl bg-[#FF1B8D] px-6 text-base font-semibold text-white shadow-[0_4px_14px_rgba(255, 27, 141,0.4)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#D4006E] hover:shadow-[0_8px_24px_rgba(255, 27, 141,0.45)]"
                     >
                       Request Demo
                     </Link>
