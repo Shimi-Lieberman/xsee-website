@@ -22,6 +22,7 @@ export default function FreeScanPage() {
     company: "",
     awsRoleArn: "",
     awsRegion: "us-east-1",
+    website: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -38,7 +39,10 @@ export default function FreeScanPage() {
       const res = await fetch("/api/free-scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          website: formData.website,
+        }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -134,6 +138,18 @@ export default function FreeScanPage() {
                 </p>
               ) : (
                 <form onSubmit={handleSubmit} className="form-fields">
+                  <div className="honeypot" aria-hidden="true">
+                    <label htmlFor="freescan-website">Website</label>
+                    <input
+                      id="freescan-website"
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.website}
+                      onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                    />
+                  </div>
                   <div className="form-row">
                     <div className="form-group">
                       <label className="form-label">Full name (required)</label>

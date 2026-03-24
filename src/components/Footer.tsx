@@ -10,6 +10,7 @@ export default function Footer() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
 
@@ -52,6 +53,7 @@ export default function Footer() {
         setName("");
         setEmail("");
         setMessage("");
+        setWebsite("");
       } else {
         setStatus("error");
         setError(data.error ?? "Something went wrong");
@@ -113,7 +115,7 @@ export default function Footer() {
                 <Link href="#contact">Contact</Link>
               </li>
               <li>
-                <Link href="#">Security</Link>
+                <Link href="/security">Security</Link>
               </li>
             </ul>
           </div>
@@ -141,6 +143,18 @@ export default function Footer() {
             <p className="footer-contact-success">Thanks! We&apos;ll get back to you soon.</p>
           ) : (
             <form onSubmit={handleContactSubmit} className="footer-contact-form">
+              <div className="honeypot" aria-hidden="true">
+                <label htmlFor="footer-website">Website</label>
+                <input
+                  id="footer-website"
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
               <div className="footer-contact-field">
                 <label htmlFor="footer-name" className="footer-contact-label">Name</label>
                 <input

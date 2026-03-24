@@ -14,6 +14,10 @@ CREATE TABLE IF NOT EXISTS demo_requests (
   email TEXT NOT NULL,
   company TEXT NOT NULL,
   message TEXT,
+  ip_address VARCHAR(45),
+  user_agent TEXT,
+  is_suspicious BOOLEAN DEFAULT false,
+  role_arn TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

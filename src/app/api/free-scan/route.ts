@@ -1,12 +1,16 @@
 import { NextResponse } from "next/server";
 import { getSql } from "@/lib/db";
 import { isValidEmail } from "@/lib/validation";
+import { rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
 
-const ARN_REGEX = /^arn:aws:iam::/;
+const ARN_REGEX = /^arn:aws:iam::\d{12}:role\/[\w+=,.@-]+$/;
 
 /** Platform API base (no trailing slash). Override in env for staging. */
 const PLATFORM_API_BASE =
   process.env.XSEE_PLATFORM_API_URL?.replace(/\/$/, "") ?? "https://app.xsee.io";
+
+const WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const LIMIT = 2;
 
 type PlatformSubmitBody = {
   name: string;
@@ -46,7 +50,10 @@ async function saveToNeon(
   email: string,
   company: string,
   awsRoleArn: string,
-  awsRegion: string
+  awsRegion: string,
+  ipAddress: string | null,
+  userAgent: string | null,
+  isSuspicious: boolean
 ): Promise<boolean> {
   try {
     const message = JSON.stringify({
@@ -56,8 +63,8 @@ async function saveToNeon(
     });
     const sql = getSql();
     await sql`
-      INSERT INTO demo_requests (name, email, company, message)
-      VALUES (${name}, ${email}, ${company}, ${message})
+      INSERT INTO demo_requests (name, email, company, message, ip_address, user_agent, is_suspicious, role_arn)
+      VALUES (${name}, ${email}, ${company}, ${message}, ${ipAddress}, ${userAgent}, ${isSuspicious}, ${awsRoleArn})
     `;
     return true;
   } catch (err) {
@@ -66,9 +73,41 @@ async function saveToNeon(
   }
 }
 
+async function isArnSubmittedByDifferentEmail(
+  roleArn: string,
+  email: string
+): Promise<boolean> {
+  try {
+    const sql = getSql();
+    const rows = await sql`
+      SELECT 1 FROM demo_requests
+      WHERE role_arn = ${roleArn}
+        AND email != ${email}
+      LIMIT 1
+    `;
+    return Array.isArray(rows) && rows.length > 0;
+  } catch {
+    return false;
+  }
+}
+
 export async function POST(request: Request) {
+  const rl = rateLimit(request, { limit: LIMIT, windowMs: WINDOW_MS });
+  if (!rl.success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later." },
+      { status: 429 }
+    );
+  }
+
   try {
     const body = await request.json();
+
+    // Honeypot: if website field has any value, silently succeed
+    if (body.website?.trim()) {
+      return NextResponse.json({ success: true });
+    }
+
     const name = (body.fullName ?? body.name ?? "").trim();
     const email = (body.email ?? "").trim();
     const company = (body.company ?? "").trim();
@@ -84,6 +123,12 @@ export async function POST(request: Request) {
     if (!isValidEmail(email)) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
     }
+    if (!isValidWorkEmail(email)) {
+      return NextResponse.json(
+        { error: "Please use your work email address." },
+        { status: 400 }
+      );
+    }
     if (!company) {
       return NextResponse.json({ error: "Company name is required" }, { status: 400 });
     }
@@ -92,9 +137,19 @@ export async function POST(request: Request) {
     }
     if (!ARN_REGEX.test(awsRoleArn)) {
       return NextResponse.json(
-        { error: "AWS Role ARN must start with arn:aws:iam::" },
+        { error: "AWS Role ARN must match format: arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME" },
         { status: 400 }
       );
+    }
+
+    const ipAddress = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+      ?? request.headers.get("x-real-ip")
+      ?? null;
+    const userAgent = request.headers.get("user-agent") ?? null;
+
+    const duplicateArn = await isArnSubmittedByDifferentEmail(awsRoleArn, email);
+    if (duplicateArn) {
+      console.warn(`[free-scan] Suspicious: ARN ${awsRoleArn} submitted from different email (${email})`);
     }
 
     const platformPayload: PlatformSubmitBody = {
@@ -106,7 +161,16 @@ export async function POST(request: Request) {
     };
 
     const platform = await forwardToPlatform(platformPayload);
-    const neonOk = await saveToNeon(name, email, company, awsRoleArn, awsRegion);
+    const neonOk = await saveToNeon(
+      name,
+      email,
+      company,
+      awsRoleArn,
+      awsRegion,
+      ipAddress,
+      userAgent,
+      duplicateArn
+    );
 
     if (!platform.ok && !neonOk) {
       return NextResponse.json(

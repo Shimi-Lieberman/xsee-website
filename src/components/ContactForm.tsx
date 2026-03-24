@@ -48,6 +48,7 @@ export default function ContactForm() {
     cloudProvider: "",
     assetCount: "",
     message: "",
+    website: "",
   });
 
   async function handleSubmit(e: React.FormEvent) {
@@ -58,12 +59,15 @@ export default function ContactForm() {
       const res = await fetch("/api/demo-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          website: formData.website,
+        }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
         setStatus("success");
-        setFormData({ fullName: "", email: "", company: "", cloudProvider: "", assetCount: "", message: "" });
+        setFormData({ fullName: "", email: "", company: "", cloudProvider: "", assetCount: "", message: "", website: "" });
       } else {
         setStatus("error");
         setApiError(data.error ?? "Something went wrong. Please try again or email demo@xsee.io directly.");
@@ -125,6 +129,18 @@ export default function ContactForm() {
               <h3 className="form-title">Request Your Free Breach Proof Report</h3>
               <p className="form-sub">We&apos;ll reach out within one business day to schedule the scan.</p>
               <form onSubmit={handleSubmit} className="form-fields">
+                <div className="honeypot" aria-hidden="true">
+                  <label htmlFor="demo-website">Website</label>
+                  <input
+                    id="demo-website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formData.website}
+                    onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  />
+                </div>
                 <div className="form-row">
                   <div className="form-group">
                     <label className="form-label">Full Name</label>
