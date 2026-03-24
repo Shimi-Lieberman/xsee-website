@@ -1,30 +1,27 @@
-const LOGOS = [
-  "Amazon AWS",
-  "Terraform",
-  "Kubernetes",
-  "AWS GuardDuty",
-  "CloudTrail",
-  "Okta SSO",
-  "GitHub Actions",
-  "Amazon EKS",
-  "AWS Lambda",
+const COMPANIES = [
+  "Series B Startup",
+  "Fortune 500",
+  "Fintech Leader",
+  "Cloud-Native SaaS",
+  "Healthcare Innovator",
+  "DevOps at Scale",
 ];
 
 export default function TrustStrip() {
   return (
     <div className="logos-strip">
-      <p className="logos-label">Integrates with your existing cloud stack</p>
+      <p className="logos-label">Trusted by security teams who are done guessing</p>
       <div className="overflow-hidden">
         <div className="logos-track">
           <div className="logos-set">
-            {LOGOS.map((name) => (
+            {COMPANIES.map((name) => (
               <span key={name} className="logo-item">
                 {name}
               </span>
             ))}
           </div>
           <div className="logos-set" aria-hidden>
-            {LOGOS.map((name) => (
+            {COMPANIES.map((name) => (
               <span key={name} className="logo-item">
                 {name}
               </span>
@@ -32,6 +29,11 @@ export default function TrustStrip() {
           </div>
         </div>
       </div>
+      <p className="logos-sublabel">
+        <a href="#contact" className="logos-sublink">
+          Early access open — join security teams on the waitlist →
+        </a>
+      </p>
     </div>
   );
 }

@@ -195,6 +195,8 @@
 .shock-stat-cell:nth-child(2) .shock-stat-number { color: #F97316; }
 .shock-stat-cell:nth-child(3) .shock-stat-number { color: #D4006E; }
 .shock-stat-cell:nth-child(4) .shock-stat-number { color: #8B5CF6; }
+.shock-stat-red .shock-stat-number { color: #EF4444 !important; }
+.shock-stat-red::before { background: #EF4444 !important; }
 .shock-stat-suffix {
   font-size: 28px;
   font-weight: 700;

@@ -19,12 +19,12 @@ export default function ComparisonTable() {
         <div className="section-head reveal">
           <span className="eyebrow">Market Position</span>
           <h2 className="display-lg">
-            CNAPP finds misconfigs.
+            Every other tool finds problems.
             <br />
-            XSEE proves breaches.
+            XSEE is the only one that proves them.
           </h2>
           <p>
-            Wiz and Prisma tell you what <em>could</em> go wrong. XM Cyber finds attack paths. Pentera simulates attacks. XSEE is the only platform that closes all three loops — discovery, validation, and verified fix — and the only one built to defend against AI-powered attackers.
+            Wiz tells you what could be exploited. XM Cyber shows you theoretical paths. Pentera runs generic simulations. XSEE validates your specific paths with live AWS API evidence and simulates AI attackers. No other platform closes all three loops.
           </p>
           <div className="section-rule" />
         </div>

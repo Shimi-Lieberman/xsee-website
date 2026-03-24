@@ -76,8 +76,7 @@ export default function Footer() {
               style={{ background: "transparent" }}
             />
             <p className="footer-tagline">
-              Cloud Exposure Intelligence. Proves exploitability.
-              Eliminates the noise. Built for the age of AI attackers.
+              XSEE — Cloud Exposure Intelligence. Stop guessing. Prove the breach. Built for the age of AI attackers.
             </p>
             <div className="footer-status">
               <div className="footer-status-dot" />

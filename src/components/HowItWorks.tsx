@@ -5,28 +5,28 @@ import { useState, useEffect, useRef, useCallback } from "react";
 const STEPS = [
   {
     n: "01",
-    title: "Infrastructure Discovery",
-    desc: "Scans every cloud asset — EC2, IAM roles, S3 buckets, VPCs, Lambda, EKS, RDS. Maps identities, permissions, and network relationships into a queryable attack graph.",
+    title: "Connect (2 minutes)",
+    desc: "Create a read-only IAM role in AWS. Paste the ARN. That&apos;s it. XSEE never writes to your environment. You can revoke access in one click.",
   },
   {
     n: "02",
-    title: "Live Attack Graph",
-    desc: "Assembles every resource, identity, permission, and network edge into a directed attack graph using 1,000+ known attack patterns. Shows exactly how both human and AI attackers could move through your environment.",
+    title: "Discover (5 minutes)",
+    desc: "XSEE maps every asset, identity, permission, and network relationship in your AWS environment. 847 resources. 12,847 edges. Assembled into a live attack graph using 1,000+ known attack patterns.",
   },
   {
     n: "03",
-    title: "Exploit Validation",
-    desc: "Each candidate path is tested with live AWS API calls. XSEE produces a cryptographic evidence package per hop — not \"this could happen\" but documented proof it will.",
+    title: "Validate (10 minutes)",
+    desc: "For every candidate path, XSEE calls live AWS APIs to test each hop. Not simulation — validation. Each hop returns a cryptographic evidence package: exact API call, exact response, exact timestamp. \"This path is confirmed exploitable\" — with proof.",
   },
   {
     n: "04",
-    title: "Attack Simulation (XseeCyber)",
-    desc: "Replays the full attack chain step by step. Simulates both human and AI attacker behavior. Measures your detection coverage at each stage — showing exactly where your SIEM, GuardDuty, and XDR go completely blind.",
+    title: "Simulate (15 minutes)",
+    desc: "XseeCyber replays the confirmed attack chain step by step — the way a human attacker would execute it, and the way an AI attacker would execute it differently. At every step: did GuardDuty fire? Did CloudTrail log it? Did your SIEM catch it? The answer, for most teams, is no.",
   },
   {
     n: "05",
-    title: "Fix the Choke Point",
-    desc: "XSEE identifies the single control change that collapses the most attack paths. Apply it, re-simulate, and get a timestamped proof-of-closure for your audit trail.",
+    title: "Fix and verify",
+    desc: "One recommended fix. Minimum change, maximum paths eliminated. Apply it. Re-run the simulation. Get a before/after evidence package with timestamps — ready for your auditor.",
   },
 ];
 
@@ -172,12 +172,12 @@ export default function HowItWorks() {
         <div className="section-head reveal">
           <span className="eyebrow">How It Works</span>
           <h2 className="display-lg">
-            From cloud scan to
+            From &quot;we might have a problem&quot;
             <br />
-            verified proof in 30 minutes
+            to &quot;here&apos;s the proof and here&apos;s the fix&quot; in 30 minutes.
           </h2>
           <p>
-            Connect your AWS account with read-only access. XSEE discovers, graphs, validates, and closes the loop — without touching your infrastructure or slowing a single workload.
+            Five steps. No agents. No disruption. Just the truth about your cloud.
           </p>
           <div className="section-rule" />
         </div>

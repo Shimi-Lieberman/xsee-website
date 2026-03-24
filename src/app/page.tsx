@@ -5,6 +5,7 @@ import AnnouncementBar from "@/components/AnnouncementBar";
 import Hero from "@/components/Hero";
 import TrustStrip from "@/components/TrustStrip";
 import ProblemSolution from "@/components/ProblemSolution";
+import AiAttackerSection from "@/components/AiAttackerSection";
 import StatsBand from "@/components/StatsBand";
 import TerminalSection from "@/components/TerminalSection";
 import HowItWorks from "@/components/HowItWorks";
@@ -26,7 +27,12 @@ export default function Home() {
       <main>
         <Hero />
         <TrustStrip />
-        <section className="shock-stats-section">
+        <div className="sec-transition sec-dark-to-light" />
+        <ProblemSolution />
+        <div className="sec-transition sec-light-to-dark" />
+        <AiAttackerSection />
+        <div className="sec-transition sec-dark-to-light" />
+        <section className="shock-stats-section" id="stats">
           <p
             style={{
               position: "relative",
@@ -40,8 +46,14 @@ export default function Home() {
               marginBottom: 48,
             }}
           >
-            THE REALITY OF CLOUD SECURITY
+            The Reality
           </p>
+
+          <div className="section-head reveal" style={{ marginBottom: 48 }}>
+            <h2 className="display-md" style={{ textAlign: "center", margin: "0 auto 16px" }}>
+              The numbers security teams don&apos;t want to see — until they do.
+            </h2>
+          </div>
 
           <div className="shock-stats-grid reveal-on-scroll">
             <div className="shock-stat-cell">
@@ -49,10 +61,21 @@ export default function Home() {
                 <span id="stat-alerts">4,000</span>
               </div>
               <p className="shock-stat-label">
-                alerts your scanner found
+                Alerts your scanner generates per month
               </p>
               <p className="shock-stat-fine">
-                3 actually reach your crown jewels
+                Average for a 500-asset AWS environment
+              </p>
+            </div>
+            <div className="shock-stat-cell shock-stat-red">
+              <div className="shock-stat-number">
+                <span id="stat-critical">3</span>
+              </div>
+              <p className="shock-stat-label">
+                That actually reach your crown jewels
+              </p>
+              <p className="shock-stat-fine">
+                The only 3 that matter
               </p>
             </div>
             <div className="shock-stat-cell">
@@ -61,49 +84,35 @@ export default function Home() {
                 <span className="shock-stat-suffix">%</span>
               </div>
               <p className="shock-stat-label">
-                of attack paths go undetected by GuardDuty
+                Of attack paths undetected by GuardDuty
               </p>
               <p className="shock-stat-fine">
-                Source: XSEE validation data
+                Measured across XSEE-validated environments
               </p>
             </div>
-            <div className="shock-stat-cell">
+            <div className="shock-stat-cell shock-stat-red">
               <div className="shock-stat-number">
-                &lt;30
-                <span className="shock-stat-suffix">m</span>
+                <span id="stat-detect">34</span>
+                <span className="shock-stat-suffix">%</span>
               </div>
               <p className="shock-stat-label">
-                to find your first validated breach path
+                Average Detection Coverage Score
               </p>
               <p className="shock-stat-fine">
-                Average across XSEE environments
-              </p>
-            </div>
-            <div className="shock-stat-cell">
-              <div className="shock-stat-number">
-                <span id="stat-patterns">0</span>
-                <span className="shock-stat-suffix">+</span>
-              </div>
-              <p className="shock-stat-label">
-                known attack patterns in XSEE&apos;s engine
-              </p>
-              <p className="shock-stat-fine">
-                AI continuously learns and adds new TTPs
+                Most teams are blind to 66% of attack steps
               </p>
             </div>
           </div>
 
           <div className="shock-cta-wrap">
             <p className="shock-cta-headline">
-              See which exposures in your cloud actually matter.
+              What&apos;s your Detection Coverage Score? Find out in 30 minutes — free.
             </p>
-            <a href="#contact" className="shock-cta-btn">
-              Get Free Breach Report →
+            <a href="/free-scan" className="shock-cta-btn">
+              Run Free Scan →
             </a>
           </div>
         </section>
-        <div className="sec-transition sec-dark-to-light" />
-        <ProblemSolution />
         <StatsBand />
         <TerminalSection />
         <div className="sec-transition sec-tint-to-dark" style={{ background: "linear-gradient(to bottom,#040B18,#040B18)" }} />

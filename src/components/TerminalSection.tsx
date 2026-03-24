@@ -9,13 +9,12 @@ export default function TerminalSection() {
         <div className="section-head reveal" style={{ textAlign: "center", marginBottom: "48px" }}>
           <span className="eyebrow">Live Intelligence</span>
           <h2 className="display-md" style={{ margin: "0 auto" }}>
-            What XSEE sees in your cloud
+            This is what XSEE sees in your cloud in the first 30 minutes.
           </h2>
           <p style={{ maxWidth: 560, margin: "16px auto 0", color: "var(--text-muted)" }}>
-            Connect once with read-only IAM. XSEE maps every asset,
-            validates every path using 1,000+ attack patterns,
+            Read-only IAM. No agents. No code deployed.
             <br />
-            and delivers a ranked breach report in under 30 minutes — no agents required.
+            Just proof.
           </p>
         </div>
 

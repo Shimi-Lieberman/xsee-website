@@ -3,7 +3,7 @@ const ENGINES = [
     num: "01",
     label: "L1 · Graph Discovery",
     title: "Attack Path Discovery",
-    desc: "Graph-based logical simulation maps every traversable path through your cloud using 1,000+ known attack patterns. AI continuously learns and adds new TTPs. Surfaces attack chains invisible to individual-finding scanners.",
+    desc: "Builds a live attack graph from every asset, identity, permission, and network edge in your cloud. Maps 1,000+ known attack patterns against your specific environment. AI continuously learns new TTPs and adds them to the engine. Surfaces multi-hop attack chains that no single-finding scanner can see.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <circle cx={11} cy={4} r={2} stroke="#FF1B8D" strokeWidth={1.4} />
@@ -21,7 +21,7 @@ const ENGINES = [
     num: "02",
     label: "L2 · Live Validation",
     title: "AWS API Validation",
-    desc: "Calls live AWS APIs to validate each path hop. Produces a cryptographic evidence package per finding — proof that the path is exploitable, not theoretical.",
+    desc: "The engine that turns theory into proof. For each candidate path, XSEE calls live AWS APIs — IAM Policy Simulator, SG rule matching, trust policy evaluation — and records the response. The result: a cryptographic evidence package per hop that proves exploitability, not possibility.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <path d="M11 2L3 5.5V11C3 15.4 6.6 19.4 11 21C15.4 19.4 19 15.4 19 11V5.5L11 2Z" stroke="#FF1B8D" strokeWidth={1.4} fill="rgba(255, 27, 141,0.08)" />
@@ -33,7 +33,7 @@ const ENGINES = [
     num: "03",
     label: "L3 · XseeCyber",
     title: "Runtime Simulation",
-    desc: "Step-by-step exploit replay simulating both human and AI attacker behavior. Measures time-to-compromise, detection gap scoring, and generates before/after proof of remediation effectiveness.",
+    desc: "The only cloud-native BAS engine that simulates your specific attack paths — not generic playbooks. Replays confirmed paths step by step, modeling both human and AI attacker behavior. Measures your Detection Coverage Score: how much of the attack your tools actually see. Generates before/after proof when you fix.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <circle cx={11} cy={11} r={9} stroke="#FF1B8D" strokeWidth={1.3} opacity={0.35} />
@@ -50,7 +50,7 @@ const ENGINES = [
     num: "04",
     label: "Smart Remediation",
     title: "Optimal Fix Engine",
-    desc: "Finds the minimum change that eliminates maximum validated risk. One SG rule change that kills 6 attack paths beats fixing 6 isolated findings.",
+    desc: "Security teams waste months fixing the wrong things. XSEE finds the single change that collapses the most paths simultaneously. One security group rule that eliminates 6 paths is worth more than fixing 6 isolated findings. Includes Terraform, CLI, and console instructions.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <circle cx={11} cy={11} r={9} stroke="#FF1B8D" strokeWidth={1.3} />
@@ -63,7 +63,7 @@ const ENGINES = [
     num: "05",
     label: "AI · Claude-Powered",
     title: "AI Security Analyst",
-    desc: "Five capabilities: explain paths, explain remediation, investigate stories, executive risk summary, ask anything. Always grounded in your XSEE data — never invented. Powered by Claude.",
+    desc: "A senior security analyst available 24/7, powered by Claude and grounded in your scan data. Ask it to explain a path in plain English. Ask it to write an executive summary for your board. Ask it what an attacker would do next. It only answers from your data — never invents.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <circle cx={11} cy={4} r={1.2} fill="#FF1B8D" />
@@ -78,7 +78,7 @@ const ENGINES = [
     num: "06",
     label: "Playbooks",
     title: "Operational Playbooks",
-    desc: "Kanban-style fix tracking from detection to verified closed. Automated re-scan on completion. Full audit trail with timestamps and evidence links.",
+    desc: "Findings don&apos;t close themselves. XSEE&apos;s Kanban-style playbooks take each finding from detection through remediation to verified closure. Assign to team members. Track status. Re-scan automatically when a fix is applied. Full audit trail for your compliance team.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <rect x={3} y={2} width={16} height={18} rx={2} stroke="#FF1B8D" strokeWidth={1.4} fill="rgba(255, 27, 141,0.05)" />
@@ -101,12 +101,12 @@ export default function EnginesGrid() {
         <div className="section-head reveal">
           <span className="eyebrow">Platform Architecture</span>
           <h2 className="display-lg">
-            Six engines. One answer:
+            Six engines built for one purpose:
             <br />
-            <span style={{ color: "var(--sky-light)" }}>can they reach your data?</span>
+            <span style={{ color: "var(--sky-light)" }}>proving whether your cloud can be breached.</span>
           </h2>
           <p>
-            Every engine feeds the same question — is this exposure actually reachable? Together they replace the CNAPP → BAS → exposure management stack with a single closed loop. Built to defend against human and AI-powered attacks.
+            Most tools stop at discovery. XSEE runs the full loop — discover, validate, simulate, fix, verify. No other platform does all five.
           </p>
           <div className="section-rule" />
         </div>

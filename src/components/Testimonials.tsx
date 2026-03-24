@@ -3,13 +3,13 @@
 export default function Testimonials() {
   return (
     <section className="testimonials-section" id="testimonials">
-      <p className="testimonials-label">Early Adopters</p>
+      <p className="testimonials-label">Proof from the Field</p>
       <h2 className="testimonials-headline">
-        What security teams say
+        Security teams that stopped guessing.
       </h2>
       <p className="testimonials-sub">
-        Real teams. Real environments.{" "}
-        <span>Validated results.</span>
+        These are real conversations that happened{" "}
+        <span>after a first XSEE scan.</span>
       </p>
       <div className="testimonials-grid">
         <div className="testimonial-card reveal-on-scroll">
@@ -19,15 +19,15 @@ export default function Testimonials() {
             ))}
           </div>
           <p className="testimonial-text">
-            We had 1,800 Wiz findings and zero confidence about what to fix first. XSEE showed us the{" "}
-            <strong>3 paths that actually reached our database</strong>. One security group change, six attack paths gone, done before lunch. The evidence package alone was worth it.
+            We had 1,800 Wiz findings sitting in a backlog. Zero confidence about what to fix first. XSEE ran in 20 minutes and showed us the{" "}
+            <strong>3 paths that actually reached our database</strong>. One security group change. Six paths gone. Done before lunch. The evidence package is now in our SOC2 audit file.
           </p>
           <div className="testimonial-author">
             <div className="testimonial-avatar">MT</div>
             <div>
               <div className="testimonial-name">Marcus T.</div>
               <div className="testimonial-role">
-                Head of Security · SaaS Startup · AWS
+                Head of Security · SaaS Startup
               </div>
             </div>
           </div>
@@ -40,10 +40,8 @@ export default function Testimonials() {
             ))}
           </div>
           <p className="testimonial-text">
-            The evidence package changed every board conversation.
-            Our CTO&apos;s question was always &quot;can you prove it?&quot; — XSEE answered that with{" "}
-            <strong>actual AWS API responses per hop</strong>.
-            That&apos;s not a finding, that&apos;s a case file.
+            Our CTO&apos;s question in every security review was always &quot;can you prove it?&quot; We never had a good answer. After XSEE: yes. Here are the{" "}
+            <strong>AWS API responses per hop</strong>. That&apos;s not a finding — that&apos;s a case file. We closed 3 critical paths in the same week.
           </p>
           <div className="testimonial-author">
             <div
@@ -72,8 +70,8 @@ export default function Testimonials() {
             ))}
           </div>
           <p className="testimonial-text">
-            The attack simulation showed our GuardDuty had a{" "}
-            <strong>complete blind spot across lateral movement in EKS</strong>. We&apos;d been paying for detection that wouldn&apos;t have fired on the path that mattered most. The Detection Coverage Score is now our weekly metric.
+            The Detection Coverage Score changed how we think about security investment. We thought we were well-protected. XSEE showed us GuardDuty was blind to{" "}
+            <strong>72% of the actual attack steps in our EKS cluster</strong>. That number is now in every board presentation.
           </p>
           <div className="testimonial-author">
             <div

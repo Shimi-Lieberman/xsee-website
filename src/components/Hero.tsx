@@ -48,44 +48,28 @@ export default function Hero() {
         <div className="hero-body">
           <div className="hero-left">
             <div className="hero-top-block">
-              <div className="hero-proof-strip">
-                <div className="hps-item">
-                  <div className="hps-dot" style={{ background: "var(--green)" }} />
-                  Early Access Open
-                </div>
-                <div className="hps-item">
-                  <div className="hps-dot" style={{ background: "var(--sky)" }} />
-                  Read-only · No agents · No code deployed
-                </div>
-                <div className="hps-item">
-                  <div className="hps-dot" style={{ background: "var(--yellow)" }} />
-                  Results in 30 minutes
-                </div>
-              </div>
               <div className="hero-eyebrow">
                 <span className="badge badge-dot eyebrow" style={{ background: "rgba(255,255,255,0.1)", color: "#e2e8f0", borderColor: "rgba(255,255,255,0.25)" }}>
-                  Cloud Exposure Intelligence
+                  Cloud Attack Intelligence
                 </span>
               </div>
               <h1 className="display-xl hero-headline">
-              The only platform that{" "}
-              <span className="blue">
-                proves every
+                Your cloud has 4,000 alerts.
                 <br />
-                <span className="hero-accent-path">attack path</span>{" "}
-                is real.
-              </span>
+                <span className="blue">
+                  <span className="hero-accent-path">Three of them</span> will end your company.
+                </span>
               </h1>
             </div>
             <p className="hero-sub">
-              Your scanner found 4,000 alerts. <strong>Three of them lead to your crown jewels.</strong> XSEE builds a live attack graph, proves which exposures are genuinely exploitable with cryptographic evidence, and shows exactly which fix breaks the most paths — defending against human and AI-powered attackers.
+              Every other tool tells you what could go wrong. XSEE proves what will — with cryptographic evidence per hop, live AWS API validation, and attack simulation that runs the way both human and AI attackers think. Not theory. Proof.
             </p>
             <div className="hero-ctas">
               <Link href="#contact" className="btn btn-primary btn-lg">
-                Get Free Breach Report →
+                Get Your Free Breach Report →
               </Link>
               <Link href="#how" className="btn btn-secondary btn-lg">
-                See How It Works
+                See a Live Demo
               </Link>
             </div>
             <div className="hero-social-proof">
@@ -93,22 +77,22 @@ export default function Hero() {
                 <div className="sp-num hero-sp-num-magenta">
                   1,000<span>+</span>
                 </div>
-                <div className="sp-lbl">Attack patterns</div>
+                <div className="sp-lbl">Attack patterns in XSEE&apos;s engine</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat">
                 <div className="sp-num" style={{ color: "var(--yellow-light)" }}>L1–L3</div>
-                <div className="sp-lbl">Validation layers</div>
+                <div className="sp-lbl">Layers of validation proof</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat warm">
                 <div className="sp-num">92<span>%</span></div>
-                <div className="sp-lbl">Avg. path confidence</div>
+                <div className="sp-lbl">Avg exploit confidence score</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat">
                 <div className="sp-num">&lt;30<span>m</span></div>
-                <div className="sp-lbl">First path found</div>
+                <div className="sp-lbl">Time to your first proven breach path</div>
               </div>
             </div>
           </div>
