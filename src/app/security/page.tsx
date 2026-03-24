@@ -175,10 +175,10 @@ export default function SecurityPage() {
               <div className="sec-compliance-col">
                 <h4 className="sec-compliance-title">In progress</h4>
                 <ul className="sec-compliance-list" style={{ color: "#334155" }}>
-                  <li>⏳ SOC2 Type II audit (2025)</li>
-                  <li>⏳ Penetration testing (Q2 2025)</li>
-                  <li>⏳ GDPR compliance documentation</li>
-                  <li>⏳ Security.txt file</li>
+                  <li>⏳ SOC2 Type II audit (Q3 2026)</li>
+                  <li>⏳ Penetration testing (Q2 2026)</li>
+                  <li>⏳ GDPR compliance (Q4 2026)</li>
+                  <li>⏳ Security.txt (in progress)</li>
                 </ul>
               </div>
               <div className="sec-compliance-col">
