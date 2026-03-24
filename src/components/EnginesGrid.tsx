@@ -3,7 +3,7 @@ const ENGINES = [
     num: "01",
     label: "L1 · Graph Discovery",
     title: "Attack Path Discovery",
-    desc: "Graph-based logical simulation maps every traversable path through your cloud. Surfaces attack chains invisible to individual-finding scanners.",
+    desc: "Graph-based logical simulation maps every traversable path through your cloud using 1,000+ known attack patterns. AI continuously learns and adds new TTPs. Surfaces attack chains invisible to individual-finding scanners.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <circle cx={11} cy={4} r={2} stroke="#FF1B8D" strokeWidth={1.4} />
@@ -33,7 +33,7 @@ const ENGINES = [
     num: "03",
     label: "L3 · XseeCyber",
     title: "Runtime Simulation",
-    desc: "Step-by-step exploit replay with detection gap scoring. Measures time-to-compromise and generates before/after proof of remediation effectiveness.",
+    desc: "Step-by-step exploit replay simulating both human and AI attacker behavior. Measures time-to-compromise, detection gap scoring, and generates before/after proof of remediation effectiveness.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <circle cx={11} cy={11} r={9} stroke="#FF1B8D" strokeWidth={1.3} opacity={0.35} />
@@ -63,7 +63,7 @@ const ENGINES = [
     num: "05",
     label: "AI · Claude-Powered",
     title: "AI Security Analyst",
-    desc: "Five capabilities: explain paths, explain remediation, investigate stories, executive summary, ask anything. Always grounded in your XSEE data — never invented.",
+    desc: "Five capabilities: explain paths, explain remediation, investigate stories, executive risk summary, ask anything. Always grounded in your XSEE data — never invented. Powered by Claude.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <circle cx={11} cy={4} r={1.2} fill="#FF1B8D" />
@@ -106,7 +106,7 @@ export default function EnginesGrid() {
             <span style={{ color: "var(--sky-light)" }}>can they reach your data?</span>
           </h2>
           <p>
-            Every engine feeds the same question — is this exposure actually reachable? Together they replace the CNAPP → BAS → exposure management stack with a single closed loop.
+            Every engine feeds the same question — is this exposure actually reachable? Together they replace the CNAPP → BAS → exposure management stack with a single closed loop. Built to defend against human and AI-powered attacks.
           </p>
           <div className="section-rule" />
         </div>

@@ -2,12 +2,14 @@ const ROWS = [
   { cap: "Attack path discovery", xsee: "Live-validated graph", wiz: "Theoretical only", prisma: "Theoretical only", xseeChk: true, wizChk: true, prismaChk: true },
   { cap: "Live API proof-of-exploitability", xsee: "Evidence package per hop", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Runtime exploit simulation", xsee: "XseeCyber L3", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
+  { cap: "AI attacker simulation", xsee: "Human + AI behavior models", wiz: "Partial", prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Detection gap analysis per path", xsee: "Per simulation run", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "AI security analyst", xsee: "5 specialised capabilities", wiz: "Partial", prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Copy-paste IaC remediation", xsee: "Terraform · CLI · CFN", wiz: "Partial", prisma: "Partial", xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Remediation verification", xsee: "Re-simulate to confirm", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Operational playbooks", xsee: "Kanban + auto-verify", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
-  { cap: "Transparent SMB pricing", xsee: "From $499/mo", wiz: "Enterprise only", prisma: "Enterprise only", xseeChk: true, wizChk: false, prismaChk: false },
+  { cap: "1,000+ attack patterns", xsee: "TTP library + AI learning", wiz: "Partial", prisma: "Partial", xseeChk: true, wizChk: false, prismaChk: false },
+  { cap: "Transparent SMB pricing", xsee: "From $1,200/mo", wiz: "Enterprise only", prisma: "Enterprise only", xseeChk: true, wizChk: false, prismaChk: false },
 ];
 
 export default function ComparisonTable() {
@@ -22,7 +24,7 @@ export default function ComparisonTable() {
             XSEE proves breaches.
           </h2>
           <p>
-            Wiz and Prisma tell you what <em>could</em> go wrong. XM Cyber finds attack paths. Pentera simulates attacks. XSEE is the only platform that closes all three loops — discovery, validation, and verified fix — in one product.
+            Wiz and Prisma tell you what <em>could</em> go wrong. XM Cyber finds attack paths. Pentera simulates attacks. XSEE is the only platform that closes all three loops — discovery, validation, and verified fix — and the only one built to defend against AI-powered attackers.
           </p>
           <div className="section-rule" />
         </div>

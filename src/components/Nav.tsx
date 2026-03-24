@@ -45,7 +45,7 @@ export default function Nav() {
               All Systems Operational
             </div>
             <Link href="#contact" className="btn btn-primary btn-sm">
-              Free Risk Assessment
+              Free Breach Report
             </Link>
             <Link
               href="https://app.xsee.io"

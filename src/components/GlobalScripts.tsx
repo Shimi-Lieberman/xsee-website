@@ -9,17 +9,19 @@ const TERM_LINES = [
   { ts: "09:41:07", type: "t-ok", tag: "[OK]", msg: "847 resources mapped · EC2, IAM, S3, VPC, EKS, Lambda" },
   { ts: "09:41:08", type: "t-info", tag: "[GRAPH]", msg: "Constructing attack graph..." },
   { ts: "09:41:11", type: "t-ok", tag: "[OK]", msg: "12,847 edges · 847 nodes · graph ready" },
+  { ts: "09:41:12", type: "t-info", tag: "[PATTERN]", msg: "Loading 1,000+ attack patterns..." },
   { ts: "09:41:12", type: "t-warn", tag: "[!]", msg: "14 candidate attack paths identified" },
   { ts: "09:41:13", type: "t-info", tag: "[L2]", msg: "Running live AWS API validation..." },
   { ts: "09:41:17", type: "t-err", tag: "[!!]", msg: "3 paths CONFIRMED exploitable via live API evidence" },
-  { ts: "09:41:18", type: "t-warn", tag: "[SIM]", msg: "Launching XseeCyber simulation..." },
-  { ts: "09:41:21", type: "t-err", tag: "[!!]", msg: "Crown jewel reachable in 4 hops · CVE-2020-9283 · RCE confirmed" },
-  { ts: "09:41:22", type: "t-info", tag: "[AI]", msg: "Generating remediation strategies..." },
+  { ts: "09:41:18", type: "t-info", tag: "[AI]", msg: "Simulating AI attacker behavior..." },
+  { ts: "09:41:20", type: "t-err", tag: "[!!]", msg: "Crown jewel reachable in 4 hops · CVE-2020-9283 · RCE confirmed" },
+  { ts: "09:41:21", type: "t-warn", tag: "[SIM]", msg: "Launching XseeCyber simulation..." },
+  { ts: "09:41:22", type: "t-info", tag: "[AI]", msg: "Generating AI-powered remediation strategies..." },
   { ts: "09:41:24", type: "t-ok", tag: "[FIX]", msg: "1 SG rule change eliminates 6 attack vectors · Terraform ready" },
   { ts: "09:41:25", type: "t-ok", tag: "[DONE]", msg: "Scan complete in 23s · Full report available" },
 ];
 
-const DELAYS = [0, 600, 1100, 1700, 2500, 3300, 4000, 4800, 5600, 6500, 7400, 8200, 8900, 9600];
+const DELAYS = [0, 550, 1050, 1650, 2250, 2850, 3450, 4050, 4750, 5450, 6150, 6850, 7550, 8250, 8950, 9650];
 
 export default function GlobalScripts() {
   const termPlayed = useRef(false);
@@ -197,6 +199,7 @@ export default function GlobalScripts() {
           if (entry.isIntersecting) {
             countUp("stat-alerts", 4000, 1800, (n) => n.toLocaleString());
             countUp("stat-undetected", 92, 1600);
+            countUp("stat-patterns", 1000, 1800, (n) => n.toLocaleString());
             statsObserver.disconnect();
           }
         });

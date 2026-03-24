@@ -11,7 +11,7 @@ const CARDS = [
       </svg>
     ),
     title: "Live environment analysis",
-    desc: "We run live analysis on your actual AWS environment — not a staged walkthrough.",
+    desc: "We run live analysis on your actual AWS environment using our full attack pattern library — not a staged walkthrough.",
   },
   {
     icon: (
@@ -22,7 +22,7 @@ const CARDS = [
       </svg>
     ),
     title: "Zero-touch access",
-    desc: "Read-only IAM role — no agents, no code deployment, nothing installed.",
+    desc: "Read-only IAM role — no agents, no code deployment, nothing installed. Works in under 2 minutes.",
   },
   {
     icon: (
@@ -34,7 +34,7 @@ const CARDS = [
       </svg>
     ),
     title: "Full report delivered",
-    desc: "Validated attack graph + ranked exposures + fix recommendations. Yours, no strings.",
+    desc: "Validated attack graph + ranked exposures + fix recommendations + evidence packages. Yours, no strings.",
   },
 ];
 
@@ -103,12 +103,10 @@ export default function ContactForm() {
               Request Demo
             </span>
             <h2 className="display-lg mb-3.5">
-              Get your free
-              <br />
-              breach path report.
+              Get your free Breach Proof Report.
             </h2>
             <p className="mb-8">
-              We connect to your AWS account with read-only IAM access, run a full attack graph analysis, and show you the exact paths that reach your crown-jewel assets. You keep the validated report — no commitment required.
+              We connect to your AWS account with read-only IAM access, run a full attack graph analysis using 1,000+ attack patterns, and show you the exact paths that reach your crown-jewel assets. You keep the validated HTML report — no commitment required.
             </p>
             <div className="contact-points">
               {CARDS.map((c, i) => (
@@ -124,7 +122,7 @@ export default function ContactForm() {
           </div>
           <div className="reveal-right">
             <div className="form-box">
-              <h3 className="form-title">Request Your Free Risk Assessment</h3>
+              <h3 className="form-title">Request Your Free Breach Proof Report</h3>
               <p className="form-sub">We&apos;ll reach out within one business day to schedule the scan.</p>
               <form onSubmit={handleSubmit} className="form-fields">
                 <div className="form-row">

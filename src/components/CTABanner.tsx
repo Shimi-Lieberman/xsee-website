@@ -6,18 +6,18 @@ export default function CTABanner() {
       <div className="container">
         <div className="cta-box cta-box-warm reveal-scale">
           <div className="cta-mesh" />
-          <span className="eyebrow">Free Risk Assessment</span>
+          <span className="eyebrow">Free Breach Report</span>
           <h2 className="display-lg">
-            See which exposures in
+            See which exposures in your cloud
             <br />
-            your cloud lead to a breach.
+            actually matter.
           </h2>
           <p>
-            Connect your AWS account with read-only access. In 30 minutes XSEE delivers a validated attack graph, ranked by blast radius — with the exact fix to close each path. Yours to keep.
+            Connect your AWS account with read-only access. XSEE maps every asset, validates paths with live evidence, and delivers a ranked breach report in under 30 minutes — yours to keep.
           </p>
           <div className="cta-actions">
             <Link href="#contact" className="btn btn-primary btn-lg">
-              Request Demo →
+              Get Free Breach Report →
             </Link>
             <Link
               href="https://app.xsee.io"

@@ -79,14 +79,26 @@ export default function Home() {
                 Average across XSEE environments
               </p>
             </div>
+            <div className="shock-stat-cell">
+              <div className="shock-stat-number">
+                <span id="stat-patterns">0</span>
+                <span className="shock-stat-suffix">+</span>
+              </div>
+              <p className="shock-stat-label">
+                known attack patterns in XSEE&apos;s engine
+              </p>
+              <p className="shock-stat-fine">
+                AI continuously learns and adds new TTPs
+              </p>
+            </div>
           </div>
 
           <div className="shock-cta-wrap">
             <p className="shock-cta-headline">
-              See which 3 of your alerts actually matter.
+              See which exposures in your cloud actually matter.
             </p>
             <a href="#contact" className="shock-cta-btn">
-              Get Free Risk Assessment →
+              Get Free Breach Report →
             </a>
           </div>
         </section>

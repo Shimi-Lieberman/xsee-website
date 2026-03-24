@@ -59,7 +59,7 @@ export default function Hero() {
                 </div>
                 <div className="hps-item">
                   <div className="hps-dot" style={{ background: "var(--yellow)" }} />
-                  Report delivered in 30 min
+                  Results in 30 minutes
                 </div>
               </div>
               <div className="hero-eyebrow">
@@ -78,11 +78,11 @@ export default function Hero() {
               </h1>
             </div>
             <p className="hero-sub">
-              Your scanner found 4,000 alerts. <strong>Three of them lead to your crown jewels.</strong> XSEE builds a live attack graph of your cloud, proves which exposures are genuinely exploitable, and shows exactly which fix breaks the most paths.
+              Your scanner found 4,000 alerts. <strong>Three of them lead to your crown jewels.</strong> XSEE builds a live attack graph, proves which exposures are genuinely exploitable with cryptographic evidence, and shows exactly which fix breaks the most paths — defending against human and AI-powered attackers.
             </p>
             <div className="hero-ctas">
               <Link href="#contact" className="btn btn-primary btn-lg">
-                Free Risk Assessment →
+                Get Free Breach Report →
               </Link>
               <Link href="#how" className="btn btn-secondary btn-lg">
                 See How It Works
@@ -90,13 +90,15 @@ export default function Hero() {
             </div>
             <div className="hero-social-proof">
               <div className="sp-stat">
-                <div className="sp-num" style={{ color: "var(--sky-light)" }}>6<span style={{ color: "var(--sky)" }}>×</span></div>
-                <div className="sp-lbl">Attack engines</div>
+                <div className="sp-num hero-sp-num-magenta">
+                  1,000<span>+</span>
+                </div>
+                <div className="sp-lbl">Attack patterns</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat">
                 <div className="sp-num" style={{ color: "var(--yellow-light)" }}>L1–L3</div>
-                <div className="sp-lbl">Proof layers</div>
+                <div className="sp-lbl">Validation layers</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat warm">

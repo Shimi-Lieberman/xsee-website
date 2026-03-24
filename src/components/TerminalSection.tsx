@@ -12,9 +12,10 @@ export default function TerminalSection() {
             What XSEE sees in your cloud
           </h2>
           <p style={{ maxWidth: 560, margin: "16px auto 0", color: "var(--text-muted)" }}>
-            Connect once with read-only IAM. XSEE maps every asset, validates every path,
+            Connect once with read-only IAM. XSEE maps every asset,
+            validates every path using 1,000+ attack patterns,
             <br />
-            and delivers a ranked breach report in under 30 minutes.
+            and delivers a ranked breach report in under 30 minutes — no agents required.
           </p>
         </div>
 

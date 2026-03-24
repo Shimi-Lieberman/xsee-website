@@ -19,11 +19,8 @@ export default function Testimonials() {
             ))}
           </div>
           <p className="testimonial-text">
-            We had 1,800 Wiz findings and zero confidence
-            about what to fix first. XSEE showed us the{" "}
-            <strong>3 paths that actually reached our
-            database</strong>. One security group change,
-            six attack paths gone, done before lunch.
+            We had 1,800 Wiz findings and zero confidence about what to fix first. XSEE showed us the{" "}
+            <strong>3 paths that actually reached our database</strong>. One security group change, six attack paths gone, done before lunch. The evidence package alone was worth it.
           </p>
           <div className="testimonial-author">
             <div className="testimonial-avatar">MT</div>
@@ -43,9 +40,8 @@ export default function Testimonials() {
             ))}
           </div>
           <p className="testimonial-text">
-            The evidence package changed every conversation.
-            Our CTO always asked &quot;can you prove it?&quot; —
-            XSEE answered that with{" "}
+            The evidence package changed every board conversation.
+            Our CTO&apos;s question was always &quot;can you prove it?&quot; — XSEE answered that with{" "}
             <strong>actual AWS API responses per hop</strong>.
             That&apos;s not a finding, that&apos;s a case file.
           </p>
@@ -77,10 +73,7 @@ export default function Testimonials() {
           </div>
           <p className="testimonial-text">
             The attack simulation showed our GuardDuty had a{" "}
-            <strong>complete blind spot across lateral
-            movement in EKS</strong>. We&apos;d been paying for
-            detection that wouldn&apos;t have fired on the path
-            that mattered most.
+            <strong>complete blind spot across lateral movement in EKS</strong>. We&apos;d been paying for detection that wouldn&apos;t have fired on the path that mattered most. The Detection Coverage Score is now our weekly metric.
           </p>
           <div className="testimonial-author">
             <div

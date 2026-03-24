@@ -4,8 +4,8 @@ const PLANS = [
   {
     tier: "// Starter",
     title: "For Small Teams",
-    desc: "Evaluate XSEE on a single AWS account with the full platform.",
-    price: "$499",
+    desc: "Prove exploitability on a single AWS account.",
+    price: "$1,200",
     per: "/month",
     feats: [
       "1 AWS account",
@@ -14,8 +14,11 @@ const PLANS = [
       "L2 validated attack paths",
       "XseeCyber simulation",
       "AI security analyst",
+      "Operational Playbooks",
+      "Evidence packages",
+      "Email support",
     ],
-    dim: ["Operational Playbooks", "Priority support"],
+    dim: [],
     cta: "Start Free Trial",
     featured: false,
   },
@@ -23,7 +26,7 @@ const PLANS = [
     tier: "// Professional",
     title: "For Growing Teams",
     desc: "Full platform for teams managing multiple AWS environments.",
-    price: "$1,499",
+    price: "$2,500",
     per: "/month",
     feats: [
       "Up to 5 AWS accounts",
@@ -31,6 +34,7 @@ const PLANS = [
       "All 6 intelligence engines",
       "XseeCyber live mode",
       "AI security analyst",
+      "Detection Coverage Score",
       "Operational Playbooks",
       "Priority support",
       "Annual discount available",
@@ -51,6 +55,7 @@ const PLANS = [
       "Custom reporting & dashboards",
       "SSO / SAML integration",
       "Self-hosted deployment",
+      "Optional XSEE Agent (real-time monitoring)",
       "Dedicated customer engineer",
       "SLA guarantee",
       "Custom integrations",
@@ -73,7 +78,7 @@ export default function Pricing() {
             from day one.
           </h2>
           <p>
-            Every plan includes the full six-engine platform. No gating, no &quot;enterprise add-ons&quot; for core proof capabilities. 14-day free trial, no credit card required.
+            Every plan includes the full six-engine platform. No gating, no &quot;enterprise add-ons&quot; for core proof capabilities. <strong>14-day free trial, no credit card required.</strong>
           </p>
           <div className="section-rule" />
         </div>
@@ -125,8 +130,7 @@ export default function Pricing() {
           ))}
         </div>
         <p className="pricing-note">
-          14-day free trial · No credit card required · Annual billing: 20%
-          discount
+          14-day free trial · No credit card required · Annual billing: 25% discount · Optional XSEE Agent for real-time mode
         </p>
       </div>
     </section>

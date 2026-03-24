@@ -48,7 +48,7 @@ export default function AnnouncementBar() {
     return (
       <div className="announcement-bar">
         <div className="ann-inner">
-          <span className="ann-badge-warm">New</span>
+          <span className="ann-badge-warm">NEW</span>
           <span className="ann-text">You&apos;re on the list. We&apos;ll be in touch soon.</span>
         </div>
       </div>
@@ -58,9 +58,9 @@ export default function AnnouncementBar() {
   return (
     <div className="announcement-bar">
       <form onSubmit={handleSubmit} className="ann-inner ann-form">
-        <span className="ann-badge-warm">New</span>
+        <span className="ann-badge-warm">NEW</span>
         <span className="ann-text">
-          XSEE is now in early access — the first platform that proves which exposures actually lead to a breach.
+          XSEE is now in early access — the first platform that proves which exposures actually lead to a breach. Built for the age of AI attackers.
         </span>
         <div className="ann-waitlist">
           <input

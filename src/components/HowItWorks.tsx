@@ -6,12 +6,12 @@ const STEPS = [
   {
     n: "01",
     title: "Infrastructure Discovery",
-    desc: "Scans every cloud asset — EC2, IAM roles, S3 buckets, VPCs, Lambda, EKS, RDS. Maps identities, permissions, and network relationships into a queryable inventory.",
+    desc: "Scans every cloud asset — EC2, IAM roles, S3 buckets, VPCs, Lambda, EKS, RDS. Maps identities, permissions, and network relationships into a queryable attack graph.",
   },
   {
     n: "02",
     title: "Live Attack Graph",
-    desc: "Assembles every resource, identity, permission, and network edge into a directed attack graph. Shows exactly how an attacker could move — hop by hop — through your environment.",
+    desc: "Assembles every resource, identity, permission, and network edge into a directed attack graph using 1,000+ known attack patterns. Shows exactly how both human and AI attackers could move through your environment.",
   },
   {
     n: "03",
@@ -20,8 +20,8 @@ const STEPS = [
   },
   {
     n: "04",
-    title: "Attack Simulation",
-    desc: "Replays the full attack chain step by step. Measures your detection coverage at each stage — showing exactly where your SIEM, GuardDuty, and XDR go blind.",
+    title: "Attack Simulation (XseeCyber)",
+    desc: "Replays the full attack chain step by step. Simulates both human and AI attacker behavior. Measures your detection coverage at each stage — showing exactly where your SIEM, GuardDuty, and XDR go completely blind.",
   },
   {
     n: "05",
@@ -40,10 +40,10 @@ const STEP_CONFIG = [
 
 const SCAN_LINES = [
   "→ Connecting to AWS eu-central-1 · read-only IAM",
-  "→ 847 assets mapped · 12,847 edges · graph ready",
-  "→ 14 candidate paths · escalation chain identified",
-  "→ CVE-2020-9283 · RCE confirmed · crown jewel reachable",
-  "→ 1 SG rule change eliminates 6 attack vectors · verified",
+  "→ 847 assets mapped · 12,847 edges · 1,000+ patterns loaded",
+  "→ 14 candidate paths · L2 live API validation running",
+  "→ XseeCyber · human + AI attacker simulation · detection gaps mapped",
+  "→ 1 SG rule change eliminates 6 attack vectors · Terraform ready",
 ];
 
 const NODES: { id: string; cx: number; cy: number; label: string; sublabel: string; crown?: boolean }[] = [

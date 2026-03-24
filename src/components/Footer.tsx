@@ -76,8 +76,8 @@ export default function Footer() {
               style={{ background: "transparent" }}
             />
             <p className="footer-tagline">
-              Cloud Exposure Intelligence. Discover real attack paths.
-              Prove exploitability. Fix what matters.
+              Cloud Exposure Intelligence. Proves exploitability.
+              Eliminates the noise. Built for the age of AI attackers.
             </p>
             <div className="footer-status">
               <div className="footer-status-dot" />
