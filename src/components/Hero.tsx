@@ -138,19 +138,19 @@ export default function Hero() {
                 <div className="af-main">
                   <div className="af-metrics">
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "var(--sky)" }}>14</div>
+                      <div className="af-mval" style={{ color: "#FF1B8D" }}>14</div>
                       <div className="af-mlbl">Attack Paths</div>
                     </div>
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "var(--red)" }}>3</div>
+                      <div className="af-mval" style={{ color: "#F97316" }}>3</div>
                       <div className="af-mlbl">Critical</div>
                     </div>
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "var(--orange)" }}>92%</div>
+                      <div className="af-mval" style={{ color: "#F97316" }}>92%</div>
                       <div className="af-mlbl">Exploitable</div>
                     </div>
                     <div className="af-metric">
-                      <div className="af-mval" style={{ color: "var(--yellow)" }}>1</div>
+                      <div className="af-mval" style={{ color: "#EAB308" }}>1</div>
                       <div className="af-mlbl">Optimal Fix</div>
                     </div>
                   </div>

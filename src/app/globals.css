@@ -901,6 +901,7 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
 .chat-msg { display: flex; }
 .chat-msg-user { justify-content: flex-end; }
 .chat-msg-assistant { justify-content: flex-start; }
+.chat-msg-has-chips { flex-direction: column; align-items: flex-start; }
 .chat-bubble {
   max-width: 85%;
   padding: 10px 14px;
@@ -911,7 +912,34 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
   word-break: break-word;
 }
 .chat-msg-user .chat-bubble { background: #2563eb; color: #fff; border-bottom-right-radius: 4px; }
-.chat-msg-assistant .chat-bubble { background: var(--bg-high); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.06); border-bottom-left-radius: 4px; }
+.chat-msg-assistant .chat-bubble {
+  background: var(--bg-high);
+  color: var(--text-primary);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-left: 3px solid #FF1B8D;
+  border-bottom-left-radius: 4px;
+}
+.chat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.chat-chip {
+  background: rgba(255,27,141,0.08);
+  border: 1px solid rgba(255,27,141,0.2);
+  color: #FF80C2;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+.chat-chip:hover:not(:disabled) {
+  background: rgba(255,27,141,0.15);
+}
+.chat-chip:disabled { opacity: 0.6; cursor: not-allowed; }
 .chat-typing {
   display: flex;
   gap: 4px;
@@ -947,16 +975,20 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
   max-height: 120px;
   padding: 10px 14px;
   border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.1);
   background: var(--bg-base);
   color: var(--text-primary);
   font-size: 14px;
   font-family: inherit;
   resize: none;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 .chat-input::placeholder { color: var(--text-muted); }
-.chat-input:focus { outline: none; border-color: var(--blue); }
+.chat-input:focus {
+  outline: none;
+  border-color: rgba(255,27,141,0.5);
+  box-shadow: 0 0 0 3px rgba(255,27,141,0.1);
+}
 .chat-input:disabled { opacity: 0.6; cursor: not-allowed; }
 .chat-send {
   width: 44px;

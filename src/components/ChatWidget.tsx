@@ -48,9 +48,9 @@ export default function ChatWidget() {
     }
   }, [open]);
 
-  async function handleSend(e?: React.FormEvent) {
+  async function handleSend(e?: React.FormEvent, textOverride?: string) {
     e?.preventDefault();
-    const text = input.trim();
+    const text = (textOverride ?? input.trim()).trim();
     if (!text || isLoading) return;
 
     setInput("");
@@ -103,6 +103,12 @@ export default function ChatWidget() {
     ? [{ role: "assistant" as const, content: OPENING_MESSAGE }]
     : messages;
 
+  const QUICK_REPLIES = [
+    "How does validation work?",
+    "How is XSEE different from Wiz?",
+    "Get a free risk assessment",
+  ];
+
   return (
     <>
       <button
@@ -145,10 +151,28 @@ export default function ChatWidget() {
                 className={
                   msg.role === "user"
                     ? "chat-msg chat-msg-user"
-                    : "chat-msg chat-msg-assistant"
+                    : msg.content === OPENING_MESSAGE
+                      ? "chat-msg chat-msg-assistant chat-msg-has-chips"
+                      : "chat-msg chat-msg-assistant"
                 }
               >
                 <div className="chat-bubble">{msg.content}</div>
+                {msg.role === "assistant" &&
+                  msg.content === OPENING_MESSAGE && (
+                    <div className="chat-chips">
+                      {QUICK_REPLIES.map((label) => (
+                        <button
+                          key={label}
+                          type="button"
+                          className="chat-chip"
+                          onClick={() => handleSend(undefined, label)}
+                          disabled={isLoading}
+                        >
+                          {label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
               </div>
             ))}
             {streamingContent ? (
