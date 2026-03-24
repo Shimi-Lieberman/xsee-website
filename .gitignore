@@ -42,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Metronic vendor bundle (local reference only; do not commit)
+/metronic-v9.4.7/
