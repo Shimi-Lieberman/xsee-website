@@ -6,6 +6,17 @@ import type { Paddle } from "@paddle/paddle-js";
 
 const SUCCESS_URL = "https://app.xsee.io/login?signup=pending";
 
+/**
+ * Paddle Billing environment. `live_*` client tokens require `production`.
+ * Set NEXT_PUBLIC_PADDLE_ENVIRONMENT=production in Vercel when using live keys.
+ */
+function getPaddleEnvironment(): "production" | "sandbox" {
+  const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
+  if (token.startsWith("live_")) return "production";
+  if (token.startsWith("test_")) return "sandbox";
+  return process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox" ? "sandbox" : "production";
+}
+
 function getPaddle(): Paddle | undefined {
   return (window as Window & { Paddle?: Paddle }).Paddle;
 }
@@ -97,6 +108,7 @@ export default function Pricing() {
       const P = getPaddle();
       if (!P) return false;
       if (!P.Initialized) {
+        P.Environment.set(getPaddleEnvironment());
         P.Initialize({ token });
       }
       return true;
@@ -124,6 +136,7 @@ export default function Pricing() {
       return;
     }
     if (!P.Initialized && process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
+      P.Environment.set(getPaddleEnvironment());
       P.Initialize({ token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN });
     }
     P.Checkout.open({
