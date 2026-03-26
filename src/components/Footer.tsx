@@ -202,9 +202,10 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <p className="footer-copy">© {new Date().getFullYear()} XSEE. All rights reserved.</p>
-          <div className="footer-legal flex gap-5">
-            <Link href="#">Privacy Policy</Link>
-            <Link href="#">Terms of Service</Link>
+          <div className="footer-legal flex flex-wrap gap-x-5 gap-y-2">
+            <Link href="/terms">Terms</Link>
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/refunds">Refunds</Link>
           </div>
         </div>
       </div>
