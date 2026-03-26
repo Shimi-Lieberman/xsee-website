@@ -1,8 +1,20 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { RefreshCw, Award, type LucideIcon } from "lucide-react";
 
-const STEPS = [
+const ALL_EDGE_IDS: string[] = ["he-inet-lb", "he-lb-ec2", "he-ec2-sg", "he-sg-iam", "he-iam-rds"];
+const ALL_NODE_IDS: string[] = ["hn-internet", "hn-lb", "hn-ec2", "hn-sg", "hn-iam", "hn-rds"];
+
+type StepDef = {
+  n: string;
+  title: string;
+  desc: string;
+  Icon?: LucideIcon;
+  certify?: boolean;
+};
+
+const STEPS: StepDef[] = [
   {
     n: "01",
     title: "Connect (2 minutes)",
@@ -25,17 +37,43 @@ const STEPS = [
   },
   {
     n: "05",
-    title: "Fix and verify",
-    desc: "One recommended fix. Minimum change, maximum paths eliminated. Apply it. Re-run the simulation. Get a before/after evidence package with timestamps — ready for your auditor.",
+    title: "Fix",
+    desc: "One recommended fix. Minimum change, maximum paths eliminated. Terraform, CLI, or CloudFormation — you choose. Apply the change XSEE recommends — then verification runs automatically.",
+  },
+  {
+    n: "06",
+    title: "Verify",
+    desc: "Apply the fix. XSEE re-runs L2 validation automatically. If the path no longer validates — it&apos;s marked closed.",
+    Icon: RefreshCw,
+  },
+  {
+    n: "07",
+    title: "Certify",
+    desc: "Before/after evidence package generated automatically. Timestamped proof that the path was open, is now closed, and what changed. Board-ready. Audit-ready.",
+    Icon: Award,
+    certify: true,
   },
 ];
 
 const STEP_CONFIG = [
-  { status: "SCANNING", color: "#0EA5E9", activeNodes: ["hn-internet"], activeEdges: [] },
+  { status: "SCANNING", color: "#0EA5E9", activeNodes: ["hn-internet"], activeEdges: [] as string[] },
   { status: "LIVE VALIDATED", color: "#F97316", activeNodes: ["hn-internet", "hn-lb", "hn-ec2"], activeEdges: ["he-inet-lb", "he-lb-ec2"] },
   { status: "ESCALATION", color: "#EAB308", activeNodes: ["hn-internet", "hn-lb", "hn-ec2", "hn-sg", "hn-iam"], activeEdges: ["he-inet-lb", "he-lb-ec2", "he-ec2-sg", "he-sg-iam"] },
-  { status: "BREACH CONFIRMED", color: "#EF4444", activeNodes: ["hn-internet", "hn-lb", "hn-ec2", "hn-sg", "hn-iam", "hn-rds"], activeEdges: ["he-inet-lb", "he-lb-ec2", "he-ec2-sg", "he-sg-iam", "he-iam-rds"] },
+  { status: "BREACH CONFIRMED", color: "#EF4444", activeNodes: [...ALL_NODE_IDS], activeEdges: [...ALL_EDGE_IDS] },
   { status: "REMEDIATED ✓", color: "#D4006E", activeNodes: ["hn-internet", "hn-lb", "hn-ec2"], activeEdges: ["he-inet-lb", "he-lb-ec2"], dimNodes: ["hn-sg", "hn-iam", "hn-rds"], shieldOn: "hn-sg" },
+  {
+    status: "RE-VALIDATED ✓",
+    color: "#10B981",
+    activeNodes: [...ALL_NODE_IDS],
+    activeEdges: [...ALL_EDGE_IDS],
+  },
+  {
+    status: "CERTIFIED ✓",
+    color: "#F59E0B",
+    activeNodes: [...ALL_NODE_IDS],
+    activeEdges: [...ALL_EDGE_IDS],
+    shieldOn: "hn-rds",
+  },
 ];
 
 const SCAN_LINES = [
@@ -44,6 +82,8 @@ const SCAN_LINES = [
   "→ 14 candidate paths · L2 live API validation running",
   "→ XseeCyber · human + AI attacker simulation · detection gaps mapped",
   "→ 1 SG rule change eliminates 6 attack vectors · Terraform ready",
+  "→ Fix applied · L2 validation re-running on affected paths",
+  "→ Evidence package sealed · before/after cryptographic proof · audit-ready",
 ];
 
 const NODES: { id: string; cx: number; cy: number; label: string; sublabel: string; crown?: boolean }[] = [
@@ -145,7 +185,7 @@ export default function HowItWorks() {
         if (!e) return;
         if (e.isIntersecting) {
           intervalRef.current = setInterval(() => {
-            setCurrentStep((prev) => (prev + 1) % 5);
+            setCurrentStep((prev) => (prev + 1) % 7);
           }, 2500);
         } else {
           if (intervalRef.current) {
@@ -177,7 +217,7 @@ export default function HowItWorks() {
             to &quot;here&apos;s the proof and here&apos;s the fix&quot; in 30 minutes.
           </h2>
           <p>
-            Five steps. No agents. No disruption. Just the truth about your cloud.
+            Seven steps. No agents. No disruption. Just the truth about your cloud.
           </p>
           <div className="section-rule" />
         </div>
@@ -186,23 +226,29 @@ export default function HowItWorks() {
       <div className="how-grid">
         <div className="hiw-steps">
           <div className="steps reveal-left reveal-on-scroll">
-            {STEPS.map((step, i) => (
-              <div
-                key={step.n}
-                className={`step ${currentStep === i ? "active" : ""}`}
-                data-step={i}
-                onClick={() => goToStep(i)}
-                onKeyDown={(e) => e.key === "Enter" && goToStep(i)}
-                role="button"
-                tabIndex={0}
-              >
-                <div className="step-n">{step.n}</div>
-                <div className="step-content">
-                  <h3>{step.title}</h3>
-                  <p>{step.desc}</p>
+            {STEPS.map((step, i) => {
+              const StepIcon = step.Icon;
+              return (
+                <div
+                  key={step.n}
+                  className={`step ${currentStep === i ? "active" : ""} ${step.certify ? "step-certify" : ""}`}
+                  data-step={i}
+                  onClick={() => goToStep(i)}
+                  onKeyDown={(e) => e.key === "Enter" && goToStep(i)}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <div className="step-n">{step.n}</div>
+                  <div className="step-content">
+                    <h3 className={StepIcon ? "step-title-row" : undefined}>
+                      {StepIcon ? <StepIcon size={18} strokeWidth={2} aria-hidden /> : null}
+                      {step.title}
+                    </h3>
+                    <p>{step.desc}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

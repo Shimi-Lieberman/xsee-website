@@ -45,7 +45,7 @@ export default function Footer() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: n, email: eVal, message: m }),
+        body: JSON.stringify({ name: n, email: eVal, message: m, website }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
@@ -78,7 +78,7 @@ export default function Footer() {
               style={{ background: "transparent" }}
             />
             <p className="footer-tagline">
-              XSEE — Cloud Exposure Intelligence. Stop guessing. Prove the breach. Built for the age of AI attackers.
+              XSEE — Cloud Exposure Intelligence. Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
             </p>
             <div className="footer-status">
               <div className="footer-status-dot" />

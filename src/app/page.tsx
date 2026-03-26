@@ -3,12 +3,15 @@ import GlobalScripts from "@/components/GlobalScripts";
 import Nav from "@/components/Nav";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Hero from "@/components/Hero";
+import AttackGraphPreview from "@/components/AttackGraphPreview";
+import DetectionCoverageChart from "@/components/DetectionCoverageChart";
 import TrustStrip from "@/components/TrustStrip";
 import ProblemSolution from "@/components/ProblemSolution";
 import AiAttackerSection from "@/components/AiAttackerSection";
 import StatsBand from "@/components/StatsBand";
 import TerminalSection from "@/components/TerminalSection";
 import HowItWorks from "@/components/HowItWorks";
+import CompleteLoopSection from "@/components/CompleteLoopSection";
 import EnginesGrid from "@/components/EnginesGrid";
 import ComparisonTable from "@/components/ComparisonTable";
 import Testimonials from "@/components/Testimonials";
@@ -26,6 +29,8 @@ export default function Home() {
       <AnnouncementBar />
       <main>
         <Hero />
+        <AttackGraphPreview />
+        <DetectionCoverageChart />
         <TrustStrip />
         <div className="sec-transition sec-dark-to-light" />
         <ProblemSolution />
@@ -117,6 +122,7 @@ export default function Home() {
         <TerminalSection />
         <div className="sec-transition sec-tint-to-dark" style={{ background: "linear-gradient(to bottom,#040B18,#040B18)" }} />
         <HowItWorks />
+        <CompleteLoopSection />
         <div className="sec-transition sec-dark-to-light" />
         <EnginesGrid />
         <div className="sec-transition sec-light-to-dark" />

@@ -89,6 +89,14 @@ export default function ProblemSolution() {
                 <span className="ps-icon">✓</span>
                 <span className="ps-item-text">One fix recommendation that eliminates the most risk</span>
               </li>
+              <li className="ps-item">
+                <span className="ps-icon">✓</span>
+                <span className="ps-item-text">Financial exposure per path ($3.2M average)</span>
+              </li>
+              <li className="ps-item">
+                <span className="ps-icon">✓</span>
+                <span className="ps-item-text">Data at risk quantified (records × $164 IBM cost)</span>
+              </li>
             </ul>
           </div>
         </div>

@@ -94,6 +94,13 @@ export default function Hero() {
                 <div className="sp-num">&lt;30<span>m</span></div>
                 <div className="sp-lbl">Time to your first proven breach path</div>
               </div>
+              <div className="sp-sep" style={{ background: "rgba(255,255,255,0.06)" }} />
+              <div className="sp-stat warm">
+                <div className="sp-num">
+                  $18.5<span>M</span>
+                </div>
+                <div className="sp-lbl">Avg financial exposure proven</div>
+              </div>
             </div>
           </div>
           <div className="hero-right">
