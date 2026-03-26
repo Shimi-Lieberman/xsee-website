@@ -1,4 +1,14 @@
+"use client";
+
+import { useEffect, useCallback } from "react";
 import Link from "next/link";
+import type { Paddle } from "@paddle/paddle-js";
+
+const SUCCESS_URL = "https://app.xsee.io/login?signup=pending";
+
+function getPaddle(): Paddle | undefined {
+  return (window as Window & { Paddle?: Paddle }).Paddle;
+}
 
 const PLANS = [
   {
@@ -21,6 +31,7 @@ const PLANS = [
     dim: [],
     cta: "Start Free Trial",
     featured: false,
+    checkout: "starter" as const,
   },
   {
     tier: "// Professional",
@@ -42,6 +53,7 @@ const PLANS = [
     dim: [],
     cta: "Start Free Trial →",
     featured: true,
+    checkout: "pro" as const,
   },
   {
     tier: "// Enterprise",
@@ -63,10 +75,65 @@ const PLANS = [
     dim: [],
     cta: "Contact Sales",
     featured: false,
+    checkout: "enterprise" as const,
   },
 ];
 
+function getPriceId(tier: "starter" | "pro"): string | undefined {
+  if (tier === "starter") return process.env.NEXT_PUBLIC_PADDLE_STARTER_PRICE_ID;
+  return process.env.NEXT_PUBLIC_PADDLE_PRO_PRICE_ID;
+}
+
 export default function Pricing() {
+  useEffect(() => {
+    const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
+    if (!token || typeof window === "undefined") return;
+
+    let interval: ReturnType<typeof setInterval> | undefined;
+    let attempts = 0;
+    const maxAttempts = 100;
+
+    const tryInit = () => {
+      const P = getPaddle();
+      if (!P) return false;
+      if (!P.Initialized) {
+        P.Initialize({ token });
+      }
+      return true;
+    };
+
+    if (tryInit()) return;
+
+    interval = setInterval(() => {
+      attempts += 1;
+      if (tryInit() || attempts >= maxAttempts) {
+        if (interval) clearInterval(interval);
+      }
+    }, 50);
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, []);
+
+  const openCheckout = useCallback((tier: "starter" | "pro") => {
+    const priceId = getPriceId(tier);
+    const P = typeof window !== "undefined" ? getPaddle() : undefined;
+    if (!P?.Checkout || !priceId) {
+      window.location.hash = "contact";
+      return;
+    }
+    if (!P.Initialized && process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
+      P.Initialize({ token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN });
+    }
+    P.Checkout.open({
+      items: [{ priceId, quantity: 1 }],
+      settings: {
+        successUrl: SUCCESS_URL,
+      },
+    });
+  }, []);
+
   return (
     <section className="section sec-blue-tint" id="pricing">
       <div className="container">
@@ -119,13 +186,24 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <Link
-                href="#contact"
-                className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
-                style={{ width: "100%", justifyContent: "center" }}
-              >
-                {plan.cta}
-              </Link>
+              {plan.checkout === "enterprise" ? (
+                <Link
+                  href="#contact"
+                  className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
+                  style={{ width: "100%", justifyContent: "center" }}
+                >
+                  {plan.cta}
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
+                  style={{ width: "100%", justifyContent: "center" }}
+                  onClick={() => openCheckout(plan.checkout)}
+                >
+                  {plan.cta}
+                </button>
+              )}
             </div>
           ))}
         </div>
