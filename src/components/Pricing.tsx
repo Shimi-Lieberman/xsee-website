@@ -105,13 +105,19 @@ export default function Pricing() {
     const maxAttempts = 100;
 
     const tryInit = () => {
-      const P = getPaddle();
-      if (!P) return false;
-      if (!P.Initialized) {
-        P.Environment.set(getPaddleEnvironment());
-        P.Initialize({ token });
+      if (typeof window === "undefined" || !window.Paddle) return false;
+      try {
+        const P = getPaddle();
+        if (!P) return false;
+        if (!P.Initialized) {
+          P.Environment.set(getPaddleEnvironment());
+          P.Initialize({ token });
+        }
+        return true;
+      } catch (e) {
+        console.warn("Paddle not ready:", e);
+        return false;
       }
-      return true;
     };
 
     if (tryInit()) return;
@@ -130,21 +136,31 @@ export default function Pricing() {
 
   const openCheckout = useCallback((tier: "starter" | "pro") => {
     const priceId = getPriceId(tier);
-    const P = typeof window !== "undefined" ? getPaddle() : undefined;
-    if (!P?.Checkout || !priceId) {
+    if (typeof window === "undefined") return;
+    if (!window.Paddle) {
       window.location.hash = "contact";
       return;
     }
-    if (!P.Initialized && process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
-      P.Environment.set(getPaddleEnvironment());
-      P.Initialize({ token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN });
+    try {
+      const P = getPaddle();
+      if (!P?.Checkout || !priceId) {
+        window.location.hash = "contact";
+        return;
+      }
+      if (!P.Initialized && process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
+        P.Environment.set(getPaddleEnvironment());
+        P.Initialize({ token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN });
+      }
+      P.Checkout.open({
+        items: [{ priceId, quantity: 1 }],
+        settings: {
+          successUrl: SUCCESS_URL,
+        },
+      });
+    } catch (e) {
+      console.warn("Paddle not ready:", e);
+      window.location.hash = "contact";
     }
-    P.Checkout.open({
-      items: [{ priceId, quantity: 1 }],
-      settings: {
-        successUrl: SUCCESS_URL,
-      },
-    });
   }, []);
 
   return (
