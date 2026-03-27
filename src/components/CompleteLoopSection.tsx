@@ -70,7 +70,7 @@ export default function CompleteLoopSection() {
                 <div className="elite-loop-name">{s.name}</div>
                 <div className="elite-loop-desc">{s.desc}</div>
                 <span className={`elite-loop-badge ${s.badge === "auto" ? "elite-loop-badge-auto" : "elite-loop-badge-human"}`}>
-                  {s.badge === "auto" ? "XSEE auto" : "Human: 1 click"}
+                  {s.badge === "auto" ? "XSEE auto" : "1 human approval"}
                 </span>
               </div>
             </Fragment>

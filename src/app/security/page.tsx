@@ -21,10 +21,10 @@ export default function SecurityPage() {
             <div className="section-head" style={{ textAlign: "center", maxWidth: 640, margin: "0 auto" }}>
               <span className="eyebrow" style={{ display: "block", marginBottom: 14 }}>SECURITY & TRUST</span>
               <h1 className="display-lg" style={{ color: "#ffffff", marginBottom: 20 }}>
-                Security is not a feature. It&apos;s the foundation.
+                Security is not a feature. It's the foundation.
               </h1>
               <p style={{ fontSize: 17, lineHeight: 1.7, color: "#94a3b8", maxWidth: 560, margin: "0 auto" }}>
-                XSEE is a security company. We hold ourselves to a higher standard than most. Here&apos;s exactly how we handle your data, your access, and your trust.
+                XSEE is a security company. We hold ourselves to a higher standard than most. Here's exactly how we handle your data, your access, and your trust.
               </p>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function SecurityPage() {
         <section className="section sec-navy" id="data-handling" style={{ background: "#050d1a" }}>
           <div className="container">
             <h2 className="display-md" style={{ color: "#ffffff", marginBottom: 32 }}>
-              What we store. What we don&apos;t.
+              What we store. What we don't.
             </h2>
             <div className="sec-data-grid">
               <div className="sec-data-col">
@@ -95,7 +95,7 @@ export default function SecurityPage() {
                   <li>The contents of your S3 buckets or databases</li>
                   <li>Personal data from your cloud resources</li>
                   <li>Raw AWS API responses containing sensitive data</li>
-                  <li>Your customers&apos; data</li>
+                  <li>Your customers' data</li>
                 </ul>
               </div>
             </div>
@@ -158,7 +158,7 @@ export default function SecurityPage() {
         <section className="section sec-light" id="compliance" style={{ background: "#f8fafc" }}>
           <div className="container">
             <h2 className="display-md" style={{ color: "#0f172a", marginBottom: 32 }}>
-              Where we&apos;re headed.
+              Where we're headed.
             </h2>
             <div className="sec-compliance-grid">
               <div className="sec-compliance-col">

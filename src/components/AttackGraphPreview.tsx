@@ -1,5 +1,7 @@
 "use client";
 
+import { Zap, Key, Crown, Check, AlertTriangle } from "lucide-react";
+
 /** Animated attack graph preview — static layout, SVG + CSS motion */
 export default function AttackGraphPreview() {
   const attackPathD = "M 52 108 L 168 152 L 352 108 L 718 104";
@@ -132,16 +134,14 @@ export default function AttackGraphPreview() {
             {/* Node 5 Lambda */}
             <g transform="translate(528,48)">
               <circle r="18" fill="rgba(249,115,22,0.1)" stroke="#F97316" strokeWidth="2" />
-              <text x="0" y="4" textAnchor="middle" fill="#F97316" fontSize="14" fontWeight="700">λ</text>
             </g>
 
             {/* Node 6 Secret */}
             <g transform="translate(528,152)">
               <circle r="18" fill="rgba(124,58,237,0.12)" stroke="#7C3AED" strokeWidth="2" />
-              <text x="0" y="4" textAnchor="middle" fill="#A78BFA" fontSize="10">🔑</text>
             </g>
 
-            {/* Node 7 prod-db crown */}
+            {/* Node 7 prod-db crown jewel */}
             <g transform="translate(718,104)">
               <circle r="30" fill="none" stroke="#F59E0B" strokeWidth="1" opacity="0.35">
                 <animate attributeName="r" values="26;34;26" dur="2s" repeatCount="indefinite" />
@@ -154,14 +154,6 @@ export default function AttackGraphPreview() {
                 strokeWidth="2"
                 style={{ filter: "drop-shadow(0 0 8px rgba(245,158,11,0.45))" }}
               />
-              <path
-                d="M -8 -18 L -5 -14 L 0 -20 L 5 -14 L 8 -18"
-                stroke="#F59E0B"
-                fill="none"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              <text x="0" y="6" textAnchor="middle" fill="#F59E0B" fontSize="16">👑</text>
             </g>
 
             {/* Labels */}
@@ -180,14 +172,66 @@ export default function AttackGraphPreview() {
             <text x="718" y="188" textAnchor="middle" fill="#F8FAFC" fontSize="10" fontWeight="600">prod-db</text>
             <text x="718" y="200" textAnchor="middle" fill="#475569" fontSize="9">Crown jewel</text>
           </svg>
+          <div
+            className="elite-attack-node-icon-layer"
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                left: `${(528 / 800) * 100}%`,
+                top: `${(48 / 220) * 100}%`,
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Zap size={16} color="#F97316" strokeWidth={2} aria-hidden />
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                left: `${(528 / 800) * 100}%`,
+                top: `${(152 / 220) * 100}%`,
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Key size={14} color="#A78BFA" strokeWidth={2} aria-hidden />
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                left: `${(718 / 800) * 100}%`,
+                top: `${(104 / 220) * 100}%`,
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <Crown size={18} color="#F59E0B" strokeWidth={2} aria-hidden />
+            </div>
+          </div>
         </div>
 
         <div className="elite-attack-pills">
-          <span className="elite-evidence-pill elite-pill-orange-pulse">⚡ EXPLOITABLE</span>
-          <span className="elite-evidence-pill elite-pill-green">✓ Confidence 92% · L2</span>
+          <span className="elite-evidence-pill elite-pill-orange-pulse elite-pill-with-icon">
+            <Zap size={12} strokeWidth={2.5} aria-hidden />
+            EXPLOITABLE
+          </span>
+          <span className="elite-evidence-pill elite-pill-green elite-pill-with-icon">
+            <Check size={12} strokeWidth={2.5} aria-hidden />
+            Confidence 92% · L2
+          </span>
           <span className="elite-evidence-pill">4 Hops</span>
-          <span className="elite-evidence-pill elite-pill-red">💥 Blast: 4 resources</span>
-          <span className="elite-evidence-pill elite-pill-red">Detection 0% ⚠</span>
+          <span className="elite-evidence-pill elite-pill-red elite-pill-with-icon">
+            <AlertTriangle size={12} strokeWidth={2.5} aria-hidden />
+            Blast: 4 resources
+          </span>
+          <span className="elite-evidence-pill elite-pill-red elite-pill-with-icon">
+            <AlertTriangle size={12} strokeWidth={2.5} aria-hidden />
+            Detection 0%
+          </span>
         </div>
       </div>
     </section>

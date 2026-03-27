@@ -66,7 +66,7 @@ export default function Hero() {
             </p>
             <div className="hero-ctas">
               <Link href="#contact" className="btn btn-primary btn-lg">
-                Get Your Free Breach Report →
+                Get Your Free Risk Assessment →
               </Link>
               <Link href="#how" className="btn btn-secondary btn-lg">
                 See a Live Demo
@@ -77,7 +77,7 @@ export default function Hero() {
                 <div className="sp-num hero-sp-num-magenta">
                   1,000<span>+</span>
                 </div>
-                <div className="sp-lbl">Attack patterns in XSEE&apos;s engine</div>
+                <div className="sp-lbl">Attack patterns in XSEE's engine</div>
               </div>
               <div className="sp-sep" />
               <div className="sp-stat">

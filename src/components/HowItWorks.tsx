@@ -18,7 +18,7 @@ const STEPS: StepDef[] = [
   {
     n: "01",
     title: "Connect (2 minutes)",
-    desc: "Create a read-only IAM role in AWS. Paste the ARN. That&apos;s it. XSEE never writes to your environment. You can revoke access in one click.",
+    desc: "Create a read-only IAM role in AWS. Paste the ARN. That's it. XSEE never writes to your environment. You can revoke access in one click.",
   },
   {
     n: "02",
@@ -43,7 +43,7 @@ const STEPS: StepDef[] = [
   {
     n: "06",
     title: "Verify",
-    desc: "Apply the fix. XSEE re-runs L2 validation automatically. If the path no longer validates — it&apos;s marked closed.",
+    desc: "Apply the fix. XSEE re-runs L2 validation automatically. If the path no longer validates — it's marked closed.",
     Icon: RefreshCw,
   },
   {
@@ -214,7 +214,7 @@ export default function HowItWorks() {
           <h2 className="display-lg">
             From &quot;we might have a problem&quot;
             <br />
-            to &quot;here&apos;s the proof and here&apos;s the fix&quot; in 30 minutes.
+            to &quot;here's the proof and here's the fix&quot; in 30 minutes.
           </h2>
           <p>
             Seven steps. No agents. No disruption. Just the truth about your cloud.

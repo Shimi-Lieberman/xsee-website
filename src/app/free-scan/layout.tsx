@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Free Breach Proof Report | XSEE",
-  description: "Connect your AWS account with read-only IAM. Get a ranked report of your top attack paths in under 30 minutes.",
+  title: "Free Risk Assessment | XSEE",
+  description:
+    "Connect your AWS account. Get a validated attack graph in 30 minutes. Free, no credit card required.",
 };
 
 export default function FreeScanLayout({

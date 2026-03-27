@@ -24,15 +24,36 @@ export default function StatsBand() {
 
   useEffect(() => {
     const el = counterRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (!el) return;
+
+    let activated = false;
+    const activate = () => {
+      if (activated) return;
+      activated = true;
+      setCountersVisible(true);
+    };
+
+    const inViewport = () => {
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const bottomInset = 50;
+      return rect.top < vh - bottomInset && rect.bottom > bottomInset * 0.25;
+    };
+
+    requestAnimationFrame(() => {
+      if (inViewport()) activate();
+    });
+
+    if (typeof IntersectionObserver === "undefined") {
+      activate();
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) {
-          setCountersVisible(true);
-          observer.disconnect();
-        }
+        if (entry?.isIntersecting) activate();
       },
-      { threshold: 0.3 }
+      { root: null, rootMargin: "0px 0px -50px 0px", threshold: 0.2 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -68,16 +89,16 @@ export default function StatsBand() {
           <div className="stat-lbl">Avg. path confidence</div>
         </div>
         <div className="stat-cell stat-warm" style={{ ...popStyle, animationDelay: countersVisible ? "0.15s" : undefined }}>
-          <div className="stat-num" style={{ color: "#EAB308" }}>
-            &lt;30<span className="sfx" style={{ color: "#EAB308" }}>m</span>
-          </div>
-          <div className="stat-lbl">First path found</div>
-        </div>
-        <div className="stat-cell" style={{ ...popStyle, animationDelay: countersVisible ? "0.2s" : undefined }}>
           <div className="stat-num" style={{ color: "#F59E0B" }}>
             $18.5<span className="sfx" style={{ color: "#F59E0B" }}>M</span>
           </div>
           <div className="stat-lbl">Avg financial exposure proven</div>
+        </div>
+        <div className="stat-cell" style={{ ...popStyle, animationDelay: countersVisible ? "0.2s" : undefined }}>
+          <div className="stat-num" style={{ color: "#EAB308" }}>
+            &lt;30<span className="sfx" style={{ color: "#EAB308" }}>m</span>
+          </div>
+          <div className="stat-lbl">First path found</div>
         </div>
       </div>
     </div>

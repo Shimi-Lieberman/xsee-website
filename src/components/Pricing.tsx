@@ -27,7 +27,7 @@ const PLANS = [
     title: "For Small Teams",
     desc: "Prove exploitability on a single AWS account.",
     price: "$1,200",
-    per: "/month",
+    per: "/mo",
     feats: [
       "1 AWS account",
       "Up to 100 assets",
@@ -237,7 +237,7 @@ export default function Pricing() {
           ))}
         </div>
         <p className="pricing-note">
-          14-day free trial · No credit card required · Annual billing: 25% discount · Optional XSEE Agent for real-time mode
+          14-day free trial · No credit card required · Starter $1,200/mo · Professional $2,500/mo · Enterprise: contact us · Annual billing: 25% discount · Optional XSEE Agent for real-time mode
         </p>
       </div>
     </section>

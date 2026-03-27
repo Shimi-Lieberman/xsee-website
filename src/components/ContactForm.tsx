@@ -84,7 +84,7 @@ export default function ContactForm() {
         <div className="container">
           <div className="reveal mx-auto max-w-xl text-center">
             <h2 className="display-lg mb-4">Thanks!</h2>
-            <p className="mb-6">We&apos;ll be in touch within 24 hours.</p>
+            <p className="mb-6">We'll be in touch within 24 hours.</p>
             <button
               type="button"
               onClick={() => setStatus("idle")}
@@ -107,7 +107,7 @@ export default function ContactForm() {
               Request Demo
             </span>
             <h2 className="display-lg mb-3.5">
-              Get your free Breach Proof Report.
+              Get your free Risk Assessment.
             </h2>
             <p className="mb-8">
               We connect to your AWS account with read-only IAM access, run a full attack graph analysis using 1,000+ attack patterns, and show you the exact paths that reach your crown-jewel assets. You keep the validated HTML report — no commitment required.
@@ -126,8 +126,8 @@ export default function ContactForm() {
           </div>
           <div className="reveal-right">
             <div className="form-box">
-              <h3 className="form-title">Request Your Free Breach Proof Report</h3>
-              <p className="form-sub">We&apos;ll reach out within one business day to schedule the scan.</p>
+              <h3 className="form-title">Request Your Free Risk Assessment</h3>
+              <p className="form-sub">We'll reach out within one business day to schedule the scan.</p>
               <form onSubmit={handleSubmit} className="form-fields">
                 <div className="honeypot" aria-hidden="true">
                   <label htmlFor="demo-website">Website</label>

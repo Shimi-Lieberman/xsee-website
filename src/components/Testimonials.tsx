@@ -40,8 +40,8 @@ export default function Testimonials() {
             ))}
           </div>
           <p className="testimonial-text">
-            Our CTO&apos;s question in every security review was always &quot;can you prove it?&quot; We never had a good answer. After XSEE: yes. Here are the{" "}
-            <strong>AWS API responses per hop</strong>. That&apos;s not a finding — that&apos;s a case file. We closed 3 critical paths in the same week.
+            Our CTO's question in every security review was always &quot;can you prove it?&quot; We never had a good answer. After XSEE: yes. Here are the{" "}
+            <strong>AWS API responses per hop</strong>. That's not a finding — that's a case file. We closed 3 critical paths in the same week.
           </p>
           <div className="testimonial-author">
             <div

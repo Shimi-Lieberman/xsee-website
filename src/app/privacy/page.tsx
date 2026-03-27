@@ -3,7 +3,7 @@ import { LegalSection } from "@/components/LegalSection";
 import PrivacyDataCards from "@/components/PrivacyDataCards";
 
 export const metadata = {
-  title: "Privacy Policy — XSEE",
+  title: "Privacy Policy | XSEE",
   description: "How XSEE collects, uses, and protects your data. Payments via Paddle.",
 };
 

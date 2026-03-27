@@ -40,14 +40,14 @@ results in 30 min, 1,000+ attack patterns + AI learning,
 evidence packages, crown jewel tagging, blast radius,
 threat intel (CISA KEV/EPSS/NVD), Detection Coverage Score,
 compliance mapping (SOC2/CIS/NIST/PCI/HIPAA),
-multi-user orgs with RBAC, free Breach Proof Report
+multi-user orgs with RBAC, free Risk Assessment
 
 PRICING:
-Starter: $1,200/month — 1 AWS account, 100 assets,
+Starter: $1,200/mo — 1 AWS account, 100 assets,
 all 6 engines, 14-day free trial
-Professional: $2,500/month — 5 accounts, 1,000 assets,
+Professional: $2,500/mo — 5 accounts, 1,000 assets,
 XseeCyber live mode, priority support, 14-day free trial
-Enterprise: Contact sales — unlimited, self-hosted,
+Enterprise: Contact us — unlimited, self-hosted,
 SSO/SAML, dedicated engineer, optional XSEE Agent
 Annual: 25% discount
 Free trial: 14 days, no credit card

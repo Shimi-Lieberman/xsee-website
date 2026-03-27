@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import GlobalScripts from "@/components/GlobalScripts";
 import Nav from "@/components/Nav";
@@ -19,6 +20,12 @@ import Pricing from "@/components/Pricing";
 import CTABanner from "@/components/CTABanner";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "XSEE — Prove Every Attack Path is Real",
+  description:
+    "XSEE proves which attack paths in your cloud are actually exploitable — with cryptographic evidence per hop, live AWS API validation, and AI attacker simulation. Not theory. Proof.",
+};
 
 export default function Home() {
   return (
@@ -56,7 +63,7 @@ export default function Home() {
 
           <div className="section-head reveal" style={{ marginBottom: 48 }}>
             <h2 className="display-md" style={{ textAlign: "center", margin: "0 auto 16px" }}>
-              The numbers security teams don&apos;t want to see — until they do.
+              The numbers security teams don't want to see — until they do.
             </h2>
           </div>
 
@@ -111,7 +118,7 @@ export default function Home() {
 
           <div className="shock-cta-wrap">
             <p className="shock-cta-headline">
-              What&apos;s your Detection Coverage Score? Find out in 30 minutes — free.
+              What's your Detection Coverage Score? Find out in 30 minutes — free.
             </p>
             <a href="/free-scan" className="shock-cta-btn">
               Run Free Scan →

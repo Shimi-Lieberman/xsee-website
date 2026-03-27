@@ -57,7 +57,7 @@ export default function AiAttackerSection() {
           ))}
         </div>
         <p className="ai-threat-summary reveal">
-          XSEE simulates AI attacker behavior — so you can measure your defenses against the threat that&apos;s actually coming.
+          XSEE simulates AI attacker behavior — so you can measure your defenses against the threat that's actually coming.
         </p>
         <div className="ai-threat-cta reveal">
           <Link href="/free-scan" className="btn btn-primary">

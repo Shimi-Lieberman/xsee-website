@@ -124,6 +124,7 @@
   color: #94a3b8;
 }
 .elite-attack-svg-wrap {
+  position: relative;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
@@ -152,6 +153,14 @@
   background: rgba(255, 255, 255, 0.06);
   color: #e2e8f0;
   white-space: nowrap;
+}
+.elite-pill-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.elite-pill-with-icon svg {
+  flex-shrink: 0;
 }
 .elite-pill-orange-pulse {
   color: #fb923c;
@@ -363,6 +372,13 @@
   background: rgba(255, 27, 141, 0.1);
   color: #ff80c2;
   border-color: rgba(255, 27, 141, 0.2);
+  white-space: normal;
+  max-width: 100%;
+  line-height: 1.25;
+  padding: 4px 8px;
+  font-size: 10px;
+  text-align: center;
+  hyphens: none;
 }
 .elite-loop-human-line {
   text-align: center;
@@ -942,6 +958,138 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 16px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.ua-main {
+  padding: 48px 0 100px;
+}
+.ua-hero {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 40px;
+}
+.ua-hero-badge {
+  display: inline-block;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.ua-hero-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 800;
+  color: #f8fafc;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.ua-hero-sub {
+  color: #94a3b8;
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0;
+}
+.ua-textarea {
+  min-height: 120px;
+  resize: vertical;
+  margin-bottom: 12px;
+}
+.ua-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+.ua-success-card {
+  background: #111827;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 20px;
+  padding: 40px 32px;
+  max-width: 520px;
+  margin: 0 auto 56px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(34, 197, 94, 0.08);
+}
+.ua-success-title {
+  color: #4ade80;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+.ua-success-body {
+  color: #94a3b8;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+.ua-success-home {
+  display: inline-flex;
+}
+.ua-section-title {
+  color: #f8fafc;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.ua-next-section {
+  margin-bottom: 56px;
+}
+.ua-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.ua-step-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px 20px;
+  text-align: center;
+}
+.ua-step-name {
+  color: #f8fafc;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.ua-step-desc {
+  color: #94a3b8;
+  font-size: 13px;
+  line-height: 1.55;
+  margin: 0;
+}
+.ua-trust-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding-top: 8px;
+}
+.ua-trust-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ua-trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.ua-trust-ico {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #94a3b8;
 }
 
 /* ── Scroll Reveal Setup ── */

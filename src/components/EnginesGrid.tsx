@@ -78,7 +78,7 @@ const ENGINES = [
     num: "06",
     label: "Playbooks",
     title: "Operational Playbooks",
-    desc: "Findings don&apos;t close themselves. XSEE&apos;s Kanban-style playbooks take each finding from detection through remediation to verified closure. Assign to team members. Track status. Re-scan automatically when a fix is applied. Full audit trail for your compliance team.",
+    desc: "Findings don't close themselves. XSEE's Kanban-style playbooks take each finding from detection through remediation to verified closure. Assign to team members. Track status. Re-scan automatically when a fix is applied. Full audit trail for your compliance team.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none">
         <rect x={3} y={2} width={16} height={18} rx={2} stroke="#FF1B8D" strokeWidth={1.4} fill="rgba(255, 27, 141,0.05)" />

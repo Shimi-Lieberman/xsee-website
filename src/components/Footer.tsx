@@ -89,16 +89,16 @@ export default function Footer() {
             <div className="footer-col-head">Product</div>
             <ul className="footer-links">
               <li>
-                <Link href="#how">How It Works</Link>
+                <Link href="/#how">How It Works</Link>
               </li>
               <li>
-                <Link href="#engines">Engines</Link>
+                <Link href="/#engines">Engines</Link>
               </li>
               <li>
-                <Link href="#compare">vs. Wiz</Link>
+                <Link href="/#compare">vs. Wiz</Link>
               </li>
               <li>
-                <Link href="#pricing">Pricing</Link>
+                <Link href="/#pricing">Pricing</Link>
               </li>
             </ul>
           </div>
@@ -112,7 +112,7 @@ export default function Footer() {
                 <Link href="#">Careers</Link>
               </li>
               <li>
-                <Link href="#contact">Contact</Link>
+                <Link href="/#contact">Contact</Link>
               </li>
               <li>
                 <Link href="/security">Security</Link>
@@ -140,7 +140,7 @@ export default function Footer() {
         <div className="footer-contact">
           <h4 className="footer-contact-title">Get in touch</h4>
           {status === "success" ? (
-            <p className="footer-contact-success">Thanks! We&apos;ll get back to you soon.</p>
+            <p className="footer-contact-success">Thanks! We'll get back to you soon.</p>
           ) : (
             <form onSubmit={handleContactSubmit} className="footer-contact-form">
               <div className="honeypot" aria-hidden="true">

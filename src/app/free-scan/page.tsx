@@ -66,7 +66,7 @@ export default function FreeScanPage() {
         <section className="section sec-navy free-scan-hero">
           <div className="container">
             <div className="free-scan-hero-inner">
-              <h1 className="display-lg">Get your free Breach Proof Report</h1>
+              <h1 className="display-lg">Get your free Risk Assessment</h1>
               <p className="free-scan-sub">
                 We connect to your AWS account with read-only IAM. No agents, no code deployed. You get a ranked report of your top attack paths in under 30 minutes.
               </p>
@@ -121,7 +121,7 @@ export default function FreeScanPage() {
               <div className="free-scan-step-num">3</div>
               <div>
                 <h3>Paste below and run</h3>
-                <p>Paste your Role ARN in the form below and we&apos;ll start the scan.</p>
+                <p>Paste your Role ARN in the form below and we'll start the scan.</p>
               </div>
             </div>
           </div>
@@ -133,7 +133,7 @@ export default function FreeScanPage() {
               <h3 className="form-title">Request your free scan</h3>
               {status === "success" ? (
                 <p className="free-scan-success">
-                  Your scan is queued — you&apos;ll receive your Breach Proof Report at{" "}
+                  Your scan is queued — you'll receive your Risk Assessment at{" "}
                   <strong>{formData.email}</strong> within 30 minutes.
                 </p>
               ) : (
