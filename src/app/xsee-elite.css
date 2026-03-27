@@ -417,6 +417,7 @@
   letter-spacing: 0.02em;
   text-decoration: none;
   transition: all 0.15s ease;
+  white-space: nowrap;
 }
 .nav-emergency:hover {
   border-color: rgba(255,255,255,0.35);

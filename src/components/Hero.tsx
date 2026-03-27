@@ -157,7 +157,7 @@ export default function Hero() {
                       <div
                         key={i}
                         className={`af-path p-${p.color} ${p.active ? "p-active" : ""}`}
-                        style={p.color === "gray" ? { opacity: 0.5 } : undefined}
+                        style={p.color === "gray" ? { opacity: 0.82 } : undefined}
                       >
                         <div
                           className="af-sev-bar"
