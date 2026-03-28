@@ -236,6 +236,15 @@ export default function Pricing() {
             </div>
           ))}
         </div>
+        <div className="mb-2 mt-8 text-center">
+          <p className="text-sm text-white/40">
+            Average XSEE customer proves{" "}
+            <span className="font-semibold text-white/70">$18.5M in validated exposure</span>
+            {" "}on their first scan. At $1,200/mo, that&apos;s a{" "}
+            <span className="font-bold text-[#ff2d78]">15,000× ROI</span>
+            {" "}before the trial ends.
+          </p>
+        </div>
         <p className="pricing-note">
           14-day free trial · No credit card required · Starter $1,200/mo · Professional $2,500/mo · Enterprise: contact us · Annual billing: 25% discount · Optional XSEE Agent for real-time mode
         </p>

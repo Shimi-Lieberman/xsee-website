@@ -36,9 +36,9 @@ export default function Home() {
       <AnnouncementBar />
       <main>
         <Hero />
+        <TrustStrip />
         <AttackGraphPreview />
         <DetectionCoverageChart />
-        <TrustStrip />
         <div className="sec-transition sec-dark-to-light" />
         <ProblemSolution />
         <div className="sec-transition sec-light-to-dark" />

@@ -1,0 +1,85 @@
+import type { Metadata } from "next";
+import Nav from "@/components/Nav";
+import ScrollProgressBar from "@/components/ScrollProgressBar";
+import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Changelog — XSEE",
+  description: "What's new in XSEE. Platform updates, new engines, and improvements.",
+};
+
+const releases = [
+  {
+    date: "March 2026",
+    version: "v1.4",
+    tag: "New Feature" as const,
+    title: "Ransomware Readiness Score",
+    description:
+      "Board-ready ransomware exposure score (0–100) with validated attack paths mapped to ransomware TTPs. Exportable PDF report. Available on all plans.",
+  },
+  {
+    date: "February 2026",
+    version: "v1.3",
+    tag: "New Feature" as const,
+    title: "NHI Full Inventory + L2 Validation",
+    description:
+      "Complete Non-Human Identity mapping — Lambda roles, CI/CD tokens, AI agent identities. Dormant NHI detection. L2-validated attack paths through every NHI.",
+  },
+  {
+    date: "February 2026",
+    version: "v1.2",
+    tag: "Improvement" as const,
+    title: "CI/CD Pipeline Security + OIDC Misconfiguration Detection",
+    description:
+      "Attack paths through CI/CD pipelines. GitHub Actions OIDC misconfiguration detection. Privilege escalation via pipeline roles validated by L2.",
+  },
+  {
+    date: "January 2026",
+    version: "v1.1",
+    tag: "New Feature" as const,
+    title: "Financial Exposure Per Path",
+    description:
+      "Every attack path now shows validated financial exposure using IBM Cost of a Data Breach methodology ($164/record). Crown jewel assets tagged with blast radius.",
+  },
+] as const;
+
+const tagClass: Record<string, string> = {
+  "New Feature": "bg-sky-500/20 text-sky-300 border-sky-500/30",
+  Improvement: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+  Fix: "bg-amber-500/20 text-amber-300 border-amber-500/30",
+};
+
+export default function ChangelogPage() {
+  return (
+    <>
+      <ScrollProgressBar />
+      <Nav />
+      <main className="min-h-screen pb-20" style={{ paddingTop: 88 }}>
+        <section className="container max-w-3xl">
+          <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-white">Changelog</h1>
+          <p className="mb-14 text-slate-400">Platform updates, new engines, and improvements.</p>
+
+          <ol className="relative border-l border-white/10 pl-8">
+            {releases.map((r) => (
+              <li key={r.version} className="mb-14 last:mb-0">
+                <span className="absolute -left-1.5 mt-2 h-3 w-3 rounded-full bg-[#ff2d78]" />
+                <div className="mb-2 flex flex-wrap items-center gap-3">
+                  <span className="font-mono text-sm font-bold text-white">{r.version}</span>
+                  <span
+                    className={`rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${tagClass[r.tag]}`}
+                  >
+                    {r.tag}
+                  </span>
+                  <span className="text-xs text-slate-500">{r.date}</span>
+                </div>
+                <h2 className="mb-2 text-xl font-bold text-white">{r.title}</h2>
+                <p className="text-slate-400 leading-relaxed">{r.description}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}

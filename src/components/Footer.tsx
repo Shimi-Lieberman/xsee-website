@@ -1,82 +1,15 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import SiteLogo from "@/components/SiteLogo";
 
 export default function Footer() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [website, setWebsite] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [error, setError] = useState("");
-
-  async function handleContactSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const n = name.trim();
-    const eVal = email.trim();
-    const m = message.trim();
-    if (!n) {
-      setError("Name is required");
-      setStatus("error");
-      return;
-    }
-    if (!eVal) {
-      setError("Email is required");
-      setStatus("error");
-      return;
-    }
-    if (!EMAIL_REGEX.test(eVal)) {
-      setError("Invalid email format");
-      setStatus("error");
-      return;
-    }
-    if (!m) {
-      setError("Message is required");
-      setStatus("error");
-      return;
-    }
-    setError("");
-    setStatus("loading");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: n, email: eVal, message: m, website }),
-      });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        setStatus("success");
-        setName("");
-        setEmail("");
-        setMessage("");
-        setWebsite("");
-      } else {
-        setStatus("error");
-        setError(data.error ?? "Something went wrong");
-      }
-    } catch {
-      setStatus("error");
-      setError("Something went wrong");
-    }
-  }
-
   return (
     <footer className="sec-navy">
       <div className="container">
         <div className="footer-grid">
           <div className="footer-brand">
-            <Image
-              src="/logo-primary-transparent.svg"
-              alt="XSEE"
-              className="footer-logo"
-              width={100}
-              height={32}
-              style={{ background: "transparent" }}
-            />
+            <div className="footer-brand-logo">
+              <SiteLogo />
+            </div>
             <p className="footer-tagline">
               XSEE — Cloud Exposure Intelligence. Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
             </p>
@@ -95,7 +28,7 @@ export default function Footer() {
                 <Link href="/#engines">Engines</Link>
               </li>
               <li>
-                <Link href="/#compare">vs. Wiz</Link>
+                <Link href="/vs-wiz">XSEE vs Wiz</Link>
               </li>
               <li>
                 <Link href="/#pricing">Pricing</Link>
@@ -129,76 +62,22 @@ export default function Footer() {
                 <Link href="#">Blog</Link>
               </li>
               <li>
-                <Link href="#">Changelog</Link>
+                <Link href="/changelog">Changelog</Link>
               </li>
               <li>
                 <Link href="#">Status</Link>
               </li>
             </ul>
           </div>
-        </div>
-        <div className="footer-contact">
-          <h4 className="footer-contact-title">Get in touch</h4>
-          {status === "success" ? (
-            <p className="footer-contact-success">Thanks! We'll get back to you soon.</p>
-          ) : (
-            <form onSubmit={handleContactSubmit} className="footer-contact-form">
-              <div className="honeypot" aria-hidden="true">
-                <label htmlFor="footer-website">Website</label>
-                <input
-                  id="footer-website"
-                  type="text"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
-                />
-              </div>
-              <div className="footer-contact-field">
-                <label htmlFor="footer-name" className="footer-contact-label">Name</label>
-                <input
-                  id="footer-name"
-                  type="text"
-                  placeholder="Your name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  disabled={status === "loading"}
-                  className="footer-contact-input"
-                />
-              </div>
-              <div className="footer-contact-field">
-                <label htmlFor="footer-email" className="footer-contact-label">Email</label>
-                <input
-                  id="footer-email"
-                  type="email"
-                  placeholder="you@company.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={status === "loading"}
-                  className="footer-contact-input"
-                />
-              </div>
-              <div className="footer-contact-field">
-                <label htmlFor="footer-message" className="footer-contact-label">Message</label>
-                <textarea
-                  id="footer-message"
-                  placeholder="How can we help?"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  disabled={status === "loading"}
-                  rows={2}
-                  className="footer-contact-input footer-contact-textarea"
-                />
-              </div>
-              <button type="submit" disabled={status === "loading"} className="footer-contact-btn">
-                {status === "loading" ? "Sending..." : "Send"}
-              </button>
-              {status === "error" && error && (
-                <p className="footer-contact-err">{error}</p>
-              )}
-            </form>
-          )}
+          <div>
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-white/70">Contact</h4>
+            <Link href="/#contact" className="mb-2 block text-sm text-white/50 transition-colors hover:text-white">
+              Request a Demo
+            </Link>
+            <a href="mailto:hello@xsee.io" className="block text-sm text-white/50 transition-colors hover:text-white">
+              hello@xsee.io
+            </a>
+          </div>
         </div>
         <div className="footer-bottom">
           <p className="footer-copy">© {new Date().getFullYear()} XSEE. All rights reserved.</p>

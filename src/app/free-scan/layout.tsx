@@ -11,5 +11,9 @@ export default function FreeScanLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <div className="free-scan-layout-shell w-full max-w-[100vw] mx-auto box-border min-w-0">
+      {children}
+    </div>
+  );
 }

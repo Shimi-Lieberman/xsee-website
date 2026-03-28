@@ -14,29 +14,65 @@ const STAGES = [
 
 export default function CompleteLoopSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const startedRef = useRef(false);
+  const timersRef = useRef<number[]>([]);
+  const [phase, setPhase] = useState<"idle" | "running" | "done">("idle");
+  const [progress, setProgress] = useState(0);
+  const [ringAt, setRingAt] = useState<number | null>(null);
 
   useEffect(() => {
     const el = sectionRef.current;
     if (!el || typeof IntersectionObserver === "undefined") return;
+
     const io = new IntersectionObserver(
       ([e]) => {
-        if (e?.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
+        if (!e?.isIntersecting || startedRef.current) return;
+        startedRef.current = true;
+        io.disconnect();
+        setPhase("running");
+        setProgress(0);
+        const timers = timersRef.current;
+        for (let p = 1; p <= 7; p++) {
+          const pid = window.setTimeout(() => {
+            setProgress(p);
+            setRingAt(p - 1);
+          }, (p - 1) * 300);
+          timers.push(pid);
         }
+        timers.push(
+          window.setTimeout(() => {
+            setRingAt(null);
+            setPhase("done");
+          }, 7 * 300 + 400)
+        );
       },
       { threshold: 0.2 }
     );
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.disconnect();
+      timersRef.current.forEach((id) => window.clearTimeout(id));
+      timersRef.current = [];
+    };
   }, []);
 
+  const isLit = (i: number) => {
+    if (phase === "idle" || phase === "done") return true;
+    return progress > i;
+  };
+
+  const connectorOn = (i: number) => {
+    if (phase === "idle" || phase === "done") return true;
+    return progress > i;
+  };
+
   return (
-    <section ref={sectionRef} className={`elite-loop-section ${visible ? "elite-loop-visible" : ""}`} aria-labelledby="elite-loop-title">
+    <section ref={sectionRef} className="elite-loop-section" aria-labelledby="elite-loop-title">
       <div className="elite-loop-inner">
         <div className="elite-loop-head">
-          <span className="elite-attack-graph-eyebrow" style={{ color: "#64748b" }}>THE COMPLETE LOOP</span>
+          <span className="elite-attack-graph-eyebrow" style={{ color: "#64748b" }}>
+            THE COMPLETE LOOP
+          </span>
           <h2 id="elite-loop-title" className="elite-attack-graph-title">
             The only platform that closes all 7 stages.
           </h2>
@@ -49,13 +85,12 @@ export default function CompleteLoopSection() {
           {STAGES.map((s, i) => (
             <Fragment key={s.n}>
               {i > 0 && (
-                <span className="elite-loop-arrow" aria-hidden>
-                  →
-                </span>
+                <div className="elite-loop-connector-wrap" aria-hidden>
+                  <div className={`elite-loop-connector ${connectorOn(i) ? "elite-loop-connector--on" : ""}`} />
+                </div>
               )}
               <div
-                className={`elite-loop-card ${visible ? "elite-loop-card-in" : ""} ${s.pulse ? "elite-loop-stage5" : ""}`}
-                style={{ animationDelay: visible ? `${i * 0.08}s` : undefined }}
+                className={`elite-loop-card ${phase === "running" && !isLit(i) ? "elite-loop-card--dim" : ""} ${ringAt === i ? "elite-loop-card-ring" : ""} ${phase === "done" && s.pulse ? "elite-loop-stage5" : ""}`}
               >
                 <div
                   className="elite-loop-num"

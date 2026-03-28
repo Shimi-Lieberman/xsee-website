@@ -2,8 +2,9 @@
 
 import { useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import type { Paddle } from "@paddle/paddle-js";
+import SiteLogo from "@/components/SiteLogo";
+import { BookDemoModal } from "@/components/BookDemo";
 
 const SUCCESS_URL = "https://app.xsee.io/login?signup=pending";
 const LOGIN_URL = "https://app.xsee.io/login";
@@ -91,22 +92,7 @@ export default function Nav() {
     <nav id="nav">
       <div className="container">
         <div className="nav-inner">
-          <Link href="/" className="nav-logo" aria-label="XSEE home">
-            <span className="nav-logo-inner" aria-hidden="true">
-              <Image
-                src="/logo-symbol-only.svg"
-                width={44}
-                height={44}
-                alt=""
-                className="nav-logo-mark"
-                style={{ background: "transparent" }}
-              />
-              <span className="nav-logo-stack">
-                <span className="nav-logo-title">XSEE</span>
-                <span className="nav-logo-tagline">Cloud attack intelligence</span>
-              </span>
-            </span>
-          </Link>
+          <SiteLogo />
           <nav className="nav-links">
             <Link href="/#how" className="nav-link">
               Platform
@@ -137,6 +123,7 @@ export default function Nav() {
               All Systems Operational
             </div>
             <div className="nav-cta-group">
+              <BookDemoModal />
               <button type="button" className="nav-btn-trial" onClick={openStarterCheckout}>
                 Start Free Trial →
               </button>

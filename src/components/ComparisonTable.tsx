@@ -1,4 +1,4 @@
-const ROWS = [
+export const COMPARISON_ROWS = [
   { cap: "Attack path discovery", xsee: "Live-validated graph", wiz: "Theoretical only", prisma: "Theoretical only", xseeChk: true, wizChk: true, prismaChk: true },
   { cap: "Live API proof-of-exploitability", xsee: "Evidence package per hop", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Runtime exploit simulation", xsee: "XseeCyber L3", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
@@ -41,7 +41,7 @@ export default function ComparisonTable() {
               </tr>
             </thead>
             <tbody>
-              {ROWS.map((row) => (
+              {COMPARISON_ROWS.map((row) => (
                 <tr key={row.cap}>
                   <td>{row.cap}</td>
                   <td className="xsee-val">

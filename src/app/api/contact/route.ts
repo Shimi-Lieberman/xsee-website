@@ -25,7 +25,11 @@ export async function POST(request: Request) {
 
     const name = (body.name ?? "").trim();
     const email = (body.email ?? "").trim();
-    const message = (body.message ?? "").trim();
+    let message = (body.message ?? "").trim();
+    const emergency = body.emergency === true || body.source === "emergency";
+    if (emergency && !message.startsWith("[EMERGENCY]")) {
+      message = `[EMERGENCY] XSEE incident response request\n\n${message}`;
+    }
 
     if (!name) {
       return NextResponse.json({ error: "Name is required" }, { status: 400 });

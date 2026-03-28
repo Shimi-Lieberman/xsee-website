@@ -35,10 +35,10 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://xsee.io"),
+  metadataBase: new URL("https://www.xsee.io"),
   title: "XSEE — Prove Every Attack Path is Real",
   description:
-    "XSEE proves which attack paths in your cloud are actually exploitable — with cryptographic evidence per hop, live AWS API validation, and AI attacker simulation. Not theory. Proof.",
+    "Cloud Attack Intelligence. XSEE discovers, validates, and simulates attack paths against your live AWS environment — with cryptographic evidence per hop. Not theory. Proof.",
   icons: {
     icon: [
       { url: "/logo-symbol-only.svg", type: "image/svg+xml" },
@@ -49,24 +49,25 @@ export const metadata: Metadata = {
   openGraph: {
     title: "XSEE — Prove Every Attack Path is Real",
     description:
-      "XSEE proves which attack paths in your cloud are actually exploitable. Not theory. Proof.",
-    url: "https://xsee.io",
+      "Stop guessing. Prove the breach. Live AWS API validation, AI attack simulation, and cryptographic evidence packages in under 30 minutes.",
+    url: "https://www.xsee.io",
     siteName: "XSEE",
     images: [
       {
-        url: "https://xsee.io/og-image.png",
+        url: "/og",
         width: 1200,
         height: 630,
         alt: "XSEE — Cloud Attack Intelligence",
       },
     ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "XSEE — Prove Every Attack Path is Real",
-    description: "XSEE proves which attack paths are actually exploitable.",
-    images: ["https://xsee.io/og-image.png"],
+    description: "Live AWS attack path validation with cryptographic evidence. Not theory. Proof.",
+    images: ["/og"],
   },
 };
 

@@ -61,8 +61,8 @@ export default function FreeScanPage() {
     <>
       <ScrollProgressBar />
       <Nav />
-      <main style={{ paddingTop: 64 }}>
-        <div className="free-scan-page">
+      <main className="free-scan-main w-full max-w-full mx-auto min-w-0 block">
+        <div className="free-scan-page w-full max-w-full mx-auto min-w-0">
         <section className="section sec-navy free-scan-hero">
           <div className="container">
             <div className="free-scan-hero-inner">
@@ -83,6 +83,18 @@ export default function FreeScanPage() {
                   <div className="hps-dot" style={{ background: "var(--yellow)" }} />
                   Report delivered in 30 min
                 </div>
+              </div>
+              <div className="my-8 grid grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-6 sm:grid-cols-3">
+                {[
+                  { value: "847", label: "Avg assets scanned" },
+                  { value: "22 min", label: "Avg time to first proof" },
+                  { value: "3", label: "Avg critical paths found" },
+                ].map(({ value, label }) => (
+                  <div key={label} className="text-center">
+                    <div className="text-2xl font-bold text-white">{value}</div>
+                    <div className="mt-1 text-xs text-white/40">{label}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -214,6 +226,9 @@ export default function FreeScanPage() {
                   <button type="submit" disabled={status === "loading"} className="btn btn-primary btn-lg free-scan-submit">
                     {status === "loading" ? "Queuing scan..." : "Run Free Scan →"}
                   </button>
+                  <p className="mt-4 text-center text-xs text-white/30">
+                    Joined 40+ security teams who&apos;ve proven their breach risk this month.
+                  </p>
                   <p className="free-scan-note">
                     Read-only access only · No agents · We never store your credentials · Report delivered by email
                   </p>

@@ -1,221 +1,111 @@
-"use client";
-
-import { useState } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import GlobalScripts from "@/components/GlobalScripts";
-import { Lock, Server, Shield } from "lucide-react";
+import UnderAttackForm from "@/components/UnderAttackForm";
 
-function buildMailto(body: Record<string, string>) {
-  const q = new URLSearchParams({
-    subject: "Emergency response — XSEE",
-    body: Object.entries(body)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("\n"),
-  });
-  return `mailto:admin@xsee.io?${q.toString()}`;
-}
+export const metadata: Metadata = {
+  title: "Under Attack? — XSEE Emergency Response",
+  description:
+    "Active breach in your AWS environment? XSEE can map your attack surface and validate active paths in under 30 minutes. Emergency scan available.",
+};
+
+const TIMELINE = [
+  {
+    title: "Minutes 1–2",
+    body: "Connect read-only IAM. No agents. No risk of interfering with your incident response.",
+  },
+  {
+    title: "Minutes 2–15",
+    body: "Map every asset, identity, and permission edge currently in your environment. Build the live attack graph against 1,000+ known attack patterns.",
+  },
+  {
+    title: "Minutes 15–25",
+    body: "L2 validation — call live AWS APIs to determine which paths are currently confirmed exploitable. Find where the attacker has already been, and where they can still go.",
+  },
+  {
+    title: "Minutes 25–30",
+    body: "Deliver prioritized report: active paths, blast radius per path, immediate containment actions.",
+  },
+] as const;
+
+const CHECKLIST_LINES = [
+  "Immediately revoke any suspicious IAM access keys via AWS Console → IAM → Users",
+  "Enable AWS CloudTrail in all regions if not already active",
+  "Check CloudTrail for AssumeRole, CreateUser, AttachUserPolicy events in last 24h",
+  "Isolate the suspected compromised instance (modify its Security Group to deny all)",
+  "Do NOT shut down the instance — preserve forensic evidence",
+  "Then connect XSEE to map what they can still reach",
+] as const;
 
 export default function UnderAttackPage() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    situation: "",
-    website: "",
-  });
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setStatus("loading");
-    const message = [
-      "UNDER ATTACK — emergency request",
-      `Company: ${form.company}`,
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone || "(not provided)"}`,
-      "",
-      "What they're seeing:",
-      form.situation,
-    ].join("\n");
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message,
-          website: form.website,
-        }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && data.success) {
-        setStatus("success");
-        return;
-      }
-    } catch {
-      /* fall through to mailto */
-    }
-
-    window.location.href = buildMailto({
-      Company: form.company,
-      Name: form.name,
-      Email: form.email,
-      Phone: form.phone,
-      Situation: form.situation,
-    });
-    setStatus("idle");
-  }
-
   return (
-    <div className="ua-page">
+    <div className="ua-page ua-page--emergency">
       <ScrollProgressBar />
       <GlobalScripts />
-      <div className="ua-banner">
-        Emergency response available — average response time: 4 hours
-      </div>
       <Nav />
 
       <main className="ua-main">
-        <div className="container">
-          <div className="ua-hero">
-            <span className="ua-hero-badge">Experiencing an incident?</span>
-            <h1 className="ua-hero-title">Get immediate attack path validation</h1>
-            <p className="ua-hero-sub">
-              We run a read-only scan of your AWS environment and identify which exposures are actively exploitable.
-              Evidence package delivered within hours.
+        <div className="container py-12 md:py-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="mb-4 inline-block rounded-full border border-red-500/40 bg-red-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-red-400">
+              Emergency
+            </span>
+            <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl">
+              Under active attack in AWS?
+            </h1>
+            <p className="text-lg text-slate-400 md:text-xl">
+              XSEE can map your attack surface, validate active paths, and show you exactly where the attacker is moving — in under 30 minutes.
             </p>
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link
+                href="/?subject=emergency#contact"
+                className="btn btn-lg inline-flex bg-red-600 text-white shadow-[0_0_24px_rgba(239,68,68,0.35)] transition-all hover:scale-[1.02] hover:bg-red-500"
+              >
+                Request Emergency Scan →
+              </Link>
+              <a href="tel:+15555550100" className="text-sm font-medium text-slate-400 transition-colors hover:text-white">
+                Call us: +1 (555) 555-0100
+              </a>
+            </div>
           </div>
 
-          {status === "success" ? (
-            <div className="ua-success-card" role="status">
-              <p className="ua-success-title">Request received</p>
-              <p className="ua-success-body">
-                We've received your request. Our team will contact you within 2 hours.
-              </p>
-              <Link href="/" className="btn btn-secondary ua-success-home">
-                Return to homepage
-              </Link>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="ua-form-card">
-              <div className="honeypot" aria-hidden="true">
-                <label htmlFor="ua-website">Website</label>
-                <input
-                  id="ua-website"
-                  type="text"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={form.website}
-                  onChange={(ev) => setForm({ ...form, website: ev.target.value })}
-                />
-              </div>
-              <input
-                type="text"
-                name="name"
-                className="ua-input"
-                placeholder="Full name"
-                required
-                value={form.name}
-                onChange={(ev) => setForm({ ...form, name: ev.target.value })}
-                disabled={status === "loading"}
-              />
-              <input
-                type="email"
-                name="email"
-                className="ua-input"
-                placeholder="Work email"
-                required
-                value={form.email}
-                onChange={(ev) => setForm({ ...form, email: ev.target.value })}
-                disabled={status === "loading"}
-              />
-              <input
-                type="text"
-                name="company"
-                className="ua-input"
-                placeholder="Company"
-                required
-                value={form.company}
-                onChange={(ev) => setForm({ ...form, company: ev.target.value })}
-                disabled={status === "loading"}
-              />
-              <input
-                type="tel"
-                name="phone"
-                className="ua-input"
-                placeholder="Phone (optional)"
-                value={form.phone}
-                onChange={(ev) => setForm({ ...form, phone: ev.target.value })}
-                disabled={status === "loading"}
-              />
-              <textarea
-                name="situation"
-                className="ua-input ua-textarea"
-                placeholder="Describe what you're seeing"
-                rows={5}
-                required
-                value={form.situation}
-                onChange={(ev) => setForm({ ...form, situation: ev.target.value })}
-                disabled={status === "loading"}
-              />
-              <button type="submit" className="ua-submit-btn" disabled={status === "loading"}>
-                {status === "loading" ? "Submitting…" : "Request emergency response →"}
-              </button>
-            </form>
-          )}
-
-          <section className="ua-next-section" aria-labelledby="ua-next-title">
-            <h2 id="ua-next-title" className="ua-section-title">
-              What happens next
+          <section className="mx-auto mt-20 max-w-3xl" aria-labelledby="ua-timeline-title">
+            <h2 id="ua-timeline-title" className="mb-10 text-center text-2xl font-bold text-white">
+              What XSEE does in the first 30 minutes during an active incident
             </h2>
-            <div className="ua-steps-grid">
-              <div className="ua-step-card">
-                <div className="ua-step-icon" style={{ background: "rgba(239,68,68,0.2)", color: "#FCA5A5" }}>
-                  1
+            <ol className="relative space-y-0 border-l border-red-500/30 pl-8">
+              {TIMELINE.map((step, i) => (
+                <li key={step.title} className="mb-10 last:mb-0">
+                  <span className="absolute -left-[9px] mt-1.5 h-4 w-4 rounded-full border-2 border-red-500 bg-[#050d1a]" />
+                  <h3 className="text-lg font-bold text-red-400">{step.title}</h3>
+                  <p className="mt-2 text-slate-400">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className="mx-auto mt-16 max-w-3xl" aria-labelledby="ua-checklist-title">
+            <h2 id="ua-checklist-title" className="mb-4 text-lg font-bold text-white">
+              Containment checklist
+            </h2>
+            <p className="mb-4 text-sm text-slate-500">If you suspect active compromise:</p>
+            <div className="rounded-xl border border-white/10 bg-[#0a1628] p-6 font-mono text-sm leading-relaxed text-slate-300">
+              {CHECKLIST_LINES.map((line) => (
+                <div key={line} className="border-b border-white/5 py-2 last:border-0">
+                  □ {line}
                 </div>
-                <div className="ua-step-name">Connect</div>
-                <p className="ua-step-desc">Secure read-only AWS access — you control scope and duration.</p>
-              </div>
-              <div className="ua-step-card">
-                <div className="ua-step-icon" style={{ background: "rgba(249,115,22,0.2)", color: "#FDBA74" }}>
-                  2
-                </div>
-                <div className="ua-step-name">Validate</div>
-                <p className="ua-step-desc">We map and L2-validate attack paths with evidence per hop.</p>
-              </div>
-              <div className="ua-step-card">
-                <div className="ua-step-icon" style={{ background: "rgba(255, 27, 141, 0.2)", color: "#FDA4D0" }}>
-                  3
-                </div>
-                <div className="ua-step-name">Deliver</div>
-                <p className="ua-step-desc">Ranked paths, blast radius, and remediation guidance — fast.</p>
-              </div>
+              ))}
             </div>
           </section>
 
-          <section className="ua-trust-section" aria-label="Trust signals">
-            <div className="ua-trust-grid">
-              <div className="ua-trust-item">
-                <Lock className="ua-trust-ico" aria-hidden />
-                <span>Read-only IAM — no write access to your environment</span>
-              </div>
-              <div className="ua-trust-item">
-                <Server className="ua-trust-ico" aria-hidden />
-                <span>No agents or code deployed in your accounts</span>
-              </div>
-              <div className="ua-trust-item">
-                <Shield className="ua-trust-ico" aria-hidden />
-                <span>Evidence suitable for leadership and audit timelines</span>
-              </div>
-            </div>
+          <section className="mx-auto mt-20 max-w-lg" aria-labelledby="ua-form-title">
+            <h2 id="ua-form-title" className="mb-6 text-center text-xl font-bold text-white">
+              Emergency contact
+            </h2>
+            <UnderAttackForm />
           </section>
         </div>
       </main>

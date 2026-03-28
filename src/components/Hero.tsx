@@ -1,4 +1,6 @@
 import Link from "next/link";
+import HeroSocialProofStats from "@/components/HeroSocialProofStats";
+import { BookDemoModal } from "@/components/BookDemo";
 
 const SIDEBAR_ICONS = [
   <svg key="o" width={14} height={14} viewBox="0 0 14 14" fill="none">
@@ -65,43 +67,15 @@ export default function Hero() {
               Every other tool tells you what could go wrong. XSEE proves what will — with cryptographic evidence per hop, live AWS API validation, and attack simulation that runs the way both human and AI attackers think. Not theory. Proof.
             </p>
             <div className="hero-ctas">
-              <Link href="#contact" className="btn btn-primary btn-lg">
+              <Link href="#contact" className="btn btn-primary btn-lg animate-pulse">
                 Get Your Free Risk Assessment →
               </Link>
               <Link href="#how" className="btn btn-secondary btn-lg">
                 See a Live Demo
               </Link>
+              <BookDemoModal variant="ghost" />
             </div>
-            <div className="hero-social-proof">
-              <div className="sp-stat">
-                <div className="sp-num hero-sp-num-magenta">
-                  1,000<span>+</span>
-                </div>
-                <div className="sp-lbl">Attack patterns in XSEE's engine</div>
-              </div>
-              <div className="sp-sep" />
-              <div className="sp-stat">
-                <div className="sp-num" style={{ color: "var(--yellow-light)" }}>L1–L3</div>
-                <div className="sp-lbl">Layers of validation proof</div>
-              </div>
-              <div className="sp-sep" />
-              <div className="sp-stat warm">
-                <div className="sp-num">92<span>%</span></div>
-                <div className="sp-lbl">Avg exploit confidence score</div>
-              </div>
-              <div className="sp-sep" />
-              <div className="sp-stat">
-                <div className="sp-num">&lt;30<span>m</span></div>
-                <div className="sp-lbl">Time to your first proven breach path</div>
-              </div>
-              <div className="sp-sep" style={{ background: "rgba(255,255,255,0.06)" }} />
-              <div className="sp-stat warm">
-                <div className="sp-num">
-                  $18.5<span>M</span>
-                </div>
-                <div className="sp-lbl">Avg financial exposure proven</div>
-              </div>
-            </div>
+            <HeroSocialProofStats />
           </div>
           <div className="hero-right">
             <div className="app-frame app-frame-warm">
