@@ -154,12 +154,20 @@ export async function POST(request: Request) {
       .filter(Boolean)
       .join("\n");
 
-    await sendEmail({
-      to: getAdminEmail(),
-      subject: `🔍 New Free Scan Request — ${company}`,
-      text: adminText,
-      html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(adminText)}</pre>`,
-    }).catch((err) => console.error("[free-scan] admin SES:", err));
+    try {
+      await sendEmail({
+        to: getAdminEmail(),
+        subject: `🔍 New Free Scan Request — ${company}`,
+        text: adminText,
+        html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(adminText)}</pre>`,
+      });
+    } catch (emailErr) {
+      console.error(
+        "[free-scan] Email failed (admin):",
+        emailErr instanceof Error ? emailErr.message : emailErr
+      );
+      // Do not rethrow — DB insert succeeded
+    }
 
     const confirmText = [
       `Hi ${full_name},`,
@@ -173,12 +181,20 @@ export async function POST(request: Request) {
       `hello@xsee.io`,
     ].join("\n");
 
-    await sendEmail({
-      to: work_email,
-      subject: "Your XSEE scan is queued",
-      text: confirmText,
-      html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(confirmText)}</pre>`,
-    }).catch((err) => console.error("[free-scan] user SES:", err));
+    try {
+      await sendEmail({
+        to: work_email,
+        subject: "Your XSEE scan is queued",
+        text: confirmText,
+        html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(confirmText)}</pre>`,
+      });
+    } catch (emailErr) {
+      console.error(
+        "[free-scan] Email failed (user):",
+        emailErr instanceof Error ? emailErr.message : emailErr
+      );
+      // Do not rethrow — DB insert succeeded
+    }
 
     if (!platform.ok) {
       console.warn("[free-scan] Platform forward did not succeed; lead still stored in Postgres.");

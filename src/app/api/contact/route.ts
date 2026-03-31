@@ -78,12 +78,20 @@ export async function POST(request: Request) {
       `Time: ${ts}`,
     ].join("\n");
 
-    await sendEmail({
-      to: getAdminEmail(),
-      subject: `Contact Form — ${name}`,
-      text: textBody,
-      html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(textBody)}</pre>`,
-    }).catch((err) => console.error("[contact] SES:", err));
+    try {
+      await sendEmail({
+        to: getAdminEmail(),
+        subject: `Contact Form — ${name}`,
+        text: textBody,
+        html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(textBody)}</pre>`,
+      });
+    } catch (emailErr) {
+      console.error(
+        "[contact] Email failed:",
+        emailErr instanceof Error ? emailErr.message : emailErr
+      );
+      // Do not rethrow — DB insert succeeded
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {

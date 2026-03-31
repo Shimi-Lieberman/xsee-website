@@ -117,12 +117,20 @@ export async function POST(request: Request) {
 
     const htmlBody = `<pre style="font-family:system-ui,sans-serif">${escapeHtml(textBody)}</pre>`;
 
-    await sendEmail({
-      to: getAdminEmail(),
-      subject: `New Demo Request — ${company}`,
-      text: textBody,
-      html: htmlBody,
-    }).catch((err) => console.error("[demo-request] SES:", err));
+    try {
+      await sendEmail({
+        to: getAdminEmail(),
+        subject: `New Demo Request — ${company}`,
+        text: textBody,
+        html: htmlBody,
+      });
+    } catch (emailErr) {
+      console.error(
+        "[demo-request] Email failed:",
+        emailErr instanceof Error ? emailErr.message : emailErr
+      );
+      // Do not rethrow — DB insert succeeded
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {

@@ -111,8 +111,12 @@ export async function POST(request: Request) {
         text: textBody,
         html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(textBody)}</pre>`,
       });
-    } catch (sesErr) {
-      console.error("[emergency] SES:", sesErr);
+    } catch (emailErr) {
+      console.error(
+        "[emergency] Email failed:",
+        emailErr instanceof Error ? emailErr.message : emailErr
+      );
+      // Do not rethrow — DB insert succeeded (if any)
     }
 
     return NextResponse.json({
