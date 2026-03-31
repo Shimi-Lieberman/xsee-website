@@ -70,22 +70,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
-    const fullName = (body.fullName ?? body.full_name ?? body.name ?? "").trim();
-    const workEmail = (body.email ?? body.work_email ?? "").trim();
+    const full_name = (body.full_name ?? body.fullName ?? body.name ?? "").trim();
+    const work_email = (body.work_email ?? body.email ?? "").trim();
     const company = (body.company ?? "").trim();
     const awsRoleArn = (body.awsRoleArn ?? body.role_arn ?? "").trim();
     const awsRegion = (body.awsRegion ?? body.region ?? "us-east-1").trim();
 
-    if (!fullName) {
+    if (!full_name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!workEmail) {
+    if (!work_email) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!isValidEmail(workEmail)) {
+    if (!isValidEmail(work_email)) {
       return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
     }
-    if (!isValidWorkEmail(workEmail)) {
+    if (!isValidWorkEmail(work_email)) {
       return NextResponse.json(
         { error: "Please use your work email address." },
         { status: 400 }
@@ -119,8 +119,8 @@ export async function POST(request: Request) {
         ip_address, user_agent, status
       )
       VALUES (
-        ${fullName},
-        ${workEmail},
+        ${full_name},
+        ${work_email},
         ${company},
         ${awsRoleArn},
         ${awsRegion},
@@ -131,8 +131,8 @@ export async function POST(request: Request) {
     `;
 
     const platformPayload: PlatformSubmitBody = {
-      name: fullName,
-      email: workEmail,
+      name: full_name,
+      email: work_email,
       company,
       role_arn: awsRoleArn,
       region: awsRegion,
@@ -143,8 +143,8 @@ export async function POST(request: Request) {
     const adminText = [
       `🔍 New Free Scan Request`,
       ``,
-      `Name: ${fullName}`,
-      `Email: ${workEmail}`,
+      `Name: ${full_name}`,
+      `Email: ${work_email}`,
       `Company: ${company}`,
       `Role ARN: ${awsRoleArn}`,
       `Region: ${awsRegion}`,
@@ -162,7 +162,7 @@ export async function POST(request: Request) {
     }).catch((err) => console.error("[free-scan] admin SES:", err));
 
     const confirmText = [
-      `Hi ${fullName},`,
+      `Hi ${full_name},`,
       ``,
       `We received your free scan request for ${company}. We'll reach out within one business day to schedule your scan.`,
       ``,
@@ -174,7 +174,7 @@ export async function POST(request: Request) {
     ].join("\n");
 
     await sendEmail({
-      to: workEmail,
+      to: work_email,
       subject: "Your XSEE scan is queued",
       text: confirmText,
       html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(confirmText)}</pre>`,

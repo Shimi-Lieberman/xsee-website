@@ -32,8 +32,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
-    const name = (body.name ?? "").trim();
-    const email = (body.email ?? "").trim();
+    const name = (body.full_name ?? body.name ?? "").trim();
+    const email = (body.email ?? body.work_email ?? "").trim();
     const message = (body.message ?? "").trim();
     const source = (body.source ?? "footer").trim() || "footer";
 

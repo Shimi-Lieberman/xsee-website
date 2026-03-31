@@ -32,26 +32,31 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: true });
     }
 
-    const fullName = (body.fullName ?? body.full_name ?? body.name ?? "").trim();
-    const workEmail = (body.email ?? body.work_email ?? "").trim();
+    const full_name = (
+      body.full_name ??
+      body.fullName ??
+      body.name ??
+      ""
+    ).trim();
+    const work_email = (body.work_email ?? body.email ?? "").trim();
     const company = (body.company ?? "").trim();
     const cloudProvider = (body.cloudProvider ?? body.cloud_provider ?? "").trim();
     const cloudAssets = (body.assetCount ?? body.cloud_assets ?? "").trim();
     const message = (body.message ?? "").trim();
 
-    if (!fullName) {
+    if (!full_name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!workEmail) {
+    if (!work_email) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
     if (!company) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!isValidEmail(workEmail)) {
+    if (!isValidEmail(work_email)) {
       return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
     }
-    if (!isValidWorkEmail(workEmail)) {
+    if (!isValidWorkEmail(work_email)) {
       return NextResponse.json(
         { error: "Please use your work email address." },
         { status: 400 }
@@ -77,13 +82,15 @@ export async function POST(request: Request) {
     const sql = getSql();
     await sql`
       INSERT INTO demo_requests (
-        name, email, company, message,
+        name, email, full_name, work_email, company, message,
         cloud_provider, cloud_assets, source,
         ip_address, user_agent
       )
       VALUES (
-        ${fullName},
-        ${workEmail},
+        ${full_name},
+        ${work_email},
+        ${full_name},
+        ${work_email},
         ${company},
         ${messageBlock || null},
         ${cloudProvider || null},
@@ -98,8 +105,8 @@ export async function POST(request: Request) {
     const textBody = [
       `New demo request (xsee.io homepage)`,
       ``,
-      `Name: ${fullName}`,
-      `Email: ${workEmail}`,
+      `Name: ${full_name}`,
+      `Email: ${work_email}`,
       `Company: ${company}`,
       `Cloud: ${cloudProvider || "—"}`,
       `Assets: ${cloudAssets || "—"}`,

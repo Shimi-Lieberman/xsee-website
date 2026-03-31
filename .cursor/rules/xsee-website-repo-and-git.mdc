@@ -1,0 +1,34 @@
+---
+description: xsee-website repo identity and safe git push (never push to platform repo)
+alwaysApply: true
+---
+
+# Marketing site — repo context and Git safety
+
+At the start of work in this project, assume the following block applies (treat it as prepended to every user request for this repo):
+
+```
+This is the xsee-website repo.
+Git remote must be: https://github.com/Shimi-Lieberman/xsee-website
+Before committing, verify with: git remote -v
+Do not push to any other repo.
+```
+
+## Before every `git push`
+
+Run:
+
+```bash
+git remote -v
+```
+
+Confirm the output shows exactly:
+
+```
+origin  https://github.com/Shimi-Lieberman/xsee-website (fetch)
+origin  https://github.com/Shimi-Lieberman/xsee-website (push)
+```
+
+If it shows `Xsee_Security`, another GitHub URL, or any repo other than `Shimi-Lieberman/xsee-website` — **STOP**. Do not push. Report the mismatch to the user.
+
+Marketing site changes must never be pushed to the platform app repository.

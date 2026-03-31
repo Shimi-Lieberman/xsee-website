@@ -66,6 +66,8 @@ CREATE TABLE IF NOT EXISTS contact_requests (
   user_agent TEXT
 );
 
+ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS full_name TEXT;
+ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS work_email TEXT;
 ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS cloud_provider TEXT;
 ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS cloud_assets TEXT;
 ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS source TEXT DEFAULT 'homepage';

@@ -52,6 +52,8 @@ export async function ensureMarketingSchema(): Promise<void> {
     )
   `;
 
+  await sql`ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS full_name TEXT`;
+  await sql`ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS work_email TEXT`;
   await sql`ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS cloud_provider TEXT`;
   await sql`ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS cloud_assets TEXT`;
   await sql`ALTER TABLE demo_requests ADD COLUMN IF NOT EXISTS source TEXT DEFAULT 'homepage'`;
