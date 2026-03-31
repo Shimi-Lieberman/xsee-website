@@ -20,6 +20,7 @@
     "react-countup": "^6.5.3",
     "react-dom": "19.2.3",
     "react-tsparticles": "^2.12.2",
+    "resend": "^6.10.0",
     "sharp": "^0.34.5",
     "tsparticles": "^3.9.1",
     "tsparticles-slim": "^2.12.0"

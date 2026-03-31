@@ -1,3 +1,7 @@
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 interface EmailParams {
   to: string;
   subject: string;
@@ -7,39 +11,23 @@ interface EmailParams {
 }
 
 export async function sendEmail(params: EmailParams): Promise<void> {
-  const apiKey = process.env.SENDER_API_KEY;
-  const fromEmail =
-    process.env.SENDER_FROM_EMAIL || "notifications@xsee.io";
+  const from =
+    process.env.RESEND_FROM_EMAIL || "notifications@xsee.io";
 
-  if (!apiKey) {
-    throw new Error("SENDER_API_KEY not set");
-  }
-
-  const res = await fetch("https://api.sender.net/v2/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      from: { name: "XSEE", email: fromEmail },
-      to: [{ email: params.to }],
-      subject: params.subject,
-      html: params.html,
-      text: params.text,
-    }),
+  const { error } = await resend.emails.send({
+    from: `XSEE <${from}>`,
+    to: params.to,
+    subject: params.subject,
+    html: params.html,
+    text: params.text,
   });
 
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Sender error ${res.status}: ${err}`);
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
   }
 }
 
-/** Alias for emergency route — same function, priority is cosmetic */
 export const sendUrgentEmail = sendEmail;
 
-export function getAdminEmail(): string {
-  return process.env.ADMIN_EMAIL?.trim() || "admin@xsee.io";
-}
+export const getAdminEmail = () =>
+  process.env.ADMIN_EMAIL?.trim() || "admin@xsee.io";
