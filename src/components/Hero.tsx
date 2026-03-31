@@ -1,6 +1,5 @@
 import Link from "next/link";
 import HeroSocialProofStats from "@/components/HeroSocialProofStats";
-import { BookDemoModal } from "@/components/BookDemo";
 
 const SIDEBAR_ICONS = [
   <svg key="o" width={14} height={14} viewBox="0 0 14 14" fill="none">
@@ -73,7 +72,9 @@ export default function Hero() {
               <Link href="#how" className="btn btn-secondary btn-lg">
                 See a Live Demo
               </Link>
-              <BookDemoModal variant="ghost" />
+              <Link href="#contact" className="btn btn-secondary btn-lg">
+                Book a Demo
+              </Link>
             </div>
             <HeroSocialProofStats />
           </div>

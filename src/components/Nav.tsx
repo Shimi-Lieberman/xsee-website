@@ -1,93 +1,12 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
 import Link from "next/link";
-import type { Paddle } from "@paddle/paddle-js";
 import SiteLogo from "@/components/SiteLogo";
-import { BookDemoModal } from "@/components/BookDemo";
 
-const SUCCESS_URL = "https://app.xsee.io/login?signup=pending";
+const REGISTER_URL = "https://app.xsee.io/register";
 const LOGIN_URL = "https://app.xsee.io/login";
 
-function getPaddleEnvironment(): "production" | "sandbox" {
-  const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
-  if (token.startsWith("live_")) return "production";
-  if (token.startsWith("test_")) return "sandbox";
-  return process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox" ? "sandbox" : "production";
-}
-
-function getPaddle(): Paddle | undefined {
-  return (window as Window & { Paddle?: Paddle }).Paddle;
-}
-
 export default function Nav() {
-  useEffect(() => {
-    const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
-    if (!token || typeof window === "undefined") return;
-
-    let interval: ReturnType<typeof setInterval> | undefined;
-    let attempts = 0;
-    const maxAttempts = 100;
-
-    const tryInit = () => {
-      if (typeof window === "undefined" || !window.Paddle) return false;
-      try {
-        const P = getPaddle();
-        if (!P) return false;
-        if (!P.Initialized) {
-          P.Environment.set(getPaddleEnvironment());
-          P.Initialize({ token });
-        }
-        return true;
-      } catch (e) {
-        console.warn("Paddle not ready:", e);
-        return false;
-      }
-    };
-
-    if (tryInit()) return;
-
-    interval = setInterval(() => {
-      attempts += 1;
-      if (tryInit() || attempts >= maxAttempts) {
-        if (interval) clearInterval(interval);
-      }
-    }, 50);
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, []);
-
-  const openStarterCheckout = useCallback(() => {
-    const priceId = process.env.NEXT_PUBLIC_PADDLE_STARTER_PRICE_ID;
-    if (typeof window === "undefined") return;
-    if (!window.Paddle) {
-      window.location.href = LOGIN_URL;
-      return;
-    }
-    try {
-      const P = getPaddle();
-      if (!P?.Checkout || !priceId) {
-        window.location.href = LOGIN_URL;
-        return;
-      }
-      if (!P.Initialized && process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
-        P.Environment.set(getPaddleEnvironment());
-        P.Initialize({ token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN });
-      }
-      P.Checkout.open({
-        items: [{ priceId, quantity: 1 }],
-        settings: {
-          successUrl: SUCCESS_URL,
-        },
-      });
-    } catch (e) {
-      console.warn("Paddle not ready:", e);
-      window.location.href = LOGIN_URL;
-    }
-  }, []);
-
   return (
     <nav id="nav">
       <div className="container">
@@ -123,10 +42,15 @@ export default function Nav() {
               All Systems Operational
             </div>
             <div className="nav-cta-group">
-              <BookDemoModal />
-              <button type="button" className="nav-btn-trial" onClick={openStarterCheckout}>
+              <Link
+                href="/#contact"
+                className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-all duration-200 hover:border-white/40 hover:bg-white/5 hover:text-white"
+              >
+                Book a Demo
+              </Link>
+              <Link href={REGISTER_URL} className="nav-btn-trial">
                 Start Free Trial →
-              </button>
+              </Link>
               <Link href={LOGIN_URL} className="nav-btn-launch">
                 Launch App
               </Link>

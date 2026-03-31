@@ -1,16 +1,17 @@
 import { NextResponse } from "next/server";
 import { getSql } from "@/lib/db";
+import { ensureMarketingSchema } from "@/lib/marketingSchema";
+import { sendEmail, getAdminEmail } from "@/lib/ses";
 import { isValidEmail } from "@/lib/validation";
 import { rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
 
-const ARN_REGEX = /^arn:aws:iam::\d{12}:role\/[\w+=,.@-]+$/;
+const ARN_REGEX = /^arn:aws:iam::[0-9]{12}:role\/.+/;
 
-/** Platform API base (no trailing slash). Override in env for staging. */
 const PLATFORM_API_BASE =
   process.env.XSEE_PLATFORM_API_URL?.replace(/\/$/, "") ?? "https://app.xsee.io";
 
-const WINDOW_MS = 60 * 60 * 1000; // 1 hour
-const LIMIT = 2;
+const WINDOW_MS = 60 * 60 * 1000;
+const LIMIT = 3;
 
 type PlatformSubmitBody = {
   name: string;
@@ -45,54 +46,16 @@ async function forwardToPlatform(body: PlatformSubmitBody): Promise<{
   }
 }
 
-async function saveToNeon(
-  name: string,
-  email: string,
-  company: string,
-  awsRoleArn: string,
-  awsRegion: string,
-  ipAddress: string | null,
-  userAgent: string | null,
-  isSuspicious: boolean
-): Promise<boolean> {
-  try {
-    const message = JSON.stringify({
-      scan_type: "free_scan",
-      aws_role_arn: awsRoleArn,
-      aws_region: awsRegion,
-    });
-    const sql = getSql();
-    await sql`
-      INSERT INTO demo_requests (name, email, company, message, ip_address, user_agent, is_suspicious, role_arn)
-      VALUES (${name}, ${email}, ${company}, ${message}, ${ipAddress}, ${userAgent}, ${isSuspicious}, ${awsRoleArn})
-    `;
-    return true;
-  } catch (err) {
-    console.error("Free scan Neon insert failed:", err);
-    return false;
-  }
-}
-
-async function isArnSubmittedByDifferentEmail(
-  roleArn: string,
-  email: string
-): Promise<boolean> {
-  try {
-    const sql = getSql();
-    const rows = await sql`
-      SELECT 1 FROM demo_requests
-      WHERE role_arn = ${roleArn}
-        AND email != ${email}
-      LIMIT 1
-    `;
-    return Array.isArray(rows) && rows.length > 0;
-  } catch {
-    return false;
-  }
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 export async function POST(request: Request) {
-  const rl = rateLimit(request, { limit: LIMIT, windowMs: WINDOW_MS });
+  const rl = rateLimit(request, { limit: LIMIT, windowMs: WINDOW_MS, identifier: "free-scan" });
   if (!rl.success) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
@@ -103,80 +66,122 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Honeypot: if website field has any value, silently succeed
     if (body.website?.trim()) {
       return NextResponse.json({ success: true });
     }
 
-    const name = (body.fullName ?? body.name ?? "").trim();
-    const email = (body.email ?? "").trim();
+    const fullName = (body.fullName ?? body.full_name ?? body.name ?? "").trim();
+    const workEmail = (body.email ?? body.work_email ?? "").trim();
     const company = (body.company ?? "").trim();
     const awsRoleArn = (body.awsRoleArn ?? body.role_arn ?? "").trim();
     const awsRegion = (body.awsRegion ?? body.region ?? "us-east-1").trim();
 
-    if (!name) {
-      return NextResponse.json({ error: "Full name is required" }, { status: 400 });
+    if (!fullName) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!email) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    if (!workEmail) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!isValidEmail(email)) {
-      return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
+    if (!isValidEmail(workEmail)) {
+      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
     }
-    if (!isValidWorkEmail(email)) {
+    if (!isValidWorkEmail(workEmail)) {
       return NextResponse.json(
         { error: "Please use your work email address." },
         { status: 400 }
       );
     }
     if (!company) {
-      return NextResponse.json({ error: "Company name is required" }, { status: 400 });
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
     if (!awsRoleArn) {
-      return NextResponse.json({ error: "AWS Role ARN is required" }, { status: 400 });
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
     if (!ARN_REGEX.test(awsRoleArn)) {
       return NextResponse.json(
-        { error: "AWS Role ARN must match format: arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME" },
+        { error: "Invalid AWS Role ARN format" },
         { status: 400 }
       );
     }
 
-    const ipAddress = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-      ?? request.headers.get("x-real-ip")
-      ?? null;
+    const ipAddress =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      request.headers.get("x-real-ip") ??
+      null;
     const userAgent = request.headers.get("user-agent") ?? null;
 
-    const duplicateArn = await isArnSubmittedByDifferentEmail(awsRoleArn, email);
-    if (duplicateArn) {
-      console.warn(`[free-scan] Suspicious: ARN ${awsRoleArn} submitted from different email (${email})`);
-    }
+    await ensureMarketingSchema();
+    const sql = getSql();
+
+    await sql`
+      INSERT INTO free_scan_requests (
+        full_name, work_email, company, aws_role_arn, aws_region,
+        ip_address, user_agent, status
+      )
+      VALUES (
+        ${fullName},
+        ${workEmail},
+        ${company},
+        ${awsRoleArn},
+        ${awsRegion},
+        ${ipAddress},
+        ${userAgent},
+        'pending'
+      )
+    `;
 
     const platformPayload: PlatformSubmitBody = {
-      name,
-      email,
+      name: fullName,
+      email: workEmail,
       company,
       role_arn: awsRoleArn,
       region: awsRegion,
     };
-
     const platform = await forwardToPlatform(platformPayload);
-    const neonOk = await saveToNeon(
-      name,
-      email,
-      company,
-      awsRoleArn,
-      awsRegion,
-      ipAddress,
-      userAgent,
-      duplicateArn
-    );
 
-    if (!platform.ok && !neonOk) {
-      return NextResponse.json(
-        { error: "Failed to submit scan request" },
-        { status: 500 }
-      );
+    const ts = new Date().toISOString();
+    const adminText = [
+      `🔍 New Free Scan Request`,
+      ``,
+      `Name: ${fullName}`,
+      `Email: ${workEmail}`,
+      `Company: ${company}`,
+      `Role ARN: ${awsRoleArn}`,
+      `Region: ${awsRegion}`,
+      `Time: ${ts}`,
+      platform.scan_id ? `Scan ID: ${platform.scan_id}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    await sendEmail({
+      to: getAdminEmail(),
+      subject: `🔍 New Free Scan Request — ${company}`,
+      text: adminText,
+      html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(adminText)}</pre>`,
+    }).catch((err) => console.error("[free-scan] admin SES:", err));
+
+    const confirmText = [
+      `Hi ${fullName},`,
+      ``,
+      `We received your free scan request for ${company}. We'll reach out within one business day to schedule your scan.`,
+      ``,
+      `Your Role ARN: ${awsRoleArn}`,
+      `Region: ${awsRegion}`,
+      ``,
+      `— The XSEE Team`,
+      `hello@xsee.io`,
+    ].join("\n");
+
+    await sendEmail({
+      to: workEmail,
+      subject: "Your XSEE scan is queued",
+      text: confirmText,
+      html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(confirmText)}</pre>`,
+    }).catch((err) => console.error("[free-scan] user SES:", err));
+
+    if (!platform.ok) {
+      console.warn("[free-scan] Platform forward did not succeed; lead still stored in Postgres.");
     }
 
     return NextResponse.json({
@@ -185,9 +190,6 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("Free scan error:", err);
-    return NextResponse.json(
-      { error: "Failed to submit scan request" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Submission failed" }, { status: 500 });
   }
 }

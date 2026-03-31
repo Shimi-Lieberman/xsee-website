@@ -223,6 +223,14 @@ export default function Pricing() {
                 >
                   {plan.cta}
                 </Link>
+              ) : plan.checkout === "starter" ? (
+                <Link
+                  href="https://app.xsee.io/register"
+                  className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
+                  style={{ width: "100%", justifyContent: "center" }}
+                >
+                  {plan.cta}
+                </Link>
               ) : (
                 <button
                   type="button"

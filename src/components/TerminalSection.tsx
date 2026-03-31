@@ -1,8 +1,13 @@
+type TerminalSectionProps = {
+  /** Main-page marketing subheadline (set from `page.tsx`). */
+  subheadline: string;
+};
+
 /**
  * Standalone terminal section ("Live Intelligence").
  * GlobalScripts injects typewriter lines into #termOutput via IntersectionObserver.
  */
-export default function TerminalSection() {
+export default function TerminalSection({ subheadline }: TerminalSectionProps) {
   return (
     <section className="sec-terminal">
       <div className="term-wrap">
@@ -12,7 +17,7 @@ export default function TerminalSection() {
             This is what XSEE sees in your cloud in the first 30 minutes.
           </h2>
           <p style={{ maxWidth: 560, margin: "16px auto 0", color: "var(--text-muted)" }}>
-            Read-only IAM. No agents. No code deployed.
+            {subheadline}
             <br />
             Just proof.
           </p>

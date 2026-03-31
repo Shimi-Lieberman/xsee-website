@@ -101,7 +101,11 @@ export default function UnderAttackPage() {
             </div>
           </section>
 
-          <section className="mx-auto mt-20 max-w-lg" aria-labelledby="ua-form-title">
+          <section
+            id="emergency-contact"
+            className="mx-auto mt-20 max-w-lg scroll-mt-28"
+            aria-labelledby="ua-form-title"
+          >
             <h2 id="ua-form-title" className="mb-6 text-center text-xl font-bold text-white">
               Emergency contact
             </h2>

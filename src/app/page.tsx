@@ -27,6 +27,10 @@ export const metadata: Metadata = {
     "XSEE proves which attack paths in your cloud are actually exploitable — with cryptographic evidence per hop, live AWS API validation, and AI attacker simulation. Not theory. Proof.",
 };
 
+/** Hero-adjacent subheadline under “Live Intelligence” (replaces legacy read-only IAM one-liner). */
+const HOME_LIVE_INTEL_SUBHEADLINE =
+  "Starts read-only. Optionally add one-click remediation — you approve every fix, XSEE applies and verifies automatically.";
+
 export default function Home() {
   return (
     <>
@@ -126,7 +130,7 @@ export default function Home() {
           </div>
         </section>
         <StatsBand />
-        <TerminalSection />
+        <TerminalSection subheadline={HOME_LIVE_INTEL_SUBHEADLINE} />
         <div className="sec-transition sec-tint-to-dark" style={{ background: "linear-gradient(to bottom,#040B18,#040B18)" }} />
         <HowItWorks />
         <CompleteLoopSection />

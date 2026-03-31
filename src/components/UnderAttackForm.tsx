@@ -3,21 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 
-function buildMailto(body: Record<string, string>) {
-  const q = new URLSearchParams({
-    subject: "Emergency response — XSEE",
-    body: Object.entries(body)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join("\n"),
-  });
-  return `mailto:admin@xsee.io?${q.toString()}`;
-}
-
 export default function UnderAttackForm() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
+    company: "",
     phone: "",
     situation: "",
     website: "",
@@ -26,51 +18,46 @@ export default function UnderAttackForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("loading");
-    const message = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone: ${form.phone || "(not provided)"}`,
-      "",
-      "Describe what you're seeing:",
-      form.situation,
-    ].join("\n");
-
+    setErrorMessage("");
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch("/api/emergency", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message,
           website: form.website,
-          emergency: true,
+          work_email: form.email,
+          full_name: form.name,
+          company: form.company,
+          message: form.situation,
+          phone: form.phone,
         }),
       });
-      const data = await res.json().catch(() => ({}));
-      if (res.ok && data.success) {
+      const data = (await res.json()) as { success?: boolean; message?: string };
+      if (!res.ok) {
+        throw new Error("Submission failed");
+      }
+      if (data.success) {
         setStatus("success");
         return;
       }
+      setStatus("success");
     } catch {
-      /* fall through to mailto */
+      setStatus("error");
+      setErrorMessage(
+        "Something went wrong. Please try again or email hello@xsee.io directly."
+      );
     }
-
-    window.location.href = buildMailto({
-      Name: form.name,
-      Email: form.email,
-      Phone: form.phone,
-      Situation: form.situation,
-    });
-    setStatus("idle");
   }
 
   if (status === "success") {
     return (
       <div className="ua-success-card mx-auto max-w-lg" role="status">
-        <p className="ua-success-title">Request received</p>
+        <p className="ua-success-title">✓ We&apos;ve been alerted.</p>
         <p className="ua-success-body">
-          We&apos;ve received your request. Our team will contact you as soon as possible.
+          Expect contact within the hour. For immediate assistance:{" "}
+          <a href="mailto:hello@xsee.io" className="text-sky-400 underline">
+            hello@xsee.io
+          </a>
         </p>
         <Link href="/" className="btn btn-secondary ua-success-home">
           Return to homepage
@@ -97,8 +84,7 @@ export default function UnderAttackForm() {
         type="text"
         name="name"
         className="ua-input"
-        placeholder="Name"
-        required
+        placeholder="Name (optional)"
         value={form.name}
         onChange={(ev) => setForm({ ...form, name: ev.target.value })}
         disabled={status === "loading"}
@@ -107,10 +93,19 @@ export default function UnderAttackForm() {
         type="email"
         name="email"
         className="ua-input"
-        placeholder="Work email"
+        placeholder="Work email (required)"
         required
         value={form.email}
         onChange={(ev) => setForm({ ...form, email: ev.target.value })}
+        disabled={status === "loading"}
+      />
+      <input
+        type="text"
+        name="company"
+        className="ua-input"
+        placeholder="Company (optional)"
+        value={form.company}
+        onChange={(ev) => setForm({ ...form, company: ev.target.value })}
         disabled={status === "loading"}
       />
       <input
@@ -125,15 +120,17 @@ export default function UnderAttackForm() {
       <textarea
         name="situation"
         className="ua-input ua-textarea"
-        placeholder="Describe what you're seeing"
+        placeholder="Brief description (optional)"
         rows={5}
-        required
         value={form.situation}
         onChange={(ev) => setForm({ ...form, situation: ev.target.value })}
         disabled={status === "loading"}
       />
+      {status === "error" && errorMessage && (
+        <p className="text-sm text-red-400">{errorMessage}</p>
+      )}
       <button type="submit" className="ua-submit-btn ua-submit-btn--emergency" disabled={status === "loading"}>
-        {status === "loading" ? "Submitting…" : "Request Emergency Response →"}
+        {status === "loading" ? "Submitting…" : "Request Emergency Scan →"}
       </button>
     </form>
   );

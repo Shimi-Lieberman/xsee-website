@@ -1,13 +1,23 @@
 import { NextResponse } from "next/server";
 import { getSql } from "@/lib/db";
+import { ensureMarketingSchema } from "@/lib/marketingSchema";
+import { sendEmail, getAdminEmail } from "@/lib/ses";
 import { isValidEmail } from "@/lib/validation";
 import { rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
 
-const WINDOW_MS = 60 * 60 * 1000; // 1 hour
-const LIMIT = 2;
+const WINDOW_MS = 60 * 60 * 1000;
+const LIMIT = 3;
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
 
 export async function POST(request: Request) {
-  const rl = rateLimit(request, { limit: LIMIT, windowMs: WINDOW_MS });
+  const rl = rateLimit(request, { limit: LIMIT, windowMs: WINDOW_MS, identifier: "demo-request" });
   if (!rl.success) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
@@ -18,56 +28,98 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Honeypot: if website field has any value, silently succeed
     if (body.website?.trim()) {
       return NextResponse.json({ success: true });
     }
 
-    const name = (body.fullName ?? body.name ?? "").trim();
-    const email = (body.email ?? "").trim();
+    const fullName = (body.fullName ?? body.full_name ?? body.name ?? "").trim();
+    const workEmail = (body.email ?? body.work_email ?? "").trim();
     const company = (body.company ?? "").trim();
+    const cloudProvider = (body.cloudProvider ?? body.cloud_provider ?? "").trim();
+    const cloudAssets = (body.assetCount ?? body.cloud_assets ?? "").trim();
     const message = (body.message ?? "").trim();
 
-    if (!name) {
-      return NextResponse.json({ error: "Name is required" }, { status: 400 });
+    if (!fullName) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!email) {
-      return NextResponse.json({ error: "Email is required" }, { status: 400 });
+    if (!workEmail) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!isValidEmail(email)) {
-      return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
+    if (!company) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!isValidWorkEmail(email)) {
+    if (!isValidEmail(workEmail)) {
+      return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
+    }
+    if (!isValidWorkEmail(workEmail)) {
       return NextResponse.json(
         { error: "Please use your work email address." },
         { status: 400 }
       );
     }
-    if (!company) {
-      return NextResponse.json({ error: "Company is required" }, { status: 400 });
-    }
 
-    const extra =
-      body.cloudProvider || body.assetCount
-        ? `Cloud: ${body.cloudProvider ?? "-"}, Assets: ${body.assetCount ?? "-"}\n\n${message}`
-        : message;
-
-    const ipAddress = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
-      ?? request.headers.get("x-real-ip")
-      ?? null;
+    const ipAddress =
+      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+      request.headers.get("x-real-ip") ??
+      null;
     const userAgent = request.headers.get("user-agent") ?? null;
 
+    const messageBlock = [
+      message,
+      cloudProvider || cloudAssets
+        ? `\n\nCloud provider: ${cloudProvider || "—"}\nCloud assets: ${cloudAssets || "—"}`
+        : "",
+    ]
+      .join("")
+      .trim();
+
+    await ensureMarketingSchema();
     const sql = getSql();
     await sql`
-      INSERT INTO demo_requests (name, email, company, message, ip_address, user_agent)
-      VALUES (${name}, ${email}, ${company}, ${extra}, ${ipAddress}, ${userAgent})
+      INSERT INTO demo_requests (
+        name, email, company, message,
+        cloud_provider, cloud_assets, source,
+        ip_address, user_agent
+      )
+      VALUES (
+        ${fullName},
+        ${workEmail},
+        ${company},
+        ${messageBlock || null},
+        ${cloudProvider || null},
+        ${cloudAssets || null},
+        'homepage',
+        ${ipAddress},
+        ${userAgent}
+      )
     `;
+
+    const ts = new Date().toISOString();
+    const textBody = [
+      `New demo request (xsee.io homepage)`,
+      ``,
+      `Name: ${fullName}`,
+      `Email: ${workEmail}`,
+      `Company: ${company}`,
+      `Cloud: ${cloudProvider || "—"}`,
+      `Assets: ${cloudAssets || "—"}`,
+      `Message: ${message || "—"}`,
+      `Time: ${ts}`,
+      `Source: xsee.io homepage`,
+    ].join("\n");
+
+    const htmlBody = `<pre style="font-family:system-ui,sans-serif">${escapeHtml(textBody)}</pre>`;
+
+    await sendEmail({
+      to: getAdminEmail(),
+      subject: `New Demo Request — ${company}`,
+      text: textBody,
+      html: htmlBody,
+    }).catch((err) => console.error("[demo-request] SES:", err));
+
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Demo request error:", err);
-    return NextResponse.json(
-      { error: "Failed to submit demo request" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Submission failed" }, { status: 500 });
   }
 }

@@ -60,8 +60,13 @@ export default function ContactForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
           website: formData.website,
+          full_name: formData.fullName,
+          work_email: formData.email,
+          company: formData.company,
+          cloud_provider: formData.cloudProvider,
+          cloud_assets: formData.assetCount,
+          message: formData.message,
         }),
       });
       const data = await res.json();
@@ -70,11 +75,11 @@ export default function ContactForm() {
         setFormData({ fullName: "", email: "", company: "", cloudProvider: "", assetCount: "", message: "", website: "" });
       } else {
         setStatus("error");
-        setApiError(data.error ?? "Something went wrong. Please try again or email demo@xsee.io directly.");
+        setApiError(data.error ?? "Something went wrong. Please try again or email hello@xsee.io directly.");
       }
     } catch {
       setStatus("error");
-      setApiError("Something went wrong. Please try again or email demo@xsee.io directly.");
+      setApiError("Something went wrong. Please try again or email hello@xsee.io directly.");
     }
   }
 
@@ -84,7 +89,9 @@ export default function ContactForm() {
         <div className="container">
           <div className="reveal mx-auto max-w-xl text-center">
             <h2 className="display-lg mb-4">Thanks!</h2>
-            <p className="mb-6">We'll be in touch within 24 hours.</p>
+            <p className="mb-6">
+              ✓ Request received. We&apos;ll be in touch within one business day.
+            </p>
             <button
               type="button"
               onClick={() => setStatus("idle")}

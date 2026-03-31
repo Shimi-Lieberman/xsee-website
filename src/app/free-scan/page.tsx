@@ -49,11 +49,11 @@ export default function FreeScanPage() {
         setStatus("success");
       } else {
         setStatus("error");
-        setError(data.error ?? "Something went wrong. Please try again.");
+        setError(data.error ?? "Something went wrong. Please try again or email hello@xsee.io directly.");
       }
     } catch {
       setStatus("error");
-      setError("Something went wrong. Please try again.");
+      setError("Something went wrong. Please try again or email hello@xsee.io directly.");
     }
   }
 
@@ -145,8 +145,8 @@ export default function FreeScanPage() {
               <h3 className="form-title">Request your free scan</h3>
               {status === "success" ? (
                 <p className="free-scan-success">
-                  Your scan is queued — you'll receive your Risk Assessment at{" "}
-                  <strong>{formData.email}</strong> within 30 minutes.
+                  ✓ Scan request received. Check your email for confirmation. We&apos;ll reach out within one
+                  business day to schedule your scan.
                 </p>
               ) : (
                 <form onSubmit={handleSubmit} className="form-fields">

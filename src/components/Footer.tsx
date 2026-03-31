@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SiteLogo from "@/components/SiteLogo";
+import FooterMiniContact from "@/components/FooterMiniContact";
 
 export default function Footer() {
   return (
@@ -39,12 +40,6 @@ export default function Footer() {
             <div className="footer-col-head">Company</div>
             <ul className="footer-links">
               <li>
-                <Link href="#">About</Link>
-              </li>
-              <li>
-                <Link href="#">Careers</Link>
-              </li>
-              <li>
                 <Link href="/#contact">Contact</Link>
               </li>
               <li>
@@ -56,21 +51,13 @@ export default function Footer() {
             <div className="footer-col-head">Resources</div>
             <ul className="footer-links">
               <li>
-                <Link href="#">Documentation</Link>
-              </li>
-              <li>
-                <Link href="#">Blog</Link>
-              </li>
-              <li>
                 <Link href="/changelog">Changelog</Link>
-              </li>
-              <li>
-                <Link href="#">Status</Link>
               </li>
             </ul>
           </div>
           <div>
             <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-white/70">Contact</h4>
+            <FooterMiniContact />
             <Link href="/#contact" className="mb-2 block text-sm text-white/50 transition-colors hover:text-white">
               Request a Demo
             </Link>

@@ -32,26 +32,100 @@ export default function SecurityPage() {
           </div>
         </section>
 
-        <div className="sec-transition sec-dark-to-light" />
-
-        <section className="section sec-light" style={{ background: "#f8fafc" }}>
+        <section
+          className="section sec-navy border-t border-white/[0.06]"
+          style={{ background: "#050d1a", paddingTop: 56, paddingBottom: 64 }}
+        >
           <div className="container">
             <div className="mx-auto max-w-3xl">
-              <h2 className="display-md mb-6 text-slate-900">How XSEE accesses your AWS environment</h2>
-              <ul className="mb-8 list-disc space-y-3 pl-5 text-slate-600">
-                <li>Read-only IAM role only — <strong className="text-slate-800">ReadOnlyAccess</strong> AWS managed policy</li>
-                <li>XSEE never writes to your environment</li>
-                <li>Credentials are ephemeral — never stored after scan completes</li>
-                <li>You can revoke access in one click at any time</li>
-                <li>Cross-account role trust — you control it, you can delete it instantly</li>
-              </ul>
+              <h2 className="display-md mb-6 font-extrabold text-white" style={{ fontWeight: 800 }}>
+                Two roles. You control both.
+              </h2>
+              <div className="mb-10 space-y-5 text-[15px] leading-[1.8] text-[#94A3B8]">
+                <p>
+                  XSEE uses two separate IAM roles — you create both, you control both, you can revoke both at any time.
+                </p>
+                <div className="space-y-2">
+                  <p className="font-bold text-[#F8FAFC]">ROLE 1 — XSEE Scanner (always required):</p>
+                  <p>Policy: AWS managed ReadOnlyAccess</p>
+                  <p>Used for: discovery, validation, simulation</p>
+                  <p>This role never changes. Always read-only.</p>
+                  <p>XSEE observes your environment — never modifies it through this role.</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="font-bold text-[#F8FAFC]">ROLE 2 — XSEE Remediation Agent (optional):</p>
+                  <p>Policy: Scoped write permissions only</p>
+                  <p>Used for: applying approved fixes</p>
+                  <p>Created by you when you&apos;re ready for one-click remediation.</p>
+                  <p>Every fix requires your explicit approval.</p>
+                  <p>Auto-rolled back if verification fails.</p>
+                </div>
+                <div>
+                  <p className="mb-2 font-bold text-[#34D399]">Permitted write actions (only these):</p>
+                  <ul className="space-y-1 font-mono text-[13px] text-[#94A3B8]">
+                    <li>+ ec2:RevokeSecurityGroupIngress</li>
+                    <li>+ iam:DetachRolePolicy</li>
+                    <li>+ s3:PutBucketPublicAccessBlock</li>
+                    <li>+ iam:PutRolePolicy (restrict, not expand)</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="mb-2 font-bold text-[#F87171]">Never permitted (ever):</p>
+                  <ul className="space-y-1 font-mono text-[13px] text-[#94A3B8]">
+                    <li>✗ iam:DeleteRole</li>
+                    <li>✗ iam:CreateUser</li>
+                    <li>✗ s3:DeleteBucket</li>
+                    <li>✗ Any destructive action</li>
+                    <li>✗ Any crown jewel path (always human)</li>
+                  </ul>
+                </div>
+                <p>
+                  XSEE never takes action without your explicit approval. Every automated action is logged with full audit trail.
+                </p>
+              </div>
+
+              <div className="mt-10">
+                <h3 className="sec-info-box-title mb-4 text-left">Scanner role</h3>
+                <div className="sec-info-box">
+                  <h4 className="sec-info-box-title">IAM role details</h4>
+                  <dl className="sec-info-dl">
+                    <dt>Policy</dt>
+                    <dd>AWS managed ReadOnlyAccess</dd>
+                    <dt>Trust</dt>
+                    <dd>XSEE account ID 722375386510</dd>
+                    <dt>External ID</dt>
+                    <dd>Unique per organization</dd>
+                    <dt>Session duration</dt>
+                    <dd>Scan duration only</dd>
+                    <dt>Revocation</dt>
+                    <dd>Delete role in AWS console</dd>
+                  </dl>
+                </div>
+              </div>
+
+              <div className="mt-10">
+                <h3 className="sec-info-box-title mb-4 text-left">Remediation role</h3>
+                <div className="sec-info-box">
+                  <h4 className="sec-info-box-title">IAM role details</h4>
+                  <dl className="sec-info-dl">
+                    <dt>Policy</dt>
+                    <dd>Scoped write (customer-defined)</dd>
+                    <dt>Trigger</dt>
+                    <dd style={{ color: "#34D399" }}>Human approval only</dd>
+                    <dt>Rollback</dt>
+                    <dd style={{ color: "#34D399" }}>Automatic if verification fails</dd>
+                    <dt>Audit</dt>
+                    <dd>Full log of every action</dd>
+                    <dt>Revocation</dt>
+                    <dd>Delete role in AWS console</dd>
+                  </dl>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <div className="sec-transition sec-light-to-dark" />
-
-        <section className="section sec-navy" style={{ background: "#050d1a" }}>
+        <section className="section sec-navy border-t border-white/[0.06]" style={{ background: "#050d1a" }}>
           <div className="container">
             <h2 className="display-md mb-8 text-white">What data XSEE stores</h2>
             <div className="cmp-wrap overflow-x-auto">
