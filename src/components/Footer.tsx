@@ -1,6 +1,13 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import SiteLogo from "@/components/SiteLogo";
 import FooterMiniContact from "@/components/FooterMiniContact";
+
+function FooterPlain({ children }: { children: ReactNode }) {
+  return (
+    <span className="block text-sm text-white/40 cursor-default">{children}</span>
+  );
+}
 
 export default function Footer() {
   return (
@@ -40,6 +47,12 @@ export default function Footer() {
             <div className="footer-col-head">Company</div>
             <ul className="footer-links">
               <li>
+                <FooterPlain>About</FooterPlain>
+              </li>
+              <li>
+                <FooterPlain>Careers</FooterPlain>
+              </li>
+              <li>
                 <Link href="/#contact">Contact</Link>
               </li>
               <li>
@@ -51,7 +64,16 @@ export default function Footer() {
             <div className="footer-col-head">Resources</div>
             <ul className="footer-links">
               <li>
-                <Link href="/changelog">Changelog</Link>
+                <FooterPlain>Documentation</FooterPlain>
+              </li>
+              <li>
+                <FooterPlain>Blog</FooterPlain>
+              </li>
+              <li>
+                <FooterPlain>Status — All Systems Operational</FooterPlain>
+              </li>
+              <li>
+                <FooterPlain>Changelog</FooterPlain>
               </li>
             </ul>
           </div>

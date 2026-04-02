@@ -75,6 +75,11 @@ export async function POST(request: Request) {
     const company = (body.company ?? "").trim();
     const awsRoleArn = (body.awsRoleArn ?? body.role_arn ?? "").trim();
     const awsRegion = (body.awsRegion ?? body.region ?? "us-east-1").trim();
+    const remediationRoleArn = (
+      body.remediation_role_arn ??
+      body.remediationRoleArn ??
+      ""
+    ).trim();
 
     if (!full_name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -103,6 +108,12 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+    if (remediationRoleArn && !ARN_REGEX.test(remediationRoleArn)) {
+      return NextResponse.json(
+        { error: "Invalid remediation Role ARN format" },
+        { status: 400 }
+      );
+    }
 
     const ipAddress =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
@@ -116,6 +127,7 @@ export async function POST(request: Request) {
     await sql`
       INSERT INTO free_scan_requests (
         full_name, work_email, company, aws_role_arn, aws_region,
+        remediation_role_arn,
         ip_address, user_agent, status
       )
       VALUES (
@@ -124,6 +136,7 @@ export async function POST(request: Request) {
         ${company},
         ${awsRoleArn},
         ${awsRegion},
+        ${remediationRoleArn || null},
         ${ipAddress},
         ${userAgent},
         'pending'
@@ -148,6 +161,7 @@ export async function POST(request: Request) {
       `Company: ${company}`,
       `Role ARN: ${awsRoleArn}`,
       `Region: ${awsRegion}`,
+      `Remediation ARN: ${remediationRoleArn || "Not provided"}`,
       `Time: ${ts}`,
       platform.scan_id ? `Scan ID: ${platform.scan_id}` : "",
     ]

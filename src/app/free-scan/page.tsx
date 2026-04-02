@@ -15,6 +15,21 @@ const AWS_REGIONS = [
 
 const TRUST_ACCOUNT_ID = "722375386510";
 
+const REMEDIATION_POLICY = `{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:RevokeSecurityGroupIngress",
+        "iam:DetachRolePolicy",
+        "s3:PutBucketPublicAccessBlock"
+      ],
+      "Resource": "*"
+    }
+  ]
+}`;
+
 export default function FreeScanPage() {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -23,6 +38,7 @@ export default function FreeScanPage() {
     awsRoleArn: "",
     awsRegion: "us-east-1",
     website: "",
+    remediation_role_arn: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -133,7 +149,70 @@ export default function FreeScanPage() {
               <div className="free-scan-step-num">3</div>
               <div>
                 <h3>Paste below and run</h3>
-                <p>Paste your Role ARN in the form below and we'll start the scan.</p>
+                <p>Paste your Role ARN in the form below and we&apos;ll start the scan.</p>
+              </div>
+            </div>
+
+            <p className="free-scan-optional-head" style={{ marginTop: 40 }}>
+              Optional — Enable one-click remediation
+            </p>
+
+            <div className="free-scan-step">
+              <div className="free-scan-step-num">4</div>
+              <div>
+                <h3>Enable one-click remediation</h3>
+                <p>
+                  Want XSEE to apply fixes automatically after you approve them? Create a second scoped role
+                  with write permissions.
+                </p>
+                <p style={{ marginTop: 12, fontWeight: 600, color: "var(--text-primary)" }}>Instructions:</p>
+                <ul>
+                  <li>
+                    In AWS Console → <strong>IAM → Roles → Create Role</strong>
+                  </li>
+                  <li>
+                    Select: <strong>Another AWS account</strong>
+                  </li>
+                  <li>
+                    Account ID: <code className="free-scan-code">{TRUST_ACCOUNT_ID}</code>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(TRUST_ACCOUNT_ID)}
+                      className="free-scan-copy"
+                    >
+                      Copy
+                    </button>
+                  </li>
+                  <li>Attach a custom <strong>inline policy</strong> (below)</li>
+                  <li>
+                    Role name: <code className="free-scan-code">xsee-remediation-role</code>
+                  </li>
+                </ul>
+                <p style={{ marginTop: 16, fontWeight: 600, color: "var(--text-primary)" }}>
+                  Custom policy (copy and paste):
+                </p>
+                <pre className="free-scan-policy-json">{REMEDIATION_POLICY}</pre>
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(REMEDIATION_POLICY)}
+                  className="free-scan-copy"
+                  style={{ marginTop: 10 }}
+                >
+                  Copy policy JSON
+                </button>
+                <p style={{ marginTop: 16 }}>
+                  After creating the role, copy the ARN. Add it to the form below as{" "}
+                  <strong>Remediation Role ARN (optional)</strong>.
+                </p>
+                <div className="free-scan-callout">
+                  <strong style={{ color: "var(--text-primary)" }}>Important</strong>
+                  <ul style={{ margin: "10px 0 0", paddingLeft: 20 }}>
+                    <li>XSEE never executes fixes automatically.</li>
+                    <li>Every fix requires your explicit approval.</li>
+                    <li>You can revoke access at any time by deleting the IAM role in your AWS console.</li>
+                    <li>Full audit log of every action applied.</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -206,6 +285,20 @@ export default function FreeScanPage() {
                       value={formData.awsRoleArn}
                       onChange={(e) => setFormData({ ...formData, awsRoleArn: e.target.value })}
                       required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Remediation Role ARN (optional)</label>
+                    <input
+                      type="text"
+                      name="remediation_role_arn"
+                      className="form-input"
+                      placeholder="arn:aws:iam::YOUR_ACCOUNT_ID:role/xsee-remediation-role"
+                      value={formData.remediation_role_arn}
+                      onChange={(e) =>
+                        setFormData({ ...formData, remediation_role_arn: e.target.value })
+                      }
+                      autoComplete="off"
                     />
                   </div>
                   <div className="form-group">

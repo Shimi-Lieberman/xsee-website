@@ -25,6 +25,8 @@ export async function ensureMarketingSchema(): Promise<void> {
     )
   `;
 
+  await sql`ALTER TABLE free_scan_requests ADD COLUMN IF NOT EXISTS remediation_role_arn TEXT`;
+
   await sql`
     CREATE TABLE IF NOT EXISTS emergency_requests (
       id SERIAL PRIMARY KEY,

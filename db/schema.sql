@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS free_scan_requests (
   status TEXT NOT NULL DEFAULT 'pending'
 );
 
+ALTER TABLE free_scan_requests ADD COLUMN IF NOT EXISTS remediation_role_arn TEXT;
+
 CREATE TABLE IF NOT EXISTS emergency_requests (
   id SERIAL PRIMARY KEY,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
