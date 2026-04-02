@@ -1,5 +1,10 @@
 import { neon } from "@neondatabase/serverless";
 
+// MARKETING_DATABASE_URL (used by platform admin)
+// = POSTGRES_URL_NON_POOLING value from Vercel
+// Add to app.xsee.io Vercel env vars to enable
+// the Leads tab in the admin dashboard.
+
 export function getSql() {
   const connectionString =
     process.env.POSTGRES_URL ||

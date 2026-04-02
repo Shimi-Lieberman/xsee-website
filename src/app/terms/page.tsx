@@ -9,17 +9,18 @@ export const metadata = {
 const TOC = [
   { id: "1", num: "1", label: "Acceptance" },
   { id: "2", num: "2", label: "Service" },
-  { id: "3", num: "3", label: "Account" },
-  { id: "4", num: "4", label: "Payment" },
-  { id: "5", num: "5", label: "Free Trial" },
-  { id: "6", num: "6", label: "Cancellation" },
-  { id: "7", num: "7", label: "Acceptable Use" },
-  { id: "8", num: "8", label: "Data & Privacy" },
-  { id: "9", num: "9", label: "IP" },
-  { id: "10", num: "10", label: "Availability" },
-  { id: "11", num: "11", label: "Liability" },
-  { id: "12", num: "12", label: "Changes" },
-  { id: "13", num: "13", label: "Contact" },
+  { id: "3", num: "3", label: "AI-Powered Features" },
+  { id: "4", num: "4", label: "Account" },
+  { id: "5", num: "5", label: "Payment" },
+  { id: "6", num: "6", label: "Free Trial" },
+  { id: "7", num: "7", label: "Cancellation" },
+  { id: "8", num: "8", label: "Acceptable Use" },
+  { id: "9", num: "9", label: "Data & Privacy" },
+  { id: "10", num: "10", label: "IP" },
+  { id: "11", num: "11", label: "Availability" },
+  { id: "12", num: "12", label: "Liability" },
+  { id: "13", num: "13", label: "Changes" },
+  { id: "14", num: "14", label: "Contact" },
 ];
 
 export default function TermsPage() {
@@ -49,7 +50,19 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="3" num="3" title="Account Registration & Security">
+      <LegalSection id="3" num="3" title="AI-Powered Features">
+        <p>
+          XSEE uses artificial intelligence, including Anthropic&apos;s Claude API, to provide features such as attack path explanation, risk summarization, and security recommendations.
+        </p>
+        <p>
+          AI features process only structured security metadata that XSEE has already collected from your connected AWS environment — such as attack path data, validation results, and asset relationships. AI features do not process raw file contents, database records, or S3 object contents.
+        </p>
+        <p>
+          AI-generated outputs are advisory only. You are responsible for reviewing and approving any recommended actions before they are applied to your infrastructure. XSEE&apos;s AI analyst is grounded in your scan data and is designed not to generate information beyond what is present in that data, but outputs should be reviewed by qualified security personnel.
+        </p>
+      </LegalSection>
+
+      <LegalSection id="4" num="4" title="Account Registration & Security">
         <p>
           You must provide accurate registration information and keep it current. You are responsible for safeguarding credentials and for all activity under your account.
         </p>
@@ -58,7 +71,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="4" num="4" title="Payment & Billing">
+      <LegalSection id="5" num="5" title="Payment & Billing">
         <div className="legal-box-blue">
           <strong>14-day free trial.</strong> No credit card required to start your trial where offered. After the trial, continued use requires a paid subscription processed by our merchant of record, Paddle.
         </div>
@@ -70,19 +83,19 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="5" num="5" title="Free Trial">
+      <LegalSection id="6" num="6" title="Free Trial">
         <p>
           Trial eligibility, duration, and feature limits are described at signup. Unless you subscribe before the trial ends, access to paid features may end automatically. One trial per organization or email may apply to prevent abuse.
         </p>
       </LegalSection>
 
-      <LegalSection id="6" num="6" title="Cancellation & Renewal">
+      <LegalSection id="7" num="7" title="Cancellation & Renewal">
         <p>
           You may cancel your subscription through the billing portal or instructions we provide. Monthly plans typically remain active until the end of the current billing period. Annual plans are governed by our <a href="/refunds">Refund Policy</a>.
         </p>
       </LegalSection>
 
-      <LegalSection id="7" num="7" title="Acceptable Use">
+      <LegalSection id="8" num="8" title="Acceptable Use">
         <p>You agree not to misuse the Service. Without limitation, you may NOT:</p>
         <ul className="legal-prohibited">
           <li>
@@ -108,7 +121,7 @@ export default function TermsPage() {
         </ul>
       </LegalSection>
 
-      <LegalSection id="8" num="8" title="Data & Privacy">
+      <LegalSection id="9" num="9" title="Data & Privacy">
         <div className="legal-box-green">
           <strong>We NEVER modify your infrastructure.</strong> Read-only access only. XSEE does not create, change, or delete your cloud resources through the standard integration described in our documentation.
         </div>
@@ -117,7 +130,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="9" num="9" title="Intellectual Property">
+      <LegalSection id="10" num="10" title="Intellectual Property">
         <p>
           The Service, software, branding, and documentation are owned by XSEE or our licensors. We grant you a limited, non-exclusive, non-transferable license to use the Service during your subscription, subject to these terms.
         </p>
@@ -126,13 +139,13 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="10" num="10" title="Service Availability">
+      <LegalSection id="11" num="11" title="Service Availability">
         <p>
           We aim for high availability but do not guarantee uninterrupted access. Scheduled maintenance, third-party outages, or events beyond our reasonable control may affect the Service. We are not liable for such interruptions except as required by law or a separate SLA you have signed.
         </p>
       </LegalSection>
 
-      <LegalSection id="11" num="11" title="Limitation of Liability">
+      <LegalSection id="12" num="12" title="Limitation of Liability">
         <div className="legal-box-amber">
           To the maximum extent permitted by law, the Service is provided &quot;as is.&quot; We disclaim implied warranties where allowed. Our aggregate liability arising out of these terms or the Service will not exceed the fees you paid us in the twelve (12) months before the claim (or, if none, fifty U.S. dollars). We are not liable for indirect, incidental, special, consequential, or punitive damages.
         </div>
@@ -141,13 +154,13 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection id="12" num="12" title="Changes to Terms">
+      <LegalSection id="13" num="13" title="Changes to Terms">
         <p>
           We may update these terms by posting a revised version on this page and updating the &quot;Last updated&quot; date. Material changes may be communicated by email or in-product notice. Continued use after the effective date constitutes acceptance unless applicable law requires otherwise.
         </p>
       </LegalSection>
 
-      <LegalSection id="13" num="13" title="Contact">
+      <LegalSection id="14" num="14" title="Contact">
         <p>
           Questions about these Terms: <a href="mailto:security@xsee.io">security@xsee.io</a>
         </p>
