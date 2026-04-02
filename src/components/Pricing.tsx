@@ -1,25 +1,6 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
 import Link from "next/link";
-import type { Paddle } from "@paddle/paddle-js";
-
-const SUCCESS_URL = "https://app.xsee.io/login?signup=pending";
-
-/**
- * Paddle Billing environment. `live_*` client tokens require `production`.
- * Set NEXT_PUBLIC_PADDLE_ENVIRONMENT=production in Vercel when using live keys.
- */
-function getPaddleEnvironment(): "production" | "sandbox" {
-  const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
-  if (token.startsWith("live_")) return "production";
-  if (token.startsWith("test_")) return "sandbox";
-  return process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox" ? "sandbox" : "production";
-}
-
-function getPaddle(): Paddle | undefined {
-  return (window as Window & { Paddle?: Paddle }).Paddle;
-}
 
 const PLANS = [
   {
@@ -90,79 +71,7 @@ const PLANS = [
   },
 ];
 
-function getPriceId(tier: "starter" | "pro"): string | undefined {
-  if (tier === "starter") return process.env.NEXT_PUBLIC_PADDLE_STARTER_PRICE_ID;
-  return process.env.NEXT_PUBLIC_PADDLE_PRO_PRICE_ID;
-}
-
 export default function Pricing() {
-  useEffect(() => {
-    const token = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
-    if (!token || typeof window === "undefined") return;
-
-    let interval: ReturnType<typeof setInterval> | undefined;
-    let attempts = 0;
-    const maxAttempts = 100;
-
-    const tryInit = () => {
-      if (typeof window === "undefined" || !window.Paddle) return false;
-      try {
-        const P = getPaddle();
-        if (!P) return false;
-        if (!P.Initialized) {
-          P.Environment.set(getPaddleEnvironment());
-          P.Initialize({ token });
-        }
-        return true;
-      } catch (e) {
-        console.warn("Paddle not ready:", e);
-        return false;
-      }
-    };
-
-    if (tryInit()) return;
-
-    interval = setInterval(() => {
-      attempts += 1;
-      if (tryInit() || attempts >= maxAttempts) {
-        if (interval) clearInterval(interval);
-      }
-    }, 50);
-
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, []);
-
-  const openCheckout = useCallback((tier: "starter" | "pro") => {
-    const priceId = getPriceId(tier);
-    if (typeof window === "undefined") return;
-    if (!window.Paddle) {
-      window.location.hash = "contact";
-      return;
-    }
-    try {
-      const P = getPaddle();
-      if (!P?.Checkout || !priceId) {
-        window.location.hash = "contact";
-        return;
-      }
-      if (!P.Initialized && process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN) {
-        P.Environment.set(getPaddleEnvironment());
-        P.Initialize({ token: process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN });
-      }
-      P.Checkout.open({
-        items: [{ priceId, quantity: 1 }],
-        settings: {
-          successUrl: SUCCESS_URL,
-        },
-      });
-    } catch (e) {
-      console.warn("Paddle not ready:", e);
-      window.location.hash = "contact";
-    }
-  }, []);
-
   return (
     <section className="section sec-blue-tint" id="pricing">
       <div className="container">
@@ -223,7 +132,7 @@ export default function Pricing() {
                 >
                   {plan.cta}
                 </Link>
-              ) : plan.checkout === "starter" ? (
+              ) : (
                 <Link
                   href="https://app.xsee.io/register"
                   className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
@@ -231,15 +140,6 @@ export default function Pricing() {
                 >
                   {plan.cta}
                 </Link>
-              ) : (
-                <button
-                  type="button"
-                  className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
-                  style={{ width: "100%", justifyContent: "center" }}
-                  onClick={() => openCheckout(plan.checkout)}
-                >
-                  {plan.cta}
-                </button>
               )}
             </div>
           ))}

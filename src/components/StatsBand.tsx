@@ -36,31 +36,52 @@ export default function StatsBand() {
     const inViewport = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      const bottomInset = 50;
-      return rect.top < vh - bottomInset && rect.bottom > bottomInset * 0.25;
+      const margin = 100;
+      return rect.top < vh + margin && rect.bottom > -margin;
     };
 
-    requestAnimationFrame(() => {
+    const tryActivate = () => {
       if (inViewport()) activate();
-    });
+    };
+
+    requestAnimationFrame(tryActivate);
+
+    let scrollRaf = 0;
+    const onScrollOrResize = () => {
+      if (activated) return;
+      cancelAnimationFrame(scrollRaf);
+      scrollRaf = requestAnimationFrame(tryActivate);
+    };
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize, { passive: true });
 
     if (typeof IntersectionObserver === "undefined") {
       activate();
-      return;
+      return () => {
+        window.removeEventListener("scroll", onScrollOrResize);
+        window.removeEventListener("resize", onScrollOrResize);
+        cancelAnimationFrame(scrollRaf);
+      };
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) activate();
       },
-      { root: null, rootMargin: "0px 0px -50px 0px", threshold: 0.2 }
+      { root: null, rootMargin: "120px 0px 120px 0px", threshold: 0 }
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+      cancelAnimationFrame(scrollRaf);
+    };
   }, []);
 
   const attackPatterns = useCountUp(1000, 1200, countersVisible);
-  const candidatePaths = useCountUp(14, 1200, countersVisible);
+  const candidatePaths = useCountUp(847, 1200, countersVisible);
   const confidence = useCountUp(92, 1200, countersVisible);
 
   const popStyle = {
@@ -78,7 +99,9 @@ export default function StatsBand() {
           <div className="stat-lbl">Attack patterns</div>
         </div>
         <div className="stat-cell stat-warm" style={{ ...popStyle, animationDelay: countersVisible ? "0.05s" : undefined }}>
-          <div className="stat-num" style={{ color: "#F97316" }}>{candidatePaths}</div>
+          <div className="stat-num" style={{ color: "#F97316" }}>
+            {candidatePaths.toLocaleString()}
+          </div>
           <div className="stat-lbl">Candidate paths discovered</div>
         </div>
         <div className="stat-cell" style={{ ...popStyle, animationDelay: countersVisible ? "0.1s" : undefined }}>
