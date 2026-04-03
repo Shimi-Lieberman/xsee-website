@@ -15,7 +15,17 @@ export default function TrustStrip() {
       <div className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 mb-8 font-mono">
         Trusted by security teams at
       </div>
-      <div className="flex items-center justify-center gap-8 md:gap-12 flex-wrap px-6">
+      <div
+        className="px-6"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "48px",
+          flexWrap: "nowrap",
+          overflowX: "hidden",
+        }}
+      >
         {[
           "FINTECH STARTUP",
           "SAAS CORP",
@@ -23,8 +33,6 @@ export default function TrustStrip() {
           "DEVOPS CO",
           "CLOUD-FIRST",
           "SECURE BASE",
-          "API LABS",
-          "DATA CO",
         ].map((name) => (
           <div
             key={name}

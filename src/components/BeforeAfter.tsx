@@ -3,7 +3,16 @@ import Link from "next/link";
 export function BeforeAfter() {
   return (
     <section style={{ padding: "80px 0", borderTop: "1px solid rgba(255,255,255,0.04)", background: "#050d1a" }}>
-      <div className="max-w-6xl mx-auto px-6 w-full">
+      <div
+        className="max-w-6xl mx-auto px-6 w-full"
+        style={{
+          maxWidth: "1152px",
+          margin: "0 auto",
+          paddingLeft: "24px",
+          paddingRight: "24px",
+          width: "100%",
+        }}
+      >
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
           <div
             style={{

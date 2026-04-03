@@ -34,11 +34,16 @@ export default function Hero() {
 
       {/* Two-column hero */}
       <div
-        className="relative z-10 mx-auto w-full max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-2 lg:gap-[60px] gap-10 items-center"
+        className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-[60px] w-full"
         style={{
-          minHeight: "calc(100vh - 52px)",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          paddingLeft: "48px",
+          paddingRight: "48px",
           paddingTop: "60px",
           paddingBottom: "60px",
+          width: "100%",
+          minHeight: "calc(100vh - 52px)",
         }}
       >
         {/* LEFT — Headline + CTAs */}
