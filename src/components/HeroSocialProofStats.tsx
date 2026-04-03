@@ -11,7 +11,7 @@ export default function HeroSocialProofStats() {
   return (
     <div className="hero-social-proof">
       <div className="sp-stat">
-        <div className="sp-num hero-sp-num-magenta">
+        <div className="sp-num hero-sp-num-magenta font-mono">
           <CountUp
             end={1000}
             duration={2}
@@ -28,14 +28,14 @@ export default function HeroSocialProofStats() {
       </div>
       <div className="sp-sep" />
       <div className="sp-stat">
-        <div className="sp-num" style={{ color: "var(--yellow-light)" }}>
+        <div className="sp-num font-mono" style={{ color: "var(--yellow-light)" }}>
           L1–L3
         </div>
         <div className="sp-lbl">Layers of validation proof</div>
       </div>
       <div className="sp-sep" />
       <div className="sp-stat warm">
-        <div className="sp-num">
+        <div className="sp-num font-mono">
           <CountUp
             end={92}
             duration={2}
@@ -50,14 +50,14 @@ export default function HeroSocialProofStats() {
       </div>
       <div className="sp-sep" />
       <div className="sp-stat">
-        <div className="sp-num">
+        <div className="sp-num font-mono">
           &lt;30<span>m</span>
         </div>
         <div className="sp-lbl">Time to your first proven breach path</div>
       </div>
       <div className="sp-sep" style={{ background: "rgba(255,255,255,0.06)" }} />
       <div className="sp-stat warm">
-        <div className="sp-num">
+        <div className="sp-num font-mono">
           <CountUp
             end={18.5}
             decimals={1}

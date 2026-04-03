@@ -1,100 +1,125 @@
-import type { ReactNode } from "react";
 import Link from "next/link";
-import SiteLogo from "@/components/SiteLogo";
-import FooterMiniContact from "@/components/FooterMiniContact";
-
-function FooterPlain({ children }: { children: ReactNode }) {
-  return (
-    <span className="block text-sm text-white/40 cursor-default">{children}</span>
-  );
-}
 
 export default function Footer() {
   return (
-    <footer className="sec-navy">
-      <div className="container">
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <div className="footer-brand-logo">
-              <SiteLogo />
-            </div>
-            <p className="footer-tagline">
-              XSEE — Cloud Exposure Intelligence. Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
-            </p>
-            <div className="footer-status">
-              <div className="footer-status-dot" />
-              All Systems Operational
-            </div>
-          </div>
-          <div>
-            <div className="footer-col-head">Product</div>
-            <ul className="footer-links">
-              <li>
-                <Link href="/#how">How It Works</Link>
-              </li>
-              <li>
-                <Link href="/#engines">Engines</Link>
-              </li>
-              <li>
-                <Link href="/vs-wiz">XSEE vs Wiz</Link>
-              </li>
-              <li>
-                <Link href="/#pricing">Pricing</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <div className="footer-col-head">Company</div>
-            <ul className="footer-links">
-              <li>
-                <FooterPlain>About</FooterPlain>
-              </li>
-              <li>
-                <FooterPlain>Careers</FooterPlain>
-              </li>
-              <li>
-                <Link href="/#contact">Contact</Link>
-              </li>
-              <li>
-                <Link href="/security">Security</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <div className="footer-col-head">Resources</div>
-            <ul className="footer-links">
-              <li>
-                <FooterPlain>Documentation</FooterPlain>
-              </li>
-              <li>
-                <FooterPlain>Blog</FooterPlain>
-              </li>
-              <li>
-                <FooterPlain>Status — All Systems Operational</FooterPlain>
-              </li>
-              <li>
-                <FooterPlain>Changelog</FooterPlain>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="mb-4 text-xs font-bold uppercase tracking-widest text-white/70">Contact</h4>
-            <FooterMiniContact />
-            <Link href="/#contact" className="mb-2 block text-sm text-white/50 transition-colors hover:text-white">
-              Request a Demo
-            </Link>
-            <a href="mailto:sales@xsee.io" className="block text-sm text-white/50 transition-colors hover:text-white">
-              sales@xsee.io
-            </a>
+    <footer style={{ background: "#050d1a", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+      {/*
+        === PREVIOUS FOOTER (replaced) ===
+        sec-navy footer with SiteLogo, FooterMiniContact, footer-grid columns:
+        Product: How It Works, Engines, XSEE vs Wiz, Pricing
+        Company: About/Careers plain, Contact, Security
+        Resources: Documentation, Blog, Status, Changelog (plain spans)
+        Contact column: FooterMiniContact, Request Demo, sales@xsee.io
+        footer-bottom: Terms, Privacy, Refunds
+      */}
+      <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+        <div className="col-span-2">
+          <img
+            src="/logo-primary-transparent.svg"
+            alt="XSEE"
+            style={{ height: "32px", width: "auto", marginBottom: "16px" }}
+          />
+          <p className="text-white/30 text-sm leading-relaxed max-w-xs mb-5">
+            Cloud Attack Intelligence. Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
+          </p>
+          <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            All Systems Operational
           </div>
         </div>
-        <div className="footer-bottom">
-          <p className="footer-copy">© {new Date().getFullYear()} XSEE. All rights reserved.</p>
-          <div className="footer-legal flex flex-wrap gap-x-5 gap-y-2">
-            <Link href="/terms">Terms</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/refunds">Refunds</Link>
+
+        <div>
+          <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 mb-4 font-mono">
+            Product
           </div>
+          {[
+            { label: "How It Works", href: "/#how" },
+            { label: "Engines", href: "/#engines" },
+            { label: "vs. Wiz", href: "/vs-wiz" },
+            { label: "Pricing", href: "/#pricing" },
+            { label: "Changelog", href: "/changelog" },
+            { label: "Free Scan", href: "/free-scan" },
+          ].map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="block text-sm text-white/40 hover:text-white mb-2.5 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        <div>
+          <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 mb-4 font-mono">
+            Company
+          </div>
+          {[
+            { label: "About", href: "#" },
+            { label: "Security", href: "/security" },
+            { label: "Blog", href: "#" },
+            { label: "Careers", href: "#" },
+            { label: "Contact", href: "/#contact" },
+            { label: "sales@xsee.io", href: "mailto:sales@xsee.io" },
+            { label: "Under Attack?", href: "/under-attack" },
+          ].map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="block text-sm text-white/40 hover:text-white mb-2.5 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        <div>
+          <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 mb-4 font-mono">
+            Resources
+          </div>
+          {[
+            { label: "Documentation", href: "#" },
+            { label: "API Reference", href: "#" },
+            { label: "Status", href: "#" },
+            { label: "Terms", href: "/terms" },
+            { label: "Privacy", href: "/privacy" },
+            { label: "Refunds", href: "/refunds" },
+          ].map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="block text-sm text-white/40 hover:text-white mb-2.5 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="px-6 py-5 max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-4"
+        style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+      >
+        <div className="text-xs text-white/22">© {new Date().getFullYear()} XSEE. All rights reserved.</div>
+        <div className="flex items-center gap-5">
+          {[
+            { label: "Terms", href: "/terms" },
+            { label: "Privacy", href: "/privacy" },
+            { label: "Security", href: "/security" },
+            { label: "Refunds", href: "/refunds" },
+          ].map((link) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="text-xs text-white/22 hover:text-white/55 transition-colors"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+        <div className="text-[10px] text-white/18 font-mono flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+          v1.4.0 · All systems operational
         </div>
       </div>
     </footer>

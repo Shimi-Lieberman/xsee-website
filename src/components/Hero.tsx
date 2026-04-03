@@ -54,6 +54,23 @@ export default function Hero() {
                   Cloud Attack Intelligence
                 </span>
               </div>
+              <div className="flex items-center justify-center mb-8">
+                <div
+                  className="flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer hover:border-white/20 transition-all"
+                  style={{ border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)" }}
+                >
+                  <span
+                    className="text-[10px] font-bold px-2 py-0.5 rounded-full font-mono"
+                    style={{ background: "rgba(255,27,141,0.15)", color: "#FF1B8D" }}
+                  >
+                    NEW
+                  </span>
+                  <span className="text-white/50 text-xs">AI attacker simulation now in XseeCyber 2.0</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" aria-hidden>
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </div>
+              </div>
               <h1 className="display-xl hero-headline">
                 Your cloud has 4,000 alerts.
                 <br />
@@ -156,6 +173,12 @@ export default function Hero() {
             </div>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col items-center gap-2 mt-10 animate-bounce pb-6">
+        <span className="text-[10px] text-white/18 tracking-widest uppercase font-mono">Scroll</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2" aria-hidden>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </div>
     </section>
   );

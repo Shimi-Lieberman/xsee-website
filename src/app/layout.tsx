@@ -1,10 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import "./xsee-elite.css";
 import "./legal-pages.css";
 import ChatWidget from "@/components/ChatWidget";
+import ScrollAnimator from "@/components/ScrollAnimator";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -14,25 +15,20 @@ export const viewport: Viewport = {
 };
 
 const inter = Inter({
+  subsets: ["latin"],
   variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-sans",
+const mono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
+
+const fontVariables = `${inter.variable} ${mono.variable}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xsee.io"),
@@ -71,17 +67,15 @@ export const metadata: Metadata = {
   },
 };
 
-const fontVariables = [inter.variable, plusJakarta.variable, ibmPlexMono.variable].join(" ");
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={fontVariables} suppressHydrationWarning>
+    <html lang="en" className={`${fontVariables} font-sans antialiased`} suppressHydrationWarning>
       <body
-        className={`${fontVariables} antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
+        className={`${fontVariables} font-sans antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
         suppressHydrationWarning
       >
         <Script
@@ -89,6 +83,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         {children}
+        <ScrollAnimator />
         <ChatWidget />
       </body>
     </html>

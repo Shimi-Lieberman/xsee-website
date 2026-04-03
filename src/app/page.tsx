@@ -17,6 +17,7 @@ import EnginesGrid from "@/components/EnginesGrid";
 import ComparisonTable from "@/components/ComparisonTable";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
+import ComplianceBar from "@/components/ComplianceBar";
 import CTABanner from "@/components/CTABanner";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
@@ -73,7 +74,7 @@ export default function Home() {
 
           <div className="shock-stats-grid reveal-on-scroll">
             <div className="shock-stat-cell">
-              <div className="shock-stat-number">
+              <div className="shock-stat-number font-mono">
                 <span id="stat-alerts">4,000</span>
               </div>
               <p className="shock-stat-label">
@@ -84,7 +85,7 @@ export default function Home() {
               </p>
             </div>
             <div className="shock-stat-cell shock-stat-red">
-              <div className="shock-stat-number">
+              <div className="shock-stat-number font-mono">
                 <span id="stat-critical">3</span>
               </div>
               <p className="shock-stat-label">
@@ -95,7 +96,7 @@ export default function Home() {
               </p>
             </div>
             <div className="shock-stat-cell">
-              <div className="shock-stat-number">
+              <div className="shock-stat-number font-mono">
                 <span id="stat-undetected">92</span>
                 <span className="shock-stat-suffix">%</span>
               </div>
@@ -107,7 +108,7 @@ export default function Home() {
               </p>
             </div>
             <div className="shock-stat-cell shock-stat-red">
-              <div className="shock-stat-number">
+              <div className="shock-stat-number font-mono">
                 <span id="stat-detect">34</span>
                 <span className="shock-stat-suffix">%</span>
               </div>
@@ -143,6 +144,7 @@ export default function Home() {
         <div className="sec-transition sec-light-to-tint" />
         <Pricing />
         <div className="sec-warm-line" />
+        <ComplianceBar />
         <CTABanner />
         <div className="sec-transition sec-dark-to-light" />
         <ContactForm />

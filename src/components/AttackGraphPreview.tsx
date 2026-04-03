@@ -214,7 +214,7 @@ export default function AttackGraphPreview() {
           </div>
         </div>
 
-        <div className="elite-attack-pills">
+        <div className="elite-attack-pills font-mono">
           <span className="elite-evidence-pill elite-pill-orange-pulse elite-pill-with-icon">
             <Zap size={12} strokeWidth={2.5} aria-hidden />
             EXPLOITABLE

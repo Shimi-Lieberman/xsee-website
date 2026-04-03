@@ -73,7 +73,7 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <section className="section sec-blue-tint" id="pricing">
+    <section className="section sec-blue-tint animate-on-scroll" id="pricing">
       <div className="container">
         <div className="section-head reveal">
           <span className="eyebrow">Pricing</span>
@@ -96,12 +96,12 @@ export default function Pricing() {
               {plan.featured && (
                 <div className="pricing-badge pricing-badge-warm">Most Popular</div>
               )}
-              <div className="pricing-tier">{plan.tier}</div>
+              <div className="pricing-tier font-mono">{plan.tier}</div>
               <h3>{plan.title}</h3>
               <p className="pricing-desc">{plan.desc}</p>
               <div className="pricing-amount">
                 <span
-                  className="pricing-num"
+                  className="pricing-num font-mono"
                   style={
                     plan.price === "Contact us"
                       ? { fontSize: "28px", lineHeight: "1.2" }

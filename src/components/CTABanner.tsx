@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function CTABanner() {
   return (
-    <section className="cta-section sec-deepblack" id="get-started">
+    <section className="cta-section sec-deepblack animate-on-scroll" id="get-started">
       <div className="container">
         <div className="section-head reveal" style={{ textAlign: "center", marginBottom: 56 }}>
           <span className="eyebrow">Get Started</span>

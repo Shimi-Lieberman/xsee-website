@@ -8,7 +8,10 @@ const LOGIN_URL = "https://app.xsee.io/login";
 
 export default function Nav() {
   return (
-    <nav id="nav">
+    <nav
+      id="nav"
+      style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
+    >
       <div className="container">
         <div className="nav-inner">
           <SiteLogo />
@@ -32,15 +35,21 @@ export default function Nav() {
               Contact
             </Link>
           </nav>
+          <div className="hidden md:flex items-center gap-1.5 text-[11px] text-white/30 mr-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            All systems operational
+          </div>
           <div className="nav-actions">
             <Link href="/under-attack" className="nav-emergency">
               <span className="nav-emergency-dot" />
               Under Attack?
             </Link>
-            <div className="nav-status-pill">
-              <div className="nav-status-dot" />
-              All Systems Operational
-            </div>
+            <Link
+              href={LOGIN_URL}
+              className="text-sm text-white/55 hover:text-white transition-colors px-3 py-1.5 hidden md:block"
+            >
+              Sign in
+            </Link>
             <div className="nav-cta-group">
               <Link
                 href="/#contact"
