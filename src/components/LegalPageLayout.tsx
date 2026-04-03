@@ -97,8 +97,8 @@ export default function LegalPageLayout({ tag, headline, subtitle, tocItems, cur
           <Mail size={28} color="#FF1B8D" style={{ margin: "0 auto 12px", display: "block" }} aria-hidden />
           <h2 className="legal-contact-title">Questions about this policy?</h2>
           <p className="legal-contact-sub">Our team responds within 2 business days.</p>
-          <a href="mailto:security@xsee.io" className="legal-contact-btn">
-            security@xsee.io
+          <a href="mailto:sales@xsee.io" className="legal-contact-btn">
+            sales@xsee.io
           </a>
           <div className="legal-contact-links">
             {OTHER_PAGES.map((p) => (

@@ -120,7 +120,7 @@ export default function PrivacyPage() {
           <span className="legal-right-pill">Opt-out of marketing</span>
         </div>
         <p style={{ marginTop: 16 }}>
-          To exercise rights, contact <a href="mailto:security@xsee.io">security@xsee.io</a>. You may also lodge a complaint with your local supervisory authority.
+          To exercise rights, contact <a href="mailto:sales@xsee.io">sales@xsee.io</a>. You may also lodge a complaint with your local supervisory authority.
         </p>
       </LegalSection>
 
@@ -150,7 +150,7 @@ export default function PrivacyPage() {
 
       <LegalSection id="13" num="13" title="Contact">
         <p>
-          Privacy inquiries: <a href="mailto:security@xsee.io">security@xsee.io</a>
+          Privacy inquiries: <a href="mailto:sales@xsee.io">sales@xsee.io</a>
         </p>
         <p>
           For payment data handled by Paddle, you may also exercise rights through Paddle as described in their privacy policy and your checkout experience.

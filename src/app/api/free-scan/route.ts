@@ -192,7 +192,7 @@ export async function POST(request: Request) {
       `Region: ${awsRegion}`,
       ``,
       `— The XSEE Team`,
-      `hello@xsee.io`,
+      `sales@xsee.io`,
     ].join("\n");
 
     try {

@@ -44,7 +44,7 @@ export default function UnderAttackForm() {
     } catch {
       setStatus("error");
       setErrorMessage(
-        "Something went wrong. Please try again or email hello@xsee.io directly."
+        "Something went wrong. Please try again or email security@xsee.io directly."
       );
     }
   }
@@ -55,8 +55,8 @@ export default function UnderAttackForm() {
         <p className="ua-success-title">✓ We&apos;ve been alerted.</p>
         <p className="ua-success-body">
           Expect contact within the hour. For immediate assistance:{" "}
-          <a href="mailto:hello@xsee.io" className="text-sky-400 underline">
-            hello@xsee.io
+          <a href="mailto:security@xsee.io" className="text-sky-400 underline">
+            security@xsee.io
           </a>
         </p>
         <Link href="/" className="btn btn-secondary ua-success-home">

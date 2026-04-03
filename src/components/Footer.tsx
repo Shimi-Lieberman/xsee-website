@@ -83,8 +83,8 @@ export default function Footer() {
             <Link href="/#contact" className="mb-2 block text-sm text-white/50 transition-colors hover:text-white">
               Request a Demo
             </Link>
-            <a href="mailto:hello@xsee.io" className="block text-sm text-white/50 transition-colors hover:text-white">
-              hello@xsee.io
+            <a href="mailto:sales@xsee.io" className="block text-sm text-white/50 transition-colors hover:text-white">
+              sales@xsee.io
             </a>
           </div>
         </div>

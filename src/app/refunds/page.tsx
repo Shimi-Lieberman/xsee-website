@@ -35,7 +35,7 @@ export default function RefundsPage() {
       <LegalSection id="2" num="2" title="How to Request a Refund">
         <p>
           <strong>Email:</strong>{" "}
-          <a href="mailto:security@xsee.io?subject=Refund%20Request">security@xsee.io</a>
+          <a href="mailto:sales@xsee.io?subject=Refund%20Request">sales@xsee.io</a>
         </p>
         <p>
           <strong>Subject:</strong> &quot;Refund Request&quot;
@@ -55,7 +55,7 @@ export default function RefundsPage() {
 
       <LegalSection id="5" num="5" title="Contact">
         <p>
-          <a href="mailto:security@xsee.io">security@xsee.io</a>
+          <a href="mailto:sales@xsee.io">sales@xsee.io</a>
         </p>
       </LegalSection>
     </LegalPageLayout>

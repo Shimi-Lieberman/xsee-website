@@ -65,11 +65,11 @@ export default function FreeScanPage() {
         setStatus("success");
       } else {
         setStatus("error");
-        setError(data.error ?? "Something went wrong. Please try again or email hello@xsee.io directly.");
+        setError(data.error ?? "Something went wrong. Please try again or email sales@xsee.io directly.");
       }
     } catch {
       setStatus("error");
-      setError("Something went wrong. Please try again or email hello@xsee.io directly.");
+      setError("Something went wrong. Please try again or email sales@xsee.io directly.");
     }
   }
 

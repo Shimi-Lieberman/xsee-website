@@ -75,11 +75,11 @@ export default function ContactForm() {
         setFormData({ fullName: "", email: "", company: "", cloudProvider: "", assetCount: "", message: "", website: "" });
       } else {
         setStatus("error");
-        setApiError(data.error ?? "Something went wrong. Please try again or email hello@xsee.io directly.");
+        setApiError(data.error ?? "Something went wrong. Please try again or email sales@xsee.io directly.");
       }
     } catch {
       setStatus("error");
-      setApiError("Something went wrong. Please try again or email hello@xsee.io directly.");
+      setApiError("Something went wrong. Please try again or email sales@xsee.io directly.");
     }
   }
 

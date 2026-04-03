@@ -39,7 +39,7 @@ export default function FooterMiniContact() {
       setErrorMessage(
         err instanceof Error
           ? err.message
-          : "Something went wrong. Please try again or email hello@xsee.io directly."
+          : "Something went wrong. Please try again or email sales@xsee.io directly."
       );
     }
   }

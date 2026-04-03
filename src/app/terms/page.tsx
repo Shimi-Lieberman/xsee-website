@@ -162,7 +162,7 @@ export default function TermsPage() {
 
       <LegalSection id="14" num="14" title="Contact">
         <p>
-          Questions about these Terms: <a href="mailto:security@xsee.io">security@xsee.io</a>
+          Questions about these Terms: <a href="mailto:sales@xsee.io">sales@xsee.io</a>
         </p>
         <p>
           For payment and invoice questions handled by Paddle, refer to your Paddle receipt or Paddle's support channels as linked in your purchase confirmation.
