@@ -1,10 +1,10 @@
 export default function ComplianceBar() {
   return (
     <div
-      className="animate-on-scroll py-12 px-6"
+      className="animate-on-scroll py-12"
       style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto w-full px-6">
         <div className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 mb-8 font-mono">
           Security & Compliance
         </div>

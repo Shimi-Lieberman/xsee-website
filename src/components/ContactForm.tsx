@@ -86,7 +86,7 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <section className="section sec-light animate-on-scroll" id="contact">
-        <div className="container">
+        <div className="max-w-5xl mx-auto w-full px-6">
           <div className="reveal mx-auto max-w-xl text-center">
             <h2 className="display-lg mb-4">Thanks!</h2>
             <p className="mb-6">
@@ -107,7 +107,7 @@ export default function ContactForm() {
 
   return (
     <section className="section sec-light animate-on-scroll" id="contact">
-      <div className="container">
+      <div className="max-w-5xl mx-auto w-full px-6">
         <div className="contact-grid">
           <div className="reveal-left">
             <span className="badge badge-blue badge-dot eyebrow block mb-5">
