@@ -4,116 +4,190 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import GlobalScripts from "@/components/GlobalScripts";
-import UnderAttackForm from "@/components/UnderAttackForm";
 
 export const metadata: Metadata = {
-  title: "Under Attack? — XSEE Emergency Response",
+  title: "Under Active Attack? — XSEE Emergency Response",
   description:
-    "Active breach in your AWS environment? XSEE can map your attack surface and validate active paths in under 30 minutes. Emergency scan available.",
+    "Active breach in your AWS environment? XSEE maps your attack surface and validates active paths in under 30 minutes. Request emergency scan.",
 };
-
-const TIMELINE = [
-  {
-    title: "Minutes 1–2",
-    body: "Connect read-only IAM. No agents. No risk of interfering with your incident response.",
-  },
-  {
-    title: "Minutes 2–15",
-    body: "Map every asset, identity, and permission edge currently in your environment. Build the live attack graph against 1,000+ known attack patterns.",
-  },
-  {
-    title: "Minutes 15–25",
-    body: "L2 validation — call live AWS APIs to determine which paths are currently confirmed exploitable. Find where the attacker has already been, and where they can still go.",
-  },
-  {
-    title: "Minutes 25–30",
-    body: "Deliver prioritized report: active paths, blast radius per path, immediate containment actions.",
-  },
-] as const;
-
-const CHECKLIST_LINES = [
-  "Immediately revoke any suspicious IAM access keys via AWS Console → IAM → Users",
-  "Enable AWS CloudTrail in all regions if not already active",
-  "Check CloudTrail for AssumeRole, CreateUser, AttachUserPolicy events in last 24h",
-  "Isolate the suspected compromised instance (modify its Security Group to deny all)",
-  "Do NOT shut down the instance — preserve forensic evidence",
-  "Then connect XSEE to map what they can still reach",
-] as const;
 
 export default function UnderAttackPage() {
   return (
-    <div className="ua-page ua-page--emergency">
+    <>
       <ScrollProgressBar />
       <GlobalScripts />
       <Nav />
-
-      <main className="ua-main">
-        <div className="container py-12 md:py-16">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="mb-4 inline-block rounded-full border border-red-500/40 bg-red-500/10 px-4 py-1 text-xs font-semibold uppercase tracking-widest text-red-400">
-              Emergency
+      <div style={{ background: "#050d1a", minHeight: "100vh", paddingTop: "80px" }}>
+        <div className="max-w-2xl mx-auto px-6 py-16">
+          <div className="flex items-center gap-3 mb-6">
+            <div
+              className="w-2 h-2 rounded-full animate-pulse"
+              style={{ background: "#ef4444", boxShadow: "0 0 8px #ef4444" }}
+            />
+            <span
+              className="text-xs font-bold uppercase tracking-widest font-mono"
+              style={{ color: "#ef4444" }}
+            >
+              Emergency Response
             </span>
-            <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-white md:text-5xl">
-              Under active attack in AWS?
-            </h1>
-            <p className="text-lg text-slate-400 md:text-xl">
-              XSEE can map your attack surface, validate active paths, and show you exactly where the attacker is moving — in under 30 minutes.
-            </p>
-            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href="/?subject=emergency#contact"
-                className="btn btn-lg inline-flex bg-red-600 text-white shadow-[0_0_24px_rgba(239,68,68,0.35)] transition-all hover:scale-[1.02] hover:bg-red-500"
-              >
-                Request Emergency Scan →
-              </Link>
-              <a href="tel:+15555550100" className="text-sm font-medium text-slate-400 transition-colors hover:text-white">
-                Call us: +1 (555) 555-0100
-              </a>
-            </div>
           </div>
 
-          <section className="mx-auto mt-20 max-w-3xl" aria-labelledby="ua-timeline-title">
-            <h2 id="ua-timeline-title" className="mb-10 text-center text-2xl font-bold text-white">
-              What XSEE does in the first 30 minutes during an active incident
-            </h2>
-            <ol className="relative space-y-0 border-l border-red-500/30 pl-8">
-              {TIMELINE.map((step, i) => (
-                <li key={step.title} className="mb-10 last:mb-0">
-                  <span className="absolute -left-[9px] mt-1.5 h-4 w-4 rounded-full border-2 border-red-500 bg-[#050d1a]" />
-                  <h3 className="text-lg font-bold text-red-400">{step.title}</h3>
-                  <p className="mt-2 text-slate-400">{step.body}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
+          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
+            Under active attack
+            <br />
+            in AWS?
+          </h1>
 
-          <section className="mx-auto mt-16 max-w-3xl" aria-labelledby="ua-checklist-title">
-            <h2 id="ua-checklist-title" className="mb-4 text-lg font-bold text-white">
-              Containment checklist
-            </h2>
-            <p className="mb-4 text-sm text-slate-500">If you suspect active compromise:</p>
-            <div className="rounded-xl border border-white/10 bg-[#0a1628] p-6 font-mono text-sm leading-relaxed text-slate-300">
-              {CHECKLIST_LINES.map((line) => (
-                <div key={line} className="border-b border-white/5 py-2 last:border-0">
-                  □ {line}
+          <p className="text-lg text-white/50 mb-10 leading-relaxed">
+            XSEE can map your attack surface, validate active paths, and show you exactly where the attacker is moving — in under 30 minutes. Read-only IAM. No agents. No disruption to your incident response.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 mb-14">
+            <Link
+              href="/?subject=emergency#contact"
+              className="flex items-center justify-center gap-2 font-bold text-white px-7 py-3.5 rounded-xl text-base transition-all"
+              style={{
+                background: "#ef4444",
+                boxShadow: "0 0 24px rgba(239,68,68,0.4)",
+              }}
+            >
+              Request Emergency Scan →
+            </Link>
+            <a
+              href="mailto:security@xsee.io"
+              className="flex items-center justify-center gap-2 font-semibold px-6 py-3.5 rounded-xl text-base border transition-all"
+              style={{
+                color: "rgba(255,255,255,0.7)",
+                borderColor: "rgba(255,255,255,0.12)",
+                background: "rgba(255,255,255,0.04)",
+              }}
+            >
+              security@xsee.io
+            </a>
+          </div>
+
+          <div className="mb-12">
+            <div
+              className="text-xs font-bold uppercase tracking-widest font-mono mb-6"
+              style={{ color: "rgba(255,255,255,0.25)" }}
+            >
+              What happens in the first 30 minutes
+            </div>
+            <div className="space-y-4">
+              {[
+                {
+                  time: "0–2 min",
+                  title: "Connect read-only IAM",
+                  detail:
+                    "No agents. No risk of interfering with active incident response. You can revoke in one click.",
+                  color: "#ef4444",
+                },
+                {
+                  time: "2–15 min",
+                  title: "Map your full attack surface",
+                  detail:
+                    "Every asset, identity, and permission edge. Live attack graph against 1,000+ known attack patterns.",
+                  color: "#f97316",
+                },
+                {
+                  time: "15–25 min",
+                  title: "L2 validation — what's confirmed exploitable right now",
+                  detail:
+                    "Live AWS API calls prove which paths are currently open. Find where the attacker has been and where they can still go.",
+                  color: "#eab308",
+                },
+                {
+                  time: "25–30 min",
+                  title: "Prioritized containment report delivered",
+                  detail:
+                    "Active paths, blast radius, immediate containment actions — ranked by financial exposure.",
+                  color: "#22c55e",
+                },
+              ].map((step, i) => (
+                <div
+                  key={i}
+                  className="flex gap-4 p-4 rounded-xl"
+                  style={{
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                    borderLeft: `3px solid ${step.color}`,
+                  }}
+                >
+                  <div
+                    className="text-xs font-bold font-mono flex-shrink-0 pt-0.5 w-14"
+                    style={{ color: step.color }}
+                  >
+                    {step.time}
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-white mb-1">{step.title}</div>
+                    <div className="text-sm text-white/40 leading-relaxed">{step.detail}</div>
+                  </div>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
 
-          <section
-            id="emergency-contact"
-            className="mx-auto mt-20 max-w-lg scroll-mt-28"
-            aria-labelledby="ua-form-title"
+          <div
+            className="rounded-xl p-5 mb-10"
+            style={{
+              background: "rgba(239,68,68,0.05)",
+              border: "1px solid rgba(239,68,68,0.15)",
+            }}
           >
-            <h2 id="ua-form-title" className="mb-6 text-center text-xl font-bold text-white">
-              Emergency contact
-            </h2>
-            <UnderAttackForm />
-          </section>
+            <div
+              className="text-xs font-bold uppercase tracking-widest font-mono mb-4"
+              style={{ color: "#ef4444" }}
+            >
+              While you wait — immediate containment steps
+            </div>
+            <div className="space-y-2.5">
+              {[
+                "Revoke any suspicious IAM access keys — AWS Console → IAM → Users",
+                "Enable CloudTrail in all regions if not already active",
+                "Check CloudTrail for AssumeRole, CreateUser, AttachUserPolicy events in last 24h",
+                "Isolate the suspected compromised instance — modify its Security Group to deny all inbound",
+                "DO NOT shut down the instance — preserve forensic evidence",
+                "Then connect XSEE to map what the attacker can still reach",
+              ].map((item, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div
+                    className="w-4 h-4 rounded border flex-shrink-0 mt-0.5"
+                    style={{ borderColor: "rgba(239,68,68,0.4)", background: "rgba(239,68,68,0.08)" }}
+                  />
+                  <span
+                    className="text-sm font-mono leading-relaxed"
+                    style={{ color: "rgba(255,255,255,0.55)" }}
+                  >
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div
+            className="rounded-xl p-6 text-center"
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              border: "1px solid rgba(255,255,255,0.07)",
+            }}
+          >
+            <div className="text-white font-bold mb-2">Need immediate help?</div>
+            <div className="text-white/40 text-sm mb-4">
+              Email us directly — we respond to emergency requests within the hour.
+            </div>
+            <a
+              href="mailto:security@xsee.io?subject=Emergency%20Incident%20Response"
+              className="text-base font-black"
+              style={{ color: "#ef4444" }}
+            >
+              security@xsee.io →
+            </a>
+          </div>
         </div>
-      </main>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
