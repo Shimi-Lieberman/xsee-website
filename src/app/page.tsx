@@ -39,7 +39,7 @@ export default function Home() {
       <GlobalScripts />
       <Nav />
       <AnnouncementBar />
-      <main>
+      <main className="w-full max-w-[100vw] mx-auto">
         <Hero />
         <TrustStrip />
         <AttackGraphPreview />
@@ -148,7 +148,6 @@ export default function Home() {
         <CTABanner />
         <div className="sec-transition sec-dark-to-light" />
         <ContactForm />
-        <div className="sec-transition sec-light-to-dark" />
         <Footer />
       </main>
     </>

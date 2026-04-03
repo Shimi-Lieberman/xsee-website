@@ -18,7 +18,7 @@ export default function UnderAttackPage() {
       <GlobalScripts />
       <Nav />
       <div style={{ background: "#050d1a", minHeight: "100vh", paddingTop: "80px" }}>
-        <div className="max-w-2xl mx-auto px-6 py-16">
+        <div className="max-w-2xl mx-auto w-full px-6 py-16">
           <div className="flex items-center gap-3 mb-6">
             <div
               className="w-2 h-2 rounded-full animate-pulse"

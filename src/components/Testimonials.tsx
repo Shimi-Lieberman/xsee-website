@@ -15,8 +15,8 @@ export default function Testimonials() {
         </section>
       */}
       {/* === PROOF FROM THE FIELD === */}
-      <section className="animate-on-scroll py-20 px-6" id="testimonials">
-        <div className="max-w-6xl mx-auto w-full">
+      <section className="animate-on-scroll py-20" id="testimonials">
+        <div className="max-w-6xl mx-auto w-full px-6">
           <div className="text-center mb-12">
             <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 font-mono mb-3">
               Proof from the field

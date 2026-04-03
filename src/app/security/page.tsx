@@ -15,7 +15,7 @@ export default function SecurityPage() {
       <ScrollProgressBar />
       <Nav />
       <div style={{ background: "#050d1a", minHeight: "100vh", paddingTop: "80px" }}>
-        <div className="max-w-3xl mx-auto px-6 py-16">
+        <div className="max-w-3xl mx-auto w-full px-6 py-16">
           <div className="mb-16">
             <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/25 font-mono mb-4">
               Security & Trust
