@@ -4,6 +4,8 @@ import GlobalScripts from "@/components/GlobalScripts";
 import Nav from "@/components/Nav";
 import AnnouncementBar from "@/components/AnnouncementBar";
 import Hero from "@/components/Hero";
+import { BeforeAfter } from "@/components/BeforeAfter";
+import HeroSocialProofStats from "@/components/HeroSocialProofStats";
 import AttackGraphPreview from "@/components/AttackGraphPreview";
 import DetectionCoverageChart from "@/components/DetectionCoverageChart";
 import TrustStrip from "@/components/TrustStrip";
@@ -41,6 +43,12 @@ export default function Home() {
       <AnnouncementBar />
       <main className="w-full max-w-[100vw] mx-auto">
         <Hero />
+        <div style={{ background: "#050d1a" }}>
+          <div className="hero-stats mt-12 md:mt-16">
+            <HeroSocialProofStats />
+          </div>
+        </div>
+        <BeforeAfter />
         <TrustStrip />
         <AttackGraphPreview />
         <DetectionCoverageChart />

@@ -1,268 +1,454 @@
+"use client";
+
 import Link from "next/link";
-import HeroSocialProofStats from "@/components/HeroSocialProofStats";
-
-const SIDEBAR_ICONS = [
-  <svg key="o" width={14} height={14} viewBox="0 0 14 14" fill="none">
-    <rect x={1} y={1} width={5} height={5} rx={1} stroke="currentColor" strokeWidth={1.2} />
-    <rect x={8} y={1} width={5} height={5} rx={1} stroke="currentColor" strokeWidth={1.2} />
-    <rect x={1} y={8} width={5} height={5} rx={1} stroke="currentColor" strokeWidth={1.2} />
-    <rect x={8} y={8} width={5} height={5} rx={1} stroke="currentColor" strokeWidth={1.2} />
-  </svg>,
-  <svg key="f" width={14} height={14} viewBox="0 0 14 14" fill="none">
-    <path d="M7 1L2 3.2V7C2 10.1 4.2 12.9 7 14C9.8 12.9 12 10.1 12 7V3.2L7 1Z" stroke="currentColor" strokeWidth={1.2} fill="rgba(255,27,141,0.15)" />
-    <polyline points="4.5,7 6.2,8.8 9.5,5.5" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" strokeLinejoin="round" />
-  </svg>,
-  <svg key="p" width={14} height={14} viewBox="0 0 14 14" fill="none">
-    <rect x={1.5} y={1.5} width={11} height={11} rx={1.5} stroke="currentColor" strokeWidth={1.2} />
-    <line x1={4.5} y1={4.5} x2={9.5} y2={4.5} stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" />
-    <line x1={4.5} y1={7} x2={9.5} y2={7} stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" />
-    <line x1={4.5} y1={9.5} x2={7.5} y2={9.5} stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" />
-  </svg>,
-  <svg key="e" width={14} height={14} viewBox="0 0 14 14" fill="none">
-    <circle cx={6} cy={6} r={4} stroke="currentColor" strokeWidth={1.2} />
-    <line x1={9.2} y1={9.2} x2={12.5} y2={12.5} stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" />
-  </svg>,
-  <svg key="s" width={14} height={14} viewBox="0 0 14 14" fill="none">
-    <circle cx={7} cy={7} r={2} stroke="currentColor" strokeWidth={1.2} />
-    <path d="M7 1.5V3M7 11V12.5M1.5 7H3M11 7H12.5M3.1 3.1L4.2 4.2M9.8 9.8L10.9 10.9M3.1 10.9L4.2 9.8M9.8 4.2L10.9 3.1" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" />
-  </svg>,
-];
-
-const PATHS = [
-  { title: "Internet → EC2 → IAM Role → S3 Crown Jewel", sub: "CVE-2020-9283 · RCE · Privilege Escalation · Data Exfiltration", color: "red", hops: "4 hops", validated: true, active: true },
-  { title: "Public LB → Lambda → RDS Database", sub: "Privilege escalation · Admin access · Sensitive data", color: "red", hops: "3 hops", validated: true, active: false },
-  { title: "EKS Pod → ServiceAccount → Secrets Manager", sub: "Lateral movement · Kubernetes misconfiguration", color: "amber", hops: "2 hops", validated: false, active: false },
-  { title: "Exposed Endpoint → IAM Role → CloudTrail", sub: "Log tampering · Audit evasion · Persistent access", color: "amber", hops: "3 hops", validated: false, active: false },
-  { title: "S3 Bucket → Cross-account Role → EC2", sub: "Data exfiltration · Cross-account trust abuse", color: "gray", hops: "2 hops", validated: false, active: false },
-];
 
 export default function Hero() {
   return (
-    <section className="hero">
-      <div className="hero-mesh">
-        <div className="glow-sky" />
-        <div className="glow-yellow" />
-      </div>
-      <div className="hero-noise" />
-      <div className="hero-grid-bg" />
-      <div className="container">
-        <div className="hero-body">
-          <div className="hero-left">
-            <div className="hero-top-block">
-              <div className="hero-eyebrow">
-                <span className="badge badge-dot eyebrow" style={{ background: "rgba(255,255,255,0.1)", color: "#e2e8f0", borderColor: "rgba(255,255,255,0.25)" }}>
-                  Cloud Attack Intelligence
-                </span>
-              </div>
-              <div className="flex items-center justify-center mb-8">
-                <div
-                  className="flex items-center gap-2 px-4 py-2 rounded-full cursor-pointer hover:border-white/20 transition-all"
-                  style={{ border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)" }}
-                >
-                  <span
-                    className="text-[10px] font-bold px-2 py-0.5 rounded-full font-mono"
-                    style={{ background: "rgba(255,27,141,0.15)", color: "#FF1B8D" }}
-                  >
-                    NEW
-                  </span>
-                  <span className="text-white/50 text-xs">AI attacker simulation now in XseeCyber 2.0</span>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" aria-hidden>
-                    <polyline points="9 18 15 12 9 6" />
-                  </svg>
-                </div>
-              </div>
-              <h1 className="display-xl hero-headline">
-                Stop guessing.
-                <br />
-                <span className="blue">Prove the breach.</span>
-              </h1>
+    <section
+      className="relative overflow-hidden"
+      style={{ minHeight: "calc(100vh - 52px)", background: "#050d1a" }}
+    >
+      {/* Animated grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,27,141,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,27,141,0.04) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+          animation: "gridDrift 20s linear infinite",
+        }}
+      />
+
+      {/* Center glow */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "800px",
+          height: "800px",
+          background: "radial-gradient(circle, rgba(255,27,141,0.07) 0%, transparent 65%)",
+        }}
+      />
+
+      {/* Two-column hero */}
+      <div
+        className="relative z-10 mx-auto w-full max-w-7xl px-6 grid grid-cols-1 lg:grid-cols-2 lg:gap-[60px] gap-10 items-center"
+        style={{
+          minHeight: "calc(100vh - 52px)",
+          paddingTop: "60px",
+          paddingBottom: "60px",
+        }}
+      >
+        {/* LEFT — Headline + CTAs */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+          {/* Announcement bar */}
+          <div style={{ display: "flex" }}>
+            <Link
+              href="/free-scan"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "6px 14px",
+                borderRadius: "100px",
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.04)",
+                textDecoration: "none",
+                transition: "border-color 0.2s",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "9px",
+                  fontWeight: 800,
+                  padding: "2px 8px",
+                  borderRadius: "100px",
+                  background: "rgba(255,27,141,0.15)",
+                  color: "#FF1B8D",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                NEW
+              </span>
+              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
+                AI attacker simulation now in XseeCyber 2.0
+              </span>
+              <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)" }}>›</span>
+            </Link>
+          </div>
+
+          {/* Headline */}
+          <h1
+            style={{
+              fontSize: "clamp(44px, 5vw, 68px)",
+              fontWeight: 900,
+              lineHeight: 1.0,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            <span style={{ color: "white", display: "block" }}>Stop guessing.</span>
+            <span style={{ color: "#FF1B8D", display: "block" }}>Prove the breach.</span>
+          </h1>
+
+          {/* Subheadline */}
+          <p
+            style={{
+              fontSize: "17px",
+              color: "rgba(255,255,255,0.5)",
+              lineHeight: 1.7,
+              maxWidth: "440px",
+            }}
+          >
+            Cryptographic evidence per hop. Live AWS API validation. Attack simulation that runs the way both human and
+            AI attackers think. Not theory — proof.
+          </p>
+
+          {/* CTAs */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div>
+              <Link
+                href="/free-scan"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  background: "#FF1B8D",
+                  color: "white",
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  padding: "14px 28px",
+                  borderRadius: "12px",
+                  textDecoration: "none",
+                  transition: "all 0.2s",
+                  boxShadow: "0 0 28px rgba(255,27,141,0.4)",
+                }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                  <polygon points="5 3 19 12 5 21 5 3" />
+                </svg>
+                Run Free Scan — 30 minutes
+              </Link>
             </div>
-            <p className="hero-sub">
-              Every other tool tells you what could go wrong. XSEE proves what will — with cryptographic evidence per hop, live AWS API validation, and attack simulation that runs the way both human and AI attackers think. Not theory. Proof.
-            </p>
-            <div className="hero-ctas">
-              <Link href="#contact" className="btn btn-primary btn-lg animate-pulse">
-                Get Your Free Risk Assessment →
+            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+              <Link
+                href="/demo"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "rgba(255,255,255,0.05)",
+                  color: "rgba(255,255,255,0.65)",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  padding: "10px 20px",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  textDecoration: "none",
+                  transition: "all 0.15s",
+                }}
+              >
+                Watch Demo
               </Link>
-              <Link href="#how" className="btn btn-secondary btn-lg">
-                See a Live Demo
-              </Link>
-              <Link href="#contact" className="btn btn-secondary btn-lg">
+              <Link
+                href="/#contact"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "rgba(255,255,255,0.05)",
+                  color: "rgba(255,255,255,0.65)",
+                  fontSize: "13px",
+                  fontWeight: 600,
+                  padding: "10px 20px",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  textDecoration: "none",
+                  transition: "all 0.15s",
+                }}
+              >
                 Book a Demo
               </Link>
             </div>
           </div>
-          <div className="hero-right">
-            {/* ── PRODUCT SCREENSHOT ── */}
-            <div className="relative w-full mb-6">
+
+          {/* Trust micro-line */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              fontSize: "11px",
+              color: "rgba(255,255,255,0.25)",
+              flexWrap: "wrap",
+            }}
+          >
+            {["Read-only IAM", "No agents installed", "Results in 30 min", "Free — no credit card"].map((t, i) => (
+              <span key={t} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                {i > 0 && (
+                  <span
+                    style={{
+                      width: "3px",
+                      height: "3px",
+                      borderRadius: "50%",
+                      background: "rgba(255,255,255,0.15)",
+                    }}
+                  />
+                )}
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* RIGHT — Live graph panel */}
+        <div style={{ position: "relative" }}>
+          <div
+            style={{
+              background: "#080f1c",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "16px",
+              overflow: "hidden",
+              boxShadow: "0 0 0 1px rgba(255,27,141,0.06), 0 40px 80px rgba(0,0,0,0.6)",
+            }}
+          >
+            {/* Graph topbar */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "10px 16px",
+                background: "#060d18",
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
+              <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
+                {["Attack Paths", "IAM", "Network", "NHI"].map((tab, i) => (
+                  <div
+                    key={tab}
+                    style={{
+                      fontSize: "10px",
+                      fontWeight: 600,
+                      padding: "4px 10px",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                      background: i === 0 ? "rgba(255,27,141,0.12)" : "transparent",
+                      color: i === 0 ? "#FF1B8D" : "rgba(255,255,255,0.3)",
+                    }}
+                  >
+                    {tab}
+                  </div>
+                ))}
+              </div>
               <div
-                className="absolute inset-0 pointer-events-none"
                 style={{
-                  background: "radial-gradient(ellipse at 50% 60%, rgba(255,27,141,0.12) 0%, transparent 65%)",
-                  filter: "blur(24px)",
-                  transform: "scale(1.1)",
-                }}
-              />
-              <div
-                className="relative rounded-2xl overflow-hidden"
-                style={{
-                  border: "1px solid rgba(255,255,255,0.09)",
-                  boxShadow:
-                    "0 0 0 1px rgba(255,27,141,0.06), 0 32px 80px rgba(0,0,0,0.65), 0 8px 24px rgba(0,0,0,0.4)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  fontSize: "10px",
+                  color: "#22c55e",
+                  fontWeight: 600,
                 }}
               >
                 <div
-                  className="flex items-center px-4 py-2.5"
                   style={{
-                    background: "#080f1c",
-                    borderBottom: "1px solid rgba(255,255,255,0.07)",
+                    width: "5px",
+                    height: "5px",
+                    borderRadius: "50%",
+                    background: "#22c55e",
+                    animation: "pulse 2s infinite",
+                  }}
+                />
+                Live · eu-central-1
+              </div>
+            </div>
+
+            {/* Stats row */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(4, 1fr)",
+                borderBottom: "1px solid rgba(255,255,255,0.05)",
+              }}
+            >
+              {[
+                { val: "14", label: "Attack Paths", color: "#ef4444" },
+                { val: "3", label: "Critical", color: "#ef4444" },
+                { val: "92%", label: "Exploitable", color: "#f97316" },
+                { val: "1", label: "Optimal Fix", color: "#FF1B8D" },
+              ].map((s, i) => (
+                <div
+                  key={s.label}
+                  style={{
+                    padding: "12px 14px",
+                    textAlign: "center",
+                    borderRight: i < 3 ? "1px solid rgba(255,255,255,0.05)" : "none",
                   }}
                 >
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(239,68,68,0.45)" }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(234,179,8,0.45)" }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(34,197,94,0.45)" }} />
-                  </div>
                   <div
-                    className="flex items-center justify-center gap-2 py-1 rounded-md mx-auto"
-                    style={{ background: "rgba(255,255,255,0.05)", padding: "4px 16px" }}
+                    style={{
+                      fontSize: "22px",
+                      fontWeight: 900,
+                      lineHeight: 1,
+                      marginBottom: "3px",
+                      color: s.color,
+                      fontFamily: "monospace",
+                    }}
                   >
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="11" width="18" height="11" rx="2" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                    <span style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "rgba(255,255,255,0.3)" }}>
-                      app.xsee.io/attack-intelligence
-                    </span>
+                    {s.val}
                   </div>
                   <div
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      fontSize: "10px",
-                      fontFamily: "var(--font-mono)",
-                      color: "#34d399",
-                      marginLeft: "auto",
-                      whiteSpace: "nowrap",
+                      fontSize: "8px",
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.12em",
+                      color: "rgba(255,255,255,0.28)",
                     }}
                   >
+                    {s.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Screenshot */}
+            <div style={{ position: "relative" }}>
+              <img
+                src="/platform_screenshot.png"
+                alt="XSEE Attack Intelligence Platform"
+                style={{ width: "100%", display: "block", maxHeight: "280px", objectFit: "cover", objectPosition: "top" }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: "80px",
+                  background: "linear-gradient(to bottom, transparent, #080f1c)",
+                  pointerEvents: "none",
+                }}
+              />
+            </div>
+
+            {/* Path list */}
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+              {[
+                {
+                  chain: "Internet → EC2 → IAM Role → S3",
+                  meta: "CVE-2020-9283 · RCE · 4 hops",
+                  sev: "CRITICAL",
+                  sevColor: "#ef4444",
+                  l2: true,
+                  active: true,
+                },
+                {
+                  chain: "Public LB → Lambda → RDS Database",
+                  meta: "Privilege escalation · 3 hops",
+                  sev: "HIGH",
+                  sevColor: "#f97316",
+                  l2: true,
+                  active: false,
+                },
+                {
+                  chain: "EKS Pod → ServiceAccount → Secrets",
+                  meta: "Lateral movement · 2 hops",
+                  sev: "MEDIUM",
+                  sevColor: "#eab308",
+                  l2: false,
+                  active: false,
+                },
+              ].map((path) => (
+                <div
+                  key={path.chain}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "9px 14px",
+                    borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    borderLeft: path.active ? "2px solid #FF1B8D" : "2px solid transparent",
+                    background: path.active ? "rgba(255,27,141,0.05)" : "transparent",
+                    cursor: "pointer",
+                  }}
+                >
+                  <div>
                     <div
                       style={{
-                        width: "6px",
-                        height: "6px",
-                        borderRadius: "50%",
-                        background: "#34d399",
-                        animation: "pulse 2s infinite",
+                        fontSize: "10px",
+                        fontWeight: 600,
+                        color: "rgba(255,255,255,0.7)",
+                        fontFamily: "monospace",
+                        marginBottom: "2px",
                       }}
-                    />
-                    Live · eu-central-1
-                  </div>
-                </div>
-                <img
-                  src="/platform_screenshot.png"
-                  alt="XSEE Attack Intelligence Platform — live attack path validation with cryptographic evidence per hop"
-                  className="w-full block"
-                  style={{
-                    maxHeight: "540px",
-                    objectFit: "cover",
-                    objectPosition: "top center",
-                  }}
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 pointer-events-none"
-                  style={{
-                    height: "96px",
-                    background: "linear-gradient(to bottom, transparent 0%, #050d1a 100%)",
-                  }}
-                />
-              </div>
-            </div>
-            {/* ── END PRODUCT SCREENSHOT ── */}
-            <div className="app-frame app-frame-warm">
-              <div className="af-bar">
-                <div className="af-dots">
-                  <div className="af-dot" style={{ background: "#FF5F57" }} />
-                  <div className="af-dot" style={{ background: "#FEBC2E" }} />
-                  <div className="af-dot" style={{ background: "#28C840" }} />
-                </div>
-                <div className="af-url">app.xsee.io — Explorer — Attack Intelligence</div>
-                <div className="af-live">Live Scan</div>
-              </div>
-              <div className="af-body">
-                <div className="af-sidebar">
-                  {SIDEBAR_ICONS.map((icon, i) => (
-                    <div
-                      key={i}
-                      className={`af-ico ${i === 1 ? "active" : ""}`}
-                      style={i === 4 ? { marginTop: "auto" } : undefined}
                     >
-                      {icon}
+                      {path.chain}
                     </div>
-                  ))}
-                </div>
-                <div className="af-main">
-                  <div className="af-metrics">
-                    <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#FF1B8D" }}>14</div>
-                      <div className="af-mlbl">Attack Paths</div>
-                    </div>
-                    <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#F97316" }}>3</div>
-                      <div className="af-mlbl">Critical</div>
-                    </div>
-                    <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#F97316" }}>92%</div>
-                      <div className="af-mlbl">Exploitable</div>
-                    </div>
-                    <div className="af-metric">
-                      <div className="af-mval" style={{ color: "#EAB308" }}>1</div>
-                      <div className="af-mlbl">Optimal Fix</div>
-                    </div>
+                    <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.28)" }}>{path.meta}</div>
                   </div>
-                  <div className="af-header">
-                    <div>
-                      <div className="af-title">Attack Path Explorer</div>
-                      <div className="af-sub">14 paths discovered &nbsp;·&nbsp; 3 validated &nbsp;·&nbsp; eu-central-1 &nbsp;·&nbsp; 847 assets</div>
-                    </div>
-                    <div className="af-filter">⊟ Filter</div>
-                  </div>
-                  <div className="af-paths">
-                    {PATHS.map((p, i) => (
-                      <div
-                        key={i}
-                        className={`af-path p-${p.color} ${p.active ? "p-active" : ""}`}
-                        style={p.color === "gray" ? { opacity: 0.82 } : undefined}
+                  <div style={{ display: "flex", gap: "5px", flexShrink: 0 }}>
+                    <span
+                      style={{
+                        fontSize: "8px",
+                        fontWeight: 700,
+                        padding: "2px 7px",
+                        borderRadius: "100px",
+                        background: `${path.sevColor}20`,
+                        color: path.sevColor,
+                        border: `1px solid ${path.sevColor}40`,
+                      }}
+                    >
+                      {path.sev}
+                    </span>
+                    {path.l2 && (
+                      <span
+                        style={{
+                          fontSize: "7px",
+                          fontWeight: 700,
+                          padding: "2px 6px",
+                          borderRadius: "4px",
+                          background: "rgba(37,99,235,0.15)",
+                          color: "#60a5fa",
+                          border: "1px solid rgba(37,99,235,0.25)",
+                        }}
                       >
-                        <div
-                          className="af-sev-bar"
-                          style={{
-                            background: p.color === "red" ? "#EF4444" : p.color === "amber" ? "#F59E0B" : "#3D5470",
-                          }}
-                        />
-                        <div className="af-pinfo flex-1 min-w-0">
-                          <div className="af-ptitle">{p.title}</div>
-                          <div className="af-psub">{p.sub}</div>
-                        </div>
-                        <div className="af-pmeta">
-                          <span className="af-hops">{p.hops}</span>
-                          {p.validated && <span className="af-validated">L2 Validated</span>}
-                        </div>
-                      </div>
-                    ))}
+                        L2 ✓
+                      </span>
+                    )}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-        <div className="hero-stats mt-12 md:mt-16">
-          <HeroSocialProofStats />
-        </div>
       </div>
-      <div className="flex flex-col items-center gap-2 mt-10 animate-bounce pb-6">
-        <span className="text-[10px] text-white/18 tracking-widest uppercase font-mono">Scroll</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2" aria-hidden>
+
+      {/* Scroll cue */}
+      <div style={{ textAlign: "center", paddingBottom: "24px", paddingTop: "8px", opacity: 0.25 }}>
+        <div
+          style={{
+            fontSize: "9px",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            fontFamily: "monospace",
+            color: "white",
+            marginBottom: "6px",
+          }}
+        >
+          Scroll
+        </div>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          strokeWidth="2"
+          style={{ animation: "bounce 1.5s infinite", display: "inline-block" }}
+        >
           <polyline points="6 9 12 15 18 9" />
         </svg>
       </div>

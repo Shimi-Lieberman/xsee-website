@@ -1423,3 +1423,14 @@ footer .footer-inner {
   opacity: 1;
   animation: none;
 }
+
+/* Hero redesign: scroll cue + live dot */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
