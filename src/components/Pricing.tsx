@@ -73,8 +73,8 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <section className="section sec-blue-tint animate-on-scroll" id="pricing">
-      <div className="max-w-6xl mx-auto w-full px-6">
+    <section className="section sec-blue-tint animate-on-scroll !pb-8" id="pricing">
+      <div className="max-w-6xl mx-auto w-full px-6 pricing-inner">
         <div className="section-head reveal">
           <span className="eyebrow">Pricing</span>
           <h2 className="display-lg">

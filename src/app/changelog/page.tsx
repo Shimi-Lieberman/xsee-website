@@ -55,7 +55,7 @@ export default function ChangelogPage() {
       <ScrollProgressBar />
       <Nav />
       <main className="min-h-screen pb-8 w-full" style={{ paddingTop: 88 }}>
-        <section className="max-w-3xl mx-auto w-full px-6 py-8">
+        <section className="page-container-sm">
           <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-white">Changelog</h1>
           <p className="mb-14 text-slate-400">Platform updates, new engines, and improvements.</p>
 

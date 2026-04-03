@@ -1,14 +1,14 @@
 export default function ComplianceBar() {
   return (
     <div
-      className="animate-on-scroll py-12"
+      className="animate-on-scroll py-10"
       style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
     >
-      <div className="max-w-5xl mx-auto w-full px-6">
+      <div className="max-w-5xl mx-auto w-full px-6 compliance-inner">
         <div className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white/20 mb-8 font-mono">
           Security & Compliance
         </div>
-        <div className="flex items-center justify-center gap-8 flex-wrap">
+        <div className="compliance-grid">
           {[
             {
               icon: (
@@ -72,19 +72,16 @@ export default function ComplianceBar() {
               sub: "Never stored after scan",
             },
           ].map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center gap-3 text-white/35 hover:text-white/60 transition-colors"
-            >
+            <div key={item.label} className="flex items-center gap-2.5 min-w-0 text-white/35 hover:text-white/60 transition-colors">
               <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{ background: "rgba(255,255,255,0.05)" }}
               >
                 {item.icon}
               </div>
-              <div>
-                <div className="text-xs font-semibold text-white/55">{item.label}</div>
-                <div className="text-[10px] text-white/25 mt-0.5">{item.sub}</div>
+              <div className="min-w-0">
+                <div className="text-xs font-semibold text-white/50 leading-tight truncate">{item.label}</div>
+                <div className="text-[10px] text-white/25 mt-0.5 leading-tight">{item.sub}</div>
               </div>
             </div>
           ))}

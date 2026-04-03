@@ -15,8 +15,8 @@ export default function Testimonials() {
         </section>
       */}
       {/* === PROOF FROM THE FIELD === */}
-      <section className="animate-on-scroll py-20" id="testimonials">
-        <div className="max-w-6xl mx-auto w-full px-6">
+      <section className="animate-on-scroll py-20 overflow-hidden" id="testimonials">
+        <div className="max-w-6xl mx-auto w-full px-6 testimonials-inner">
           <div className="text-center mb-12">
             <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 font-mono mb-3">
               Proof from the field
@@ -26,7 +26,7 @@ export default function Testimonials() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="testimonials-grid">
             {[
               {
                 outcome: "1 fix. 6 paths eliminated.",
@@ -67,7 +67,7 @@ export default function Testimonials() {
             ].map((cs, i) => (
               <div
                 key={i}
-                className="rounded-2xl p-6 flex flex-col"
+                className="rounded-2xl p-6 flex flex-col min-w-0 w-full testimonial-card"
                 style={{
                   background: "#111827",
                   border: "1px solid rgba(255,255,255,0.07)",

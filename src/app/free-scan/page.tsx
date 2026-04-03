@@ -77,7 +77,7 @@ export default function FreeScanPage() {
     <>
       <ScrollProgressBar />
       <Nav />
-      <main className="max-w-3xl mx-auto w-full px-6 py-16 min-w-0 block">
+      <main className="page-container-sm min-w-0 block">
         <div className="free-scan-page w-full min-w-0">
         <section className="section sec-navy free-scan-hero">
           <div className="container">

@@ -1,6 +1,6 @@
 export default function TrustStrip() {
   return (
-    <div className="animate-on-scroll py-10 border-y border-white/5 bg-[#050d1a]">
+    <div className="animate-on-scroll py-10 border-y border-white/5 bg-[#050d1a] trust-inner">
       {/*
         Previous trust strip (replaced):
         <div className="trust-strip border-y border-white/5 bg-[#050d1a] py-8 px-6">

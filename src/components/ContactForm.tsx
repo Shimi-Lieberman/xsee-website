@@ -85,12 +85,8 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <section
-        className="section sec-light animate-on-scroll"
-        id="contact"
-        style={{ paddingBottom: "2rem" }}
-      >
-        <div className="max-w-5xl mx-auto w-full px-6">
+      <section className="section sec-light animate-on-scroll !pt-16" id="contact" style={{ paddingBottom: "2rem" }}>
+        <div className="max-w-6xl mx-auto w-full px-6 contact-section-inner">
           <div className="reveal mx-auto max-w-xl text-center">
             <h2 className="display-lg mb-4">Thanks!</h2>
             <p className="mb-6">
@@ -110,13 +106,9 @@ export default function ContactForm() {
   }
 
   return (
-    <section
-      className="section sec-light animate-on-scroll"
-      id="contact"
-      style={{ paddingBottom: "2rem" }}
-    >
-      <div className="max-w-5xl mx-auto w-full px-6">
-        <div className="contact-grid">
+    <section className="section sec-light animate-on-scroll !pt-16" id="contact" style={{ paddingBottom: "2rem" }}>
+      <div className="max-w-6xl mx-auto w-full px-6 contact-section-inner">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="reveal-left">
             <span className="badge badge-blue badge-dot eyebrow block mb-5">
               Request Demo

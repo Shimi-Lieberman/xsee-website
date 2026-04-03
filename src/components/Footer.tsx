@@ -12,13 +12,46 @@ export default function Footer() {
         Contact column: FooterMiniContact, Request Demo, sales@xsee.io
         footer-bottom: Terms, Privacy, Refunds
       */}
-      <div className="max-w-6xl mx-auto w-full px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8">
+      <div className="max-w-6xl mx-auto w-full px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8 footer-inner">
         <div className="col-span-2">
-          <img
-            src="/logo-white-transparent.svg"
-            alt="XSEE"
-            style={{ height: "32px", width: "auto", display: "block", marginBottom: "16px" }}
-          />
+          <a
+            href="/"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              marginBottom: "20px",
+              textDecoration: "none",
+            }}
+          >
+            <img
+              src="/logo-symbol-only.svg"
+              alt=""
+              style={{
+                height: "32px",
+                width: "32px",
+                imageRendering: "crisp-edges",
+                filter:
+                  "brightness(0) saturate(100%) invert(19%) sepia(99%) saturate(7478%) hue-rotate(316deg) brightness(103%) contrast(101%)",
+              }}
+            />
+            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+              <span style={{ color: "white", fontWeight: 900, fontSize: "17px", letterSpacing: "0.18em" }}>
+                XSEE
+              </span>
+              <span
+                style={{
+                  color: "rgba(255,255,255,0.35)",
+                  fontSize: "9px",
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  marginTop: "3px",
+                }}
+              >
+                Cloud Attack Intelligence
+              </span>
+            </div>
+          </a>
           <p className="text-white/45 text-base leading-relaxed max-w-md mb-5">
             Cloud Attack Intelligence. Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
           </p>
@@ -97,7 +130,7 @@ export default function Footer() {
       </div>
 
       <div
-        className="px-6 py-5 max-w-6xl mx-auto w-full flex items-center justify-between flex-wrap gap-4"
+        className="px-6 py-5 max-w-6xl mx-auto w-full flex items-center justify-between flex-wrap gap-4 footer-inner"
         style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
       >
         <div className="text-xs text-white/22">© {new Date().getFullYear()} XSEE. All rights reserved.</div>

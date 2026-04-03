@@ -91,89 +91,94 @@ export default function Hero() {
                 Book a Demo
               </Link>
             </div>
+          </div>
+          <div className="hero-right">
             {/* ── PRODUCT SCREENSHOT ── */}
-            <div className="relative w-full max-w-5xl mx-auto mt-10 mb-6 px-4">
-
-              {/* Glow behind frame */}
+            <div className="relative w-full mb-6">
               <div
                 className="absolute inset-0 pointer-events-none"
                 style={{
-                  background: 'radial-gradient(ellipse at 50% 60%, rgba(255,27,141,0.12) 0%, transparent 65%)',
-                  filter: 'blur(24px)',
-                  transform: 'scale(1.1)',
+                  background: "radial-gradient(ellipse at 50% 60%, rgba(255,27,141,0.12) 0%, transparent 65%)",
+                  filter: "blur(24px)",
+                  transform: "scale(1.1)",
                 }}
               />
-
-              {/* Browser frame */}
               <div
                 className="relative rounded-2xl overflow-hidden"
                 style={{
-                  border: '1px solid rgba(255,255,255,0.09)',
-                  boxShadow: '0 0 0 1px rgba(255,27,141,0.06), 0 32px 80px rgba(0,0,0,0.65), 0 8px 24px rgba(0,0,0,0.4)',
+                  border: "1px solid rgba(255,255,255,0.09)",
+                  boxShadow:
+                    "0 0 0 1px rgba(255,27,141,0.06), 0 32px 80px rgba(0,0,0,0.65), 0 8px 24px rgba(0,0,0,0.4)",
                 }}
               >
-                {/* Browser chrome bar */}
                 <div
                   className="flex items-center px-4 py-2.5"
                   style={{
-                    background: '#080f1c',
-                    borderBottom: '1px solid rgba(255,255,255,0.07)',
+                    background: "#080f1c",
+                    borderBottom: "1px solid rgba(255,255,255,0.07)",
                   }}
                 >
-                  {/* Traffic lights */}
                   <div className="flex items-center gap-1.5">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(239,68,68,0.45)' }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(234,179,8,0.45)' }} />
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: 'rgba(34,197,94,0.45)' }} />
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(239,68,68,0.45)" }} />
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(234,179,8,0.45)" }} />
+                    <div className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(34,197,94,0.45)" }} />
                   </div>
-
-                  {/* URL bar */}
                   <div
                     className="flex items-center justify-center gap-2 py-1 rounded-md mx-auto"
-                    style={{ background: 'rgba(255,255,255,0.05)', padding: '4px 16px' }}
+                    style={{ background: "rgba(255,255,255,0.05)", padding: "4px 16px" }}
                   >
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="11" width="18" height="11" rx="2"/>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                      <rect x="3" y="11" width="18" height="11" rx="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                     </svg>
-                    <span style={{ fontSize: '11px', fontFamily: 'var(--font-mono)', color: 'rgba(255,255,255,0.3)' }}>
+                    <span style={{ fontSize: "11px", fontFamily: "var(--font-mono)", color: "rgba(255,255,255,0.3)" }}>
                       app.xsee.io/attack-intelligence
                     </span>
                   </div>
-
-                  {/* Live badge */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '10px', fontFamily: 'var(--font-mono)', color: '#34d399', marginLeft: 'auto', whiteSpace: 'nowrap' }}>
-                    <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#34d399', animation: 'pulse 2s infinite' }} />
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      fontSize: "10px",
+                      fontFamily: "var(--font-mono)",
+                      color: "#34d399",
+                      marginLeft: "auto",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "6px",
+                        height: "6px",
+                        borderRadius: "50%",
+                        background: "#34d399",
+                        animation: "pulse 2s infinite",
+                      }}
+                    />
                     Live · eu-central-1
                   </div>
                 </div>
-
-                {/* Screenshot */}
                 <img
                   src="/platform_screenshot.png"
                   alt="XSEE Attack Intelligence Platform — live attack path validation with cryptographic evidence per hop"
                   className="w-full block"
                   style={{
-                    maxHeight: '540px',
-                    objectFit: 'cover',
-                    objectPosition: 'top center',
+                    maxHeight: "540px",
+                    objectFit: "cover",
+                    objectPosition: "top center",
                   }}
                 />
-
-                {/* Bottom fade — blends screenshot into dark page background */}
                 <div
                   className="absolute bottom-0 left-0 right-0 pointer-events-none"
                   style={{
-                    height: '96px',
-                    background: 'linear-gradient(to bottom, transparent 0%, #050d1a 100%)',
+                    height: "96px",
+                    background: "linear-gradient(to bottom, transparent 0%, #050d1a 100%)",
                   }}
                 />
               </div>
             </div>
             {/* ── END PRODUCT SCREENSHOT ── */}
-            <HeroSocialProofStats />
-          </div>
-          <div className="hero-right">
             <div className="app-frame app-frame-warm">
               <div className="af-bar">
                 <div className="af-dots">
@@ -250,6 +255,9 @@ export default function Hero() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="hero-stats mt-12 md:mt-16">
+          <HeroSocialProofStats />
         </div>
       </div>
       <div className="flex flex-col items-center gap-2 mt-10 animate-bounce pb-6">

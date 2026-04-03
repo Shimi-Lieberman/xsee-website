@@ -77,7 +77,7 @@ export default function VsWizPage() {
       <Nav />
       <main className="w-full" style={{ paddingTop: 72 }}>
         <section className="section sec-navy" style={{ paddingTop: 48, paddingBottom: 64 }}>
-          <div className="max-w-5xl mx-auto w-full px-6">
+          <div className="xsee-container xsee-section">
             <div className="mx-auto max-w-3xl text-center">
               <span className="eyebrow mb-4 inline-block">Comparison</span>
               <h1 className="display-lg mb-6">
@@ -110,7 +110,7 @@ export default function VsWizPage() {
         </section>
 
         <section className="section sec-navy" style={{ paddingTop: 0 }}>
-          <div className="max-w-5xl mx-auto w-full px-6">
+          <div className="xsee-container xsee-section">
             <div className="section-head reveal mb-10 text-center">
               <h2 className="display-md">Full comparison</h2>
               <p className="text-slate-400">Same table as the homepage, expanded with capabilities Wiz can&apos;t match.</p>

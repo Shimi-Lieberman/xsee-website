@@ -143,7 +143,6 @@ export default function Home() {
         <Testimonials />
         <div className="sec-transition sec-light-to-tint" />
         <Pricing />
-        <div className="sec-warm-line" />
         <ComplianceBar />
         <CTABanner />
         <div className="sec-transition sec-dark-to-light" />
