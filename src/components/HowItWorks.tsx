@@ -207,7 +207,7 @@ export default function HowItWorks() {
   const scanLine = SCAN_LINES[currentStep];
 
   return (
-    <section ref={sectionRef} className="section sec-blue-tint" id="how">
+    <section ref={sectionRef} className="section sec-light" style={{ background: "transparent" }} id="how">
       <div className="container">
         <div className="section-head reveal">
           <span className="eyebrow">How It Works</span>
@@ -216,7 +216,7 @@ export default function HowItWorks() {
             <br />
             to &quot;here's the proof and here's the fix&quot; in 30 minutes.
           </h2>
-          <p>
+          <p style={{ color: "#64748b" }}>
             Seven steps. No agents. No disruption. Just the truth about your cloud.
           </p>
           <div className="section-rule" />

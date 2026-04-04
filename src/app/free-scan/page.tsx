@@ -316,8 +316,10 @@ export default function FreeScanPage() {
                   {status === "error" && error && (
                     <p className="text-sm" style={{ color: "var(--red)" }}>{error}</p>
                   )}
-                  <button type="submit" disabled={status === "loading"} className="btn btn-primary btn-lg free-scan-submit">
-                    {status === "loading" ? "Queuing scan..." : "Run Free Scan →"}
+                  <button type="submit" disabled={status === "loading"} className="btn btn-primary btn-lg btn-shimmer free-scan-submit">
+                    <span className="relative z-[2]">
+                      {status === "loading" ? "Queuing scan..." : "Run Free Scan →"}
+                    </span>
                   </button>
                   <p className="mt-4 text-center text-xs text-white/30">
                     Joined 40+ security teams who&apos;ve proven their breach risk this month.

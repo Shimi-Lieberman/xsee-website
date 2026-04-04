@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { MagneticCard } from "@/components/MagneticCard";
 
 export function BeforeAfter() {
   return (
-    <section style={{ padding: "80px 0", borderTop: "1px solid rgba(255,255,255,0.04)", background: "#050d1a" }}>
+    <section style={{ padding: "80px 0", borderTop: "1px solid #f1f5f9", background: "white" }}>
       <div
         className="max-w-6xl mx-auto px-6 w-full"
         style={{
@@ -14,20 +15,17 @@ export function BeforeAfter() {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <div
+          <span className="section-eyebrow section-eyebrow-dark mb-3 text-center block">
+            The difference that matters
+          </span>
+          <h2
             style={{
-              fontSize: "10px",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.25)",
-              fontFamily: "monospace",
-              marginBottom: "12px",
+              fontSize: "clamp(28px, 4vw, 42px)",
+              fontWeight: 900,
+              color: "#0f172a",
+              lineHeight: 1.1,
             }}
           >
-            The difference that matters
-          </div>
-          <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 900, color: "white", lineHeight: 1.1 }}>
             Wiz shows you what could go wrong.
             <br />
             <span style={{ color: "#FF1B8D" }}>XSEE proves what will.</span>
@@ -35,11 +33,10 @@ export function BeforeAfter() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full" style={{ marginBottom: "36px" }}>
-          {/* Wiz card */}
-          <div
+          <MagneticCard
             style={{
-              background: "#0a1220",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: "white",
+              border: "1px solid #e2e8f0",
               borderRadius: "14px",
               overflow: "hidden",
             }}
@@ -50,14 +47,14 @@ export function BeforeAfter() {
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "14px 18px",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                borderBottom: "1px solid #e2e8f0",
               }}
             >
               <span
                 style={{
                   fontSize: "11px",
                   fontWeight: 700,
-                  color: "rgba(255,255,255,0.35)",
+                  color: "#64748b",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                 }}
@@ -70,8 +67,8 @@ export function BeforeAfter() {
                   fontWeight: 700,
                   padding: "3px 9px",
                   borderRadius: "100px",
-                  background: "rgba(255,255,255,0.07)",
-                  color: "rgba(255,255,255,0.35)",
+                  background: "#f1f5f9",
+                  color: "#64748b",
                 }}
               >
                 Theoretical
@@ -93,7 +90,7 @@ export function BeforeAfter() {
                     alignItems: "flex-start",
                     gap: "8px",
                     fontSize: "12px",
-                    color: "rgba(255,255,255,0.4)",
+                    color: "#64748b",
                     lineHeight: 1.5,
                   }}
                 >
@@ -113,13 +110,12 @@ export function BeforeAfter() {
                 </div>
               ))}
             </div>
-          </div>
+          </MagneticCard>
 
-          {/* XSEE card */}
-          <div
+          <MagneticCard
             style={{
-              background: "#0a1220",
-              border: "1px solid rgba(255,27,141,0.2)",
+              background: "white",
+              border: "1px solid #e2e8f0",
               borderRadius: "14px",
               overflow: "hidden",
             }}
@@ -130,14 +126,14 @@ export function BeforeAfter() {
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "14px 18px",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                borderBottom: "1px solid #e2e8f0",
               }}
             >
               <span
                 style={{
                   fontSize: "11px",
                   fontWeight: 700,
-                  color: "rgba(255,255,255,0.35)",
+                  color: "#64748b",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
                 }}
@@ -150,7 +146,7 @@ export function BeforeAfter() {
                   fontWeight: 700,
                   padding: "3px 9px",
                   borderRadius: "100px",
-                  background: "rgba(255,27,141,0.12)",
+                  background: "#fdf2f8",
                   color: "#FF1B8D",
                   border: "1px solid rgba(255,27,141,0.2)",
                 }}
@@ -174,7 +170,7 @@ export function BeforeAfter() {
                     alignItems: "flex-start",
                     gap: "8px",
                     fontSize: "12px",
-                    color: "rgba(255,255,255,0.55)",
+                    color: "#64748b",
                     lineHeight: 1.5,
                   }}
                 >
@@ -190,22 +186,24 @@ export function BeforeAfter() {
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                   <span>
-                    <strong style={{ color: "white", fontWeight: 600 }}>{bold}</strong>
+                    <strong style={{ color: "#0f172a", fontWeight: 600 }}>{bold}</strong>
                     {rest}
                   </span>
                 </div>
               ))}
             </div>
-          </div>
+          </MagneticCard>
         </div>
 
         <div style={{ textAlign: "center" }}>
-          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>
+          <p style={{ fontSize: "13px", color: "#64748b", marginBottom: "16px" }}>
             Don&apos;t cancel Wiz. Add the layer it structurally cannot provide.
           </p>
           <Link
             href="/free-scan"
+            className="btn-shimmer"
             style={{
+              position: "relative",
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
@@ -218,9 +216,10 @@ export function BeforeAfter() {
               textDecoration: "none",
               boxShadow: "0 0 24px rgba(255,27,141,0.35)",
               transition: "all 0.2s",
+              overflow: "hidden",
             }}
           >
-            Run Free Scan — Prove it yourself →
+            <span className="inline-flex items-center gap-2">Run Free Scan — Prove it yourself →</span>
           </Link>
         </div>
       </div>

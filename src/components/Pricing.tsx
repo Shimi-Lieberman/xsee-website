@@ -73,17 +73,18 @@ const PLANS = [
 
 export default function Pricing() {
   return (
-    <section className="section sec-blue-tint animate-on-scroll !pb-8" id="pricing">
+    <section className="section sec-light animate-on-scroll !pb-8" style={{ background: "transparent" }} id="pricing">
       <div className="max-w-6xl mx-auto w-full px-6 pricing-inner">
         <div className="section-head reveal">
-          <span className="eyebrow">Pricing</span>
-          <h2 className="display-lg">
+          <span className="section-eyebrow section-eyebrow-dark">Pricing</span>
+          <h2 className="display-lg" style={{ color: "#0f172a" }}>
             Know your breach risk
             <br />
             from day one.
           </h2>
-          <p>
-            Every plan includes the full six-engine platform. No gating, no &quot;enterprise add-ons&quot; for core proof capabilities. <strong>14-day free trial, no credit card required.</strong>
+          <p style={{ color: "#64748b" }}>
+            Every plan includes the full six-engine platform. No gating, no &quot;enterprise add-ons&quot; for core proof capabilities.{" "}
+            <strong style={{ color: "#0f172a" }}>14-day free trial, no credit card required.</strong>
           </p>
           <div className="section-rule" />
         </div>
@@ -91,7 +92,36 @@ export default function Pricing() {
           {PLANS.map((plan, i) => (
             <div
               key={plan.tier}
-              className={`pricing-card reveal-on-scroll ${i === 0 ? "" : i === 1 ? "reveal-delay-1" : "reveal-delay-2"} ${plan.featured ? "featured" : ""}`}
+              className={`pricing-card reveal-on-scroll ${i === 0 ? "" : i === 1 ? "reveal-delay-1" : "reveal-delay-2"} ${plan.featured ? "featured featured-pulse" : ""}`}
+              style={
+                plan.featured
+                  ? {
+                      border: "2px solid #FF1B8D",
+                      borderRadius: "16px",
+                      padding: "28px",
+                      background: "white",
+                      position: "relative",
+                    }
+                  : {
+                      transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
+                    }
+              }
+              onMouseEnter={
+                plan.featured
+                  ? undefined
+                  : (e) => {
+                      e.currentTarget.style.transform = "translateY(-2px)";
+                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.06)";
+                    }
+              }
+              onMouseLeave={
+                plan.featured
+                  ? undefined
+                  : (e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "none";
+                    }
+              }
             >
               {plan.featured && (
                 <div className="pricing-badge pricing-badge-warm">Most Popular</div>
@@ -127,31 +157,40 @@ export default function Pricing() {
               {plan.checkout === "enterprise" ? (
                 <Link
                   href="#contact"
-                  className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
+                  className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
                   style={{ width: "100%", justifyContent: "center" }}
                 >
-                  {plan.cta}
+                  <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
                 </Link>
               ) : (
                 <Link
                   href="https://app.xsee.io/register"
-                  className={`btn ${plan.featured ? "btn-primary" : "btn-secondary"}`}
+                  className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
                   style={{ width: "100%", justifyContent: "center" }}
                 >
-                  {plan.cta}
+                  <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
                 </Link>
               )}
             </div>
           ))}
         </div>
-        <div className="mb-2 mt-8 text-center">
-          <p className="text-sm text-white/40">
-            Average XSEE customer proves{" "}
-            <span className="font-semibold text-white/70">$18.5M in validated exposure</span>
-            {" "}on their first scan. At $1,200/mo, that&apos;s a{" "}
-            <span className="font-bold text-[#ff2d78]">15,000× ROI</span>
-            {" "}before the trial ends.
-          </p>
+        <div
+          style={{
+            textAlign: "center",
+            padding: "14px 24px",
+            background: "#fdf2f8",
+            borderRadius: "10px",
+            maxWidth: "600px",
+            margin: "20px auto 0",
+            fontSize: "13px",
+            color: "#64748b",
+          }}
+        >
+          Average XSEE customer proves{" "}
+          <strong style={{ color: "#0f172a" }}>$18.5M in validated exposure</strong>
+          {" "}on their first scan. At $1,200/mo, that&apos;s a{" "}
+          <strong style={{ color: "#FF1B8D" }}>15,000× ROI</strong>
+          {" "}before the trial ends.
         </div>
         <p className="pricing-note">
           14-day free trial · No credit card required · Starter $1,200/mo · Professional $2,500/mo · Enterprise: contact us · Annual billing: 25% discount · Optional XSEE Agent for real-time mode

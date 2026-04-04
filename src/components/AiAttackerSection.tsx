@@ -35,7 +35,7 @@ export default function AiAttackerSection() {
     <section className="section sec-navy" id="ai-threat">
       <div className="container">
         <div className="section-head reveal" style={{ textAlign: "center" }}>
-          <span className="eyebrow">The New Threat</span>
+          <span className="section-eyebrow">The New Threat</span>
           <h2 className="display-lg">
             Human hackers were bad enough.
             <br />
@@ -60,8 +60,8 @@ export default function AiAttackerSection() {
           XSEE simulates AI attacker behavior — so you can measure your defenses against the threat that's actually coming.
         </p>
         <div className="ai-threat-cta reveal">
-          <Link href="/free-scan" className="btn btn-primary">
-            See your AI attacker exposure →
+          <Link href="/free-scan" className="btn btn-primary btn-shimmer">
+            <span className="relative z-[2]">See your AI attacker exposure →</span>
           </Link>
         </div>
       </div>

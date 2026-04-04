@@ -12,7 +12,7 @@ export default function TerminalSection({ subheadline }: TerminalSectionProps) {
     <section className="sec-terminal">
       <div className="term-wrap">
         <div className="section-head reveal" style={{ textAlign: "center", marginBottom: "48px" }}>
-          <span className="eyebrow">Live Intelligence</span>
+          <span className="section-eyebrow mb-3 block">Live Intelligence</span>
           <h2 className="display-md" style={{ margin: "0 auto" }}>
             This is what XSEE sees in your cloud in the first 30 minutes.
           </h2>

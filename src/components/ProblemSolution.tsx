@@ -3,7 +3,7 @@ export default function ProblemSolution() {
     <section className="section sec-light" id="problem">
       <div className="container">
         <div className="section-head reveal">
-          <span className="eyebrow chip-warm">The Problem</span>
+          <span className="section-eyebrow section-eyebrow-dark">The Problem</span>
           <h2 className="display-lg">
             Your scanner is lying to you.
             <br />

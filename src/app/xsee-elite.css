@@ -91,7 +91,7 @@
 
 /* ── Attack graph preview section ── */
 .elite-attack-graph-section {
-  background: #0d1117;
+  background: #050d1a;
   padding: 88px 24px;
   position: relative;
 }
@@ -502,7 +502,7 @@
 
 /* ── Shock Stats Section ── */
 .shock-stats-section {
-  background: #0D1117;
+  background: #050d1a;
   padding: 88px 24px;
   position: relative;
   overflow: hidden;

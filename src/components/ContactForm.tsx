@@ -245,10 +245,12 @@ export default function ContactForm() {
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="btn btn-primary btn-lg"
+                    className="btn btn-primary btn-lg btn-shimmer"
                     style={{ width: "100%", justifyContent: "center" }}
                   >
-                    {status === "loading" ? "Sending..." : "Request Demo →"}
+                    <span className="relative z-[2]">
+                      {status === "loading" ? "Sending..." : "Request Demo →"}
+                    </span>
                   </button>
                   <p
                     className="text-center font-[var(--font-mono)] text-[10px] text-[var(--text-muted)] tracking-wider"

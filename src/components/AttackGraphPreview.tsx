@@ -10,7 +10,7 @@ export default function AttackGraphPreview() {
     <section className="elite-attack-graph-section" aria-labelledby="elite-attack-graph-title">
       <div className="container">
         <div className="elite-attack-graph-head">
-          <span className="elite-attack-graph-eyebrow">LIVE ATTACK INTELLIGENCE</span>
+          <span className="section-eyebrow mb-3 block">Live attack intelligence</span>
           <h2 id="elite-attack-graph-title" className="elite-attack-graph-title">
             Every path. Every hop. Proven in real time.
           </h2>

@@ -63,7 +63,8 @@ export default function GlobalScripts() {
       (entries) => entries.forEach((e) => e.target.classList.add("in")),
       { threshold: 0.1 }
     );
-    document.querySelectorAll(".reveal, .reveal-left, .reveal-right, .reveal-scale, .ps-panel").forEach((el) => io.observe(el));
+    /* .reveal → ScrollReveal (adds .visible + unobserve) */
+    document.querySelectorAll(".reveal-left, .reveal-right, .reveal-scale, .ps-panel").forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, []);
 
@@ -143,30 +144,6 @@ export default function GlobalScripts() {
   }, []);
 
   useEffect(() => {
-    document.querySelectorAll(".engine-card").forEach((card) => {
-      const mm = (e: Event) => {
-        const ev = e as MouseEvent;
-        const el = ev.currentTarget as HTMLElement;
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--mx", ((ev.clientX - r.left) / r.width) * 100 + "%");
-        el.style.setProperty("--my", ((ev.clientY - r.top) / r.height) * 100 + "%");
-        const dx = ((ev.clientX - r.left - r.width / 2) / r.width) * 5;
-        const dy = ((ev.clientY - r.top - r.height / 2) / r.height) * 5;
-        el.style.transform = `perspective(600px) rotateY(${dx}deg) rotateX(${-dy}deg)`;
-      };
-      const ml = () => {
-        (card as HTMLElement).style.transform = "";
-      };
-      card.addEventListener("mousemove", mm);
-      card.addEventListener("mouseleave", ml);
-      return () => {
-        card.removeEventListener("mousemove", mm);
-        card.removeEventListener("mouseleave", ml);
-      };
-    });
-  }, []);
-
-  useEffect(() => {
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((el) => {
@@ -177,45 +154,8 @@ export default function GlobalScripts() {
     );
     document.querySelectorAll(".reveal-on-scroll").forEach((el) => revealObserver.observe(el));
 
-    const countUp = (
-      id: string,
-      target: number,
-      duration: number,
-      formatter?: (n: number) => string
-    ) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const start = performance.now();
-      const tick = (now: number) => {
-        const progress = Math.min((now - start) / duration, 1);
-        const ease = 1 - Math.pow(1 - progress, 3);
-        const value = Math.round(ease * target);
-        el.textContent = formatter ? formatter(value) : value.toString();
-        if (progress < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    };
-
-    const statsObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            countUp("stat-alerts", 4000, 1800, (n) => n.toLocaleString());
-            countUp("stat-critical", 3, 1200);
-            countUp("stat-undetected", 92, 1600);
-            countUp("stat-detect", 34, 1400);
-            statsObserver.disconnect();
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px 80px 0px" }
-    );
-    const statsSection = document.querySelector(".shock-stats-section");
-    if (statsSection) statsObserver.observe(statsSection);
-
     return () => {
       revealObserver.disconnect();
-      statsObserver.disconnect();
     };
   }, []);
 

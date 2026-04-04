@@ -13,7 +13,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,27,141,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,27,141,0.04) 1px, transparent 1px)",
+            "linear-gradient(rgba(255,27,141,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,27,141,0.04) 1px,transparent 1px)",
           backgroundSize: "44px 44px",
           animation: "gridDrift 20s linear infinite",
         }}
@@ -25,10 +25,10 @@ export default function Hero() {
         style={{
           top: "50%",
           left: "50%",
-          transform: "translate(-50%, -50%)",
           width: "800px",
           height: "800px",
           background: "radial-gradient(circle, rgba(255,27,141,0.07) 0%, transparent 65%)",
+          animation: "glowBreathe 4s ease-in-out infinite",
         }}
       />
 
@@ -89,16 +89,31 @@ export default function Hero() {
             style={{
               fontSize: "clamp(44px, 5vw, 68px)",
               fontWeight: 900,
-              lineHeight: 1.0,
+              lineHeight: 1.02,
               letterSpacing: "-0.02em",
             }}
           >
-            <span style={{ color: "white", display: "block" }}>Stop guessing.</span>
-            <span style={{ color: "#FF1B8D", display: "block" }}>Prove the breach.</span>
+            <span className="word-reveal" style={{ color: "white" }}>
+              Stop{" "}
+            </span>
+            <span className="word-reveal" style={{ color: "white" }}>
+              guessing.
+            </span>
+            <br />
+            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.35s" }}>
+              Prove{" "}
+            </span>
+            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.5s" }}>
+              the{" "}
+            </span>
+            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.65s" }}>
+              breach.
+            </span>
           </h1>
 
           {/* Subheadline */}
           <p
+            className="fade-up fade-up-1"
             style={{
               fontSize: "17px",
               color: "rgba(255,255,255,0.5)",
@@ -115,7 +130,9 @@ export default function Hero() {
             <div>
               <Link
                 href="/free-scan"
+                className="btn-shimmer fade-up fade-up-2"
                 style={{
+                  position: "relative",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "8px",
@@ -128,15 +145,18 @@ export default function Hero() {
                   textDecoration: "none",
                   transition: "all 0.2s",
                   boxShadow: "0 0 28px rgba(255,27,141,0.4)",
+                  overflow: "hidden",
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                  <polygon points="5 3 19 12 5 21 5 3" />
-                </svg>
-                Run Free Scan — 30 minutes
+                <span className="inline-flex items-center gap-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                  Run Free Scan — 30 minutes
+                </span>
               </Link>
             </div>
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <div className="fade-up fade-up-3" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
               <Link
                 href="/demo"
                 style={{
@@ -180,6 +200,7 @@ export default function Hero() {
 
           {/* Trust micro-line */}
           <div
+            className="fade-up fade-up-4"
             style={{
               display: "flex",
               alignItems: "center",

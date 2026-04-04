@@ -70,9 +70,7 @@ export default function CompleteLoopSection() {
     <section ref={sectionRef} className="elite-loop-section" aria-labelledby="elite-loop-title">
       <div className="elite-loop-inner">
         <div className="elite-loop-head">
-          <span className="elite-attack-graph-eyebrow" style={{ color: "#64748b" }}>
-            THE COMPLETE LOOP
-          </span>
+          <span className="section-eyebrow mb-3 block">The complete loop</span>
           <h2 id="elite-loop-title" className="elite-attack-graph-title">
             The only platform that closes all 7 stages.
           </h2>

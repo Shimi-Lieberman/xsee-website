@@ -19,7 +19,7 @@ export default function ComparisonTable() {
     <section className="section sec-navy" id="compare">
       <div className="container">
         <div className="section-head reveal">
-          <span className="eyebrow">Market Position</span>
+          <span className="section-eyebrow">Market Position</span>
           <h2 className="display-lg">
             Every other tool finds problems.
             <br />

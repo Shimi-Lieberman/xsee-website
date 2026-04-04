@@ -153,8 +153,8 @@ export default function VsWizPage() {
 
             <div className="mx-auto mt-16 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-10 text-center">
               <p className="mb-6 text-xl font-semibold text-white">Don&apos;t cancel Wiz. Add the layer it can&apos;t provide.</p>
-              <Link href="/free-scan" className="btn btn-primary btn-lg inline-flex">
-                Run Free Scan →
+              <Link href="/free-scan" className="btn btn-primary btn-lg btn-shimmer inline-flex">
+                <span className="relative z-[2]">Run Free Scan →</span>
               </Link>
             </div>
           </div>

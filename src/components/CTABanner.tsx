@@ -5,7 +5,7 @@ export default function CTABanner() {
     <section className="cta-section sec-deepblack animate-on-scroll" id="get-started">
       <div className="container">
         <div className="section-head reveal" style={{ textAlign: "center", marginBottom: 56 }}>
-          <span className="eyebrow">Get Started</span>
+          <span className="section-eyebrow">Get Started</span>
           <h2 className="display-lg">
             The question isn't whether your cloud
             <br />
@@ -25,8 +25,8 @@ export default function CTABanner() {
             <p className="cta-option-body">
               Connect your AWS account with read-only IAM. XSEE scans your environment, validates attack paths, and delivers a ranked HTML report in 30 minutes. No commitment. No credit card. No agents.
             </p>
-            <Link href="/free-scan" className="btn btn-primary">
-              Run Free Scan →
+            <Link href="/free-scan" className="btn btn-primary btn-shimmer">
+              <span className="relative z-[2]">Run Free Scan →</span>
             </Link>
           </div>
           <div className="cta-option cta-option-platform">
