@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import GlobalScripts from "@/components/GlobalScripts";
 import Nav from "@/components/Nav";
-import AnnouncementBar from "@/components/AnnouncementBar";
 import Hero from "@/components/Hero";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import HeroSocialProofStats from "@/components/HeroSocialProofStats";
@@ -41,7 +40,6 @@ export default function Home() {
       <ScrollProgressBar />
       <GlobalScripts />
       <Nav />
-      <AnnouncementBar />
       <main className="w-full max-w-[100vw] mx-auto">
         <Hero />
         <div

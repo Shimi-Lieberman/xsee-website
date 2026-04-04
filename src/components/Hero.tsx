@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section
       className="relative overflow-hidden"
-      style={{ minHeight: "calc(100vh - 52px)", background: "#050d1a" }}
+      style={{ background: "#050d1a", margin: 0, padding: 0 }}
     >
       {/* Animated grid background */}
       <div
@@ -34,19 +34,16 @@ export default function Hero() {
 
       {/* Two-column hero */}
       <div
-        className="relative z-10 grid w-full grid-cols-1 lg:grid-cols-2"
+        className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2"
         style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          paddingLeft: "48px",
-          paddingRight: "48px",
-          paddingTop: "40px",
-          paddingBottom: "60px",
-          width: "100%",
-          minHeight: "calc(100vh - 52px)",
+          display: "grid",
           gap: "56px",
           alignItems: "center",
-          alignContent: "center",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "32px 48px 60px",
+          width: "100%",
+          minHeight: "calc(100vh - 56px)",
         }}
       >
         {/* LEFT — Headline + CTAs */}
@@ -96,11 +93,14 @@ export default function Hero() {
               letterSpacing: "-0.02em",
             }}
           >
-            <span className="word-reveal" style={{ color: "white" }}>Stop </span>
-            <span className="word-reveal" style={{ color: "white" }}>guessing. </span>
+            <span className="word-reveal" style={{ color: "white" }}>Stop</span>
+            {" "}
+            <span className="word-reveal" style={{ color: "white", animationDelay: "0.18s" }}>guessing.</span>
             <br />
-            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.35s" }}>Prove </span>
-            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.5s" }}>the </span>
+            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.35s" }}>Prove</span>
+            {" "}
+            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.5s" }}>the</span>
+            {" "}
             <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.65s" }}>breach.</span>
           </h1>
 
