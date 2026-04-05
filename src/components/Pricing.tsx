@@ -1,6 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { initializePaddle, type Paddle } from "@paddle/paddle-js";
+
+const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
+const PADDLE_ENV =
+  process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox" ? "sandbox" : "production";
+const PADDLE_STARTER_PRICE_ID = process.env.NEXT_PUBLIC_PADDLE_STARTER_PRICE_ID ?? "";
+const PADDLE_PRO_PRICE_ID = process.env.NEXT_PUBLIC_PADDLE_PRO_PRICE_ID ?? "";
+
+const REGISTER_FALLBACK = "https://app.xsee.io/register";
 
 const PLANS = [
   {
@@ -71,7 +81,42 @@ const PLANS = [
   },
 ];
 
+function priceIdForCheckout(kind: "starter" | "pro" | "enterprise"): string {
+  if (kind === "starter") return PADDLE_STARTER_PRICE_ID;
+  if (kind === "pro") return PADDLE_PRO_PRICE_ID;
+  return "";
+}
+
 export default function Pricing() {
+  const paddleRef = useRef<Paddle | null>(null);
+  const [paddleReady, setPaddleReady] = useState(false);
+
+  useEffect(() => {
+    if (!PADDLE_TOKEN) return;
+    let cancelled = false;
+    initializePaddle({
+      environment: PADDLE_ENV,
+      token: PADDLE_TOKEN,
+    }).then((instance) => {
+      if (cancelled || !instance) return;
+      paddleRef.current = instance;
+      setPaddleReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const openCheckout = useCallback((kind: "starter" | "pro") => {
+    const priceId = priceIdForCheckout(kind);
+    const paddle = paddleRef.current;
+    if (paddleReady && paddle && priceId) {
+      paddle.Checkout.open({ items: [{ priceId, quantity: 1 }] });
+      return;
+    }
+    window.location.href = REGISTER_FALLBACK;
+  }, [paddleReady]);
+
   return (
     <section className="section sec-light animate-on-scroll !pb-8" style={{ background: "transparent" }} id="pricing">
       <div className="max-w-6xl mx-auto w-full px-6 pricing-inner">
@@ -163,13 +208,14 @@ export default function Pricing() {
                   <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
                 </Link>
               ) : (
-                <Link
-                  href="https://app.xsee.io/register"
+                <button
+                  type="button"
                   className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
                   style={{ width: "100%", justifyContent: "center" }}
+                  onClick={() => openCheckout(plan.checkout)}
                 >
                   <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
-                </Link>
+                </button>
               )}
             </div>
           ))}
