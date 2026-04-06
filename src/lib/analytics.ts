@@ -5,8 +5,6 @@ export const track = (event: string, properties?: Record<string, unknown>) => {
   posthog.capture(event, properties);
 };
 
-let lastPricingViewedAt = 0;
-
 export const Analytics = {
   ctaClicked: (location: string, label: string) => track("cta_clicked", { location, label }),
 
@@ -18,13 +16,7 @@ export const Analytics = {
   formAbandoned: (formName: string, lastField: string) =>
     track("form_abandoned", { form_name: formName, last_field: lastField }),
 
-  pricingViewed: () => {
-    if (typeof window === "undefined") return;
-    const now = Date.now();
-    if (now - lastPricingViewedAt < 2000) return;
-    lastPricingViewedAt = now;
-    track("pricing_viewed");
-  },
+  pricingViewed: () => track("pricing_viewed"),
   freeScanViewed: () => track("free_scan_viewed"),
 
   scrollDepth: (percent: number) => track("scroll_depth", { percent }),
