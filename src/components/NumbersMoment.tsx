@@ -122,7 +122,7 @@ export function NumbersMoment() {
           <div
             style={{
               fontSize: "16px",
-              color: "rgba(255,255,255,0.35)",
+              color: "rgba(255,255,255,0.48)",
               fontWeight: 500,
               lineHeight: 1.5,
               maxWidth: "260px",
@@ -158,7 +158,7 @@ export function NumbersMoment() {
           <div
             style={{
               fontSize: "16px",
-              color: "rgba(255,255,255,0.35)",
+              color: "rgba(255,255,255,0.48)",
               fontWeight: 500,
               lineHeight: 1.5,
               maxWidth: "260px",
@@ -224,7 +224,7 @@ export function NumbersMoment() {
           <p
             style={{
               fontSize: "12px",
-              color: "rgba(255,255,255,0.2)",
+              color: "rgba(255,255,255,0.38)",
               marginTop: "12px",
               textAlign: "center",
             }}

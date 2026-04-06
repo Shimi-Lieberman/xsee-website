@@ -98,7 +98,7 @@ export default function ComplianceBar() {
                   alignItems: "center",
                   justifyContent: "center",
                   flexShrink: 0,
-                  color: "rgba(255,255,255,0.45)",
+                  color: "rgba(255,255,255,0.58)",
                 }}
               >
                 {item.icon}
@@ -108,7 +108,7 @@ export default function ComplianceBar() {
                   style={{
                     fontSize: "12px",
                     fontWeight: 600,
-                    color: "rgba(255,255,255,0.38)",
+                    color: "rgba(255,255,255,0.55)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -117,7 +117,7 @@ export default function ComplianceBar() {
                 <div
                   style={{
                     fontSize: "10px",
-                    color: "rgba(255,255,255,0.18)",
+                    color: "rgba(255,255,255,0.32)",
                     whiteSpace: "nowrap",
                     marginTop: "2px",
                   }}

@@ -332,8 +332,11 @@ export default function FreeScanPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">AWS Region</label>
+                    <label className="form-label" htmlFor="free-scan-aws-region">
+                      AWS Region
+                    </label>
                     <select
+                      id="free-scan-aws-region"
                       className="form-select"
                       value={formData.awsRegion}
                       onChange={(e) => setFormData({ ...formData, awsRegion: e.target.value })}

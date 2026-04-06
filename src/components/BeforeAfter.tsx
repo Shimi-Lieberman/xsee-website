@@ -22,7 +22,7 @@ export function BeforeAfter() {
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.24em",
-              color: "rgba(255,255,255,0.22)",
+              color: "rgba(255,255,255,0.38)",
               fontFamily: "var(--font-mono)",
               marginBottom: "14px",
             }}
@@ -213,7 +213,7 @@ export function BeforeAfter() {
         </div>
 
         <div style={{ textAlign: "center" }}>
-          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginBottom: "16px" }}>
+          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.48)", marginBottom: "16px" }}>
             This is not a gap competitors can close. It is a structural difference in how XSEE is built.
           </p>
           <Link

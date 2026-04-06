@@ -48,7 +48,7 @@ export default function CTABanner() {
               already in your graph.
             </em>
           </h2>
-          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.28)", maxWidth: "520px", margin: "20px auto 0" }}>
+          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.4)", maxWidth: "520px", margin: "20px auto 0" }}>
             Most teams find out during an incident. XSEE gives you the proof before the attacker does. One IAM role. Thirty
             minutes. The truth about your cloud.
           </p>

@@ -34,7 +34,7 @@ export default function TrustStrip() {
         ].map((name) => (
           <div
             key={name}
-            className="text-slate-400 text-sm font-black tracking-[0.12em] uppercase hover:text-slate-600 transition-colors cursor-default select-none font-mono"
+            className="text-slate-600 text-sm font-black tracking-[0.12em] uppercase hover:text-slate-800 transition-colors cursor-default select-none font-mono"
           >
             {name}
           </div>

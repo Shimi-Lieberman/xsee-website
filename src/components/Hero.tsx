@@ -137,7 +137,7 @@ export default function Hero() {
           <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
             AI attacker simulation now in XseeCyber 2.0
           </span>
-          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)" }}>›</span>
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>›</span>
         </Link>
 
         <h1
@@ -193,7 +193,7 @@ export default function Hero() {
         <p
           style={{
             fontSize: "18px",
-            color: "rgba(255,255,255,0.34)",
+            color: "rgba(255,255,255,0.45)",
             lineHeight: 1.7,
             maxWidth: "520px",
             marginBottom: "24px",
@@ -209,7 +209,7 @@ export default function Hero() {
           className="font-mono"
           style={{
             fontSize: 12,
-            color: "rgba(255,255,255,0.32)",
+            color: "rgba(255,255,255,0.45)",
             textAlign: "center",
             maxWidth: 440,
             lineHeight: 1.5,
@@ -305,7 +305,7 @@ export default function Hero() {
             alignItems: "center",
             gap: "8px",
             fontSize: "11px",
-            color: "rgba(255,255,255,0.18)",
+            color: "rgba(255,255,255,0.32)",
             flexWrap: "wrap",
             justifyContent: "center",
             opacity: 0,

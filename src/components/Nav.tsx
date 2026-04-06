@@ -37,7 +37,7 @@ export default function Nav() {
               </Link>
             ))}
           </nav>
-          <div className="hidden md:flex items-center gap-1.5 text-[11px] text-white/30 mr-2">
+          <div className="hidden md:flex items-center gap-1.5 text-[11px] text-white/45 mr-2">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             All systems operational
           </div>
@@ -48,7 +48,7 @@ export default function Nav() {
             </Link>
             <Link
               href={LOGIN_URL}
-              className="text-sm text-white/55 hover:text-white transition-colors px-3 py-1.5 hidden md:block"
+              className="text-sm text-white/65 hover:text-white transition-colors px-3 py-2.5 min-h-[44px] items-center hidden md:inline-flex"
             >
               Sign in
             </Link>
@@ -75,7 +75,7 @@ export default function Nav() {
             <Link
               key={`m-${href}`}
               href={href}
-              className="nav-link text-xs py-1 px-2"
+              className="nav-link text-xs"
               onClick={
                 label === "Demo" ? () => Analytics.ctaClicked("nav", "demo_link") : undefined
               }

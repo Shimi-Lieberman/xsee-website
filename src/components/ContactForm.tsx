@@ -203,8 +203,11 @@ export default function ContactForm() {
                 </div>
                 <div className="form-row">
                   <div className="form-group">
-                    <label className="form-label">Cloud Provider</label>
+                    <label className="form-label" htmlFor="contact-cloud-provider">
+                      Cloud Provider
+                    </label>
                     <select
+                      id="contact-cloud-provider"
                       className="form-select"
                       value={formData.cloudProvider}
                       onChange={(e) =>
@@ -220,8 +223,11 @@ export default function ContactForm() {
                     </select>
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Cloud Assets</label>
+                    <label className="form-label" htmlFor="contact-cloud-assets">
+                      Cloud Assets
+                    </label>
                     <select
+                      id="contact-cloud-assets"
                       className="form-select"
                       value={formData.assetCount}
                       onChange={(e) =>
@@ -265,7 +271,7 @@ export default function ContactForm() {
                     </span>
                   </button>
                   <p
-                    className="text-center font-[var(--font-mono)] text-[10px] text-[var(--text-muted)] tracking-wider"
+                    className="text-center font-[var(--font-mono)] text-[10px] text-slate-600 tracking-wider"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
                     No commitment · Read-only IAM · Report delivered in 30 min

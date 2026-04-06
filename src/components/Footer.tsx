@@ -47,7 +47,7 @@ export default function Footer() {
               </span>
               <span
                 style={{
-                  color: "rgba(255,255,255,0.22)",
+                  color: "rgba(255,255,255,0.38)",
                   fontSize: "7px",
                   letterSpacing: "0.22em",
                   textTransform: "uppercase",
@@ -58,7 +58,7 @@ export default function Footer() {
               </span>
             </div>
           </Link>
-          <p className="text-base leading-relaxed max-w-md mb-5 text-white/45">
+          <p className="text-base leading-relaxed max-w-md mb-5 text-white/55">
             Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
           </p>
           <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
@@ -75,7 +75,7 @@ export default function Footer() {
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.2)",
+              color: "rgba(255,255,255,0.38)",
               marginBottom: "16px",
             }}
           >
@@ -93,7 +93,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block mb-2.5 text-[13px] text-white/30 transition-colors hover:text-white/65"
+              className="block mb-2.5 text-[13px] text-white/45 transition-colors hover:text-white/75 max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
               onClick={
                 link.label === "Free Scan"
                   ? () => Analytics.ctaClicked("footer", "free_scan")
@@ -113,7 +113,7 @@ export default function Footer() {
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.2)",
+              color: "rgba(255,255,255,0.38)",
               marginBottom: "16px",
             }}
           >
@@ -130,7 +130,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block mb-2.5 text-[13px] text-white/30 transition-colors hover:text-white/65"
+              className="block mb-2.5 text-[13px] text-white/45 transition-colors hover:text-white/75 max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
             >
               {link.label}
             </Link>
@@ -145,7 +145,7 @@ export default function Footer() {
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.2)",
+              color: "rgba(255,255,255,0.38)",
               marginBottom: "16px",
             }}
           >
@@ -162,7 +162,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block mb-2.5 text-[13px] text-white/30 transition-colors hover:text-white/65"
+              className="block mb-2.5 text-[13px] text-white/45 transition-colors hover:text-white/75 max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
             >
               {link.label}
             </Link>
@@ -174,10 +174,10 @@ export default function Footer() {
         className="px-6 py-5 max-w-6xl mx-auto w-full flex items-center justify-between flex-wrap gap-4 footer-inner"
         style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
       >
-        <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.22)" }}>
+        <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)" }}>
           © 2026 XSEE. All rights reserved.
         </div>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 flex-wrap">
           {[
             { label: "Terms", href: "/terms" },
             { label: "Privacy", href: "/privacy" },
@@ -187,14 +187,14 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)" }}
-              className="hover:text-white/65 transition-colors"
+              style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}
+              className="hover:text-white/75 transition-colors max-sm:min-h-[44px] max-sm:inline-flex max-sm:items-center"
             >
               {link.label}
             </Link>
           ))}
         </div>
-        <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.18)", fontFamily: "var(--font-mono)" }} className="flex items-center gap-2">
+        <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.32)", fontFamily: "var(--font-mono)" }} className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           v1.4.0 · All systems operational
         </div>
