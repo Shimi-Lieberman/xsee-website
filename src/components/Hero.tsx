@@ -118,12 +118,26 @@ export default function Hero() {
             AI attackers think. Not theory — proof.
           </p>
 
+          <p
+            className="font-mono fade-up fade-up-2"
+            style={{
+              fontSize: 12,
+              color: "rgba(255,255,255,0.32)",
+              textAlign: "center",
+              maxWidth: 440,
+              lineHeight: 1.5,
+              marginTop: 4,
+            }}
+          >
+            Read-only AWS access · No agent installed · Your data never leaves your account
+          </p>
+
           {/* CTAs */}
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             <div>
               <Link
                 href="/free-scan"
-                className="btn-shimmer fade-up fade-up-2"
+                className="btn-shimmer fade-up fade-up-3"
                 style={{
                   position: "relative",
                   display: "inline-flex",
@@ -149,7 +163,7 @@ export default function Hero() {
                 </span>
               </Link>
             </div>
-            <div className="fade-up fade-up-3" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+            <div className="fade-up fade-up-4" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
               <Link
                 href="/demo"
                 style={{

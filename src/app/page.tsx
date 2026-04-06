@@ -17,6 +17,7 @@ import CompleteLoopSection from "@/components/CompleteLoopSection";
 import EnginesGrid from "@/components/EnginesGrid";
 import ComparisonTable from "@/components/ComparisonTable";
 import Testimonials from "@/components/Testimonials";
+import TrustModel from "@/components/TrustModel";
 import Pricing from "@/components/Pricing";
 import ComplianceBar from "@/components/ComplianceBar";
 import CTABanner from "@/components/CTABanner";
@@ -154,6 +155,9 @@ export default function Home() {
           <Testimonials />
         </div>
         <div className="sec-transition sec-light-to-tint" />
+        <div className="reveal">
+          <TrustModel />
+        </div>
         <div className="reveal" style={{ background: "white" }}>
           <Pricing />
         </div>

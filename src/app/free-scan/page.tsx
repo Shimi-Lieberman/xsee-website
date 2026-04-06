@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Nav from "@/components/Nav";
+import TrustModel from "@/components/TrustModel";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import Footer from "@/components/Footer";
 
@@ -115,6 +116,8 @@ export default function FreeScanPage() {
             </div>
           </div>
         </section>
+
+        <TrustModel variant="compact" />
 
         <section className="section sec-navy free-scan-steps">
           <div className="container">
