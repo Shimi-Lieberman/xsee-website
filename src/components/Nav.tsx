@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import SiteLogo from "@/components/SiteLogo";
+import { Analytics } from "@/lib/analytics";
 
 const REGISTER_URL = "https://app.xsee.io/register";
 const LOGIN_URL = "https://app.xsee.io/login";
@@ -24,7 +25,14 @@ export default function Nav() {
           <SiteLogo />
           <nav className="nav-links">
             {NAV_LINKS.map(({ href, label }) => (
-              <Link key={href} href={href} className="nav-link">
+              <Link
+                key={href}
+                href={href}
+                className="nav-link"
+                onClick={
+                  label === "Demo" ? () => Analytics.ctaClicked("nav", "demo_link") : undefined
+                }
+              >
                 {label}
               </Link>
             ))}
@@ -48,6 +56,7 @@ export default function Nav() {
               <Link
                 href="/#contact"
                 className="inline-flex items-center gap-2 rounded-lg border border-white/20 px-5 py-2.5 text-sm font-medium text-white/80 transition-all duration-200 hover:border-white/40 hover:bg-white/5 hover:text-white"
+                onClick={() => Analytics.ctaClicked("nav", "book_demo")}
               >
                 Book a Demo
               </Link>
@@ -63,7 +72,14 @@ export default function Nav() {
         {/* Mobile: nav-links hidden below lg in globals; mirror links here */}
         <div className="nav-mobile-links hidden max-[1024px]:flex flex-wrap items-center justify-center gap-x-2 gap-y-1 py-2 border-t border-white/[0.06] -mx-4 px-4 sm:mx-0 sm:px-0">
           {NAV_LINKS.map(({ href, label }) => (
-            <Link key={`m-${href}`} href={href} className="nav-link text-xs py-1 px-2">
+            <Link
+              key={`m-${href}`}
+              href={href}
+              className="nav-link text-xs py-1 px-2"
+              onClick={
+                label === "Demo" ? () => Analytics.ctaClicked("nav", "demo_link") : undefined
+              }
+            >
               {label}
             </Link>
           ))}

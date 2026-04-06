@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
+import { ScrollTracker } from "@/components/ScrollTracker";
 import GlobalScripts from "@/components/GlobalScripts";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
@@ -38,6 +39,7 @@ const HOME_LIVE_INTEL_SUBHEADLINE =
 export default function Home() {
   return (
     <>
+      <ScrollTracker />
       <ScrollProgressBar />
       <GlobalScripts />
       <Nav />

@@ -5,6 +5,7 @@ import "./globals.css";
 import "./xsee-elite.css";
 import "./legal-pages.css";
 import ChatWidget from "@/components/ChatWidget";
+import { PostHogProvider } from "@/components/PostHogProvider";
 import ScrollAnimator from "@/components/ScrollAnimator";
 import { ScrollReveal } from "@/components/ScrollReveal";
 
@@ -93,7 +94,7 @@ export default function RootLayout({
           strategy="afterInteractive"
         />
         <ScrollReveal />
-        {children}
+        <PostHogProvider>{children}</PostHogProvider>
         <ScrollAnimator />
         <ChatWidget />
       </body>

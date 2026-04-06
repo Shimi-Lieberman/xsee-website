@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
+import { Analytics } from "@/lib/analytics";
 
 const CARDS = [
   {
@@ -41,6 +42,7 @@ const CARDS = [
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [apiError, setApiError] = useState("");
+  const formStartedRef = useRef(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -71,6 +73,7 @@ export default function ContactForm() {
       });
       const data = await res.json();
       if (res.ok && data.success) {
+        Analytics.formSubmitted("demo_request");
         setStatus("success");
         setFormData({ fullName: "", email: "", company: "", cloudProvider: "", assetCount: "", message: "", website: "" });
       } else {
@@ -135,7 +138,16 @@ export default function ContactForm() {
             <div className="form-box">
               <h3 className="form-title">Request Your Free Risk Assessment</h3>
               <p className="form-sub">We'll reach out within one business day to schedule the scan.</p>
-              <form onSubmit={handleSubmit} className="form-fields">
+              <form
+                onSubmit={handleSubmit}
+                className="form-fields"
+                onFocusCapture={() => {
+                  if (!formStartedRef.current) {
+                    formStartedRef.current = true;
+                    Analytics.formStarted("demo_request");
+                  }
+                }}
+              >
                 <div className="honeypot" aria-hidden="true">
                   <label htmlFor="demo-website">Website</label>
                   <input

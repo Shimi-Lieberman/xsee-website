@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Analytics } from "@/lib/analytics";
 
 const PATH_ROWS = [
   {
@@ -223,9 +224,11 @@ export default function Hero() {
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             alignItems: "center",
             gap: "14px",
+            flexWrap: "wrap",
+            justifyContent: "center",
             opacity: 0,
             animation: "fadeUp 0.6s ease-out 0.85s forwards",
           }}
@@ -248,6 +251,7 @@ export default function Hero() {
               transition: "all 0.2s",
               boxShadow: "0 0 50px rgba(255,31,143,0.4)",
             }}
+            onClick={() => Analytics.ctaClicked("hero", "free_scan")}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-2px)";
               e.currentTarget.style.boxShadow = "0 0 80px rgba(255,31,143,0.6)";
@@ -264,34 +268,65 @@ export default function Hero() {
               Run Free Scan — 30 minutes
             </span>
           </Link>
-
-          <div
+          <Link
+            href="/demo"
             style={{
-              display: "flex",
+              display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              fontSize: "11px",
-              color: "rgba(255,255,255,0.18)",
-              flexWrap: "wrap",
-              justifyContent: "center",
+              background: "transparent",
+              color: "rgba(255,255,255,0.85)",
+              fontSize: "15px",
+              fontWeight: 600,
+              fontFamily: "var(--font-sans)",
+              padding: "14px 28px",
+              borderRadius: "14px",
+              textDecoration: "none",
+              transition: "all 0.2s",
+              border: "1px solid rgba(255,255,255,0.2)",
+            }}
+            onClick={() => Analytics.ctaClicked("hero", "watch_demo")}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)";
+              e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+              e.currentTarget.style.background = "transparent";
             }}
           >
-            {["Read-only IAM", "No agents", "Results in 30 min", "Free"].map((t, i) => (
-              <span key={t} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                {i > 0 && (
-                  <span
-                    style={{
-                      width: "3px",
-                      height: "3px",
-                      borderRadius: "50%",
-                      background: "rgba(255,255,255,0.15)",
-                    }}
-                  />
-                )}
-                {t}
-              </span>
-            ))}
-          </div>
+            Watch Demo
+          </Link>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            fontSize: "11px",
+            color: "rgba(255,255,255,0.18)",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            opacity: 0,
+            animation: "fadeUp 0.6s ease-out 0.85s forwards",
+          }}
+        >
+          {["Read-only IAM", "No agents", "Results in 30 min", "Free"].map((t, i) => (
+            <span key={t} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              {i > 0 && (
+                <span
+                  style={{
+                    width: "3px",
+                    height: "3px",
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.15)",
+                  }}
+                />
+              )}
+              {t}
+            </span>
+          ))}
         </div>
       </div>
 

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Nav from "@/components/Nav";
+import { Analytics } from "@/lib/analytics";
 import TrustModel from "@/components/TrustModel";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import Footer from "@/components/Footer";
@@ -43,6 +44,11 @@ export default function FreeScanPage() {
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
+  const formStartedRef = useRef(false);
+
+  useEffect(() => {
+    Analytics.freeScanViewed();
+  }, []);
 
   async function copyToClipboard(text: string) {
     await navigator.clipboard.writeText(text);
@@ -63,6 +69,7 @@ export default function FreeScanPage() {
       });
       const data = await res.json();
       if (res.ok && data.success) {
+        Analytics.formSubmitted("free_scan");
         setStatus("success");
       } else {
         setStatus("error");
@@ -241,7 +248,16 @@ export default function FreeScanPage() {
                   business day to schedule your scan.
                 </p>
               ) : (
-                <form onSubmit={handleSubmit} className="form-fields">
+                <form
+                  onSubmit={handleSubmit}
+                  className="form-fields"
+                  onFocusCapture={() => {
+                    if (!formStartedRef.current) {
+                      formStartedRef.current = true;
+                      Analytics.formStarted("free_scan");
+                    }
+                  }}
+                >
                   <p className="text-sm text-white/50 text-center mb-6">We&apos;ll reach out within one business day to schedule the scan.</p>
                   <div className="honeypot" aria-hidden="true">
                     <label htmlFor="freescan-website">Website</label>

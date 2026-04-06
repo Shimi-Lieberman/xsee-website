@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { initializePaddle, type Paddle } from "@paddle/paddle-js";
+import { Analytics } from "@/lib/analytics";
 
 const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
 const PADDLE_ENV =
@@ -91,6 +92,10 @@ export default function Pricing() {
   const [paddleReady, setPaddleReady] = useState(false);
 
   useEffect(() => {
+    Analytics.pricingViewed();
+  }, []);
+
+  useEffect(() => {
     if (!PADDLE_TOKEN) return;
     let cancelled = false;
     initializePaddle({
@@ -115,6 +120,18 @@ export default function Pricing() {
     }
     window.location.href = REGISTER_FALLBACK;
   }, [paddleReady]);
+
+  const handlePlanClick = useCallback(
+    (kind: "starter" | "pro") => {
+      if (kind === "starter") {
+        Analytics.ctaClicked("pricing", "starter_trial");
+      } else {
+        Analytics.ctaClicked("pricing", "pro_demo");
+      }
+      openCheckout(kind);
+    },
+    [openCheckout]
+  );
 
   return (
     <section className="section sec-light animate-on-scroll !pb-8" style={{ background: "transparent" }} id="pricing">
@@ -211,7 +228,7 @@ export default function Pricing() {
                   type="button"
                   className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
                   style={{ width: "100%", justifyContent: "center" }}
-                  onClick={() => openCheckout(plan.checkout)}
+                  onClick={() => handlePlanClick(plan.checkout)}
                 >
                   <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
                 </button>

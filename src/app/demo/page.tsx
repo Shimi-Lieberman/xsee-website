@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import DemoTracker from "@/components/DemoTracker";
 
 export const metadata: Metadata = {
   title: "Interactive Demo — XSEE",
@@ -39,6 +40,7 @@ export default function DemoPage() {
         flexDirection: "column",
       }}
     >
+      <DemoTracker />
       {/* Minimal back link — top left, low opacity */}
       <div
         style={{

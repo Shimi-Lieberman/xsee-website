@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { Analytics } from "@/lib/analytics";
 
 export default function Footer() {
   return (
@@ -91,6 +94,11 @@ export default function Footer() {
               key={link.label}
               href={link.href}
               className="block mb-2.5 text-[13px] text-white/30 transition-colors hover:text-white/65"
+              onClick={
+                link.label === "Free Scan"
+                  ? () => Analytics.ctaClicked("footer", "free_scan")
+                  : undefined
+              }
             >
               {link.label}
             </Link>
