@@ -41,10 +41,10 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="animate-on-scroll py-20 overflow-hidden" id="testimonials">
+    <section className="animate-on-scroll overflow-hidden" id="testimonials">
       <div className="max-w-6xl mx-auto w-full px-6 testimonials-inner">
-        <div className="text-center mb-12">
-          <span className="section-eyebrow section-eyebrow-dark mb-3 block">Proof from the field</span>
+        <div className="text-center">
+          <span className="section-eyebrow section-eyebrow-dark">Proof from the field</span>
           <h2 className="text-3xl md:text-4xl font-black" style={{ color: "#0f172a" }}>
             Security teams that stopped guessing.
           </h2>
