@@ -64,8 +64,8 @@ export default function ComplianceBar() {
   ];
 
   return (
-    <div className="animate-on-scroll py-10" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-      <div className="w-full px-6 compliance-inner">
+    <div className="animate-on-scroll reveal" style={{ padding: "30px 48px" }}>
+      <div className="w-full compliance-inner">
         <div className="section-eyebrow mb-8 text-center">Security & Compliance</div>
         <div
           style={{
@@ -76,7 +76,6 @@ export default function ComplianceBar() {
             flexWrap: "wrap",
             maxWidth: "1152px",
             margin: "0 auto",
-            padding: "0 24px",
           }}
         >
           {items.map((item) => (
@@ -85,7 +84,7 @@ export default function ComplianceBar() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "10px",
+                gap: "9px",
                 flexShrink: 0,
               }}
             >
@@ -94,7 +93,7 @@ export default function ComplianceBar() {
                   width: "32px",
                   height: "32px",
                   borderRadius: "8px",
-                  background: "rgba(255,255,255,0.06)",
+                  background: "rgba(255,255,255,0.05)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -109,7 +108,7 @@ export default function ComplianceBar() {
                   style={{
                     fontSize: "12px",
                     fontWeight: 600,
-                    color: "rgba(255,255,255,0.5)",
+                    color: "rgba(255,255,255,0.38)",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -118,7 +117,7 @@ export default function ComplianceBar() {
                 <div
                   style={{
                     fontSize: "10px",
-                    color: "rgba(255,255,255,0.25)",
+                    color: "rgba(255,255,255,0.18)",
                     whiteSpace: "nowrap",
                     marginTop: "2px",
                   }}

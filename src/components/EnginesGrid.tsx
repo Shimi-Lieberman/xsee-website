@@ -107,7 +107,16 @@ export default function EnginesGrid() {
           <h2 className="display-lg" style={{ color: "#0f172a" }}>
             Six engines built for one purpose:
             <br />
-            <span style={{ color: "var(--sky-light)" }}>proving whether your cloud can be breached.</span>
+            <em
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                color: "var(--pink)",
+                fontWeight: 900,
+              }}
+            >
+              proving whether your cloud can be breached.
+            </em>
           </h2>
           <p style={{ color: "#64748b" }}>
             Most tools stop at discovery. XSEE runs the full loop — discover, validate, simulate, fix, verify. No other platform does all five.
@@ -115,12 +124,25 @@ export default function EnginesGrid() {
           <div className="section-rule" />
         </div>
         <div className="engines-grid">
-          {ENGINES.map((e, i) => (
+          {ENGINES.map((e, i) => {
+            const revealCls =
+              i === 0
+                ? "reveal"
+                : i === 1
+                  ? "reveal reveal-d1"
+                  : i === 2
+                    ? "reveal reveal-d2"
+                    : i === 3
+                      ? "reveal"
+                      : i === 4
+                        ? "reveal reveal-d1"
+                        : "reveal reveal-d2";
+            return (
             <MagneticCard
               key={e.num}
-              className={`engine-card engine-card-premium reveal-on-scroll ${i === 2 ? "engine-warm" : ""} ${i === 4 ? "engine-orange" : ""}`}
+              className={`magnetic-card top-bar-card engine-card engine-card-premium ${revealCls} ${i === 2 ? "engine-warm" : ""} ${i === 4 ? "engine-orange" : ""}`}
               style={{
-                border: "1px solid #e2e8f0",
+                border: "1px solid rgba(0,0,0,0.07)",
                 borderRadius: "16px",
                 padding: "28px",
                 background: "white",
@@ -130,8 +152,8 @@ export default function EnginesGrid() {
               onMouseEnter={(ev) => {
                 const t = ev.currentTarget;
                 t.style.transform = "translateY(-3px)";
-                t.style.boxShadow = "0 12px 40px rgba(255,27,141,0.08)";
-                t.style.borderColor = "rgba(255,27,141,0.25)";
+                t.style.boxShadow = "0 12px 40px rgba(0,0,0,0.07)";
+                t.style.borderColor = "rgba(255,31,143,0.2)";
                 const wrap = t.querySelector(".engine-icon-wrap");
                 const svg = t.querySelector(".engine-icon-svg");
                 if (wrap instanceof HTMLElement) wrap.style.background = "#FF1B8D";
@@ -141,7 +163,7 @@ export default function EnginesGrid() {
                 const t = ev.currentTarget;
                 t.style.transform = "translateY(0)";
                 t.style.boxShadow = "none";
-                t.style.borderColor = "#e2e8f0";
+                t.style.borderColor = "rgba(0,0,0,0.07)";
                 const wrap = t.querySelector(".engine-icon-wrap");
                 const svg = t.querySelector(".engine-icon-svg");
                 if (wrap instanceof HTMLElement) wrap.style.background = "#fdf2f8";
@@ -171,7 +193,8 @@ export default function EnginesGrid() {
               <h3 style={{ color: "#0f172a" }}>{e.title}</h3>
               <p style={{ color: "#64748b" }}>{e.desc}</p>
             </MagneticCard>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

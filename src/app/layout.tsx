@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { DM_Mono, DM_Sans, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import "./xsee-elite.css";
@@ -12,24 +12,33 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#050d1a",
+  themeColor: "#050810",
 };
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["300", "400", "500", "700", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-dm-sans",
   display: "swap",
 });
 
-const mono = JetBrains_Mono({
+const dmMono = DM_Mono({
   subsets: ["latin"],
-  variable: "--font-mono",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500"],
+  variable: "--font-dm-mono",
   display: "swap",
 });
 
-const fontVariables = `${inter.variable} ${mono.variable}`;
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["italic"],
+  variable: "--font-instrument-serif",
+  display: "swap",
+});
+
+const fontVariables = `${dmSans.variable} ${dmMono.variable} ${instrumentSerif.variable}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xsee.io"),
@@ -83,8 +92,8 @@ export default function RootLayout({
           src="https://cdn.paddle.com/paddle/v2/paddle.js"
           strategy="afterInteractive"
         />
-        {children}
         <ScrollReveal />
+        {children}
         <ScrollAnimator />
         <ChatWidget />
       </body>

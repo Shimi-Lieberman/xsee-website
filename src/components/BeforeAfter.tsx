@@ -3,7 +3,7 @@ import { MagneticCard } from "@/components/MagneticCard";
 
 export function BeforeAfter() {
   return (
-    <section style={{ padding: "80px 0", borderTop: "1px solid #f1f5f9", background: "white" }}>
+    <section style={{ padding: "80px 0", background: "var(--dark)" }}>
       <div
         className="max-w-6xl mx-auto px-6 w-full"
         style={{
@@ -15,20 +15,30 @@ export function BeforeAfter() {
         }}
       >
         <div style={{ textAlign: "center", marginBottom: "48px" }}>
-          <span className="section-eyebrow section-eyebrow-dark mb-3 text-center block">
+          <span
+            className="mb-3 text-center block"
+            style={{
+              fontSize: "10px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.24em",
+              color: "rgba(255,255,255,0.22)",
+              fontFamily: "var(--font-mono)",
+              marginBottom: "14px",
+            }}
+          >
             The difference that matters
           </span>
           <h2
+            className="display-lg"
             style={{
-              fontSize: "clamp(28px, 4vw, 42px)",
-              fontWeight: 900,
-              color: "#0f172a",
+              color: "#fff",
               lineHeight: 1.1,
             }}
           >
             Wiz shows you what could go wrong.
             <br />
-            <span style={{ color: "#FF1B8D" }}>XSEE proves what will.</span>
+            <span style={{ color: "var(--pink)" }}>XSEE proves what will.</span>
           </h2>
         </div>
 
@@ -65,10 +75,10 @@ export function BeforeAfter() {
                 style={{
                   fontSize: "9px",
                   fontWeight: 700,
-                  padding: "3px 9px",
-                  borderRadius: "100px",
-                  background: "#f1f5f9",
-                  color: "#64748b",
+                  fontFamily: "var(--font-mono)",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "var(--ink-3)",
                 }}
               >
                 Theoretical
@@ -144,11 +154,10 @@ export function BeforeAfter() {
                 style={{
                   fontSize: "9px",
                   fontWeight: 700,
-                  padding: "3px 9px",
-                  borderRadius: "100px",
-                  background: "#fdf2f8",
-                  color: "#FF1B8D",
-                  border: "1px solid rgba(255,27,141,0.2)",
+                  fontFamily: "var(--font-mono)",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "var(--ink-3)",
                 }}
               >
                 Live validated
@@ -196,7 +205,7 @@ export function BeforeAfter() {
         </div>
 
         <div style={{ textAlign: "center" }}>
-          <p style={{ fontSize: "13px", color: "#64748b", marginBottom: "16px" }}>
+          <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginBottom: "16px" }}>
             Don&apos;t cancel Wiz. Add the layer it structurally cannot provide.
           </p>
           <Link
@@ -207,7 +216,7 @@ export function BeforeAfter() {
               display: "inline-flex",
               alignItems: "center",
               gap: "8px",
-              background: "#FF1B8D",
+              background: "var(--pink)",
               color: "white",
               fontSize: "14px",
               fontWeight: 700,

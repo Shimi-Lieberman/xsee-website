@@ -2,219 +2,278 @@
 
 import Link from "next/link";
 
+const PATH_ROWS = [
+  {
+    chain: "Internet → EC2 → IAM Role → S3",
+    meta: "CVE-2020-9283 · RCE · 4 hops",
+    sev: "CRITICAL",
+    sevColor: "#ef4444",
+    l2: true,
+    active: true,
+  },
+  {
+    chain: "Public LB → Lambda → RDS Database",
+    meta: "Privilege escalation · 3 hops",
+    sev: "HIGH",
+    sevColor: "#f97316",
+    l2: true,
+    active: false,
+  },
+  {
+    chain: "EKS Pod → ServiceAccount → Secrets",
+    meta: "Lateral movement · 2 hops",
+    sev: "MEDIUM",
+    sevColor: "#eab308",
+    l2: false,
+    active: false,
+  },
+] as const;
+
 export default function Hero() {
   return (
     <section
-      className="relative overflow-hidden"
-      style={{ background: "#050d1a", margin: 0, padding: 0 }}
+      style={{
+        minHeight: "100vh",
+        background: "var(--dark)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        paddingTop: "96px",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
-      {/* Animated grid background */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="mesh-orb"
         style={{
+          width: "700px",
+          height: "700px",
+          background: "radial-gradient(circle, rgba(255,31,143,0.1) 0%, transparent 70%)",
+          top: "-150px",
+          left: "-150px",
+          animation: "orbDrift1 10s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="mesh-orb"
+        style={{
+          width: "600px",
+          height: "600px",
+          background: "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)",
+          top: "30%",
+          right: "-100px",
+          animation: "orbDrift2 12s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="mesh-orb"
+        style={{
+          width: "500px",
+          height: "500px",
+          background: "radial-gradient(circle, rgba(20,184,166,0.06) 0%, transparent 70%)",
+          bottom: "-50px",
+          left: "35%",
+          animation: "orbDrift3 9s ease-in-out infinite",
+        }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
           backgroundImage:
-            "linear-gradient(rgba(255,27,141,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,27,141,0.04) 1px,transparent 1px)",
-          backgroundSize: "44px 44px",
-          animation: "gridDrift 20s linear infinite",
+            "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          maskImage: "radial-gradient(ellipse 70% 70% at 50% 40%, black, transparent)",
+          pointerEvents: "none",
         }}
       />
 
-      {/* Center glow */}
       <div
-        className="absolute pointer-events-none"
         style={{
-          top: "50%",
-          left: "50%",
-          width: "800px",
-          height: "800px",
-          background: "radial-gradient(circle, rgba(255,27,141,0.07) 0%, transparent 65%)",
-          animation: "glowBreathe 4s ease-in-out infinite",
-        }}
-      />
-
-      {/* Two-column hero */}
-      <div
-        className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-2"
-        style={{
-          display: "grid",
-          gap: "56px",
+          position: "relative",
+          zIndex: 2,
+          display: "flex",
+          flexDirection: "column",
           alignItems: "center",
-          maxWidth: "1200px",
-          margin: "0 auto",
-          padding: "32px 48px 60px",
+          textAlign: "center",
           width: "100%",
-          minHeight: "calc(100vh - 56px)",
+          maxWidth: "880px",
+          padding: "0 32px",
         }}
       >
-        {/* LEFT — Headline + CTAs */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
-          {/* Announcement bar */}
-          <div style={{ display: "flex" }}>
-            <Link
-              href="/free-scan"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "6px 14px",
-                borderRadius: "100px",
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.04)",
-                textDecoration: "none",
-                transition: "border-color 0.2s",
-              }}
-            >
-              <span
-                style={{
-                  fontSize: "9px",
-                  fontWeight: 800,
-                  padding: "2px 8px",
-                  borderRadius: "100px",
-                  background: "rgba(255,27,141,0.15)",
-                  color: "#FF1B8D",
-                  letterSpacing: "0.1em",
-                }}
-              >
-                NEW
-              </span>
-              <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
-                AI attacker simulation now in XseeCyber 2.0
-              </span>
-              <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)" }}>›</span>
-            </Link>
-          </div>
-
-          {/* Headline */}
-          <h1
+        <Link
+          href="/free-scan"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            padding: "5px 14px 5px 5px",
+            borderRadius: "100px",
+            border: "1px solid rgba(255,255,255,0.09)",
+            background: "rgba(255,255,255,0.04)",
+            marginBottom: "40px",
+            cursor: "pointer",
+            opacity: 0,
+            animation: "fadeUp 0.5s ease-out 0.1s forwards",
+            textDecoration: "none",
+          }}
+        >
+          <span
             style={{
-              fontSize: "clamp(44px, 5vw, 68px)",
-              fontWeight: 900,
-              lineHeight: 1.02,
-              letterSpacing: "-0.02em",
+              fontSize: "9px",
+              fontWeight: 800,
+              padding: "2px 8px",
+              borderRadius: "100px",
+              background: "rgba(255,27,141,0.15)",
+              color: "#FF1B8D",
+              letterSpacing: "0.1em",
             }}
           >
-            <span className="word-reveal" style={{ color: "white" }}>Stop</span>
-            {" "}
-            <span className="word-reveal" style={{ color: "white", animationDelay: "0.18s" }}>guessing.</span>
-            <br />
-            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.35s" }}>Prove</span>
-            {" "}
-            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.5s" }}>the</span>
-            {" "}
-            <span className="word-reveal" style={{ color: "#FF1B8D", animationDelay: "0.65s" }}>breach.</span>
-          </h1>
+            NEW
+          </span>
+          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
+            AI attacker simulation now in XseeCyber 2.0
+          </span>
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.25)" }}>›</span>
+        </Link>
 
-          {/* Subheadline */}
-          <p
-            className="fade-up fade-up-1"
+        <h1
+          style={{
+            fontSize: "clamp(60px, 9vw, 108px)",
+            fontWeight: 900,
+            lineHeight: 0.98,
+            letterSpacing: "-0.035em",
+            color: "#fff",
+            marginBottom: "28px",
+            fontFamily: "var(--font-sans)",
+          }}
+        >
+          <span className="word-reveal wr-1" style={{ color: "#fff" }}>
+            Stop
+          </span>{" "}
+          <span className="word-reveal wr-2" style={{ color: "#fff" }}>
+            guessing.
+          </span>
+          <br />
+          <span
+            className="word-reveal wr-3"
             style={{
-              fontSize: "17px",
-              color: "rgba(255,255,255,0.5)",
-              lineHeight: 1.7,
-              maxWidth: "440px",
+              color: "var(--pink)",
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
             }}
           >
-            Cryptographic evidence per hop. Live AWS API validation. Attack simulation that runs the way both human and
-            AI attackers think. Not theory — proof.
-          </p>
-
-          <p
-            className="font-mono fade-up fade-up-2"
+            Prove
+          </span>{" "}
+          <span
+            className="word-reveal wr-4"
             style={{
-              fontSize: 12,
-              color: "rgba(255,255,255,0.32)",
-              textAlign: "center",
-              maxWidth: 440,
-              lineHeight: 1.5,
-              marginTop: 4,
+              color: "var(--pink)",
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
             }}
           >
-            Read-only AWS access · No agent installed · Your data never leaves your account
-          </p>
+            the
+          </span>{" "}
+          <span
+            className="word-reveal wr-5"
+            style={{
+              color: "var(--pink)",
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
+            }}
+          >
+            breach.
+          </span>
+        </h1>
 
-          {/* CTAs */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <div>
-              <Link
-                href="/free-scan"
-                className="btn-shimmer fade-up fade-up-3"
-                style={{
-                  position: "relative",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  background: "#FF1B8D",
-                  color: "white",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  padding: "14px 28px",
-                  borderRadius: "12px",
-                  textDecoration: "none",
-                  transition: "all 0.2s",
-                  boxShadow: "0 0 28px rgba(255,27,141,0.4)",
-                  overflow: "hidden",
-                }}
-              >
-                <span className="inline-flex items-center gap-2">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                    <polygon points="5 3 19 12 5 21 5 3" />
-                  </svg>
-                  Run Free Scan — 30 minutes
-                </span>
-              </Link>
-            </div>
-            <div className="fade-up fade-up-4" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-              <Link
-                href="/demo"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  background: "rgba(255,255,255,0.05)",
-                  color: "rgba(255,255,255,0.65)",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  padding: "10px 20px",
-                  borderRadius: "10px",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  textDecoration: "none",
-                  transition: "all 0.15s",
-                }}
-              >
-                Watch Demo
-              </Link>
-              <Link
-                href="/#contact"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                  background: "rgba(255,255,255,0.05)",
-                  color: "rgba(255,255,255,0.65)",
-                  fontSize: "13px",
-                  fontWeight: 600,
-                  padding: "10px 20px",
-                  borderRadius: "10px",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  textDecoration: "none",
-                  transition: "all 0.15s",
-                }}
-              >
-                Book a Demo
-              </Link>
-            </div>
-          </div>
+        <p
+          style={{
+            fontSize: "18px",
+            color: "rgba(255,255,255,0.34)",
+            lineHeight: 1.7,
+            maxWidth: "520px",
+            marginBottom: "24px",
+            opacity: 0,
+            animation: "fadeUp 0.6s ease-out 0.7s forwards",
+          }}
+        >
+          Cryptographic evidence per hop. Live AWS API validation. Attack simulation that runs the way both human and
+          AI attackers think. Not theory — proof.
+        </p>
 
-          {/* Trust micro-line */}
+        <p
+          className="font-mono"
+          style={{
+            fontSize: 12,
+            color: "rgba(255,255,255,0.32)",
+            textAlign: "center",
+            maxWidth: 440,
+            lineHeight: 1.5,
+            marginBottom: "28px",
+            opacity: 0,
+            animation: "fadeUp 0.6s ease-out 0.78s forwards",
+          }}
+        >
+          Read-only AWS access · No agent installed · Your data never leaves your account
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "14px",
+            opacity: 0,
+            animation: "fadeUp 0.6s ease-out 0.85s forwards",
+          }}
+        >
+          <Link
+            href="/free-scan"
+            className="btn-shimmer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "10px",
+              background: "var(--pink)",
+              color: "#fff",
+              fontSize: "16px",
+              fontWeight: 700,
+              fontFamily: "var(--font-sans)",
+              padding: "16px 36px",
+              borderRadius: "14px",
+              textDecoration: "none",
+              transition: "all 0.2s",
+              boxShadow: "0 0 50px rgba(255,31,143,0.4)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow = "0 0 80px rgba(255,31,143,0.6)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow = "0 0 50px rgba(255,31,143,0.4)";
+            }}
+          >
+            <span className="inline-flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              Run Free Scan — 30 minutes
+            </span>
+          </Link>
+
           <div
-            className="fade-up fade-up-4"
             style={{
               display: "flex",
               alignItems: "center",
               gap: "8px",
               fontSize: "11px",
-              color: "rgba(255,255,255,0.25)",
+              color: "rgba(255,255,255,0.18)",
               flexWrap: "wrap",
+              justifyContent: "center",
             }}
           >
             {["Read-only IAM", "No agents installed", "Results in 30 min", "Free — no credit card"].map((t, i) => (
@@ -234,257 +293,279 @@ export default function Hero() {
             ))}
           </div>
         </div>
+      </div>
 
-        {/* RIGHT — Live graph panel */}
-        <div style={{ position: "relative" }}>
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          width: "100%",
+          maxWidth: "1100px",
+          marginTop: "60px",
+          padding: "0 24px 48px",
+          opacity: 0,
+          animation: "graphReveal 0.9s cubic-bezier(0.4,0,0.2,1) 1.05s forwards",
+        }}
+      >
+        <div
+          style={{
+            background: "rgba(8,12,24,0.95)",
+            border: "1px solid rgba(255,255,255,0.09)",
+            borderRadius: "18px",
+            overflow: "hidden",
+            boxShadow: `0 0 0 1px rgba(255,31,143,0.06), 0 60px 120px rgba(0,0,0,0.8), 0 0 150px rgba(255,31,143,0.04)`,
+          }}
+        >
           <div
             style={{
-              background: "#080f1c",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: "16px",
-              overflow: "hidden",
-              boxShadow: "0 0 0 1px rgba(255,27,141,0.06), 0 40px 80px rgba(0,0,0,0.6)",
+              display: "flex",
+              alignItems: "center",
+              padding: "11px 18px",
+              background: "rgba(5,8,16,0.8)",
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+              gap: "0",
             }}
           >
-            {/* Graph topbar */}
+            <div style={{ display: "flex", gap: "6px", marginRight: "16px" }}>
+              {["rgba(239,68,68,0.5)", "rgba(234,179,8,0.5)", "rgba(34,197,94,0.5)"].map((c) => (
+                <div
+                  key={c}
+                  style={{
+                    width: "11px",
+                    height: "11px",
+                    borderRadius: "50%",
+                    background: c,
+                  }}
+                />
+              ))}
+            </div>
+            <div
+              style={{
+                flex: 1,
+                height: "26px",
+                background: "rgba(255,255,255,0.05)",
+                borderRadius: "6px",
+                display: "flex",
+                alignItems: "center",
+                padding: "0 12px",
+                gap: "8px",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontFamily: "var(--font-mono)",
+                  color: "rgba(255,255,255,0.28)",
+                }}
+              >
+                app.xsee.io/attack-intelligence
+              </span>
+            </div>
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
-                padding: "10px 16px",
-                background: "#060d18",
-                borderBottom: "1px solid rgba(255,255,255,0.06)",
+                gap: "5px",
+                marginLeft: "16px",
+                fontSize: "10px",
+                fontWeight: 600,
+                color: "#22c55e",
+                fontFamily: "var(--font-mono)",
               }}
             >
-              <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
-                {["Attack Paths", "IAM", "Network", "NHI"].map((tab, i) => (
-                  <div
-                    key={tab}
-                    style={{
-                      fontSize: "10px",
-                      fontWeight: 600,
-                      padding: "4px 10px",
-                      borderRadius: "6px",
-                      cursor: "pointer",
-                      background: i === 0 ? "rgba(255,27,141,0.12)" : "transparent",
-                      color: i === 0 ? "#FF1B8D" : "rgba(255,255,255,0.3)",
-                    }}
-                  >
-                    {tab}
-                  </div>
-                ))}
-              </div>
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                  fontSize: "10px",
-                  color: "#22c55e",
-                  fontWeight: 600,
-                }}
-              >
-                <div
-                  style={{
-                    width: "5px",
-                    height: "5px",
-                    borderRadius: "50%",
-                    background: "#22c55e",
-                    animation: "pulse 2s infinite",
-                  }}
-                />
-                Live · eu-central-1
-              </div>
-            </div>
-
-            {/* Stats row */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
-                borderBottom: "1px solid rgba(255,255,255,0.05)",
-              }}
-            >
-              {[
-                { val: "14", label: "Attack Paths", color: "#ef4444" },
-                { val: "3", label: "Critical", color: "#ef4444" },
-                { val: "92%", label: "Exploitable", color: "#f97316" },
-                { val: "1", label: "Optimal Fix", color: "#FF1B8D" },
-              ].map((s, i) => (
-                <div
-                  key={s.label}
-                  style={{
-                    padding: "12px 14px",
-                    textAlign: "center",
-                    borderRight: i < 3 ? "1px solid rgba(255,255,255,0.05)" : "none",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "22px",
-                      fontWeight: 900,
-                      lineHeight: 1,
-                      marginBottom: "3px",
-                      color: s.color,
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    {s.val}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "8px",
-                      fontWeight: 600,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.12em",
-                      color: "rgba(255,255,255,0.28)",
-                    }}
-                  >
-                    {s.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Screenshot */}
-            <div style={{ position: "relative" }}>
-              <img
-                src="/platform_screenshot.png"
-                alt="XSEE Attack Intelligence Platform"
-                style={{ width: "100%", display: "block", maxHeight: "280px", objectFit: "cover", objectPosition: "top" }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: "80px",
-                  background: "linear-gradient(to bottom, transparent, #080f1c)",
-                  pointerEvents: "none",
+                  width: "5px",
+                  height: "5px",
+                  borderRadius: "50%",
+                  background: "#22c55e",
+                  animation: "breathe 2s infinite",
                 }}
               />
+              Live · eu-central-1
             </div>
+          </div>
 
-            {/* Path list */}
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-              {[
-                {
-                  chain: "Internet → EC2 → IAM Role → S3",
-                  meta: "CVE-2020-9283 · RCE · 4 hops",
-                  sev: "CRITICAL",
-                  sevColor: "#ef4444",
-                  l2: true,
-                  active: true,
-                },
-                {
-                  chain: "Public LB → Lambda → RDS Database",
-                  meta: "Privilege escalation · 3 hops",
-                  sev: "HIGH",
-                  sevColor: "#f97316",
-                  l2: true,
-                  active: false,
-                },
-                {
-                  chain: "EKS Pod → ServiceAccount → Secrets",
-                  meta: "Lateral movement · 2 hops",
-                  sev: "MEDIUM",
-                  sevColor: "#eab308",
-                  l2: false,
-                  active: false,
-                },
-              ].map((path) => (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "10px 16px",
+              background: "rgba(5,8,16,0.65)",
+              borderBottom: "1px solid rgba(255,255,255,0.05)",
+            }}
+          >
+            <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
+              {["Attack Paths", "IAM", "Network", "NHI"].map((tab, i) => (
                 <div
-                  key={path.chain}
+                  key={tab}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "9px 14px",
-                    borderBottom: "1px solid rgba(255,255,255,0.04)",
-                    borderLeft: path.active ? "2px solid #FF1B8D" : "2px solid transparent",
-                    background: path.active ? "rgba(255,27,141,0.05)" : "transparent",
+                    fontSize: "10px",
+                    fontWeight: 600,
+                    padding: "4px 10px",
+                    borderRadius: "6px",
                     cursor: "pointer",
+                    background: i === 0 ? "rgba(255,27,141,0.12)" : "transparent",
+                    color: i === 0 ? "#FF1B8D" : "rgba(255,255,255,0.3)",
                   }}
                 >
-                  <div>
-                    <div
-                      style={{
-                        fontSize: "10px",
-                        fontWeight: 600,
-                        color: "rgba(255,255,255,0.7)",
-                        fontFamily: "monospace",
-                        marginBottom: "2px",
-                      }}
-                    >
-                      {path.chain}
-                    </div>
-                    <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.28)" }}>{path.meta}</div>
-                  </div>
-                  <div style={{ display: "flex", gap: "5px", flexShrink: 0 }}>
-                    <span
-                      style={{
-                        fontSize: "8px",
-                        fontWeight: 700,
-                        padding: "2px 7px",
-                        borderRadius: "100px",
-                        background: `${path.sevColor}20`,
-                        color: path.sevColor,
-                        border: `1px solid ${path.sevColor}40`,
-                      }}
-                    >
-                      {path.sev}
-                    </span>
-                    {path.l2 && (
-                      <span
-                        style={{
-                          fontSize: "7px",
-                          fontWeight: 700,
-                          padding: "2px 6px",
-                          borderRadius: "4px",
-                          background: "rgba(37,99,235,0.15)",
-                          color: "#60a5fa",
-                          border: "1px solid rgba(37,99,235,0.25)",
-                        }}
-                      >
-                        L2 ✓
-                      </span>
-                    )}
-                  </div>
+                  {tab}
                 </div>
               ))}
             </div>
           </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              borderBottom: "1px solid rgba(255,255,255,0.05)",
+            }}
+          >
+            {[
+              { val: "14", label: "Attack Paths", color: "#ef4444" },
+              { val: "3", label: "Critical", color: "#ef4444" },
+              { val: "92%", label: "Exploitable", color: "#f97316" },
+              { val: "1", label: "Optimal Fix", color: "var(--pink)" },
+            ].map((s, i) => (
+              <div
+                key={s.label}
+                style={{
+                  padding: "12px 16px",
+                  textAlign: "center",
+                  borderRight: i < 3 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: 900,
+                    fontFamily: "var(--font-mono)",
+                    color: s.color,
+                    lineHeight: 1,
+                    marginBottom: "3px",
+                  }}
+                >
+                  {s.val}
+                </div>
+                <div
+                  style={{
+                    fontSize: "8px",
+                    fontWeight: 600,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.14em",
+                    color: "rgba(255,255,255,0.22)",
+                  }}
+                >
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ position: "relative" }}>
+            <img
+              src="/platform_screenshot.png"
+              alt="XSEE Attack Intelligence Platform"
+              style={{
+                width: "100%",
+                display: "block",
+                maxHeight: "320px",
+                objectFit: "cover",
+                objectPosition: "top",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "100px",
+                background: "linear-gradient(transparent, rgba(8,12,24,0.98))",
+                pointerEvents: "none",
+              }}
+            />
+          </div>
+
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+            {PATH_ROWS.map((path) => (
+              <div
+                key={path.chain}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "9px 14px",
+                  borderBottom: "1px solid rgba(255,255,255,0.04)",
+                  borderLeft: path.active ? "2px solid #FF1B8D" : "2px solid transparent",
+                  background: path.active ? "rgba(255,27,141,0.05)" : "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: "10px",
+                      fontWeight: 600,
+                      color: "rgba(255,255,255,0.7)",
+                      fontFamily: "var(--font-mono)",
+                      marginBottom: "2px",
+                    }}
+                  >
+                    {path.chain}
+                  </div>
+                  <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.28)" }}>{path.meta}</div>
+                </div>
+                <div style={{ display: "flex", gap: "5px", flexShrink: 0 }}>
+                  <span
+                    style={{
+                      fontSize: "8px",
+                      fontWeight: 700,
+                      padding: "2px 7px",
+                      borderRadius: "100px",
+                      background: `${path.sevColor}20`,
+                      color: path.sevColor,
+                      border: `1px solid ${path.sevColor}40`,
+                    }}
+                  >
+                    {path.sev}
+                  </span>
+                  {path.l2 && (
+                    <span
+                      style={{
+                        fontSize: "7px",
+                        fontWeight: 700,
+                        padding: "2px 6px",
+                        borderRadius: "4px",
+                        background: "rgba(37,99,235,0.15)",
+                        color: "#60a5fa",
+                        border: "1px solid rgba(37,99,235,0.25)",
+                      }}
+                    >
+                      L2 ✓
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <div style={{ textAlign: "center", paddingBottom: "24px", paddingTop: "8px", opacity: 0.25 }}>
-        <div
-          style={{
-            fontSize: "9px",
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            fontFamily: "monospace",
-            color: "white",
-            marginBottom: "6px",
-          }}
-        >
-          Scroll
-        </div>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="white"
-          strokeWidth="2"
-          style={{ animation: "bounce 1.5s infinite", display: "inline-block" }}
-        >
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </div>
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "140px",
+          background: "linear-gradient(transparent, var(--bg))",
+          pointerEvents: "none",
+          zIndex: 3,
+        }}
+      />
     </section>
   );
 }

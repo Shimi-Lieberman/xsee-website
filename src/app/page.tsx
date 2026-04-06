@@ -5,6 +5,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import HeroSocialProofStats from "@/components/HeroSocialProofStats";
+import { NumbersMoment } from "@/components/NumbersMoment";
 import AttackGraphPreview from "@/components/AttackGraphPreview";
 import DetectionCoverageChart from "@/components/DetectionCoverageChart";
 import TrustStrip from "@/components/TrustStrip";
@@ -23,7 +24,6 @@ import ComplianceBar from "@/components/ComplianceBar";
 import CTABanner from "@/components/CTABanner";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
-import { CountUp } from "@/components/CountUp";
 
 export const metadata: Metadata = {
   title: "XSEE — Prove Every Attack Path is Real",
@@ -45,103 +45,49 @@ export default function Home() {
         <Hero />
         <div
           className="home-stats-strip reveal"
-          style={{ background: "white", borderBottom: "1px solid #f1f5f9" }}
+          style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}
         >
-          <div className="hero-stats mt-12 md:mt-16">
+          <div className="hero-stats">
             <HeroSocialProofStats />
           </div>
         </div>
-        <div className="reveal" style={{ background: "white" }}>
+        <NumbersMoment />
+        <div className="reveal" style={{ background: "var(--dark)" }}>
           <BeforeAfter />
         </div>
-        <div style={{ background: "white", borderBottom: "1px solid #f1f5f9" }}>
+        <div className="reveal" style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
           <TrustStrip />
         </div>
-        <AttackGraphPreview />
-        <DetectionCoverageChart />
-        <div className="sec-transition sec-dark-to-light" />
-        <ProblemSolution />
-        <div className="sec-transition sec-light-to-dark" />
-        <AiAttackerSection />
-        <div className="sec-transition sec-dark-to-light" />
-        <div className="reveal" style={{ background: "#050d1a" }}>
-          <section className="shock-stats-section" id="stats">
-            <span className="section-eyebrow" style={{ display: "block", marginBottom: 48 }}>
-              The Reality
-            </span>
-
-            <div className="section-head reveal" style={{ marginBottom: 48 }}>
-              <h2 className="display-md" style={{ textAlign: "center", margin: "0 auto 16px", color: "#f8fafc" }}>
-                The numbers security teams don&apos;t want to see — until they do.
-              </h2>
-            </div>
-
-            <div className="shock-stats-grid reveal-on-scroll">
-              <div className="shock-stat-cell stat-bar-accent">
-                <div className="shock-stat-number font-mono">
-                  <CountUp target={4000} color="#ef4444" duration={2000} />
-                </div>
-                <p className="shock-stat-label">
-                  Alerts your scanner generates per month
-                </p>
-                <p className="shock-stat-fine">
-                  Average for a 500-asset AWS environment
-                </p>
-              </div>
-              <div className="shock-stat-cell shock-stat-red stat-bar-accent">
-                <div className="shock-stat-number font-mono">
-                  <CountUp target={3} color="#FF1B8D" duration={1200} />
-                </div>
-                <p className="shock-stat-label">
-                  That actually reach your crown jewels
-                </p>
-                <p className="shock-stat-fine">
-                  The only 3 that matter
-                </p>
-              </div>
-              <div className="shock-stat-cell stat-bar-accent">
-                <div className="shock-stat-number font-mono">
-                  <CountUp target={92} suffix="%" color="#f97316" duration={1800} />
-                </div>
-                <p className="shock-stat-label">
-                  Of attack paths undetected by GuardDuty
-                </p>
-                <p className="shock-stat-fine">
-                  Measured across XSEE-validated environments
-                </p>
-              </div>
-              <div className="shock-stat-cell shock-stat-red stat-bar-accent">
-                <div className="shock-stat-number font-mono">
-                  <CountUp target={34} suffix="%" color="#eab308" duration={1600} />
-                </div>
-                <p className="shock-stat-label">
-                  Average Detection Coverage Score
-                </p>
-                <p className="shock-stat-fine">
-                  Most teams are blind to 66% of attack steps
-                </p>
-              </div>
-            </div>
-
-            <div className="shock-cta-wrap">
-              <p className="shock-cta-headline">
-                What&apos;s your Detection Coverage Score? Find out in 30 minutes — free.
-              </p>
-              <a href="/free-scan" className="shock-cta-btn btn-shimmer">
-                <span className="relative z-[2]">Run Free Scan →</span>
-              </a>
-            </div>
-          </section>
+        <div className="reveal">
+          <AttackGraphPreview />
         </div>
+        <div className="reveal">
+          <DetectionCoverageChart />
+        </div>
+        <div className="sec-transition sec-dark-to-light" />
+        <div className="reveal">
+          <ProblemSolution />
+        </div>
+        <div className="sec-transition sec-light-to-dark" />
+        <div className="reveal">
+          <AiAttackerSection />
+        </div>
+        <div className="sec-transition sec-dark-to-light" />
         <StatsBand />
-        <div style={{ background: "#050d1a" }}>
+        <div className="reveal" style={{ background: "var(--dark)" }}>
           <TerminalSection subheadline={HOME_LIVE_INTEL_SUBHEADLINE} />
         </div>
-        <div className="sec-transition sec-tint-to-dark" style={{ background: "linear-gradient(to bottom,#040B18,#040B18)" }} />
-        <div className="reveal" style={{ background: "#f8f9fc" }}>
+        <div
+          className="sec-transition sec-tint-to-dark"
+          style={{ background: "linear-gradient(to bottom,#040B18,#040B18)" }}
+        />
+        <div
+          className="reveal dot-texture"
+          style={{ background: "#f4f4f2", position: "relative", overflow: "hidden" }}
+        >
           <HowItWorks />
         </div>
-        <div style={{ background: "#050d1a" }}>
+        <div className="reveal" style={{ background: "var(--dark)" }}>
           <CompleteLoopSection />
         </div>
         <div className="sec-transition sec-dark-to-light" />
@@ -149,22 +95,27 @@ export default function Home() {
           <EnginesGrid />
         </div>
         <div className="sec-transition sec-light-to-dark" />
-        <ComparisonTable />
+        <div style={{ background: "var(--dark)" }}>
+          <ComparisonTable />
+        </div>
         <div className="sec-transition sec-dark-to-light" />
-        <div className="reveal" style={{ background: "#f8f9fc" }}>
+        <div className="reveal" style={{ background: "white" }}>
           <Testimonials />
         </div>
         <div className="sec-transition sec-light-to-tint" />
-        <div className="reveal">
+        <div className="reveal" style={{ background: "white" }}>
           <TrustModel />
         </div>
-        <div className="reveal" style={{ background: "white" }}>
+        <div
+          className="reveal dot-texture"
+          style={{ background: "#f4f4f2", position: "relative", overflow: "hidden" }}
+        >
           <Pricing />
         </div>
-        <div style={{ background: "#080f1c" }}>
+        <div className="reveal" style={{ background: "#0c1120" }}>
           <ComplianceBar />
         </div>
-        <div style={{ background: "#050d1a" }}>
+        <div style={{ background: "var(--dark)" }}>
           <CTABanner />
         </div>
         <div className="sec-transition sec-dark-to-light" />

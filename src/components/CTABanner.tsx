@@ -2,18 +2,56 @@ import Link from "next/link";
 
 export default function CTABanner() {
   return (
-    <section className="cta-section sec-deepblack animate-on-scroll" id="get-started">
-      <div className="container">
-        <div className="section-head reveal" style={{ textAlign: "center", marginBottom: 56 }}>
+    <section
+      className="cta-section sec-deepblack animate-on-scroll reveal"
+      id="get-started"
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        padding: "130px 48px",
+        background: "var(--dark)",
+      }}
+    >
+      <div
+        className="mesh-orb"
+        style={{
+          width: "560px",
+          height: "560px",
+          background: "radial-gradient(circle, rgba(255,31,143,0.12), transparent 70%)",
+          top: "20%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          animation: "orbDrift1 14s ease-in-out infinite",
+        }}
+      />
+      <div className="container" style={{ position: "relative", zIndex: 2 }}>
+        <div className="section-head" style={{ textAlign: "center", marginBottom: 56 }}>
           <span className="section-eyebrow">Get Started</span>
-          <h2 className="display-lg">
-            The question isn't whether your cloud
+          <h2
+            className="display-lg"
+            style={{
+              fontSize: "clamp(42px,6vw,76px)",
+              fontWeight: 900,
+              color: "white",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            The question isn&apos;t whether your cloud
             <br />
             will be attacked by AI.
             <br />
-            It's whether you'll know before the breach.
+            It&apos;s whether you&apos;ll know{" "}
+            <em
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                color: "var(--pink)",
+              }}
+            >
+              before the breach.
+            </em>
           </h2>
-          <p>
+          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.28)", maxWidth: "520px", margin: "20px auto 0" }}>
             Most teams find out the hard way. XSEE gives you proof before the attacker does.
           </p>
           <div className="section-rule" style={{ margin: "20px auto 0" }} />

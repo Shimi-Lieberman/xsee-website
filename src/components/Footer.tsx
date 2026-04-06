@@ -1,20 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#050d1a", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-      {/*
-        === PREVIOUS FOOTER (replaced) ===
-        sec-navy footer with SiteLogo, FooterMiniContact, footer-grid columns:
-        Product: How It Works, Engines, XSEE vs Wiz, Pricing
-        Company: About/Careers plain, Contact, Security
-        Resources: Documentation, Blog, Status, Changelog (plain spans)
-        Contact column: FooterMiniContact, Request Demo, sales@xsee.io
-        footer-bottom: Terms, Privacy, Refunds
-      */}
-      <div className="max-w-6xl mx-auto w-full px-6 py-12 grid grid-cols-2 md:grid-cols-5 gap-8 footer-inner">
-        <div className="col-span-2">
-          <a
+    <footer style={{ background: "#030710", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+      <div className="max-w-6xl mx-auto w-full px-6 py-12 grid grid-cols-1 gap-10 footer-inner sm:grid-cols-2 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
+        <div>
+          <Link
             href="/"
             style={{
               display: "flex",
@@ -24,25 +16,36 @@ export default function Footer() {
               textDecoration: "none",
             }}
           >
-            <img
-              src="/logo-symbol-only.svg"
-              alt=""
-              style={{
-                height: "32px",
-                width: "32px",
-                imageRendering: "crisp-edges",
-                filter:
-                  "brightness(0) saturate(100%) invert(19%) sepia(99%) saturate(7478%) hue-rotate(316deg) brightness(103%) contrast(101%)",
-              }}
-            />
+            <span className="nav-logo-mark-wrap">
+              <Image
+                src="/logo-symbol-only.svg"
+                width={44}
+                height={44}
+                alt=""
+                className="nav-logo-mark"
+                style={{
+                  background: "transparent",
+                  filter:
+                    "brightness(0) saturate(100%) invert(19%) sepia(99%) saturate(7478%) hue-rotate(316deg) brightness(103%) contrast(101%)",
+                }}
+              />
+            </span>
             <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
-              <span style={{ color: "white", fontWeight: 900, fontSize: "17px", letterSpacing: "0.18em" }}>
+              <span
+                style={{
+                  color: "white",
+                  fontWeight: 800,
+                  fontSize: "18px",
+                  letterSpacing: "0.16em",
+                  fontFamily: "var(--font-sans)",
+                }}
+              >
                 XSEE
               </span>
               <span
                 style={{
-                  color: "rgba(255,255,255,0.35)",
-                  fontSize: "9px",
+                  color: "rgba(255,255,255,0.22)",
+                  fontSize: "7px",
                   letterSpacing: "0.22em",
                   textTransform: "uppercase",
                   marginTop: "3px",
@@ -51,8 +54,8 @@ export default function Footer() {
                 Cloud Attack Intelligence
               </span>
             </div>
-          </a>
-          <p className="text-white/45 text-base leading-relaxed max-w-md mb-5">
+          </Link>
+          <p className="text-base leading-relaxed max-w-md mb-5 text-white/45">
             Cloud Attack Intelligence. Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
           </p>
           <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
@@ -62,7 +65,17 @@ export default function Footer() {
         </div>
 
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 mb-4 font-mono">
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "9px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.2em",
+              color: "rgba(255,255,255,0.2)",
+              marginBottom: "16px",
+            }}
+          >
             Product
           </div>
           {[
@@ -77,7 +90,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block text-sm text-white/40 hover:text-white mb-2.5 transition-colors"
+              className="block mb-2.5 text-[13px] text-white/30 transition-colors hover:text-white/65"
             >
               {link.label}
             </Link>
@@ -85,7 +98,17 @@ export default function Footer() {
         </div>
 
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 mb-4 font-mono">
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "9px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.2em",
+              color: "rgba(255,255,255,0.2)",
+              marginBottom: "16px",
+            }}
+          >
             Company
           </div>
           {[
@@ -100,7 +123,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block text-sm text-white/40 hover:text-white mb-2.5 transition-colors"
+              className="block mb-2.5 text-[13px] text-white/30 transition-colors hover:text-white/65"
             >
               {link.label}
             </Link>
@@ -108,21 +131,31 @@ export default function Footer() {
         </div>
 
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/25 mb-4 font-mono">
-            Resources
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "9px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.2em",
+              color: "rgba(255,255,255,0.2)",
+              marginBottom: "16px",
+            }}
+          >
+            Legal
           </div>
           {[
-            { label: "Documentation", href: "#" },
-            { label: "API Reference", href: "#" },
-            { label: "Status", href: "#" },
             { label: "Terms", href: "/terms" },
             { label: "Privacy", href: "/privacy" },
+            { label: "Security Policy", href: "/security" },
             { label: "Refunds", href: "/refunds" },
+            { label: "Documentation", href: "#" },
+            { label: "Status", href: "#" },
           ].map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              className="block text-sm text-white/40 hover:text-white mb-2.5 transition-colors"
+              className="block mb-2.5 text-[13px] text-white/30 transition-colors hover:text-white/65"
             >
               {link.label}
             </Link>
@@ -132,9 +165,11 @@ export default function Footer() {
 
       <div
         className="px-6 py-5 max-w-6xl mx-auto w-full flex items-center justify-between flex-wrap gap-4 footer-inner"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+        style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
       >
-        <div className="text-xs text-white/22">© {new Date().getFullYear()} XSEE. All rights reserved.</div>
+        <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.22)" }}>
+          © {new Date().getFullYear()} XSEE. All rights reserved.
+        </div>
         <div className="flex items-center gap-5">
           {[
             { label: "Terms", href: "/terms" },
@@ -145,13 +180,14 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-xs text-white/22 hover:text-white/55 transition-colors"
+              style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)" }}
+              className="hover:text-white/65 transition-colors"
             >
               {link.label}
             </Link>
           ))}
         </div>
-        <div className="text-[10px] text-white/18 font-mono flex items-center gap-2">
+        <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.18)", fontFamily: "var(--font-mono)" }} className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           v1.4.0 · All systems operational
         </div>

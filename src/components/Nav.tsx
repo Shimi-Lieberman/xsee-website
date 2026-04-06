@@ -18,10 +18,7 @@ const NAV_LINKS = [
 
 export default function Nav() {
   return (
-    <nav
-      id="nav"
-      style={{ backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)" }}
-    >
+    <nav id="nav">
       <div className="container">
         <div className="nav-inner">
           <SiteLogo />
@@ -54,7 +51,7 @@ export default function Nav() {
               >
                 Book a Demo
               </Link>
-              <Link href={REGISTER_URL} className="nav-btn-trial">
+              <Link href={REGISTER_URL} className="nav-btn-trial btn-shimmer">
                 Start Free Trial →
               </Link>
               <Link href={LOGIN_URL} className="nav-btn-launch">

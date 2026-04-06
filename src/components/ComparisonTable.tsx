@@ -16,7 +16,7 @@ export const COMPARISON_ROWS = [
 
 export default function ComparisonTable() {
   return (
-    <section className="section sec-navy" id="compare">
+    <section className="section sec-navy reveal" id="compare">
       <div className="container">
         <div className="section-head reveal">
           <span className="section-eyebrow">Market Position</span>

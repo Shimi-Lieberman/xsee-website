@@ -40,7 +40,7 @@ export default function Testimonials() {
     },
   ];
 
-  const revealClass = ["reveal", "reveal reveal-delay-1", "reveal reveal-delay-2"] as const;
+  const revealClass = ["reveal", "reveal reveal-d1", "reveal reveal-d2"] as const;
 
   return (
     <section className="animate-on-scroll py-20 overflow-hidden" id="testimonials">
@@ -56,38 +56,37 @@ export default function Testimonials() {
           {cards.map((cs, i) => (
             <div
               key={cs.outcome}
-              className={revealClass[i]}
+              className={`top-bar-card ${revealClass[i]}`}
               style={{
-                background: "white",
-                border: "1px solid #e2e8f0",
+                background: "#fafaf9",
+                border: "1px solid rgba(0,0,0,0.07)",
                 borderRadius: "16px",
                 padding: "24px",
                 transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
                 cursor: "pointer",
-                transitionDelay: i === 0 ? "0s" : undefined,
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.boxShadow = "0 12px 40px rgba(255,27,141,0.07)";
-                e.currentTarget.style.borderColor = "rgba(255,27,141,0.2)";
+                e.currentTarget.style.boxShadow = "0 16px 56px rgba(255,31,143,0.06)";
+                e.currentTarget.style.borderColor = "rgba(255,31,143,0.16)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
                 e.currentTarget.style.boxShadow = "none";
-                e.currentTarget.style.borderColor = "#e2e8f0";
+                e.currentTarget.style.borderColor = "rgba(0,0,0,0.07)";
               }}
             >
-              <div className="flex gap-0.5 mb-4">
+              <div className="flex gap-0.5 mb-4" style={{ letterSpacing: "2px" }}>
                 {[...Array(5)].map((_, j) => (
-                  <svg key={j} width="12" height="12" viewBox="0 0 24 24" fill="#FF1B8D" aria-hidden>
+                  <svg key={j} width="12" height="12" viewBox="0 0 24 24" fill="var(--pink)" aria-hidden>
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                   </svg>
                 ))}
               </div>
-              <div className="text-lg font-black mb-3 leading-tight" style={{ color: "#0f172a" }}>
+              <div className="mb-3 leading-tight" style={{ fontSize: "19px", fontWeight: 900, color: "#0f172a" }}>
                 {cs.outcome}
               </div>
-              <p className="text-sm leading-relaxed mb-4 italic flex-1" style={{ color: "#64748b" }}>
+              <p className="leading-relaxed mb-4 italic flex-1" style={{ fontSize: "13px", color: "var(--ink-2)" }}>
                 &quot;{cs.quote}&quot;
               </p>
               <div className="text-xs mb-4" style={{ color: "#94a3b8" }}>
@@ -100,7 +99,7 @@ export default function Testimonials() {
               <div className="flex gap-4 pt-4" style={{ borderTop: "1px solid #e2e8f0" }}>
                 {cs.metrics.map((m) => (
                   <div key={m.label}>
-                    <div className="text-sm font-black font-mono" style={{ color: "#0f172a" }}>
+                    <div className="font-black font-mono" style={{ fontSize: "18px", color: "#0f172a" }}>
                       {m.value}
                     </div>
                     <div className="text-[9px] mt-0.5" style={{ color: "#94a3b8" }}>

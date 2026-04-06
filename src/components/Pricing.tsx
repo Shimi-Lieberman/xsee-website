@@ -141,7 +141,7 @@ export default function Pricing() {
               style={
                 plan.featured
                   ? {
-                      border: "2px solid #FF1B8D",
+                      border: "2px solid var(--pink)",
                       borderRadius: "16px",
                       padding: "28px",
                       background: "white",
@@ -223,11 +223,12 @@ export default function Pricing() {
         <div
           style={{
             textAlign: "center",
-            padding: "14px 24px",
-            background: "#fdf2f8",
-            borderRadius: "10px",
-            maxWidth: "600px",
-            margin: "20px auto 0",
+            padding: "16px 24px",
+            background: "white",
+            border: "1px solid rgba(0,0,0,0.07)",
+            borderRadius: "12px",
+            maxWidth: "560px",
+            margin: "32px auto 0",
             fontSize: "13px",
             color: "#64748b",
           }}
