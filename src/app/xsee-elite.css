@@ -79,7 +79,14 @@
 
 /* ── Attack graph preview section ── */
 .elite-attack-graph-section {
-  background: #050d1a;
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 50% 50%,
+      rgba(239, 68, 68, 0.06) 0%,
+      rgba(124, 58, 237, 0.04) 50%,
+      transparent 100%
+    ),
+    rgb(5, 13, 26);
   padding: 88px 24px;
   position: relative;
 }
@@ -120,7 +127,7 @@
   background: #080c14;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.06);
-  overflow: hidden;
+  overflow: visible;
 }
 .elite-attack-pills {
   display: flex;

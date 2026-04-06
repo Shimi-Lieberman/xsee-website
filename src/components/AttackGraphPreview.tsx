@@ -5,6 +5,10 @@ import { Zap, Key, Crown, Check, AlertTriangle } from "lucide-react";
 /** Animated attack graph preview — static layout, SVG + CSS motion */
 export default function AttackGraphPreview() {
   const attackPathD = "M 52 108 L 168 152 L 352 108 L 718 104";
+  const secondaryPathUpper = "M 52 108 L 168 48 L 352 108";
+  const secondaryPathToTarget = "M 352 108 L 528 48 L 718 104";
+
+  const criticalParticleBegins = ["0.5s", "1s", "1.5s", "2s", "2.5s", "3s", "3.5s", "4s"];
 
   return (
     <section className="elite-attack-graph-section" aria-labelledby="elite-attack-graph-title">
@@ -30,21 +34,33 @@ export default function AttackGraphPreview() {
           >
             <defs>
               <linearGradient id="attackGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#EF4444" />
-                <stop offset="100%" stopColor="#F97316" />
+                <stop offset="0%" stopColor="#F97316" stopOpacity="0.9" />
+                <stop offset="50%" stopColor="#EF4444" stopOpacity="1" />
+                <stop offset="100%" stopColor="#EC4899" stopOpacity="0.9" />
               </linearGradient>
-              <filter id="attackGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#EF4444" floodOpacity="0.5" />
+              <filter id="attackGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="particleGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="2.5" result="pBlur" />
+                <feMerge>
+                  <feMergeNode in="pBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
               </filter>
             </defs>
 
             {/* Secondary edges (dimmer) */}
-            <line x1="52" y1="108" x2="168" y2="48" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
-            <line x1="168" y1="48" x2="352" y2="108" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
-            <line x1="352" y1="108" x2="528" y2="48" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
-            <line x1="528" y1="152" x2="352" y2="108" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
-            <line x1="528" y1="48" x2="718" y2="104" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
-            <line x1="528" y1="152" x2="718" y2="104" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="4 4" />
+            <line x1="52" y1="108" x2="168" y2="48" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <line x1="168" y1="48" x2="352" y2="108" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <line x1="352" y1="108" x2="528" y2="48" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <line x1="528" y1="152" x2="352" y2="108" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <line x1="528" y1="48" x2="718" y2="104" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeDasharray="4 4" />
+            <line x1="528" y1="152" x2="718" y2="104" stroke="rgba(255,255,255,0.18)" strokeWidth="1.5" strokeDasharray="4 4" />
 
             {/* Glass pill labels */}
             <g>
@@ -66,24 +82,91 @@ export default function AttackGraphPreview() {
               d={attackPathD}
               fill="none"
               stroke="url(#attackGradient)"
-              strokeWidth="2"
+              strokeWidth="2.5"
+              strokeDasharray="800"
+              strokeDashoffset="800"
               filter="url(#attackGlow)"
-            />
+            >
+              <animate
+                attributeName="stroke-dashoffset"
+                from="800"
+                to="0"
+                dur="2.5s"
+                begin="0.5s"
+                fill="freeze"
+                calcMode="spline"
+                keyTimes="0;1"
+                keySplines="0.42 0 0.58 1"
+              />
+            </path>
 
-            {/* Particles along path */}
-            <circle r="3" fill="#EF4444">
-              <animateMotion dur="1.5s" repeatCount="indefinite" path={attackPathD} rotate="auto" />
+            {/* Critical path particles */}
+            {criticalParticleBegins.map((begin) => (
+              <circle key={begin} r="4" fill="#EF4444" filter="url(#particleGlow)">
+                <animateMotion
+                  path={attackPathD}
+                  dur="4s"
+                  begin={begin}
+                  repeatCount="indefinite"
+                  calcMode="linear"
+                  keyPoints="0;1"
+                  keyTimes="0;1"
+                />
+              </circle>
+            ))}
+
+            {/* Softer particles on secondary routes */}
+            <circle r="2.5" fill="rgba(255,255,255,0.5)">
+              <animateMotion
+                path={secondaryPathUpper}
+                dur="6s"
+                begin="0s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                keyPoints="0;1"
+                keyTimes="0;1"
+              />
             </circle>
-            <circle r="3" fill="#EF4444">
-              <animateMotion dur="2s" repeatCount="indefinite" begin="0.3s" path={attackPathD} rotate="auto" />
+            <circle r="2.5" fill="rgba(255,255,255,0.5)">
+              <animateMotion
+                path={secondaryPathUpper}
+                dur="6s"
+                begin="3s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                keyPoints="0;1"
+                keyTimes="0;1"
+              />
             </circle>
-            <circle r="3" fill="#EF4444">
-              <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.6s" path={attackPathD} rotate="auto" />
+            <circle r="2.5" fill="rgba(255,255,255,0.5)">
+              <animateMotion
+                path={secondaryPathToTarget}
+                dur="6s"
+                begin="1.5s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                keyPoints="0;1"
+                keyTimes="0;1"
+              />
+            </circle>
+            <circle r="2.5" fill="rgba(255,255,255,0.5)">
+              <animateMotion
+                path={secondaryPathToTarget}
+                dur="6s"
+                begin="4.5s"
+                repeatCount="indefinite"
+                calcMode="linear"
+                keyPoints="0;1"
+                keyTimes="0;1"
+              />
             </circle>
 
             {/* Node 1 Internet */}
             <g transform="translate(52,108)">
-              <circle r="22" fill="rgba(8,145,178,0.15)" stroke="#0891B2" strokeWidth="2" />
+              <circle r="22" fill="rgba(8,145,178,0.15)" stroke="#0891B2" strokeWidth="2">
+                <animate attributeName="r" values="22;25;22" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="1;0.7;1" dur="3s" repeatCount="indefinite" />
+              </circle>
               <g stroke="#0891B2" fill="none" strokeWidth="1.2">
                 <circle r="8" />
                 <ellipse rx="3" ry="8" />
@@ -121,7 +204,15 @@ export default function AttackGraphPreview() {
                   dur="3s"
                   repeatCount="indefinite"
                 />
-                <circle r="22" fill="rgba(124,58,237,0.15)" stroke="#7C3AED" strokeWidth="2" />
+                <circle r="22" fill="rgba(124,58,237,0.15)" stroke="#7C3AED" strokeWidth="2">
+                  <animate
+                    attributeName="r"
+                    values="22;26;22"
+                    dur="2.5s"
+                    repeatCount="indefinite"
+                    begin="0.5s"
+                  />
+                </circle>
                 <g stroke="#7C3AED" fill="none" strokeWidth="1.2">
                   <circle cx="-3" cy="-1" r="5" />
                   <line x1="2" y1="-1" x2="10" y2="-1" />
@@ -143,6 +234,10 @@ export default function AttackGraphPreview() {
 
             {/* Node 7 prod-db crown jewel */}
             <g transform="translate(718,104)">
+              <circle r="28" fill="none" stroke="#7C3AED" strokeWidth="1" opacity="0">
+                <animate attributeName="r" values="28;45" dur="2s" repeatCount="indefinite" begin="1s" />
+                <animate attributeName="opacity" values="0.6;0" dur="2s" repeatCount="indefinite" begin="1s" />
+              </circle>
               <circle r="30" fill="none" stroke="#F59E0B" strokeWidth="1" opacity="0.35">
                 <animate attributeName="r" values="26;34;26" dur="2s" repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite" />
@@ -153,7 +248,22 @@ export default function AttackGraphPreview() {
                 stroke="#F59E0B"
                 strokeWidth="2"
                 style={{ filter: "drop-shadow(0 0 8px rgba(245,158,11,0.45))" }}
-              />
+              >
+                <animate
+                  attributeName="r"
+                  values="26;30;26"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  begin="1s"
+                />
+                <animate
+                  attributeName="stroke-width"
+                  values="1.5;3;1.5"
+                  dur="2s"
+                  repeatCount="indefinite"
+                  begin="1s"
+                />
+              </circle>
             </g>
 
             {/* Labels */}
