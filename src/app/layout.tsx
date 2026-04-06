@@ -5,7 +5,7 @@ import "./globals.css";
 import "./xsee-elite.css";
 import "./legal-pages.css";
 import ChatWidget from "@/components/ChatWidget";
-import { ClarityScript } from "@/components/ClarityScript";
+import { ClarityInit } from "@/components/ClarityInit";
 import { PostHogProvider } from "@/components/PostHogProvider";
 import ScrollAnimator from "@/components/ScrollAnimator";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -98,7 +98,7 @@ export default function RootLayout({
         <PostHogProvider>{children}</PostHogProvider>
         <ScrollAnimator />
         <ChatWidget />
-        <ClarityScript />
+        <ClarityInit />
       </body>
     </html>
   );
