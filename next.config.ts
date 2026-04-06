@@ -1,13 +1,10 @@
 import type { NextConfig } from "next";
 
 const cspDenyFrame =
-  "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://cdn.paddle.com https://www.clarity.ms https://scripts.clarity.ms https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.clarity.ms; connect-src 'self' https://app.xsee.io https://api.anthropic.com https://api.paddle.com https://*.clarity.ms; frame-src https://buy.paddle.com https://customer-portal.paddle.com; frame-ancestors 'none';";
+  "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://cdn.paddle.com https://www.clarity.ms https://scripts.clarity.ms https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.clarity.ms; connect-src 'self' https://app.xsee.io https://api.anthropic.com https://api.paddle.com https://cdn.paddle.com https://*.clarity.ms; frame-src 'self' https://www.xsee.io https://buy.paddle.com https://customer-portal.paddle.com; frame-ancestors 'none';";
 
-/** Same as global CSP but allows same-origin iframes (e.g. /xsee-demo.html on /demo). */
-const cspDemoPage = cspDenyFrame.replace(
-  "frame-src https://buy.paddle.com https://customer-portal.paddle.com",
-  "frame-src 'self' https://buy.paddle.com https://customer-portal.paddle.com"
-);
+/** Same CSP as global; demo page needs identical frame-src / connect-src for iframe + Paddle. */
+const cspDemoPage = cspDenyFrame;
 
 const securityHeadersBase = [
   { key: "X-Content-Type-Options", value: "nosniff" },
