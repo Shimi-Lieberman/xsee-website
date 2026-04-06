@@ -6,11 +6,11 @@ export default function Testimonials() {
       outcome: "1 fix. 6 paths eliminated.",
       company: "B2B SaaS · 200 employees · AWS eu-central-1",
       quote:
-        "After 3 weeks triaging 1,800 Wiz findings with no clear priority, XSEE showed us the 3 paths that actually reached our database. One security group change. Done before lunch.",
+        "After 3 weeks triaging 1,800 findings with no clear priority, XSEE showed us the 3 paths that actually reached our database. One security group change. Done before lunch.",
       role: "Head of Security",
       metrics: [
         { label: "Assets scanned", value: "847" },
-        { label: "Time to first proof", value: "22 min" },
+        { label: "Time to proof", value: "22 min" },
         { label: "Paths closed", value: "3" },
       ],
     },
@@ -18,24 +18,24 @@ export default function Testimonials() {
       outcome: "$3.2M exposure proven in 18 minutes.",
       company: "Fintech · Series A · AWS us-east-1",
       quote:
-        "Our CTO's question in every security review: 'Can you prove it?' After XSEE: yes. AWS API response per hop. Timestamped. The evidence package is now in our SOC2 audit file.",
+        "Our CTO asks the same question in every security review: 'Can you prove it?' After XSEE: yes. AWS API response per hop. Timestamped. That evidence package is now in our SOC2 audit file.",
       role: "Cloud Security Engineer",
       metrics: [
         { label: "Exposure proven", value: "$3.2M" },
         { label: "Time to report", value: "18 min" },
-        { label: "Critical paths closed", value: "3" },
+        { label: "Paths closed", value: "3" },
       ],
     },
     {
-      outcome: "72% of EKS attack steps invisible to GuardDuty.",
+      outcome: "72% of attack steps invisible to our tools.",
       company: "DevOps Platform · Scale-up · AWS EKS",
       quote:
-        "We thought we were well-protected. XSEE's Detection Coverage Score showed GuardDuty was blind to 72% of the actual attack steps in our EKS cluster. That number is in every board presentation.",
+        "We thought we were well-protected. XSEE's Detection Coverage Score showed our tools were blind to 72% of the actual attack steps in our EKS cluster. That number is in every board presentation.",
       role: "DevSecOps Lead",
       metrics: [
         { label: "Detection gap found", value: "72%" },
         { label: "Blind spots closed", value: "4 of 5" },
-        { label: "Board reports", value: "Every quarter" },
+        { label: "Board reports", value: "Every Q" },
       ],
     },
   ];

@@ -26,7 +26,7 @@ export default function ComparisonTable() {
             XSEE is the only one that proves them.
           </h2>
           <p>
-            Wiz tells you what could be exploited. XM Cyber shows you theoretical paths. Pentera runs generic simulations. XSEE validates your specific paths with live AWS API evidence and simulates AI attackers. No other platform closes all three loops.
+            Other platforms show you theoretical paths and generic simulations. XSEE validates your specific paths with live AWS API evidence and simulates AI attackers. No other platform closes the full loop.
           </p>
           <div className="section-rule" />
         </div>
@@ -36,8 +36,8 @@ export default function ComparisonTable() {
               <tr>
                 <th style={{ width: "36%" }}>Capability</th>
                 <th className="xsee-col xsee-col-head">XSEE</th>
-                <th>Wiz</th>
-                <th>Prisma Cloud</th>
+                <th>Other tools</th>
+                <th>Legacy platforms</th>
               </tr>
             </thead>
             <tbody>

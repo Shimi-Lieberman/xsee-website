@@ -88,10 +88,10 @@ export default function CompetitiveDiff() {
                     XSEE
                   </th>
                   <th className="border-b border-slate-200 px-5 py-5 text-center text-sm font-semibold text-slate-500">
-                    Wiz
+                    Other tools
                   </th>
                   <th className="border-b border-slate-200 px-5 py-5 text-center text-sm font-semibold text-slate-500">
-                    Prisma Cloud
+                    Legacy platforms
                   </th>
                 </tr>
               </thead>

@@ -81,13 +81,12 @@ export default function VsWizPage() {
             <div className="mx-auto max-w-3xl text-center">
               <span className="eyebrow mb-4 inline-block">Comparison</span>
               <h1 className="display-lg mb-6">
-                Wiz tells you what could be exploited.
+                Why security teams use XSEE
                 <br />
-                <span className="text-[#ff2d78]">XSEE proves what will be.</span>
+                alongside Wiz — not instead of it.
               </h1>
               <p className="text-lg text-slate-400">
-                Wiz is the best CSPM on the market. It&apos;s also fundamentally incapable of answering the one question every CISO actually needs
-                answered: is this path real?
+                Wiz is excellent at cloud posture and hygiene. XSEE proves exploitability. They answer different questions. Smart teams use both.
               </p>
             </div>
 

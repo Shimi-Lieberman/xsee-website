@@ -66,7 +66,7 @@ export default function HeroSocialProofStats() {
           />
           <span>M</span>
         </div>
-        <div className="sp-lbl">Avg financial exposure proven</div>
+        <div className="sp-lbl">Avg financial exposure proven on first scan</div>
       </div>
     </div>
   );

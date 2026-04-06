@@ -129,7 +129,7 @@ export function NumbersMoment() {
               margin: "0 auto",
             }}
           >
-            Alerts your scanner generates per month
+            Alerts your scanner generates every month.
           </div>
         </div>
 
@@ -165,7 +165,7 @@ export function NumbersMoment() {
               margin: "0 auto",
             }}
           >
-            That actually reach your crown jewels
+            That actually reach your crown-jewel database.
           </div>
         </div>
       </div>
@@ -183,18 +183,11 @@ export function NumbersMoment() {
           letterSpacing: "-0.02em",
         }}
       >
-        Wiz shows you the 4,000.
+        The 3,997 others are noise.
         <br />
-        XSEE proves the{" "}
-        <em
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontStyle: "italic",
-            color: "var(--pink)",
-          }}
-        >
-          3 that matter.
-        </em>
+        XSEE finds the three
+        <br />
+        that will end your quarter.
       </div>
 
       <div className="reveal">
@@ -226,7 +219,7 @@ export function NumbersMoment() {
               e.currentTarget.style.boxShadow = "0 0 40px rgba(255,31,143,0.35)";
             }}
           >
-            Run Free Scan →
+            Run Free Scan — See yours →
           </Link>
           <p
             style={{
@@ -236,7 +229,7 @@ export function NumbersMoment() {
               textAlign: "center",
             }}
           >
-            Don&apos;t cancel Wiz. Add the layer it structurally cannot provide.
+            Don&apos;t cancel your CSPM. Add the layer it structurally cannot provide.
           </p>
         </div>
       </div>

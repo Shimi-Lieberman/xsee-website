@@ -56,7 +56,7 @@ export default function Footer() {
             </div>
           </Link>
           <p className="text-base leading-relaxed max-w-md mb-5 text-white/45">
-            Cloud Attack Intelligence. Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
+            Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
           </p>
           <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -81,11 +81,11 @@ export default function Footer() {
           {[
             { label: "How It Works", href: "/#how" },
             { label: "Engines", href: "/#engines" },
-            { label: "Demo", href: "/demo" },
-            { label: "vs. Wiz", href: "/vs-wiz" },
             { label: "Pricing", href: "/#pricing" },
             { label: "Changelog", href: "/changelog" },
             { label: "Free Scan", href: "/free-scan" },
+            { label: "Under Attack?", href: "/under-attack" },
+            { label: "vs. Wiz", href: "/vs-wiz" },
           ].map((link) => (
             <Link
               key={link.label}
@@ -118,7 +118,6 @@ export default function Footer() {
             { label: "Careers", href: "#" },
             { label: "Contact", href: "/#contact" },
             { label: "sales@xsee.io", href: "mailto:sales@xsee.io" },
-            { label: "Under Attack?", href: "/under-attack" },
           ].map((link) => (
             <Link
               key={link.label}
@@ -142,15 +141,15 @@ export default function Footer() {
               marginBottom: "16px",
             }}
           >
-            Legal
+            Resources
           </div>
           {[
+            { label: "Documentation", href: "#" },
+            { label: "API Reference", href: "#" },
+            { label: "Status", href: "#" },
             { label: "Terms", href: "/terms" },
             { label: "Privacy", href: "/privacy" },
-            { label: "Security Policy", href: "/security" },
             { label: "Refunds", href: "/refunds" },
-            { label: "Documentation", href: "#" },
-            { label: "Status", href: "#" },
           ].map((link) => (
             <Link
               key={link.label}
@@ -168,7 +167,7 @@ export default function Footer() {
         style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
       >
         <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.22)" }}>
-          © {new Date().getFullYear()} XSEE. All rights reserved.
+          © 2026 XSEE. All rights reserved.
         </div>
         <div className="flex items-center gap-5">
           {[

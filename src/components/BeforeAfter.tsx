@@ -27,7 +27,7 @@ export function BeforeAfter() {
               marginBottom: "14px",
             }}
           >
-            The difference that matters
+            The proof layer
           </span>
           <h2
             className="display-lg"
@@ -36,10 +36,20 @@ export function BeforeAfter() {
               lineHeight: 1.1,
             }}
           >
-            Wiz shows you what could go wrong.
-            <br />
-            <span style={{ color: "var(--pink)" }}>XSEE proves what will.</span>
+            Every claim backed by evidence.
           </h2>
+          <p
+            style={{
+              color: "rgba(255,255,255,0.4)",
+              fontSize: "16px",
+              lineHeight: 1.65,
+              maxWidth: "640px",
+              margin: "20px auto 0",
+            }}
+          >
+            Any tool can show you an attack graph. Only XSEE can prove — hop by hop, API call by API call — that the path
+            is real and exploitable right now.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full" style={{ marginBottom: "36px" }}>
@@ -69,7 +79,7 @@ export function BeforeAfter() {
                   letterSpacing: "0.1em",
                 }}
               >
-                What Wiz gives you
+                What every other tool gives you
               </span>
               <span
                 style={{
@@ -86,12 +96,11 @@ export function BeforeAfter() {
             </div>
             <div style={{ padding: "16px 18px", display: "flex", flexDirection: "column", gap: "10px" }}>
               {[
-                "4,000 alerts ranked by CVSS score",
-                "Theoretical attack graph — not validated against live AWS",
-                "No live API call per hop — cannot prove exploitability",
-                "No cryptographic evidence package for audit",
-                "No detection coverage score per path",
-                "Structurally cannot close the proof loop",
+                "Alert lists ranked by CVSS score",
+                "Theoretical attack graphs — not validated against your live environment",
+                "No live API call per hop — cannot prove a path is actually exploitable",
+                "No cryptographic evidence package for audit or compliance",
+                "The loop never closes — findings age, never get verified",
               ].map((item) => (
                 <div
                   key={item}
@@ -166,11 +175,10 @@ export function BeforeAfter() {
             <div style={{ padding: "16px 18px", display: "flex", flexDirection: "column", gap: "10px" }}>
               {[
                 ["3 paths", " that actually reach your production database"],
-                ["Live AWS API call per hop", " — confirmed exploitable, not theoretical"],
-                ["Cryptographic evidence package", " per hop — timestamped, audit-ready"],
-                ["Detection Coverage Score", " — % of attack steps your tools actually catch"],
-                ["AI attacker simulation", " — not just human attack patterns"],
-                ["One fix → 6 paths eliminated", " → L2 re-validates → certificate generated"],
+                ["Live AWS API call per hop", " — cryptographic evidence, timestamped"],
+                ["Detection Coverage Score", " — the % your tools actually catch"],
+                ["One fix → 6 paths eliminated", " → L2 re-validates → path closed"],
+                ["Before/after certificate", " — board-ready, SOC2-ready, signed"],
               ].map(([bold, rest]) => (
                 <div
                   key={bold}
@@ -206,7 +214,7 @@ export function BeforeAfter() {
 
         <div style={{ textAlign: "center" }}>
           <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginBottom: "16px" }}>
-            Don&apos;t cancel Wiz. Add the layer it structurally cannot provide.
+            This is not a gap competitors can close. It is a structural difference in how XSEE is built.
           </p>
           <Link
             href="/free-scan"

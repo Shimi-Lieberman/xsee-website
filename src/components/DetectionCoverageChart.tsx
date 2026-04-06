@@ -37,10 +37,10 @@ export default function DetectionCoverageChart() {
         <div className="elite-detect-head">
           <div>
             <h2 id="elite-detect-title" style={{ fontSize: 18, fontWeight: 800, color: "#f8fafc", marginBottom: 6, letterSpacing: "-0.02em" }}>
-              Detection Coverage Score — By Attack Technique
+              Your tools catch 1 in 3 attack steps.
             </h2>
             <p style={{ fontSize: 13, color: "#94a3b8", margin: 0, lineHeight: 1.5 }}>
-              How much of each TTP your tools actually detect
+              XSEE measures exactly how much of each attack chain your current tools can see. The average team is blind to 66% of what happens on their most critical paths. Now you have the number. Now you can fix it.
             </p>
           </div>
           <div className="elite-detect-badges">
@@ -79,7 +79,7 @@ export default function DetectionCoverageChart() {
         ))}
 
         <div className="elite-detect-foot">
-          Your average: 34% — Industry needs: 80%+
+          Detection Coverage Score — avg. 34% across techniques shown above
         </div>
       </div>
     </section>

@@ -20,8 +20,7 @@ const PLANS = [
     price: "$1,200",
     per: "/mo",
     feats: [
-      "1 AWS account",
-      "Up to 100 assets",
+      "1 AWS account · Up to 100 assets",
       "All 6 intelligence engines",
       "L2 validated attack paths",
       "XseeCyber simulation",
@@ -69,7 +68,7 @@ const PLANS = [
       "Custom reporting & dashboards",
       "SSO / SAML integration",
       "Self-hosted deployment",
-      "Optional XSEE Agent (real-time monitoring)",
+      "Optional XSEE Agent (real-time)",
       "Dedicated customer engineer",
       "SLA guarantee",
       "Custom integrations",
@@ -128,8 +127,8 @@ export default function Pricing() {
             from day one.
           </h2>
           <p style={{ color: "#64748b" }}>
-            Every plan includes the full six-engine platform. No gating, no &quot;enterprise add-ons&quot; for core proof capabilities.{" "}
-            <strong style={{ color: "#0f172a" }}>14-day free trial, no credit card required.</strong>
+            Every plan includes the full six-engine platform. No gating. No enterprise add-ons for core proof capabilities.{" "}
+            <strong style={{ color: "#0f172a" }}>14-day free trial. No credit card required.</strong>
           </p>
           <div className="section-rule" />
         </div>
@@ -234,13 +233,13 @@ export default function Pricing() {
           }}
         >
           Average XSEE customer proves{" "}
-          <strong style={{ color: "#0f172a" }}>$18.5M in validated exposure</strong>
-          {" "}on their first scan. At $1,200/mo, that&apos;s a{" "}
+          <strong style={{ color: "#0f172a" }}>$18.5M</strong>
+          {" "}in validated exposure on their first scan. At $1,200/mo, that&apos;s a{" "}
           <strong style={{ color: "#FF1B8D" }}>15,000× ROI</strong>
           {" "}before the trial ends.
         </div>
         <p className="pricing-note">
-          14-day free trial · No credit card required · Starter $1,200/mo · Professional $2,500/mo · Enterprise: contact us · Annual billing: 25% discount · Optional XSEE Agent for real-time mode
+          14-day free trial · No credit card required · Starter $1,200/mo · Professional $2,500/mo · Enterprise: contact us · Annual billing: 25% discount
         </p>
       </div>
     </section>

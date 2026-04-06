@@ -17,7 +17,7 @@ export default function ComplianceBar() {
         </svg>
       ),
       label: "Read-only IAM",
-      sub: "Never writes to your env",
+      sub: "Never writes to your environment",
     },
     {
       icon: (

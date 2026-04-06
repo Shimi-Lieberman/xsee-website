@@ -10,12 +10,12 @@ export default function AttackGraphPreview() {
     <section className="elite-attack-graph-section" aria-labelledby="elite-attack-graph-title">
       <div className="container">
         <div className="elite-attack-graph-head">
-          <span className="section-eyebrow mb-3 block">Live attack intelligence</span>
+          <span className="section-eyebrow mb-3 block">The proof layer</span>
           <h2 id="elite-attack-graph-title" className="elite-attack-graph-title">
-            Every path. Every hop. Proven in real time.
+            Every hop. Cryptographically proven.
           </h2>
           <p className="elite-attack-graph-sub">
-            XSEE builds a live attack graph and validates each path against your actual AWS environment.
+            This is what separates XSEE from every other tool in the market. Not theory — evidence. For every candidate path, XSEE calls IAM Policy Simulator, evaluates security group rules, and checks trust policies. Each response is recorded, timestamped, and signed.
           </p>
         </div>
 

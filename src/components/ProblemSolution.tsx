@@ -11,7 +11,7 @@ export default function ProblemSolution() {
             <span style={{ color: "var(--blue-light)" }}>the difference between noise and a breach.</span>
           </h2>
           <p>
-            Wiz flagged 4,000 issues last month. Your team triaged for three weeks. You fixed 200 findings. None of them were the three paths that actually reached your production database.
+            Your scanner flagged 4,000 issues last month. Your team triaged for three weeks. You fixed 200 findings. None of them were the three paths that actually reached your production database.
           </p>
           <p>
             The attacker didn't care about your CVSS scores. They followed the graph. And now AI-powered attackers are doing it 10,000 times faster than any human ever could. Your current tools were not built for this.

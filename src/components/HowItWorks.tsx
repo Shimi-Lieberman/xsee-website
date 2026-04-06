@@ -7,19 +7,19 @@ const STEPS = [
   {
     n: "01",
     title: "Connect",
-    desc: "Create a read-only IAM role in AWS. Paste the ARN. That's it. XSEE never writes to your environment. You can revoke access in one click.",
+    desc: "Create a read-only IAM role in AWS. Paste the ARN. That's the entire setup. XSEE never writes to your environment. You can revoke access in one click by deleting the role. Takes under 2 minutes. We've never needed more. (~2 minutes)",
     Icon: Plug,
   },
   {
     n: "02",
     title: "Validate",
-    desc: "For every candidate path, XSEE calls live AWS APIs to test each hop. Not simulation — validation. Each hop returns a cryptographic evidence package: exact API call, exact response, exact timestamp. \"This path is confirmed exploitable\" — with proof.",
+    desc: "XSEE builds your live attack graph using 1,000+ known attack patterns. Then, for every candidate path, we make a live AWS API call for every single hop. Each call returns a cryptographic response. Each response is timestamped and signed. This is not a theoretical graph. This is a case file. (L2 validated · ~25 minutes)",
     Icon: ShieldCheck,
   },
   {
     n: "03",
     title: "Certify",
-    desc: "Before/after evidence package generated automatically. Timestamped proof that the path was open, is now closed, and what changed. Board-ready. Audit-ready.",
+    desc: "One recommended fix. You approve. XSEE applies it and re-validates automatically. If the path no longer validates — it's closed. A before/after evidence package is generated, timestamped, and signed. Board-ready. SOC2-ready. The loop is closed. (1 human decision · everything else is XSEE)",
     Icon: Award,
   },
 ] as const;
@@ -44,16 +44,12 @@ export default function HowItWorks() {
               textAlign: "center",
             }}
           >
-            How It Works
+            How it works
           </span>
           <h2 className="display-lg" style={{ color: "var(--ink)" }}>
-            From &quot;we might have a problem&quot;
-            <br />
-            to &quot;here's the proof and here's the fix&quot; in 30 minutes.
+            From zero to proven breach path in 30 minutes.
           </h2>
-          <p style={{ color: "var(--ink-2)" }}>
-            Seven steps. No agents. No disruption. Just the truth about your cloud.
-          </p>
+          <p style={{ color: "var(--ink-2)" }}>Three steps. No agents. No disruption. No guessing.</p>
           <div className="section-rule" />
         </div>
 

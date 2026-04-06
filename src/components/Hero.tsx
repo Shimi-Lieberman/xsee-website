@@ -200,8 +200,8 @@ export default function Hero() {
             animation: "fadeUp 0.6s ease-out 0.7s forwards",
           }}
         >
-          Cryptographic evidence per hop. Live AWS API validation. Attack simulation that runs the way both human and
-          AI attackers think. Not theory — proof.
+          Your cloud is being mapped by AI attackers right now. Not theoretically. Actually. XSEE shows you exactly which
+          paths reach your crown jewels — with cryptographic evidence for every single hop.
         </p>
 
         <p
@@ -276,7 +276,7 @@ export default function Hero() {
               justifyContent: "center",
             }}
           >
-            {["Read-only IAM", "No agents installed", "Results in 30 min", "Free — no credit card"].map((t, i) => (
+            {["Read-only IAM", "No agents", "Results in 30 min", "Free"].map((t, i) => (
               <span key={t} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 {i > 0 && (
                   <span

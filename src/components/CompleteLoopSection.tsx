@@ -9,7 +9,7 @@ const STAGES = [
   { n: "④", name: "Prioritize", desc: "$ + compliance + KEV", badge: "auto" as const, circle: "rgba(239,68,68,0.2)", color: "#FCA5A5", border: "rgba(248,113,113,0.35)" },
   { n: "⑤", name: "Fix", desc: "Terraform/CLI recommendation", badge: "human" as const, circle: "rgba(255,27,141,0.2)", color: "#FF1B8D", border: "#FF1B8D", pulse: true },
   { n: "⑥", name: "Verify", desc: "L2 re-runs after fix", badge: "auto" as const, circle: "rgba(16,185,129,0.2)", color: "#34D399", border: "rgba(52,211,153,0.35)" },
-  { n: "⑦", name: "Certified", desc: "Before/after proof", badge: "auto" as const, circle: "rgba(245,158,11,0.2)", color: "#F59E0B", border: "rgba(245,158,11,0.35)" },
+  { n: "⑦", name: "Certify", desc: "Before/after proof", badge: "auto" as const, circle: "rgba(245,158,11,0.2)", color: "#F59E0B", border: "rgba(245,158,11,0.35)" },
 ];
 
 export default function CompleteLoopSection() {
@@ -75,7 +75,8 @@ export default function CompleteLoopSection() {
             The only platform that closes all 7 stages.
           </h2>
           <p className="elite-attack-graph-sub" style={{ maxWidth: 520, margin: "0 auto" }}>
-            Every other tool stops at stage 1 or 2. XSEE runs the full loop — automatically.
+            Every other tool stops at stage 1 or 2. XSEE runs the full loop — automatically. One human decision at stage 5.
+            Everything else: XSEE.
           </p>
         </div>
 
@@ -111,9 +112,9 @@ export default function CompleteLoopSection() {
         </div>
 
         <p className="elite-loop-human-line">
-          Human effort: one decision at stage{" "}
+          Human effort: one approval at stage{" "}
           <span style={{ color: "#FF1B8D", fontWeight: 800 }}>⑤</span>
-          . Everything else: XSEE.
+          . Everything else is automatic.
         </p>
       </div>
     </section>

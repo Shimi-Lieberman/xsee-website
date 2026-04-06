@@ -105,7 +105,7 @@ export default function ChatWidget() {
 
   const QUICK_REPLIES = [
     "How does validation work?",
-    "How is XSEE different from Wiz?",
+    "How is XSEE different from other tools?",
     "Get a free risk assessment",
   ];
 

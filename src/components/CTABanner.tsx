@@ -26,7 +26,7 @@ export default function CTABanner() {
       />
       <div className="container" style={{ position: "relative", zIndex: 2 }}>
         <div className="section-head" style={{ textAlign: "center", marginBottom: 56 }}>
-          <span className="section-eyebrow">Get Started</span>
+          <span className="section-eyebrow">Get started</span>
           <h2
             className="display-lg"
             style={{
@@ -36,11 +36,8 @@ export default function CTABanner() {
               letterSpacing: "-0.03em",
             }}
           >
-            The question isn&apos;t whether your cloud
+            The breach your scanner missed is
             <br />
-            will be attacked by AI.
-            <br />
-            It&apos;s whether you&apos;ll know{" "}
             <em
               style={{
                 fontFamily: "var(--font-serif)",
@@ -48,11 +45,12 @@ export default function CTABanner() {
                 color: "var(--pink)",
               }}
             >
-              before the breach.
+              already in your graph.
             </em>
           </h2>
           <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.28)", maxWidth: "520px", margin: "20px auto 0" }}>
-            Most teams find out the hard way. XSEE gives you proof before the attacker does.
+            Most teams find out during an incident. XSEE gives you the proof before the attacker does. One IAM role. Thirty
+            minutes. The truth about your cloud.
           </p>
           <div className="section-rule" style={{ margin: "20px auto 0" }} />
         </div>
@@ -61,7 +59,7 @@ export default function CTABanner() {
             <div className="cta-option-badge">FREE</div>
             <h3 className="cta-option-title">Free Risk Assessment</h3>
             <p className="cta-option-body">
-              Connect your AWS account with read-only IAM. XSEE scans your environment, validates attack paths, and delivers a ranked HTML report in 30 minutes. No commitment. No credit card. No agents.
+              Connect your AWS account with read-only IAM. XSEE scans your environment, validates attack paths, and delivers a ranked HTML report in 30 minutes. No commitment. No credit card. No agents. 14-day free trial · No credit card required · Read-only IAM · Results in 30 minutes
             </p>
             <Link href="/free-scan" className="btn btn-primary btn-shimmer">
               <span className="relative z-[2]">Run Free Scan →</span>
