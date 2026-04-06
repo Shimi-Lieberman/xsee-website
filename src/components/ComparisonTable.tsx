@@ -40,7 +40,7 @@ export default function ComparisonTable() {
                 <th>Legacy platforms</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="stagger-children">
               {COMPARISON_ROWS.map((row) => (
                 <tr key={row.cap}>
                   <td>{row.cap}</td>

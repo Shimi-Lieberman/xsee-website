@@ -149,11 +149,11 @@ export default function Pricing() {
           </p>
           <div className="section-rule" />
         </div>
-        <div className="pricing-grid">
-          {PLANS.map((plan, i) => (
+        <div className="pricing-grid stagger-children">
+          {PLANS.map((plan) => (
             <div
               key={plan.tier}
-              className={`pricing-card reveal-on-scroll ${i === 0 ? "" : i === 1 ? "reveal-delay-1" : "reveal-delay-2"} ${plan.featured ? "featured featured-pulse" : ""}`}
+              className={`pricing-card reveal ${plan.featured ? "featured featured-pulse" : ""}`}
               style={
                 plan.featured
                   ? {

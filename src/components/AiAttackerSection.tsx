@@ -42,11 +42,11 @@ export default function AiAttackerSection() {
             AI attackers are a different category.
           </h2>
         </div>
-        <div className="ai-threat-grid reveal-on-scroll">
-          {COLUMNS.map((col, i) => (
+        <div className="ai-threat-grid stagger-children">
+          {COLUMNS.map((col) => (
             <div
               key={col.title}
-              className={`ai-threat-col ${col.nhi ? "ai-threat-col-nhi" : ""} ${i === 1 ? "reveal-delay-1" : i === 2 ? "reveal-delay-2" : i === 3 ? "reveal-delay-3" : ""}`}
+              className={`ai-threat-col reveal ${col.nhi ? "ai-threat-col-nhi" : ""}`}
             >
               <div className={`ai-threat-icon ${col.nhi ? "ai-threat-icon-nhi" : ""}`}>
                 <col.icon size={28} strokeWidth={2} />

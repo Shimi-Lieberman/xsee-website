@@ -40,8 +40,6 @@ export default function Testimonials() {
     },
   ];
 
-  const revealClass = ["reveal", "reveal reveal-d1", "reveal reveal-d2"] as const;
-
   return (
     <section className="animate-on-scroll py-20 overflow-hidden" id="testimonials">
       <div className="max-w-6xl mx-auto w-full px-6 testimonials-inner">
@@ -52,11 +50,11 @@ export default function Testimonials() {
           </h2>
         </div>
 
-        <div className="testimonials-grid">
-          {cards.map((cs, i) => (
+        <div className="testimonials-grid stagger-children">
+          {cards.map((cs) => (
             <div
               key={cs.outcome}
-              className={`top-bar-card ${revealClass[i]}`}
+              className="top-bar-card reveal"
               style={{
                 background: "#fafaf9",
                 border: "1px solid rgba(0,0,0,0.07)",

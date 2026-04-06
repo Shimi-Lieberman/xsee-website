@@ -112,24 +112,12 @@ export default function EnginesGrid() {
           </p>
           <div className="section-rule" />
         </div>
-        <div className="engines-grid">
+        <div className="engines-grid stagger-children">
           {ENGINES.map((e, i) => {
-            const revealCls =
-              i === 0
-                ? "reveal"
-                : i === 1
-                  ? "reveal reveal-d1"
-                  : i === 2
-                    ? "reveal reveal-d2"
-                    : i === 3
-                      ? "reveal"
-                      : i === 4
-                        ? "reveal reveal-d1"
-                        : "reveal reveal-d2";
             return (
             <MagneticCard
               key={e.num}
-              className={`magnetic-card top-bar-card engine-card engine-card-premium ${revealCls} ${i === 2 ? "engine-warm" : ""} ${i === 4 ? "engine-orange" : ""}`}
+              className={`magnetic-card top-bar-card engine-card engine-card-premium reveal ${i === 2 ? "engine-warm" : ""} ${i === 4 ? "engine-orange" : ""}`}
               style={{
                 border: "1px solid rgba(0,0,0,0.07)",
                 borderRadius: "16px",

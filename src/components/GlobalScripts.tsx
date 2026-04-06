@@ -123,9 +123,7 @@ export default function GlobalScripts() {
       (entries) => {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
-          e.target.querySelectorAll("tbody tr").forEach((r, i) => {
-            setTimeout(() => r.classList.add("in"), i * 70);
-          });
+          e.target.querySelectorAll("tbody tr").forEach((r) => r.classList.add("in"));
         });
       },
       { threshold: 0.15 }

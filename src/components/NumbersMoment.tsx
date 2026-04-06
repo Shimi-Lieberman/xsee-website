@@ -59,11 +59,11 @@ export function NumbersMoment() {
         style={{
           width: "600px",
           height: "600px",
-          background: "radial-gradient(circle, rgba(239,68,68,0.08), transparent 70%)",
+          background: "radial-gradient(circle, rgba(239,68,68,0.1), transparent 70%)",
           left: "-100px",
           top: "50%",
           transform: "translateY(-50%)",
-          animation: "orbDrift1 12s ease-in-out infinite",
+          animation: "orbDrift1 14s ease-in-out infinite",
         }}
       />
       <div
@@ -71,11 +71,11 @@ export function NumbersMoment() {
         style={{
           width: "500px",
           height: "500px",
-          background: "radial-gradient(circle, rgba(255,31,143,0.08), transparent 70%)",
+          background: "radial-gradient(circle, rgba(255,31,143,0.1), transparent 70%)",
           right: "-80px",
           top: "50%",
           transform: "translateY(-50%)",
-          animation: "orbDrift2 10s ease-in-out infinite",
+          animation: "orbDrift2 17s ease-in-out infinite",
         }}
       />
 

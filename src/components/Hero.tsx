@@ -53,7 +53,7 @@ export default function Hero() {
           background: "radial-gradient(circle, rgba(255,31,143,0.1) 0%, transparent 70%)",
           top: "-150px",
           left: "-150px",
-          animation: "orbDrift1 10s ease-in-out infinite",
+          animation: "orbDrift1 14s ease-in-out infinite",
         }}
       />
       <div
@@ -61,10 +61,10 @@ export default function Hero() {
         style={{
           width: "600px",
           height: "600px",
-          background: "radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)",
           top: "30%",
           right: "-100px",
-          animation: "orbDrift2 12s ease-in-out infinite",
+          animation: "orbDrift2 17s ease-in-out infinite",
         }}
       />
       <div
@@ -72,10 +72,10 @@ export default function Hero() {
         style={{
           width: "500px",
           height: "500px",
-          background: "radial-gradient(circle, rgba(20,184,166,0.06) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(20,184,166,0.1) 0%, transparent 70%)",
           bottom: "-50px",
           left: "35%",
-          animation: "orbDrift3 9s ease-in-out infinite",
+          animation: "orbDrift3 20s ease-in-out infinite",
         }}
       />
 
@@ -139,64 +139,79 @@ export default function Hero() {
           <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>›</span>
         </Link>
 
-        <h1
-          style={{
-            fontSize: "clamp(60px, 9vw, 108px)",
-            fontWeight: 900,
-            lineHeight: 0.98,
-            letterSpacing: "-0.035em",
-            color: "#fff",
-            marginBottom: "28px",
-            fontFamily: "var(--font-sans)",
-          }}
-        >
-          <span className="word-reveal wr-1" style={{ color: "#fff" }}>
-            Stop
-          </span>{" "}
-          <span className="word-reveal wr-2" style={{ color: "#fff" }}>
-            guessing.
-          </span>
-          <br />
-          <span
-            className="word-reveal wr-3"
+        <div style={{ marginBottom: "28px", width: "100%" }}>
+          <h1
             style={{
-              color: "var(--pink)",
-              fontFamily: "var(--font-serif)",
-              fontStyle: "italic",
+              fontSize: "clamp(60px, 9vw, 108px)",
+              fontWeight: 900,
+              lineHeight: 0.98,
+              letterSpacing: "-0.035em",
+              color: "#fff",
+              margin: 0,
+              fontFamily: "var(--font-sans)",
             }}
           >
-            Prove
-          </span>{" "}
-          <span
-            className="word-reveal wr-4"
+            <span className="word-reveal" style={{ animationDelay: "0ms", color: "#fff" }}>
+              Stop
+            </span>{" "}
+            <span className="word-reveal" style={{ animationDelay: "80ms", color: "#fff" }}>
+              guessing.
+            </span>
+          </h1>
+          <div
+            className="hero-pink-line"
             style={{
-              color: "var(--pink)",
-              fontFamily: "var(--font-serif)",
-              fontStyle: "italic",
+              fontSize: "clamp(60px, 9vw, 108px)",
+              fontWeight: 900,
+              lineHeight: 0.98,
+              letterSpacing: "-0.035em",
+              marginTop: "0.06em",
             }}
           >
-            the
-          </span>{" "}
-          <span
-            className="word-reveal wr-5"
-            style={{
-              color: "var(--pink)",
-              fontFamily: "var(--font-serif)",
-              fontStyle: "italic",
-            }}
-          >
-            breach.
-          </span>
-        </h1>
+            <span
+              className="word-reveal"
+              style={{
+                animationDelay: "200ms",
+                color: "var(--pink)",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+              }}
+            >
+              Prove
+            </span>{" "}
+            <span
+              className="word-reveal"
+              style={{
+                animationDelay: "280ms",
+                color: "var(--pink)",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+              }}
+            >
+              the
+            </span>{" "}
+            <span
+              className="word-reveal"
+              style={{
+                animationDelay: "360ms",
+                color: "var(--pink)",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+              }}
+            >
+              breach.
+            </span>
+          </div>
+        </div>
 
         <p
+          className="hero-body-copy"
           style={{
             fontSize: "18px",
             color: "rgba(255,255,255,0.45)",
             lineHeight: 1.7,
             maxWidth: "520px",
             marginBottom: "24px",
-            opacity: 1,
           }}
         >
           Your cloud is being mapped by AI attackers right now. Not theoretically. Actually. XSEE shows you exactly which
@@ -204,7 +219,7 @@ export default function Hero() {
         </p>
 
         <p
-          className="font-mono"
+          className="font-mono hero-trust-line"
           style={{
             fontSize: 12,
             color: "rgba(255,255,255,0.45)",
@@ -212,7 +227,6 @@ export default function Hero() {
             maxWidth: 440,
             lineHeight: 1.5,
             marginBottom: "28px",
-            opacity: 1,
           }}
         >
           Read-only AWS access · No agent installed · Your data never leaves your account
@@ -231,7 +245,7 @@ export default function Hero() {
         >
           <Link
             href="/free-scan"
-            className="btn-shimmer"
+            className="btn-shimmer hero-cta-primary"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -244,18 +258,9 @@ export default function Hero() {
               padding: "16px 36px",
               borderRadius: "14px",
               textDecoration: "none",
-              transition: "all 0.2s",
               boxShadow: "0 0 50px rgba(255,31,143,0.4)",
             }}
             onClick={() => Analytics.ctaClicked("hero", "free_scan")}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 0 80px rgba(255,31,143,0.6)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 0 50px rgba(255,31,143,0.4)";
-            }}
           >
             <span className="inline-flex items-center gap-2">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
@@ -266,6 +271,7 @@ export default function Hero() {
           </Link>
           <Link
             href="/demo"
+            className="hero-cta-secondary"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -278,18 +284,9 @@ export default function Hero() {
               padding: "14px 28px",
               borderRadius: "14px",
               textDecoration: "none",
-              transition: "all 0.2s",
               border: "1px solid rgba(255,255,255,0.2)",
             }}
             onClick={() => Analytics.ctaClicked("hero", "watch_demo")}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.35)";
-              e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-              e.currentTarget.style.background = "transparent";
-            }}
           >
             Watch Demo
           </Link>
@@ -337,6 +334,7 @@ export default function Hero() {
         }}
       >
         <div
+          className="hero-mockup-wrapper"
           style={{
             background: "rgba(8,12,24,0.95)",
             border: "1px solid rgba(255,255,255,0.09)",
