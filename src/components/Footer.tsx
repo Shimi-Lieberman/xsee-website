@@ -68,6 +68,7 @@ export default function Footer() {
           {[
             { label: "How It Works", href: "/#how" },
             { label: "Engines", href: "/#engines" },
+            { label: "Demo", href: "/demo" },
             { label: "vs. Wiz", href: "/vs-wiz" },
             { label: "Pricing", href: "/#pricing" },
             { label: "Changelog", href: "/changelog" },

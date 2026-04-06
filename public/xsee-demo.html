@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XSEE — Interactive Platform Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:#010912;--deep:#040C1C;--surf0:#071020;--surf1:#0B1728;--surf2:#0F1E32;--surf3:#14253C;
+  --border:rgba(37,99,235,.13);--borderB:rgba(37,99,235,.38);--borderG:rgba(34,197,94,.3);
+  --blue:#2563EB;--blue2:#1D4ED8;--cyan:#06B6D4;--red:#EF4444;--red2:#DC2626;
+  --amber:#F59E0B;--green:#22C55E;--purple:#8B5CF6;--gold:#FBBF24;
+  --white:#EEF4FF;--muted:#64748B;--dim:#2D3F55;
+  --mono:'IBM Plex Mono',monospace;--display:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--void);color:var(--white);font-family:var(--body);font-size:14px}
+
+/* BG */
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(37,99,235,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.03) 1px,transparent 1px);
+  background-size:44px 44px}
+.bg-vignette{position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:radial-gradient(ellipse 90% 80% at 50% 50%,transparent 30%,rgba(1,9,18,.7) 100%)}
+.bg-orb{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(90px);opacity:.06}
+.orb1{width:700px;height:700px;top:-250px;left:-150px;background:var(--blue)}
+.orb2{width:500px;height:500px;bottom:-150px;right:-150px;background:var(--purple)}
+
+/* TOAST */
+#toast-root{position:fixed;top:70px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{
+  padding:10px 16px;border-radius:8px;font-family:var(--mono);font-size:11px;
+  background:rgba(11,23,40,.97);border:1px solid var(--border);color:var(--white);
+  display:flex;align-items:center;gap:10px;pointer-events:all;
+  animation:toastIn .3s cubic-bezier(.4,0,.2,1) forwards;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);backdrop-filter:blur(16px);
+}
+.toast.green{border-color:rgba(34,197,94,.35);background:rgba(7,26,18,.97)}
+.toast.red{border-color:rgba(239,68,68,.35);background:rgba(26,7,7,.97)}
+.toast.blue{border-color:rgba(37,99,235,.35)}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@keyframes toastOut{from{opacity:1;transform:none}to{opacity:0;transform:translateX(20px)}}
+
+/* APP */
+#app{position:relative;z-index:10;display:flex;flex-direction:column;height:100vh}
+
+/* TOPBAR */
+.topbar{
+  height:54px;padding:0 20px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(4,12,28,.94);border-bottom:1px solid var(--border);
+  backdrop-filter:blur(16px);position:relative;
+}
+.topbar::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(37,99,235,.5) 30%,rgba(6,182,212,.4) 70%,transparent)}
+.logo{font-family:var(--display);font-size:20px;font-weight:800;letter-spacing:.06em;
+  display:flex;align-items:center;gap:10px}
+.logo-x{color:#fff}.logo-see{color:var(--blue)}
+.logo-tag{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.08em;
+  border-left:1px solid var(--border);padding-left:10px}
+.topbar-center{display:flex;align-items:center;gap:16px}
+.scan-badge{display:flex;align-items:center;gap:6px;padding:4px 11px;border-radius:20px;
+  background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);
+  font-family:var(--mono);font-size:10px;color:var(--green);letter-spacing:.06em}
+.scan-pulse{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.6)}}
+.topbar-right{display:flex;align-items:center;gap:14px}
+.org-chip{padding:4px 11px;border-radius:6px;font-family:var(--mono);font-size:10px;
+  background:rgba(37,99,235,.1);border:1px solid var(--borderB);color:#93C5FD;letter-spacing:.06em}
+.clock{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.kbd-hint{
+  display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;color:var(--dim);
+  padding:3px 8px;border-radius:4px;border:1px solid var(--dim);background:rgba(255,255,255,.02);
+}
+
+/* MIDDLE */
+.middle{flex:1;display:flex;overflow:hidden;min-height:0}
+
+/* SIDEBAR */
+.sidebar{
+  width:220px;flex-shrink:0;background:rgba(4,12,28,.82);
+  border-right:1px solid var(--border);display:flex;flex-direction:column;
+  padding:14px 0;backdrop-filter:blur(12px);position:relative;overflow:hidden;
+}
+.sidebar::before{content:'';position:absolute;top:0;right:0;bottom:0;width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(37,99,235,.28) 30%,rgba(37,99,235,.28) 70%,transparent)}
+.sidebar-section{padding:0 10px;margin-bottom:4px}
+.sidebar-label{font-family:var(--mono);font-size:9px;color:var(--dim);letter-spacing:.14em;
+  text-transform:uppercase;padding:0 8px;margin-bottom:6px}
+.nav-item{
+  display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:8px;
+  cursor:pointer;transition:all .2s;border:1px solid transparent;
+  position:relative;margin-bottom:2px;
+}
+.nav-item:hover{background:rgba(37,99,235,.07);border-color:rgba(37,99,235,.12)}
+.nav-item.active{background:rgba(37,99,235,.12);border-color:rgba(37,99,235,.25)}
+.nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:55%;border-radius:0 2px 2px 0;background:var(--blue)}
+.nav-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);font-size:14px}
+.nav-item.active .nav-icon{background:rgba(37,99,235,.15);border-color:var(--borderB)}
+.nav-num{width:17px;height:17px;border-radius:50%;border:1px solid var(--dim);
+  font-family:var(--mono);font-size:9px;font-weight:600;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.nav-item.active .nav-num{background:var(--blue);border-color:var(--blue);color:#fff}
+.nav-item.visited .nav-num{background:rgba(34,197,94,.15);border-color:rgba(34,197,94,.3);color:var(--green)}
+.nav-text{flex:1;min-width:0}
+.nav-name{font-size:12px;font-weight:600;color:#94A3B8;line-height:1;margin-bottom:2px}
+.nav-item.active .nav-name{color:var(--white)}
+.nav-sub{font-family:var(--mono);font-size:9px;color:var(--muted)}
+.nav-status{flex-shrink:0}
+.dot-red{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1s infinite}
+.dot-green{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.dot-dim{width:6px;height:6px;border-radius:50%;background:var(--dim)}
+.sidebar-footer{margin-top:auto;padding:10px 18px;border-top:1px solid var(--border)}
+.footer-text{font-family:var(--mono);font-size:9px;color:var(--muted);line-height:1.9}
+.kbd-chip{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:16px;height:14px;border-radius:3px;border:1px solid var(--dim);
+  font-family:var(--mono);font-size:8px;color:var(--dim);margin-right:1px;
+}
+
+/* CONTENT */
+.content{flex:1;overflow:hidden;position:relative}
+.screen{
+  position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding:20px 24px;
+  opacity:0;pointer-events:none;transform:translateX(20px);
+  transition:opacity .32s cubic-bezier(.4,0,.2,1),transform .32s cubic-bezier(.4,0,.2,1);
+}
+.screen.active{opacity:1;pointer-events:all;transform:none}
+.screen.exit{opacity:0;transform:translateX(-20px)}
+.screen::-webkit-scrollbar{width:4px}
+.screen::-webkit-scrollbar-track{background:transparent}
+.screen::-webkit-scrollbar-thumb{background:var(--dim);border-radius:2px}
+
+/* BOTTOMBAR */
+.bottombar{
+  height:50px;padding:0 20px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(4,12,28,.97);border-top:1px solid var(--border);
+}
+.nbtn{
+  display:flex;align-items:center;gap:7px;padding:7px 18px;border-radius:7px;
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.04em;
+  cursor:pointer;transition:all .2s;border:1px solid var(--border);
+  background:transparent;color:var(--muted);
+}
+.nbtn:hover{background:rgba(37,99,235,.1);border-color:var(--borderB);color:var(--white)}
+.nbtn:disabled{opacity:.2;cursor:not-allowed;pointer-events:none}
+.nbtn.primary{
+  background:linear-gradient(135deg,var(--blue),var(--blue2));border-color:var(--blue);color:#fff;
+  box-shadow:0 0 20px rgba(37,99,235,.3),0 2px 8px rgba(0,0,0,.4);
+}
+.nbtn.primary:hover{box-shadow:0 0 32px rgba(37,99,235,.45),0 4px 16px rgba(0,0,0,.4)}
+.progress-bar{display:flex;align-items:center;gap:8px}
+.prog-dots{display:flex;gap:5px}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--dim);transition:all .4s;cursor:pointer}
+.pdot:hover{background:rgba(37,99,235,.5);transform:scale(1.2)}
+.pdot.active{background:var(--blue);transform:scale(1.3)}
+.pdot.done{background:var(--green)}
+.prog-label{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:6px}
+
+/* SHARED */
+.screen-title{
+  font-family:var(--display);font-size:22px;font-weight:800;
+  background:linear-gradient(135deg,#fff 55%,rgba(148,163,184,.6));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;margin-bottom:3px;
+}
+.engine-tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+  display:flex;align-items:center;gap:7px;margin-bottom:16px;margin-top:2px}
+.etag-num{padding:2px 7px;border-radius:3px;background:rgba(37,99,235,.15);border:1px solid var(--borderB);color:#93C5FD}
+.etag-name{color:var(--muted)}
+.etag-sep{color:var(--dim)}
+.card{background:rgba(11,23,40,.72);border:1px solid var(--border);border-radius:10px;
+  backdrop-filter:blur(12px);padding:14px}
+.card-hd{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:4px;
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.04em}
+.b-red{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.28);color:#FCA5A5}
+.b-green{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.25);color:#6EE7B7}
+.b-blue{background:rgba(37,99,235,.13);border:1px solid rgba(37,99,235,.3);color:#93C5FD}
+.b-amber{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#FDE68A}
+.b-purple{background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.28);color:#C4B5FD}
+.b-cyan{background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.25);color:#67E8F9}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fu{animation:fadeUp .45s ease forwards;opacity:0}
+.fu1{animation-delay:.06s}.fu2{animation-delay:.12s}.fu3{animation-delay:.18s}.fu4{animation-delay:.24s}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 10px rgba(251,191,36,.3)}50%{box-shadow:0 0 28px rgba(251,191,36,.65),0 0 50px rgba(251,191,36,.15)}}
+
+/* ── SCREEN 0 · WAR ROOM ── */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.stat-card{border-radius:10px;padding:16px 16px 12px;position:relative;overflow:hidden;border:1px solid transparent}
+.stat-card::before{content:'';position:absolute;inset:0;border-radius:inherit;opacity:.05;background:var(--c)}
+.stat-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--c),transparent);opacity:.55}
+.sc-threat{--c:var(--red);background:linear-gradient(160deg,rgba(239,68,68,.07),rgba(4,12,28,.5));border-color:rgba(239,68,68,.18)}
+.sc-proof{--c:var(--amber);background:linear-gradient(160deg,rgba(245,158,11,.07),rgba(4,12,28,.5));border-color:rgba(245,158,11,.18)}
+.sc-exp{--c:var(--purple);background:linear-gradient(160deg,rgba(139,92,246,.07),rgba(4,12,28,.5));border-color:rgba(139,92,246,.18)}
+.sc-cov{--c:var(--cyan);background:linear-gradient(160deg,rgba(6,182,212,.07),rgba(4,12,28,.5));border-color:rgba(6,182,212,.18)}
+.sc-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.sc-val{font-family:var(--display);font-size:34px;font-weight:800;line-height:1;margin-bottom:6px}
+.sc-threat .sc-val{color:#F87171}.sc-proof .sc-val{color:#FCD34D}
+.sc-exp .sc-val{color:#C4B5FD}.sc-cov .sc-val{color:#67E8F9}
+.sc-delta{font-family:var(--mono);font-size:10px;color:var(--muted);display:flex;align-items:center;gap:4px}
+.sc-delta.bad{color:#F87171}.sc-delta.good{color:#6EE7B7}
+.sc-spark{position:absolute;right:12px;bottom:12px;opacity:.45}
+.overview-grid{display:grid;grid-template-columns:1fr 310px;gap:12px}
+.activity-list{display:flex;flex-direction:column;gap:5px}
+.act-item{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:8px;
+  background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.04);transition:border-color .2s;cursor:default}
+.act-item:hover{border-color:var(--border)}
+.act-time{font-family:var(--mono);font-size:9px;color:var(--dim);flex-shrink:0;width:36px}
+.act-msg{font-size:12px;color:#94A3B8;flex:1;line-height:1.3}
+.act-msg strong{color:var(--white)}
+.ai-card{background:linear-gradient(150deg,rgba(8,16,36,.92),rgba(12,20,44,.92));
+  border:1px solid rgba(139,92,246,.22);border-radius:10px;padding:16px;position:relative;overflow:hidden}
+.ai-card::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;
+  background:radial-gradient(circle,rgba(139,92,246,.1),transparent 70%)}
+.ai-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(139,92,246,.5),transparent)}
+.ai-hd{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.ai-orb{width:32px;height:32px;border-radius:8px;flex-shrink:0;
+  background:linear-gradient(135deg,#7C3AED,#4338CA);display:flex;align-items:center;justify-content:center;
+  font-size:15px;box-shadow:0 0 14px rgba(139,92,246,.3)}
+.ai-name{font-family:var(--display);font-size:13px;font-weight:700}
+.ai-sub{font-family:var(--mono);font-size:9px;color:var(--purple);letter-spacing:.07em}
+.ai-body{font-size:12px;line-height:1.75;color:#CBD5E1;
+  border-left:2px solid rgba(139,92,246,.35);padding-left:10px;margin-bottom:11px}
+.ai-findings{display:flex;flex-direction:column;gap:4px}
+.ai-row{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:6px;
+  font-family:var(--mono);font-size:10px;color:var(--muted);background:rgba(255,255,255,.025)}
+.ai-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+
+/* ── SCREEN 1 · ATTACK GRAPH ── */
+.graph-layout{display:grid;grid-template-columns:1fr 272px;gap:12px;height:calc(100vh - 178px);min-height:400px}
+.graph-wrap{background:rgba(1,6,16,.88);border:1px solid var(--border);border-radius:10px;
+  position:relative;overflow:hidden;display:flex;flex-direction:column}
+.graph-toolbar{display:flex;align-items:center;gap:5px;padding:9px 11px;border-bottom:1px solid var(--border);flex-shrink:0}
+.gtab{padding:4px 10px;border-radius:5px;font-family:var(--mono);font-size:10px;
+  background:transparent;border:1px solid transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.gtab:hover{color:var(--white);background:rgba(255,255,255,.04)}
+.gtab.on{background:rgba(37,99,235,.15);border-color:var(--borderB);color:var(--white)}
+.gtab-sep{width:1px;height:14px;background:var(--border);margin:0 3px}
+.graph-canvas{flex:1;overflow:hidden;position:relative}
+.graph-canvas svg{width:100%;height:100%;display:block}
+.graph-right{display:flex;flex-direction:column;gap:9px;overflow-y:auto}
+.graph-right::-webkit-scrollbar{width:3px}
+.graph-right::-webkit-scrollbar-thumb{background:var(--dim)}
+
+/* PATH FILTER */
+.path-filter{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}
+.filter-btn{padding:3px 8px;border-radius:4px;font-family:var(--mono);font-size:9px;
+  background:transparent;border:1px solid var(--dim);color:var(--muted);cursor:pointer;transition:all .15s}
+.filter-btn:hover{border-color:var(--borderB);color:var(--white)}
+.filter-btn.on{background:rgba(37,99,235,.15);border-color:var(--borderB);color:var(--white)}
+
+.path-item{padding:10px 11px;border-radius:8px;background:rgba(255,255,255,.02);
+  border:1px solid var(--border);cursor:pointer;transition:all .2s;margin-bottom:4px}
+.path-item:hover{border-color:var(--borderB);background:rgba(37,99,235,.05)}
+.path-item.sel{border-color:var(--blue);background:rgba(37,99,235,.09)}
+.path-item.hidden{display:none}
+.path-sev{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;margin-bottom:3px}
+.path-name{font-size:11px;font-weight:600;color:var(--white);line-height:1.3;margin-bottom:3px}
+.path-meta{font-family:var(--mono);font-size:9px;color:var(--muted)}
+.conf-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.06);margin-top:5px;overflow:hidden}
+.conf-fill{height:100%;border-radius:2px;transition:width .5s ease}
+
+.verdict-box{border-radius:9px;padding:13px;border:1px solid rgba(239,68,68,.2);background:rgba(239,68,68,.05);transition:all .3s}
+.verdict-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px}
+.verdict-title{font-family:var(--display);font-size:11px;font-weight:700;margin-bottom:3px}
+.verdict-body{font-size:11px;line-height:1.6;color:#94A3B8}
+.conf-block{text-align:center;flex-shrink:0;margin-left:10px}
+.conf-val{font-family:var(--display);font-size:28px;font-weight:800;line-height:1;transition:color .3s}
+.conf-lbl{font-family:var(--mono);font-size:8px;color:var(--muted);letter-spacing:.08em}
+.detail-rows{display:flex;flex-direction:column;gap:4px}
+.dr{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:10px;
+  padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.dr:last-child{border-bottom:none}
+.dr-k{color:var(--muted)}.dr-v{color:var(--white)}
+.mitre-list{display:flex;flex-direction:column;gap:4px}
+
+/* ── SCREEN 2 · L2 VALIDATION ── */
+.proof-banner{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:9px;
+  background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);margin-bottom:14px}
+.proof-icon{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:rgba(34,197,94,.12);
+  border:1px solid rgba(34,197,94,.3);display:flex;align-items:center;justify-content:center;font-size:18px}
+.proof-title{font-family:var(--display);font-size:15px;font-weight:800;color:#4ADE80;line-height:1;margin-bottom:3px}
+.proof-sub{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.03em}
+.l2-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.code-block{background:#020C18;border:1px solid rgba(37,99,235,.18);border-radius:8px;padding:12px;
+  font-family:var(--mono);font-size:11px;line-height:1.85;overflow-x:auto;position:relative}
+.code-copy{position:absolute;top:8px;right:8px;padding:3px 8px;border-radius:4px;
+  font-family:var(--mono);font-size:9px;background:rgba(37,99,235,.15);border:1px solid var(--borderB);
+  color:#93C5FD;cursor:pointer;transition:all .2s;opacity:0}
+.code-block:hover .code-copy{opacity:1}
+.code-copy:hover{background:rgba(37,99,235,.3)}
+.ck{color:#93C5FD}.cv{color:#6EE7B7}.cs{color:#FDE68A}.cn{color:#F9A8D4}.cc{color:var(--muted);font-style:italic}
+.c-red{color:#FCA5A5;font-weight:600}
+.vchain{display:flex;flex-direction:column;gap:6px}
+.vrow{display:flex;align-items:flex-start;gap:9px;padding:9px 11px;border-radius:8px;
+  background:rgba(255,255,255,.018);border:1px solid rgba(255,255,255,.04);cursor:pointer;transition:all .2s}
+.vrow:hover{border-color:var(--border);background:rgba(255,255,255,.03)}
+.vicon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:11px;flex-shrink:0;margin-top:1px}
+.vi-pass{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#4ADE80}
+.vi-fail{background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);color:#F87171}
+.vi-warn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:#FDE68A}
+.vt{font-size:12px;font-weight:600;margin-bottom:2px}
+.vd{font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.5}
+.vd.danger{color:#FCA5A5}
+.diff-card{background:rgba(239,68,68,.03);border:1px solid rgba(239,68,68,.15);border-radius:9px;padding:13px;margin-top:10px}
+.diff-head{font-family:var(--display);font-size:12px;font-weight:700;color:#F87171;margin-bottom:7px}
+.diff-body{font-size:12px;line-height:1.75;color:#94A3B8}
+
+/* ── SCREEN 3 · REMEDIATION ── */
+.rem-layout{display:grid;grid-template-columns:1fr 296px;gap:12px}
+.cutpoint-box{background:rgba(1,6,16,.88);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:10px}
+.fix-list{display:flex;flex-direction:column;gap:8px}
+.fix-card{padding:13px;border-radius:9px;background:rgba(255,255,255,.02);
+  border:1px solid var(--border);cursor:pointer;transition:all .2s;position:relative}
+.fix-card:hover{border-color:var(--borderB);background:rgba(37,99,235,.04)}
+.fix-card.best{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.035)}
+.fix-card.best::before{content:'OPTIMAL';position:absolute;top:-8px;right:10px;
+  font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:.1em;color:#4ADE80;
+  background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);padding:2px 6px;border-radius:3px}
+.fix-t{font-size:12px;font-weight:600;margin-bottom:4px}
+.fix-d{font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6;margin-bottom:8px}
+.fix-chips{display:flex;gap:5px;flex-wrap:wrap}
+.chip{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:4px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted)}
+.chip.green{color:#4ADE80;border-color:rgba(34,197,94,.2);background:rgba(34,197,94,.06)}
+.chip.blue{color:#93C5FD;border-color:rgba(37,99,235,.25);background:rgba(37,99,235,.08)}
+.chip.amber{color:#FDE68A;border-color:rgba(245,158,11,.2);background:rgba(245,158,11,.06)}
+.approve-box{border-radius:9px;padding:14px;margin-top:12px;background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2)}
+.approve-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--muted);margin-bottom:9px}
+.abtn{width:100%;padding:12px;border-radius:8px;background:linear-gradient(135deg,#15803D,#16A34A);color:#fff;
+  font-family:var(--display);font-size:14px;font-weight:800;border:none;cursor:pointer;letter-spacing:.02em;
+  box-shadow:0 0 24px rgba(22,163,74,.2),0 4px 16px rgba(0,0,0,.4);transition:all .3s;position:relative;overflow:hidden}
+.abtn:hover{transform:translateY(-1px);box-shadow:0 0 38px rgba(22,163,74,.32),0 8px 24px rgba(0,0,0,.4)}
+.abtn:disabled{cursor:not-allowed;transform:none}
+.abtn-progress{position:absolute;left:0;top:0;bottom:0;width:0%;background:rgba(255,255,255,.15);transition:width .8s ease}
+.approve-note{font-family:var(--mono);font-size:9px;color:var(--muted);text-align:center;margin-top:7px;line-height:1.7}
+
+/* ── SCREEN 4 · XSEECYBER ── */
+.sim-layout{display:grid;grid-template-columns:1fr 290px;gap:12px;height:calc(100vh - 178px);min-height:400px}
+.sim-controls{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.speed-btn{padding:3px 9px;border-radius:4px;font-family:var(--mono);font-size:10px;
+  background:transparent;border:1px solid var(--dim);color:var(--muted);cursor:pointer;transition:all .15s}
+.speed-btn:hover{border-color:var(--borderB);color:var(--white)}
+.speed-btn.on{background:rgba(37,99,235,.15);border-color:var(--borderB);color:var(--white)}
+.replay-btn{padding:3px 9px;border-radius:4px;font-family:var(--mono);font-size:10px;
+  background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.25);color:#C4B5FD;cursor:pointer;transition:all .2s}
+.replay-btn:hover{background:rgba(139,92,246,.2)}
+.terminal{background:#00060F;border:1px solid rgba(37,99,235,.2);border-radius:10px;
+  display:flex;flex-direction:column;overflow:hidden}
+.term-hd{display:flex;align-items:center;gap:6px;padding:10px 12px;
+  border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;background:rgba(0,0,0,.2)}
+.tdot{width:10px;height:10px;border-radius:50%}
+.tdot1{background:#FF5F57}.tdot2{background:#FEBC2E}.tdot3{background:#28C840}
+.term-title{font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:5px}
+.term-body{flex:1;overflow-y:auto;padding:12px 14px;font-family:var(--mono);font-size:11px;line-height:1.9}
+.term-body::-webkit-scrollbar{width:3px}
+.term-body::-webkit-scrollbar-thumb{background:var(--dim);border-radius:2px}
+.tl{display:block}
+.tl.cmd{color:#93C5FD}.tl.out{color:#64748B}.tl.ok{color:#4ADE80}
+.tl.err{color:#F87171}.tl.warn{color:#FDE68A}.tl.hi{color:#fff;font-weight:600}
+.tl.sec{color:#C4B5FD;border-left:2px solid rgba(139,92,246,.4);padding-left:8px;margin-top:3px}
+.tl.box{color:#fff;padding:5px 9px;margin:3px 0;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:4px}
+.tl.box-g{color:#4ADE80;padding:5px 9px;margin:3px 0;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:4px}
+.cursor-blink{display:inline-block;width:7px;height:12px;background:var(--blue);vertical-align:text-bottom;animation:cblink 1s step-end infinite}
+@keyframes cblink{0%,100%{opacity:1}50%{opacity:0}}
+.kc-panel{display:flex;flex-direction:column;gap:0;overflow-y:auto}
+.kc-row{display:flex;gap:10px;position:relative}
+.kc-spine{display:flex;flex-direction:column;align-items:center;width:28px;flex-shrink:0}
+.kc-node{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:10px;font-weight:700;z-index:1}
+.kc-n-done{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#4ADE80}
+.kc-n-active{background:var(--red);color:#fff;box-shadow:0 0 12px rgba(239,68,68,.5)}
+.kc-n-idle{background:rgba(255,255,255,.05);border:1px solid var(--dim);color:var(--muted)}
+.kc-line{width:1px;flex:1;background:var(--border);min-height:14px}
+.kc-content{padding:1px 0 14px;flex:1}
+.kc-t{font-size:11px;font-weight:600;margin-bottom:2px;padding-top:4px}
+.kc-d{font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.5}
+.kc-time{font-family:var(--mono);font-size:9px;color:var(--dim)}
+.sim-stat{padding:9px 11px;border-radius:8px;background:rgba(239,68,68,.05);
+  border:1px solid rgba(239,68,68,.18);margin-top:8px}
+.ss-title{font-family:var(--mono);font-size:10px;color:#FCA5A5;margin-bottom:6px;font-weight:600}
+.ss-row{font-family:var(--mono);font-size:10px;color:var(--muted);padding:2px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:5px}
+.ss-row:last-child{border-bottom:none}
+.ss-x{color:#F87171}
+
+/* ── SCREEN 5 · CERTIFICATE ── */
+.cert-layout{display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:start}
+.certificate{background:linear-gradient(160deg,#071322,#050E1E);border:1px solid rgba(37,99,235,.35);
+  border-radius:14px;padding:30px 34px;position:relative;overflow:hidden;
+  box-shadow:0 0 60px rgba(37,99,235,.06),0 24px 48px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
+.certificate::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent 5%,var(--blue) 30%,var(--cyan) 70%,transparent 95%)}
+.certificate::after{content:'';position:absolute;inset:8px;border-radius:8px;
+  border:1px solid rgba(37,99,235,.08);pointer-events:none}
+.cert-wm{position:absolute;bottom:-40px;right:-20px;font-family:var(--display);font-size:150px;font-weight:800;
+  color:rgba(37,99,235,.03);letter-spacing:-.05em;pointer-events:none;line-height:1}
+/* Certificate scanline */
+.cert-scan{position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(37,99,235,.4),transparent);
+  animation:certScan 4s linear infinite;pointer-events:none}
+@keyframes certScan{0%{top:0;opacity:1}80%{opacity:.3}100%{top:100%;opacity:0}}
+.cert-brand{font-family:var(--display);font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--blue);margin-bottom:2px}
+.cert-type{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:.16em;margin-bottom:24px}
+.cert-hl{font-family:var(--display);font-size:28px;font-weight:800;line-height:1.15;
+  background:linear-gradient(135deg,#fff,#93C5FD);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:5px}
+.cert-org{font-family:var(--mono);font-size:11px;color:var(--cyan);margin-bottom:22px}
+.cert-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:22px}
+.cstat{text-align:center;padding:12px;position:relative}
+.cstat:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;bottom:20%;width:1px;background:var(--border)}
+.cstat-val{font-family:var(--display);font-size:26px;font-weight:800;line-height:1;margin-bottom:3px}
+.cstat-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cert-body{font-size:12px;line-height:1.8;color:#94A3B8;margin-bottom:20px;
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0}
+.cert-footer{display:flex;align-items:center;justify-content:space-between}
+.cert-sig{font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.7}
+.cert-hash{font-size:9px;color:var(--dim)}
+.cert-seal{width:62px;height:62px;border-radius:50%;border:2px solid rgba(37,99,235,.35);
+  background:rgba(37,99,235,.07);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.seal-inner{font-family:var(--mono);font-size:8px;color:#93C5FD;line-height:1.4}
+.loop-card{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.18);border-radius:9px;padding:14px;margin-bottom:10px}
+.loop-title{font-family:var(--display);font-size:13px;font-weight:700;color:#4ADE80;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.loop-steps{display:flex;flex-direction:column;gap:4px}
+.ls{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px}
+.lcheck{color:#4ADE80;font-size:11px}.lhuman{color:#93C5FD;font-size:11px}
+.lname{color:#94A3B8;flex:1}.lresult{color:var(--white);font-weight:600;font-size:9px}
+.dl-btn{width:100%;padding:12px;border-radius:8px;
+  background:linear-gradient(135deg,var(--blue2),var(--blue));color:#fff;
+  font-family:var(--display);font-size:14px;font-weight:700;border:none;cursor:pointer;
+  box-shadow:0 0 20px rgba(37,99,235,.22),0 4px 14px rgba(0,0,0,.4);
+  display:flex;align-items:center;justify-content:center;gap:7px;transition:all .2s;letter-spacing:.02em;position:relative;overflow:hidden}
+.dl-btn:hover{box-shadow:0 0 36px rgba(37,99,235,.38),0 8px 24px rgba(0,0,0,.5);transform:translateY(-1px)}
+.dl-btn-wave{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
+  transform:translateX(-100%)}
+.dl-btn:hover .dl-btn-wave{animation:btnWave .6s ease forwards}
+@keyframes btnWave{to{transform:translateX(100%)}}
+.closer-card{background:rgba(37,99,235,.04);border:1px solid rgba(37,99,235,.18);border-radius:9px;padding:14px;margin-top:8px}
+.closer-red{color:#F87171;font-weight:600;font-style:italic;font-size:12px;margin-bottom:6px;line-height:1.5}
+.closer-green{color:#4ADE80;font-weight:600;font-style:italic;font-size:12px;margin-bottom:9px;line-height:1.5}
+.closer-meta{font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-vignette"></div>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div id="toast-root"></div>
+
+<div id="app">
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo">
+    <span class="logo-x">X</span><span class="logo-see">SEE</span>
+    <span class="logo-tag">TRUST NOTHING. PROVE EVERYTHING.</span>
+  </div>
+  <div class="topbar-center">
+    <div class="scan-badge"><div class="scan-pulse"></div><span id="scanNum">LIVE · SCAN #1,847</span></div>
+  </div>
+  <div class="topbar-right">
+    <div class="clock" id="liveClock">--:--:-- UTC</div>
+    <div class="org-chip">ACME CORP</div>
+    <div class="kbd-hint"><span class="kbd-chip">←</span><span class="kbd-chip">→</span> navigate</div>
+  </div>
+</div>
+
+<!-- MIDDLE -->
+<div class="middle">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Demo Flow</div>
+
+    <div class="nav-item active" data-s="0" onclick="goTo(0)">
+      <div class="nav-icon">⬡</div>
+      <div class="nav-text"><div class="nav-name">War Room</div><div class="nav-sub">Overview · 6 engines</div></div>
+      <div class="nav-status"><div class="dot-red" id="nd0"></div></div>
+    </div>
+    <div class="nav-item" data-s="1" onclick="goTo(1)">
+      <div class="nav-icon">◎</div>
+      <div class="nav-text"><div class="nav-name">Attack Graph</div><div class="nav-sub">L1 · 12 critical paths</div></div>
+      <div class="nav-status"><div class="dot-dim" id="nd1"></div></div>
+    </div>
+    <div class="nav-item" data-s="2" onclick="goTo(2)">
+      <div class="nav-icon">✓</div>
+      <div class="nav-text"><div class="nav-name">L2 Validation</div><div class="nav-sub">Live AWS proof</div></div>
+      <div class="nav-status"><div class="dot-dim" id="nd2"></div></div>
+    </div>
+    <div class="nav-item" data-s="3" onclick="goTo(3)">
+      <div class="nav-icon">⚙</div>
+      <div class="nav-text"><div class="nav-name">Remediation</div><div class="nav-sub">Cut-point · approve fix</div></div>
+      <div class="nav-status"><div class="dot-dim" id="nd3"></div></div>
+    </div>
+    <div class="nav-item" data-s="4" onclick="goTo(4)">
+      <div class="nav-icon">▶</div>
+      <div class="nav-text"><div class="nav-name">XseeCyber L3</div><div class="nav-sub">Runtime simulation</div></div>
+      <div class="nav-status"><div class="dot-dim" id="nd4"></div></div>
+    </div>
+    <div class="nav-item" data-s="5" onclick="goTo(5)">
+      <div class="nav-icon">◈</div>
+      <div class="nav-text"><div class="nav-name">Certificate</div><div class="nav-sub">Board-ready proof</div></div>
+      <div class="nav-status"><div class="dot-dim" id="nd5"></div></div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="footer-text">
+      847 assets indexed<br>
+      6 engines · Demo mode<br>
+      <br>
+      <span class="kbd-chip">1</span>–<span class="kbd-chip">6</span> jump to screen<br>
+      <span class="kbd-chip">←</span><span class="kbd-chip">→</span> prev / next
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ══ SCREEN 0 · WAR ROOM ══ -->
+<div class="screen active" id="s0">
+  <div class="fu fu1">
+    <div class="screen-title">Security War Room</div>
+    <div class="engine-tag">
+      <span class="etag-num">ENGINE 01 / 06</span><span class="etag-sep">·</span>
+      <span class="etag-name">CONTINUOUS MONITORING · ALL ENGINES ACTIVE</span>
+    </div>
+  </div>
+
+  <div class="stat-row fu fu2">
+    <div class="stat-card sc-threat">
+      <div class="sc-label">Critical Attack Paths</div>
+      <div class="sc-val" data-count="12" data-prefix="" data-suffix="">0</div>
+      <div class="sc-delta bad">↑ 3 since last scan</div>
+      <svg class="sc-spark" width="80" height="28" viewBox="0 0 80 28">
+        <polyline points="0,25 10,22 20,19 30,16 40,14 55,10 65,7 75,4 80,2" fill="none" stroke="rgba(239,68,68,.55)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="stat-card sc-proof">
+      <div class="sc-label">L2 Validated · Exploitable</div>
+      <div class="sc-val" data-count="4" data-prefix="" data-suffix="">0</div>
+      <div class="sc-delta bad">AWS API proof confirmed</div>
+      <svg class="sc-spark" width="80" height="28" viewBox="0 0 80 28">
+        <polyline points="0,18 15,16 30,17 45,14 60,12 75,10 80,9" fill="none" stroke="rgba(245,158,11,.55)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="stat-card sc-exp">
+      <div class="sc-label">Financial Exposure</div>
+      <div class="sc-val" data-count="2.4" data-prefix="$" data-suffix="M">$0</div>
+      <div class="sc-delta bad">↑ Est. breach cost</div>
+      <svg class="sc-spark" width="80" height="28" viewBox="0 0 80 28">
+        <polyline points="0,24 20,20 40,16 60,12 80,7" fill="none" stroke="rgba(139,92,246,.55)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="stat-card sc-cov">
+      <div class="sc-label">Detection Coverage</div>
+      <div class="sc-val" data-count="34" data-prefix="" data-suffix="%">0%</div>
+      <div class="sc-delta bad">↓ 66% of attacks invisible</div>
+      <svg class="sc-spark" width="80" height="28" viewBox="0 0 80 28">
+        <polyline points="0,22 20,20 40,19 55,16 70,14 80,14" fill="none" stroke="rgba(6,182,212,.55)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="overview-grid fu fu3">
+    <div>
+      <div class="card-hd">Live Activity Feed</div>
+      <div class="activity-list">
+        <div class="act-item"><div class="act-time" data-start="2">2m</div><div class="badge b-red" style="flex-shrink:0">CRITICAL</div><div class="act-msg"><strong>New IAM privilege escalation path</strong> — Internet → EC2 → S3 Crown Jewel discovered</div></div>
+        <div class="act-item"><div class="act-time" data-start="4">4m</div><div class="badge b-amber" style="flex-shrink:0">L2</div><div class="act-msg"><strong>L2 validation confirmed</strong> — lambda-processor can assume admin-role via iam:PassRole</div></div>
+        <div class="act-item"><div class="act-time" data-start="7">7m</div><div class="badge b-purple" style="flex-shrink:0">SIM</div><div class="act-msg"><strong>XseeCyber simulation complete</strong> — Path AP-0031 exploitable in 4 steps, 0 detections triggered</div></div>
+        <div class="act-item"><div class="act-time" data-start="12">12m</div><div class="badge b-green" style="flex-shrink:0">FIXED</div><div class="act-msg"><strong>Remediation verified</strong> — SG ingress rule revoked, path AP-0028 permanently closed</div></div>
+        <div class="act-item"><div class="act-time" data-start="15">15m</div><div class="badge b-blue" style="flex-shrink:0">AI</div><div class="act-msg"><strong>Claude Engine</strong> — Executive risk summary generated for board · 3 critical paths</div></div>
+        <div class="act-item"><div class="act-time" data-start="21">21m</div><div class="badge b-cyan" style="flex-shrink:0">SCAN</div><div class="act-msg"><strong>Scan #1,847 complete</strong> — 847 assets indexed · 12 new findings · 4 validated</div></div>
+      </div>
+    </div>
+    <div class="ai-card">
+      <div class="ai-hd">
+        <div class="ai-orb">✦</div>
+        <div><div class="ai-name">Claude Engine</div><div class="ai-sub">AI SECURITY ANALYST · ACTIVE</div></div>
+      </div>
+      <div class="ai-body">
+        I've identified <strong style="color:#FCA5A5">4 exploitable attack paths</strong> requiring immediate attention. Path AP-0031 leads directly to your customer PII database via a validated IAM privilege escalation chain. Estimated breach probability: <strong style="color:#FCA5A5">94%</strong>. A single IAM policy change closes 3 paths simultaneously.
+      </div>
+      <div class="ai-findings">
+        <div class="ai-row"><div class="ai-dot" style="background:#F87171"></div>AP-0031 · Internet → EC2 → IAM → S3-PII · <span style="color:#F87171;margin-left:auto">CRITICAL</span></div>
+        <div class="ai-row"><div class="ai-dot" style="background:#F87171"></div>AP-0029 · Lambda → AssumeRole → Admin → All Resources · <span style="color:#F87171;margin-left:auto">CRITICAL</span></div>
+        <div class="ai-row"><div class="ai-dot" style="background:#FDE68A"></div>AP-0033 · NHI token exposed in EC2 instance metadata · <span style="color:#FDE68A;margin-left:auto">HIGH</span></div>
+        <div class="ai-row"><div class="ai-dot" style="background:#FDE68A"></div>AP-0034 · Public S3 + unencrypted secrets → Account takeover · <span style="color:#FDE68A;margin-left:auto">HIGH</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /s0 -->
+
+<!-- ══ SCREEN 1 · ATTACK GRAPH ══ -->
+<div class="screen" id="s1">
+  <div class="fu fu1">
+    <div class="screen-title">Attack Intelligence Graph</div>
+    <div class="engine-tag">
+      <span class="etag-num">ENGINE 02 / 06</span><span class="etag-sep">·</span>
+      <span class="etag-name">L1 GRAPH SIMULATION · 847 NODES · 2,341 EDGES · 12 CRITICAL PATHS</span>
+    </div>
+  </div>
+
+  <div class="graph-layout fu fu2">
+    <div class="graph-wrap">
+      <div class="graph-toolbar">
+        <button class="gtab on" data-g="0" onclick="switchGraph(0)">Attack Paths</button>
+        <button class="gtab" data-g="1" onclick="switchGraph(1)">IAM Graph</button>
+        <button class="gtab" data-g="2" onclick="switchGraph(2)">Network</button>
+        <button class="gtab" data-g="3" onclick="switchGraph(3)">NHI</button>
+        <div class="gtab-sep"></div>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--muted)">
+          <span style="color:#F87171">●</span> Critical &nbsp;
+          <span style="color:#FCD34D">●</span> High &nbsp;
+          <span style="color:#FBBF24">♔</span> Crown jewel
+        </span>
+      </div>
+      <div class="graph-canvas" id="graphCanvas"></div>
+    </div>
+
+    <div class="graph-right">
+      <div class="path-filter">
+        <button class="filter-btn on" onclick="filterPaths('all',this)">All</button>
+        <button class="filter-btn" onclick="filterPaths('CRITICAL',this)">Critical</button>
+        <button class="filter-btn" onclick="filterPaths('HIGH',this)">High</button>
+        <button class="filter-btn" onclick="filterPaths('MEDIUM',this)">Medium</button>
+      </div>
+
+      <div id="pathList"></div>
+
+      <div class="verdict-box" id="verdictBox">
+        <div class="verdict-top">
+          <div>
+            <div class="verdict-title">AI Verdict · <span id="verdictPathId">AP-0031</span></div>
+            <div class="verdict-body" id="verdictBody">Path is <strong style="color:#FCA5A5">immediately exploitable</strong>. EC2 has iam:PassRole to admin-role. L2 confirmed via SimulatePrincipalPolicy.</div>
+          </div>
+          <div class="conf-block">
+            <div class="conf-val" id="confVal" style="color:#F87171">94%</div>
+            <div class="conf-lbl">CONF.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:11px">
+        <div class="card-hd">Path Details</div>
+        <div class="detail-rows" id="pathDetails">
+          <div class="dr"><span class="dr-k">Path ID</span><span class="dr-v" id="d-id">AP-0031</span></div>
+          <div class="dr"><span class="dr-k">Target</span><span style="color:#FBBF24;font-family:var(--mono);font-size:10px" id="d-target">s3://acme-pii</span></div>
+          <div class="dr"><span class="dr-k">Exposure</span><span style="color:#C4B5FD" id="d-exp">$1.8M</span></div>
+          <div class="dr"><span class="dr-k">L2 Status</span><span id="d-l2"><span class="badge b-green">CONFIRMED</span></span></div>
+          <div class="dr"><span class="dr-k">Cut Points</span><span class="dr-v" id="d-cut">2 identified</span></div>
+        </div>
+      </div>
+
+      <div class="card" style="padding:11px">
+        <div class="card-hd">MITRE ATT&amp;CK</div>
+        <div class="mitre-list" id="mitreList">
+          <span class="badge b-red" style="justify-content:flex-start">T1190 · Exploit Public App</span>
+          <span class="badge b-amber" style="justify-content:flex-start">T1548 · Elevation Control</span>
+          <span class="badge b-red" style="justify-content:flex-start">T1530 · Cloud Storage Data</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /s1 -->
+
+<!-- ══ SCREEN 2 · L2 VALIDATION ══ -->
+<div class="screen" id="s2">
+  <div class="fu fu1">
+    <div class="screen-title">L2 Attack Path Validation</div>
+    <div class="engine-tag">
+      <span class="etag-num">ENGINE 03 / 06</span><span class="etag-sep">·</span>
+      <span class="etag-name">LIVE AWS API VALIDATION · PATH AP-0031 · REAL EVIDENCE · NOT THEORETICAL</span>
+    </div>
+  </div>
+
+  <div class="proof-banner fu fu2">
+    <div class="proof-icon">✓</div>
+    <div>
+      <div class="proof-title">PROOF: This path is exploitable. Not theoretical. Proven.</div>
+      <div class="proof-sub">AWS SimulatePrincipalPolicy → ALLOWED · Captured: <span id="l2-ts">2026-04-05T09:47:22Z</span> · sha256:8f3a9d2e...</div>
+    </div>
+    <span class="badge b-green" style="flex-shrink:0;font-size:11px;padding:6px 12px">EXPLOITABLE</span>
+  </div>
+
+  <div class="l2-grid fu fu3">
+    <div>
+      <div class="card-hd">Live AWS API Evidence — SimulatePrincipalPolicy</div>
+      <div class="code-block">
+        <button class="code-copy" onclick="copyCode(this,'iam-json')">copy</button>
+        <span id="iam-json"><span class="cc">// AWS IAM · SimulatePrincipalPolicy</span>
+<span class="cc">// Captured: 2026-04-05T09:47:22Z · us-east-1</span>
+
+{
+  <span class="ck">"EvaluationResults"</span>: [{
+    <span class="ck">"EvalActionName"</span>: <span class="cs">"iam:PassRole"</span>,
+    <span class="ck">"EvalDecision"</span>:   <span class="cv c-red">"allowed"</span>,
+    <span class="ck">"EvalResourceName"</span>: <span class="cs">"arn:aws:iam::123456789012:role/admin-role"</span>,
+    <span class="ck">"MatchedStatements"</span>: [{
+      <span class="ck">"SourcePolicyId"</span>: <span class="cs">"ec2-processor-policy"</span>,
+      <span class="ck">"StartPosition"</span>: { <span class="ck">"Line"</span>: <span class="cn">14</span> }
+    }]
+  },{
+    <span class="ck">"EvalActionName"</span>: <span class="cs">"s3:GetObject"</span>,
+    <span class="ck">"EvalDecision"</span>:   <span class="cv c-red">"allowed"</span>,
+    <span class="ck">"EvalResourceName"</span>: <span class="cs">"arn:aws:s3:::acme-customer-pii/*"</span>
+  }],
+  <span class="ck">"IsTruncated"</span>: <span class="cv">false</span>
+}</span>
+      </div>
+
+      <div class="card-hd" style="margin-top:12px">Security Group — Public Ingress Confirmed</div>
+      <div class="code-block">
+        <button class="code-copy" onclick="copyCode(this,'sg-json')">copy</button>
+        <span id="sg-json"><span class="cc">// DescribeSecurityGroups · sg-0a1b2c3d4e5f</span>
+{
+  <span class="ck">"GroupId"</span>: <span class="cs">"sg-0a1b2c3d4e5f"</span>,
+  <span class="ck">"GroupName"</span>: <span class="cs">"ec2-processor-sg"</span>,
+  <span class="ck">"IpPermissions"</span>: [{
+    <span class="ck">"IpProtocol"</span>: <span class="cs">"tcp"</span>,
+    <span class="ck">"FromPort"</span>: <span class="cn">443</span>, <span class="ck">"ToPort"</span>: <span class="cn">443</span>,
+    <span class="ck">"IpRanges"</span>: [{
+      <span class="ck">"CidrIp"</span>: <span class="cv c-red">"0.0.0.0/0"</span>,
+      <span class="ck">"Description"</span>: <span class="cs">"public-access"</span>
+    }]
+  }]
+}</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="card-hd">Validation Chain · 5 of 5 Steps</div>
+      <div class="vchain">
+        <div class="vrow"><div class="vicon vi-pass">✓</div><div><div class="vt">Public Internet Access Confirmed</div><div class="vd">SG allows 0.0.0.0/0 on port 443 · EC2 public IP: 54.23.11.87</div></div></div>
+        <div class="vrow"><div class="vicon vi-pass">✓</div><div><div class="vt">IAM PassRole Permission Verified</div><div class="vd">SimulatePrincipalPolicy → ALLOWED · iam:PassRole on admin-role</div></div></div>
+        <div class="vrow"><div class="vicon vi-fail">✗</div><div><div class="vt">No Permission Boundary Detected</div><div class="vd danger">No boundary on ec2-processor-role · Escalation unconstrained</div></div></div>
+        <div class="vrow"><div class="vicon vi-pass">✓</div><div><div class="vt">Crown Jewel S3 Access Confirmed</div><div class="vd">s3:GetObject ALLOWED · 847,293 PII records directly accessible</div></div></div>
+        <div class="vrow"><div class="vicon vi-warn">!</div><div><div class="vt">No CloudTrail Alert Configured</div><div class="vd" style="color:#FDE68A">iam:PassRole calls not alerting · Attack invisible to your team</div></div></div>
+      </div>
+
+      <div class="diff-card">
+        <div class="diff-head">Why Wiz can't show you this</div>
+        <div class="diff-body">Wiz uses an <strong style="color:var(--white)">agentless graph model</strong> — it cannot call SimulatePrincipalPolicy, validate real AWS permissions, or generate a signed evidence package. It shows <em>theoretical paths</em>, not proof.<br><br>XSEE called <strong style="color:#4ADE80">3 live AWS APIs</strong> and returned <strong style="color:#4ADE80">cryptographically signed evidence</strong>. This is the difference between a finding and a <em>proof</em>.</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /s2 -->
+
+<!-- ══ SCREEN 3 · REMEDIATION ══ -->
+<div class="screen" id="s3">
+  <div class="fu fu1">
+    <div class="screen-title">Smart Remediation Engine</div>
+    <div class="engine-tag">
+      <span class="etag-num">ENGINE 05 / 06</span><span class="etag-sep">·</span>
+      <span class="etag-name">OPTIMAL CUT-POINT ANALYSIS · PATH AP-0031 · ONE CLICK TO FIX</span>
+    </div>
+  </div>
+
+  <div class="rem-layout fu fu2">
+    <div>
+      <div class="cutpoint-box">
+        <div class="card-hd">Cut-Point Analysis — Minimum Change, Maximum Impact</div>
+        <svg viewBox="0 0 600 155" style="width:100%;margin-bottom:10px">
+          <defs>
+            <marker id="ca" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="rgba(239,68,68,.6)"/>
+            </marker>
+          </defs>
+          <!-- path edges animated -->
+          <line x1="44" y1="77" x2="120" y2="77" stroke="rgba(239,68,68,.6)" stroke-width="2" marker-end="url(#ca)" stroke-dasharray="5,3"><animate attributeName="stroke-dashoffset" values="0;-16" dur="1s" repeatCount="indefinite"/></line>
+          <line x1="164" y1="77" x2="240" y2="77" stroke="rgba(239,68,68,.55)" stroke-width="2" marker-end="url(#ca)" stroke-dasharray="5,3"><animate attributeName="stroke-dashoffset" values="0;-16" dur="1s" repeatCount="indefinite"/></line>
+          <line x1="284" y1="77" x2="372" y2="77" stroke="rgba(239,68,68,.3)" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="412" y1="77" x2="492" y2="77" stroke="rgba(239,68,68,.25)" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <!-- nodes -->
+          <circle cx="44" cy="77" r="22" fill="rgba(37,99,235,.09)" stroke="rgba(37,99,235,.4)" stroke-width="1.5"/>
+          <text x="44" y="82" text-anchor="middle" fill="#93C5FD" font-size="10" font-family="IBM Plex Mono">INT</text>
+          <circle cx="142" cy="77" r="22" fill="rgba(37,99,235,.09)" stroke="rgba(37,99,235,.4)" stroke-width="1.5"/>
+          <text x="142" y="74" text-anchor="middle" fill="#93C5FD" font-size="10" font-family="IBM Plex Mono">EC2</text>
+          <text x="142" y="86" text-anchor="middle" fill="#475569" font-size="8" font-family="IBM Plex Mono">i-0a1b</text>
+          <circle cx="262" cy="77" r="22" fill="rgba(245,158,11,.09)" stroke="rgba(245,158,11,.4)" stroke-width="1.5"/>
+          <text x="262" y="74" text-anchor="middle" fill="#FCD34D" font-size="10" font-family="IBM Plex Mono">IAM</text>
+          <text x="262" y="86" text-anchor="middle" fill="#475569" font-size="8" font-family="IBM Plex Mono">PassRole</text>
+          <circle cx="392" cy="77" r="20" fill="rgba(239,68,68,.09)" stroke="rgba(239,68,68,.4)" stroke-width="1.5"/>
+          <text x="392" y="81" text-anchor="middle" fill="#F87171" font-size="9" font-family="IBM Plex Mono">ADMIN</text>
+          <circle cx="514" cy="77" r="20" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.5)" stroke-width="2"/>
+          <text x="514" y="73" text-anchor="middle" fill="#FBBF24" font-size="14">♔</text>
+          <text x="514" y="86" text-anchor="middle" fill="#92400E" font-size="8" font-family="IBM Plex Mono">S3-PII</text>
+          <!-- CUT 1 optimal -->
+          <line x1="202" y1="48" x2="202" y2="108" stroke="rgba(34,197,94,.8)" stroke-width="2" stroke-dasharray="4,2"/>
+          <circle cx="202" cy="50" r="11" fill="rgba(34,197,94,.13)" stroke="rgba(34,197,94,.5)" stroke-width="1"/>
+          <text x="202" y="54" text-anchor="middle" fill="#4ADE80" font-size="13">✂</text>
+          <text x="202" y="128" text-anchor="middle" fill="#4ADE80" font-size="9" font-family="IBM Plex Mono" font-weight="600">CUT-1 · OPTIMAL</text>
+          <text x="202" y="140" text-anchor="middle" fill="#475569" font-size="8" font-family="IBM Plex Mono">Remove PassRole · kills 3 paths</text>
+          <!-- CUT 2 -->
+          <line x1="328" y1="52" x2="328" y2="104" stroke="rgba(34,197,94,.4)" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <circle cx="328" cy="54" r="9" fill="rgba(34,197,94,.08)" stroke="rgba(34,197,94,.3)" stroke-width="1"/>
+          <text x="328" y="58" text-anchor="middle" fill="#4ADE80" font-size="11">✂</text>
+          <text x="328" y="128" text-anchor="middle" fill="#475569" font-size="9" font-family="IBM Plex Mono">CUT-2</text>
+          <text x="328" y="140" text-anchor="middle" fill="#475569" font-size="8" font-family="IBM Plex Mono">Permission boundary</text>
+        </svg>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <span class="badge b-green">✂ CUT-1 kills 3 critical paths simultaneously</span>
+          <span class="badge b-blue">Single IAM change · zero service impact</span>
+        </div>
+      </div>
+
+      <div class="card-hd">Auto-Generated Terraform Fix</div>
+      <div class="code-block">
+        <button class="code-copy" onclick="copyCode(this,'tf-code')">copy</button>
+        <span id="tf-code"><span class="cc"># Remove iam:PassRole from ec2-processor-role</span>
+<span class="cc"># Closes: AP-0031, AP-0032, AP-0035</span>
+
+resource <span class="cs">"aws_iam_policy"</span> <span class="cs">"ec2_processor_restricted"</span> {
+  name   = <span class="cs">"ec2-processor-policy-v2"</span>
+  policy = jsonencode({
+    Version = <span class="cs">"2012-10-17"</span>
+    Statement = [{
+      Effect   = <span class="cs">"Allow"</span>
+      Action   = [<span class="cs">"s3:GetObject"</span>, <span class="cs">"logs:PutLogEvents"</span>]
+      <span class="cc"># iam:PassRole REMOVED ← entire fix in one line</span>
+      Resource = <span class="cs">"*"</span>
+    }]
+  })
+}</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="card-hd">Fix Options · Ranked by Impact / Effort</div>
+      <div class="fix-list">
+        <div class="fix-card best">
+          <div class="fix-t">Remove iam:PassRole Permission</div>
+          <div class="fix-d">Delete iam:PassRole from ec2-processor-policy. Kills AP-0031, AP-0032, AP-0035 in one change. Zero service impact. Reversible in seconds.</div>
+          <div class="fix-chips"><span class="chip green">Risk −94%</span><span class="chip blue">Effort: Low</span><span class="chip">3 paths closed</span><span class="chip">Time: 2 min</span></div>
+        </div>
+        <div class="fix-card">
+          <div class="fix-t">Enforce IMDSv2 on EC2 Instance</div>
+          <div class="fix-d">Block IMDSv1 metadata access. Kills the credential extraction step. Requires a brief instance restart.</div>
+          <div class="fix-chips"><span class="chip amber">Risk −60%</span><span class="chip blue">Effort: Low</span><span class="chip">2 paths closed</span></div>
+        </div>
+        <div class="fix-card">
+          <div class="fix-t">Attach IAM Permission Boundary</div>
+          <div class="fix-d">Limit maximum permissions of ec2-processor-role. Defense-in-depth.</div>
+          <div class="fix-chips"><span class="chip">Risk −40%</span><span class="chip amber">Effort: Med</span><span class="chip">1 path closed</span></div>
+        </div>
+      </div>
+
+      <div class="approve-box">
+        <div class="approve-label">REMEDIATION AGENT READY · AWAITING HUMAN APPROVAL</div>
+        <button class="abtn" id="approveBtn" onclick="doApprove()">
+          <div class="abtn-progress" id="approveProgress"></div>
+          <span id="approveTxt">✓ &nbsp; APPROVE &amp; APPLY FIX</span>
+        </button>
+        <div class="approve-note" id="approveNote">
+          One click. Agent applies via AWS SDK → L2 re-validates → certificate generated.<br>
+          Rollback available 24h if verification fails.
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /s3 -->
+
+<!-- ══ SCREEN 4 · XSEECYBER ══ -->
+<div class="screen" id="s4">
+  <div class="fu fu1">
+    <div class="screen-title">XseeCyber L3 Simulation</div>
+    <div class="engine-tag">
+      <span class="etag-num">ENGINE 04 / 06</span><span class="etag-sep">·</span>
+      <span class="etag-name">RUNTIME EXPLOIT SIMULATION · PATH AP-0031 · SAFE MODE · ZERO PROD IMPACT</span>
+    </div>
+  </div>
+  <div class="sim-controls fu fu1">
+    <div class="speed-btn on" onclick="setSpeed(1,this)" data-speed="1">1×</div>
+    <div class="speed-btn" onclick="setSpeed(2,this)" data-speed="2">2×</div>
+    <div class="speed-btn" onclick="setSpeed(5,this)" data-speed="5">5×</div>
+    <div class="replay-btn" onclick="replayTerminal()">↺ Replay</div>
+    <span style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-left:8px">Safe sandbox · no prod impact</span>
+  </div>
+  <div class="sim-layout fu fu2">
+    <div class="terminal">
+      <div class="term-hd">
+        <div class="tdot tdot1"></div><div class="tdot tdot2"></div><div class="tdot tdot3"></div>
+        <div class="term-title">xseecyber-agent · v2.4.1 · path:AP-0031 · simulation-mode:safe</div>
+      </div>
+      <div class="term-body" id="termBody"><span class="cursor-blink"></span></div>
+    </div>
+
+    <div class="kc-panel">
+      <div class="card-hd" style="margin-bottom:10px">Kill Chain Timeline</div>
+      <div class="kc-row"><div class="kc-spine"><div class="kc-node kc-n-done">1</div><div class="kc-line"></div></div>
+        <div class="kc-content"><div class="kc-time">T+00:00</div><div class="kc-t">Reconnaissance</div><div class="kc-d">Port scan · nginx/1.24.0 fingerprint · CVE-2023-44487 matched</div></div></div>
+      <div class="kc-row"><div class="kc-spine"><div class="kc-node kc-n-active" id="kc2">2</div><div class="kc-line"></div></div>
+        <div class="kc-content"><div class="kc-time">T+02:11</div><div class="kc-t">Initial Access</div><div class="kc-d">HTTP/2 exploit · IMDSv1 abuse · EC2 credentials from metadata</div></div></div>
+      <div class="kc-row"><div class="kc-spine"><div class="kc-node kc-n-active" id="kc3">3</div><div class="kc-line"></div></div>
+        <div class="kc-content"><div class="kc-time">T+04:47</div><div class="kc-t">Privilege Escalation</div><div class="kc-d">iam:PassRole → admin-role assumed · Full account control</div></div></div>
+      <div class="kc-row"><div class="kc-spine"><div class="kc-node kc-n-active" id="kc4">4</div></div>
+        <div class="kc-content"><div class="kc-time">T+08:33</div><div class="kc-t">Data Exfiltration</div><div class="kc-d">847K PII records · S3 bulk GetObject · 0 detections fired</div></div></div>
+
+      <div class="sim-stat">
+        <div class="ss-title">Simulation Result</div>
+        <div class="ss-row"><span class="ss-x">EXPLOIT SUCCEEDED</span></div>
+        <div class="ss-row"><span style="color:var(--muted)">Stages:</span>&nbsp;4 / 4 complete</div>
+        <div class="ss-row"><span class="ss-x">✗</span>&nbsp;IMDSv2 not enforced</div>
+        <div class="ss-row"><span class="ss-x">✗</span>&nbsp;iam:PassRole not monitored</div>
+        <div class="ss-row"><span class="ss-x">✗</span>&nbsp;S3 logging disabled</div>
+        <div class="ss-row" style="margin-top:4px"><span style="color:#4ADE80">✓ 3 detection rules auto-generated</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /s4 -->
+
+<!-- ══ SCREEN 5 · CERTIFICATE ══ -->
+<div class="screen" id="s5">
+  <div class="fu fu1">
+    <div class="screen-title">Breach Prevention Certificate</div>
+    <div class="engine-tag">
+      <span class="etag-num">ENGINE 06 / 06</span><span class="etag-sep">·</span>
+      <span class="etag-name">AUTONOMOUS LOOP COMPLETE · ALL PATHS CLOSED · BOARD-READY PDF GENERATED</span>
+    </div>
+  </div>
+
+  <div class="cert-layout fu fu2">
+    <div>
+      <div class="certificate">
+        <div class="cert-scan"></div>
+        <div class="cert-wm">XSEE</div>
+        <div class="cert-brand">XSEE</div>
+        <div class="cert-type">BREACH PREVENTION CERTIFICATE · BOARD EDITION</div>
+        <div class="cert-hl">3 Critical Attack<br>Paths Eliminated.</div>
+        <div class="cert-org">Acme Corp · AWS Account 123456789012 · April 5, 2026</div>
+        <div class="cert-stats">
+          <div class="cstat"><div class="cstat-val" style="color:#4ADE80">3</div><div class="cstat-label">Paths Closed</div></div>
+          <div class="cstat"><div class="cstat-val" style="color:#93C5FD">$2.4M</div><div class="cstat-label">Risk Eliminated</div></div>
+          <div class="cstat"><div class="cstat-val" style="color:#fff">94</div><div class="cstat-label">Security Score</div></div>
+        </div>
+        <div class="cert-body">
+          XSEE validated, simulated, and verified closure of all critical attack paths. Each fix was applied by the XSEE Remediation Agent following explicit human approval, then independently verified via L2 live AWS API re-validation. The attack paths listed above no longer exist in the customer environment. This certificate is cryptographically signed and tamper-evident.
+        </div>
+        <div class="cert-footer">
+          <div>
+            <div class="cert-sig">Issued: April 5, 2026 · 10:17:44 UTC<br>Verified by: XSEE L2 Validation Engine v2.4</div>
+            <div class="cert-hash">sha256: 8f3a9d2e1c4b7f6a0e9d3c8b5a2f1e4d7c0b9a3</div>
+          </div>
+          <div class="cert-seal"><div class="seal-inner">XSEE<br>VERIFIED<br>✓</div></div>
+        </div>
+      </div>
+      <button class="dl-btn" style="margin-top:12px" onclick="downloadCert()">
+        <div class="dl-btn-wave"></div>
+        ↓ &nbsp; Download Board PDF
+      </button>
+    </div>
+
+    <div>
+      <div class="loop-card">
+        <div class="loop-title">✓ Autonomous Loop Complete</div>
+        <div class="loop-steps">
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">Discover</span><span class="lresult">847 assets · 12 paths</span></div>
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">L1 Graph Validate</span><span class="lresult">4 exploitable</span></div>
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">L2 Prove</span><span class="lresult">AWS API evidence</span></div>
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">Prioritize</span><span class="lresult">Cut-points ranked</span></div>
+          <div class="ls"><span class="lhuman">◎</span><span class="lname" style="color:var(--white)">Human Approved</span><span class="lresult" style="color:#93C5FD">1 click · 4 seconds</span></div>
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">Fix Applied</span><span class="lresult">AWS SDK · IAM updated</span></div>
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">L3 Simulate</span><span class="lresult">Post-fix confirmed clean</span></div>
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">Verify</span><span class="lresult">L2 re-run · path closed</span></div>
+          <div class="ls"><span class="lcheck">✓</span><span class="lname">Certify</span><span class="lresult">Board PDF signed</span></div>
+        </div>
+      </div>
+
+      <div class="closer-card">
+        <div class="card-hd">The XSEE Difference</div>
+        <div class="closer-red">"You might have a problem here. We ranked it critical."</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:10px">← What Wiz delivers</div>
+        <div class="closer-green">"This was exploitable. We proved it. We fixed it. Here's the signed certificate."</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:10px">← What XSEE delivers</div>
+        <div class="closer-meta">
+          Loop time: 28 minutes total<br>
+          Human effort: 1 approval click<br>
+          Without XSEE: weeks of analyst time · still unverified
+        </div>
+      </div>
+
+      <div class="card" style="padding:12px;margin-top:8px;background:rgba(37,99,235,.04);border-color:rgba(37,99,235,.18)">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.9">
+          Next scan: <span style="color:var(--white)">tomorrow 09:00 UTC</span><br>
+          Auto-alert: <span style="color:var(--white)">admin@acme.io</span><br>
+          Certificate ID: <span style="color:#93C5FD">XSEE-2026-04-05-AP0031</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /s5 -->
+
+</div><!-- /content -->
+</div><!-- /middle -->
+
+<!-- BOTTOMBAR -->
+<div class="bottombar">
+  <button class="nbtn" id="prevBtn" onclick="prevScreen()" disabled>← Prev</button>
+  <div class="progress-bar">
+    <div class="prog-dots" id="progDots"></div>
+    <div class="prog-label" id="progLabel">War Room · 1 of 6</div>
+  </div>
+  <button class="nbtn primary" id="nextBtn" onclick="nextScreen()">Next: Attack Graph →</button>
+</div>
+
+</div><!-- /app -->
+
+<script>
+/* ─── DATA ─── */
+const SCREENS = [
+  {name:'War Room',     next:'Attack Graph'},
+  {name:'Attack Graph', next:'L2 Validation'},
+  {name:'L2 Validation',next:'Remediation'},
+  {name:'Remediation',  next:'XseeCyber L3'},
+  {name:'XseeCyber L3', next:'Certificate'},
+  {name:'Certificate',  next:null},
+];
+
+const PATHS = [
+  {
+    id:'AP-0031',sev:'CRITICAL',l2:true,hops:4,exp:'$1.8M',conf:94,color:'#F87171',confColor:'#F87171',
+    name:'Internet → EC2 → IAM Escalation → S3 Crown Jewel',
+    meta:'4 hops · $1.8M exposure · 94% confidence',
+    verdict:'Path is <strong style="color:#FCA5A5">immediately exploitable</strong>. EC2 has iam:PassRole to admin-role. L2 confirmed via SimulatePrincipalPolicy.',
+    target:'s3://acme-pii',cut:'2 identified',
+    verdictBorder:'rgba(239,68,68,.2)',verdictBg:'rgba(239,68,68,.05)',
+    mitre:[{t:'T1190 · Exploit Public App',c:'b-red'},{t:'T1548 · Elevation Control',c:'b-amber'},{t:'T1530 · Cloud Storage Data',c:'b-red'}],
+  },
+  {
+    id:'AP-0029',sev:'CRITICAL',l2:true,hops:3,exp:'$2.1M',conf:88,color:'#F87171',confColor:'#F87171',
+    name:'Lambda → AssumeRole → Admin → All Resources',
+    meta:'3 hops · $2.1M exposure · 88% confidence',
+    verdict:'Lambda execution role has sts:AssumeRole on admin-role. <strong style="color:#FCA5A5">Full account compromise</strong> achievable from any Lambda invocation.',
+    target:'iam::admin-role',cut:'1 identified',
+    verdictBorder:'rgba(239,68,68,.2)',verdictBg:'rgba(239,68,68,.05)',
+    mitre:[{t:'T1078 · Valid Accounts',c:'b-red'},{t:'T1548 · Abuse Elevation',c:'b-amber'},{t:'T1190 · Exploit App',c:'b-red'}],
+  },
+  {
+    id:'AP-0033',sev:'HIGH',l2:false,hops:5,exp:'$640K',conf:71,color:'#FDE68A',confColor:'#FBBF24',
+    name:'NHI Token Exposure → Lateral Movement → RDS',
+    meta:'5 hops · $640K exposure · 71% confidence',
+    verdict:'EC2 instance metadata exposes <strong style="color:#FDE68A">NHI service token</strong>. Token has read access to production RDS credentials via Secrets Manager.',
+    target:'rds://prod-postgres',cut:'3 identified',
+    verdictBorder:'rgba(245,158,11,.2)',verdictBg:'rgba(245,158,11,.04)',
+    mitre:[{t:'T1552 · Unsecured Credentials',c:'b-amber'},{t:'T1021 · Remote Services',c:'b-blue'},{t:'T1078 · Valid Accounts',c:'b-amber'}],
+  },
+  {
+    id:'AP-0034',sev:'MEDIUM',l2:false,hops:6,exp:'$320K',conf:48,color:'#93C5FD',confColor:'#3B82F6',
+    name:'CI/CD Pipeline → OIDC Abuse → Prod Deploy',
+    meta:'6 hops · $320K exposure · 48% confidence',
+    verdict:'GitHub Actions OIDC token has <strong style="color:#93C5FD">overly broad AssumeRole</strong> permissions. Any workflow can deploy to production without additional approval.',
+    target:'ecs://prod-cluster',cut:'2 identified',
+    verdictBorder:'rgba(37,99,235,.2)',verdictBg:'rgba(37,99,235,.04)',
+    mitre:[{t:'T1195 · Supply Chain',c:'b-blue'},{t:'T1078 · Valid Accounts',c:'b-blue'},{t:'T1190 · Exploit App',c:'b-blue'}],
+  },
+  {
+    id:'AP-0037',sev:'LOW',l2:false,hops:2,exp:'$180K',conf:31,color:'#6EE7B7',confColor:'#22C55E',
+    name:'Public S3 Bucket → Exposed Secrets → Account',
+    meta:'2 hops · $180K exposure · 31% confidence',
+    verdict:'S3 bucket <strong style="color:#6EE7B7">acme-dev-artifacts</strong> is publicly readable. Contains .env files with AWS access keys committed by a developer.',
+    target:'s3://acme-dev-artifacts',cut:'1 identified',
+    verdictBorder:'rgba(34,197,94,.2)',verdictBg:'rgba(34,197,94,.04)',
+    mitre:[{t:'T1552 · Unsecured Credentials',c:'b-green'},{t:'T1530 · Cloud Storage',c:'b-green'}],
+  },
+];
+
+/* ─── STATE ─── */
+let cur = 0;
+let countersRun = false;
+let termTimer = null;
+let termSpeed = 1;
+let termRunning = false;
+let approveTimer = null;
+let approved = false;
+let activeGraph = 0;
+let activePath = 0;
+
+/* ─── CLOCK ─── */
+function updateClock(){
+  const now = new Date();
+  const h = String(now.getUTCHours()).padStart(2,'0');
+  const m = String(now.getUTCMinutes()).padStart(2,'0');
+  const s = String(now.getUTCSeconds()).padStart(2,'0');
+  document.getElementById('liveClock').textContent = h+':'+m+':'+s+' UTC';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* ─── TOAST ─── */
+function showToast(msg, type='blue', duration=3000){
+  const root = document.getElementById('toast-root');
+  const t = document.createElement('div');
+  const icons = {green:'✓',red:'✗',blue:'ℹ'};
+  t.className = 'toast '+type;
+  t.innerHTML = '<span>'+icons[type]+'</span><span>'+msg+'</span>';
+  root.appendChild(t);
+  setTimeout(()=>{
+    t.style.animation = 'toastOut .3s ease forwards';
+    setTimeout(()=>t.remove(), 300);
+  }, duration);
+}
+
+/* ─── NAVIGATION ─── */
+function goTo(idx){
+  if(idx === cur) return;
+  const old = document.getElementById('s'+cur);
+  const nw  = document.getElementById('s'+idx);
+  old.classList.remove('active');
+  old.classList.add('exit');
+  setTimeout(()=>old.classList.remove('exit'), 380);
+  nw.classList.add('active');
+
+  // Cancel pending approve animation if navigating away from screen 3
+  if(cur === 3 && approveTimer){ clearTimeout(approveTimer); approveTimer=null; }
+
+  cur = idx;
+  updateUI();
+
+  // Screen-specific triggers
+  if(idx === 0 && !countersRun){ countersRun = true; runCounters(); }
+  if(idx === 1){ initPathList(); initGraph(); }
+  if(idx === 4){ replayTerminal(); }
+}
+
+function nextScreen(){ if(cur < 5) goTo(cur+1); else { approveReset(); countersRun=false; goTo(0); } }
+function prevScreen(){ if(cur > 0) goTo(cur-1); }
+
+function updateUI(){
+  document.getElementById('prevBtn').disabled = cur === 0;
+  const nb = document.getElementById('nextBtn');
+  const s  = SCREENS[cur];
+  if(s.next){ nb.textContent = 'Next: '+s.next+' →'; nb.onclick = nextScreen; }
+  else { nb.textContent = '↺ Restart Demo'; nb.onclick = ()=>{ approveReset(); countersRun=false; goTo(0); }; }
+
+  const dots = document.getElementById('progDots');
+  dots.innerHTML = '';
+  for(let i=0;i<6;i++){
+    const d = document.createElement('div');
+    d.className = 'pdot'+(i < cur ?' done': i===cur?' active':'');
+    d.onclick = ()=>goTo(i);
+    dots.appendChild(d);
+  }
+  document.getElementById('progLabel').textContent = SCREENS[cur].name+' · '+(cur+1)+' of 6';
+
+  document.querySelectorAll('.nav-item').forEach((el,i)=>{
+    el.classList.remove('active');
+    if(i === cur) el.classList.add('active');
+    const dot = document.getElementById('nd'+i);
+    if(!dot) return;
+    if(i < cur){ dot.className='dot-green'; el.classList.add('visited'); }
+    else if(i === cur){ dot.className='dot-red'; }
+    else { dot.className='dot-dim'; }
+    const num = el.querySelector('.nav-num');
+    if(num) num.textContent = i < cur ? '✓' : i+1;
+  });
+}
+
+/* ─── KEYBOARD ─── */
+document.addEventListener('keydown', e => {
+  if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if(e.key === 'ArrowRight' || e.key === 'ArrowDown') nextScreen();
+  else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevScreen();
+  else if(e.key >= '1' && e.key <= '6') goTo(parseInt(e.key)-1);
+  else if(e.key === 'r' || e.key === 'R') replayTerminal();
+});
+
+/* ─── COUNTERS (run once) ─── */
+function runCounters(){
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseFloat(el.dataset.count);
+    const suffix = el.dataset.suffix || '';
+    const prefix = el.dataset.prefix || '';
+    const isFloat = target % 1 !== 0;
+    const dur = 1400, steps = 50;
+    let i = 0;
+    const iv = setInterval(()=>{
+      i++;
+      const v = target * (i/steps);
+      el.textContent = prefix + (isFloat ? v.toFixed(1) : Math.round(v)) + suffix;
+      if(i >= steps){ el.textContent = prefix + target + suffix; clearInterval(iv); }
+    }, dur/steps);
+  });
+}
+
+/* ─── GRAPHS ─── */
+function initGraph(){ switchGraph(activeGraph); }
+
+function switchGraph(idx){
+  activeGraph = idx;
+  document.querySelectorAll('.gtab').forEach((b,i)=>{
+    b.classList.toggle('on', i===idx);
+  });
+  const canvas = document.getElementById('graphCanvas');
+  canvas.innerHTML = GRAPH_SVG[idx]();
+}
+
+const GRAPH_SVG = [
+  /* 0 - Attack Paths */
+  ()=>`<svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <defs>
+      <marker id="ar" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="rgba(37,99,235,.5)"/></marker>
+      <marker id="arR" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="rgba(239,68,68,.7)"/></marker>
+      <filter id="fg2"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <radialGradient id="goldG" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FBBF24" stop-opacity=".22"/><stop offset="100%" stop-color="#FBBF24" stop-opacity="0"/></radialGradient>
+    </defs>
+    <rect width="860" height="430" fill="#00060F"/>
+    <pattern id="dp" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r=".8" fill="rgba(37,99,235,.16)"/></pattern>
+    <rect width="860" height="430" fill="url(#dp)"/>
+    <!-- Critical path edges -->
+    <line x1="75" y1="215" x2="165" y2="215" stroke="rgba(239,68,68,.65)" stroke-width="2" marker-end="url(#arR)" stroke-dasharray="6,4"><animate attributeName="stroke-dashoffset" values="0;-20" dur=".9s" repeatCount="indefinite"/></line>
+    <line x1="205" y1="200" x2="292" y2="155" stroke="rgba(239,68,68,.65)" stroke-width="2" marker-end="url(#arR)" stroke-dasharray="6,4"><animate attributeName="stroke-dashoffset" values="0;-20" dur=".9s" repeatCount="indefinite"/></line>
+    <line x1="338" y1="143" x2="423" y2="118" stroke="rgba(239,68,68,.65)" stroke-width="2" marker-end="url(#arR)" stroke-dasharray="6,4"><animate attributeName="stroke-dashoffset" values="0;-20" dur=".9s" repeatCount="indefinite"/></line>
+    <line x1="472" y1="107" x2="548" y2="107" stroke="rgba(239,68,68,.7)" stroke-width="2.5" marker-end="url(#arR)" stroke-dasharray="6,4"><animate attributeName="stroke-dashoffset" values="0;-20" dur=".9s" repeatCount="indefinite"/></line>
+    <line x1="570" y1="88" x2="618" y2="60" stroke="rgba(239,68,68,.65)" stroke-width="2" marker-end="url(#arR)" stroke-dasharray="6,4"><animate attributeName="stroke-dashoffset" values="0;-20" dur=".9s" repeatCount="indefinite"/></line>
+    <line x1="660" y1="53" x2="738" y2="53" stroke="rgba(239,68,68,.8)" stroke-width="3" marker-end="url(#arR)" stroke-dasharray="6,4"><animate attributeName="stroke-dashoffset" values="0;-20" dur=".7s" repeatCount="indefinite"/></line>
+    <!-- Secondary -->
+    <line x1="205" y1="230" x2="295" y2="282" stroke="rgba(37,99,235,.22)" stroke-width="1.2" marker-end="url(#ar)"/>
+    <line x1="318" y1="307" x2="420" y2="248" stroke="rgba(37,99,235,.2)" stroke-width="1.2" marker-end="url(#ar)"/>
+    <line x1="448" y1="238" x2="552" y2="258" stroke="rgba(37,99,235,.2)" stroke-width="1.2" marker-end="url(#ar)"/>
+    <line x1="448" y1="115" x2="448" y2="228" stroke="rgba(37,99,235,.16)" stroke-width="1" marker-end="url(#ar)"/>
+    <line x1="574" y1="126" x2="744" y2="172" stroke="rgba(37,99,235,.18)" stroke-width="1.2" marker-end="url(#ar)"/>
+    <line x1="582" y1="272" x2="742" y2="278" stroke="rgba(37,99,235,.16)" stroke-width="1" marker-end="url(#ar)"/>
+    <!-- Particle -->
+    <circle r="4" fill="#EF4444" opacity=".9"><animateMotion dur="4s" repeatCount="indefinite" path="M75,215 L187,215 L187,200 L307,148 L448,115 L559,107 L637,53 L760,53"/></circle>
+    <circle r="2" fill="#fff" opacity=".55"><animateMotion dur="4s" repeatCount="indefinite" begin="-2s" path="M75,215 L187,215 L187,200 L307,148 L448,115 L559,107 L637,53 L760,53"/></circle>
+    <!-- Internet -->
+    <circle cx="75" cy="215" r="30" fill="rgba(37,99,235,.07)" stroke="rgba(37,99,235,.45)" stroke-width="1.5"/>
+    <circle cx="75" cy="215" r="18" fill="rgba(37,99,235,.05)" stroke="rgba(37,99,235,.28)" stroke-width="1"/>
+    <text x="75" y="210" text-anchor="middle" fill="#60A5FA" font-size="17">⊕</text>
+    <text x="75" y="238" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">Internet</text>
+    <!-- App EP -->
+    <circle cx="187" cy="215" r="19" fill="rgba(249,115,22,.1)" stroke="rgba(249,115,22,.4)" stroke-width="1.5"/>
+    <text x="187" y="210" text-anchor="middle" fill="#FB923C" font-size="13">⬡</text>
+    <text x="187" y="238" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">App EP</text>
+    <!-- EC2 -->
+    <polygon points="315,124 336,136 336,160 315,172 294,160 294,136" fill="rgba(37,99,235,.1)" stroke="rgba(37,99,235,.5)" stroke-width="1.5"/>
+    <text x="315" y="153" text-anchor="middle" fill="#93C5FD" font-size="13">▣</text>
+    <text x="315" y="186" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">EC2</text>
+    <circle cx="335" cy="126" r="10" fill="rgba(239,68,68,.9)" stroke="#fff" stroke-width="1"/>
+    <text x="335" y="130" text-anchor="middle" fill="#fff" font-size="8" font-family="IBM Plex Mono" font-weight="600">CVE</text>
+    <!-- IAM Role -->
+    <polygon points="448,90 467,101 467,123 448,134 429,123 429,101" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.45)" stroke-width="1.5"/>
+    <text x="448" y="115" text-anchor="middle" fill="#FCD34D" font-size="13">⬡</text>
+    <text x="448" y="148" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">IAM Role</text>
+    <!-- PrivEsc -->
+    <polygon points="559,87 579,98 579,120 559,131 539,120 539,98" fill="rgba(239,68,68,.12)" stroke="rgba(239,68,68,.6)" stroke-width="2"/>
+    <text x="559" y="111" text-anchor="middle" fill="#F87171" font-size="12">⚠</text>
+    <text x="559" y="144" text-anchor="middle" fill="#F87171" font-size="9" font-family="IBM Plex Mono">PrivEsc</text>
+    <!-- Svc Accts -->
+    <polygon points="638,40 654,49 654,67 638,76 622,67 622,49" fill="rgba(139,92,246,.1)" stroke="rgba(139,92,246,.4)" stroke-width="1.5"/>
+    <text x="638" y="61" text-anchor="middle" fill="#C4B5FD" font-size="11">◎</text>
+    <text x="638" y="90" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">Svc Accts</text>
+    <!-- Crown Jewel -->
+    <g class="crown-glow">
+      <circle cx="760" cy="53" r="46" fill="url(#goldG)"/>
+      <polygon points="760,28 785,42 785,68 760,82 735,68 735,42" fill="rgba(251,191,36,.12)" stroke="rgba(251,191,36,.75)" stroke-width="2.5"/>
+      <text x="760" y="55" text-anchor="middle" fill="#FBBF24" font-size="19">♔</text>
+      <text x="760" y="97" text-anchor="middle" fill="#FBBF24" font-size="10" font-family="IBM Plex Mono" font-weight="600">S3-PII</text>
+      <text x="760" y="110" text-anchor="middle" fill="#92400E" font-size="9" font-family="IBM Plex Mono">Crown Jewel</text>
+    </g>
+    <!-- Secondary nodes -->
+    <circle cx="307" cy="297" r="15" fill="rgba(239,68,68,.1)" stroke="rgba(239,68,68,.35)" stroke-width="1.5"/>
+    <text x="307" y="302" text-anchor="middle" fill="#F87171" font-size="11">✕</text>
+    <text x="307" y="320" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">CVE-2023</text>
+    <polygon points="448,224 464,233 464,251 448,260 432,251 432,233" fill="rgba(37,99,235,.08)" stroke="rgba(37,99,235,.28)" stroke-width="1"/>
+    <text x="448" y="245" text-anchor="middle" fill="#60A5FA" font-size="11">≋</text>
+    <text x="448" y="275" text-anchor="middle" fill="#475569" font-size="9" font-family="IBM Plex Mono">Lateral</text>
+    <polygon points="566,248 583,258 583,278 566,288 549,278 549,258" fill="rgba(239,68,68,.06)" stroke="rgba(239,68,68,.22)" stroke-width="1"/>
+    <text x="566" y="272" text-anchor="middle" fill="#FCA5A5" font-size="11">⬡</text>
+    <text x="566" y="303" text-anchor="middle" fill="#475569" font-size="9" font-family="IBM Plex Mono">Admin Role</text>
+    <circle cx="748" cy="182" r="15" fill="rgba(6,182,212,.08)" stroke="rgba(6,182,212,.3)" stroke-width="1.5"/>
+    <text x="748" y="187" text-anchor="middle" fill="#67E8F9" font-size="12">⊗</text>
+    <text x="748" y="206" text-anchor="middle" fill="#475569" font-size="9" font-family="IBM Plex Mono">Secrets</text>
+    <circle cx="748" cy="283" r="13" fill="rgba(6,182,212,.06)" stroke="rgba(6,182,212,.2)" stroke-width="1"/>
+    <text x="748" y="288" text-anchor="middle" fill="#67E8F9" font-size="11">◉</text>
+    <text x="748" y="305" text-anchor="middle" fill="#475569" font-size="9" font-family="IBM Plex Mono">PII/Email</text>
+    <!-- Legend -->
+    <g transform="translate(14,378)"><rect width="195" height="34" rx="5" fill="rgba(0,0,0,.45)" stroke="rgba(37,99,235,.13)" stroke-width="1"/>
+    <circle cx="13" cy="17" r="5" fill="rgba(251,191,36,.7)"/>
+    <text x="23" y="21" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">Crown Jewel</text>
+    <line x1="80" y1="17" x2="96" y2="17" stroke="rgba(239,68,68,.7)" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="102" y="21" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">Critical path</text>
+    <circle cx="170" cy="17" r="4" fill="#3B82F6" opacity=".5"/></g>
+    <style>@keyframes glow-pulse{0%,100%{filter:drop-shadow(0 0 8px rgba(251,191,36,.4))}50%{filter:drop-shadow(0 0 22px rgba(251,191,36,.7))}}.crown-glow{animation:glow-pulse 2s ease-in-out infinite}</style>
+  </svg>`,
+
+  /* 1 - IAM Graph */
+  ()=>`<svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <defs><marker id="ia" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="rgba(245,158,11,.7)"/></marker>
+    <marker id="ig" markerWidth="7" markerHeight="7" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="rgba(34,197,94,.5)"/></marker></defs>
+    <rect width="860" height="430" fill="#00060F"/><pattern id="dp2" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r=".8" fill="rgba(245,158,11,.12)"/></pattern><rect width="860" height="430" fill="url(#dp2)"/>
+    <text x="430" y="22" text-anchor="middle" fill="rgba(245,158,11,.25)" font-size="11" font-family="IBM Plex Mono">IAM IDENTITY GRAPH · us-east-1 · 127 roles · 3 overprivileged</text>
+    <!-- Users/Groups left -->
+    <rect x="40" y="80" width="130" height="36" rx="7" fill="rgba(37,99,235,.08)" stroke="rgba(37,99,235,.3)" stroke-width="1.5"/>
+    <text x="105" y="102" text-anchor="middle" fill="#93C5FD" font-size="11" font-family="IBM Plex Mono">dev-team-group</text>
+    <rect x="40" y="140" width="130" height="36" rx="7" fill="rgba(37,99,235,.08)" stroke="rgba(37,99,235,.3)" stroke-width="1.5"/>
+    <text x="105" y="162" text-anchor="middle" fill="#93C5FD" font-size="11" font-family="IBM Plex Mono">ops-team-group</text>
+    <rect x="40" y="200" width="130" height="36" rx="7" fill="rgba(37,99,235,.06)" stroke="rgba(37,99,235,.2)" stroke-width="1"/>
+    <text x="105" y="222" text-anchor="middle" fill="#64748B" font-size="11" font-family="IBM Plex Mono">readonly-group</text>
+    <!-- Service roles middle -->
+    <rect x="260" y="60" width="155" height="40" rx="7" fill="rgba(245,158,11,.08)" stroke="rgba(245,158,11,.4)" stroke-width="2"/>
+    <text x="337" y="79" text-anchor="middle" fill="#FCD34D" font-size="10" font-family="IBM Plex Mono" font-weight="600">ec2-processor-role</text>
+    <text x="337" y="93" text-anchor="middle" fill="#F87171" font-size="9" font-family="IBM Plex Mono">⚠ iam:PassRole</text>
+    <rect x="260" y="140" width="155" height="36" rx="7" fill="rgba(245,158,11,.06)" stroke="rgba(245,158,11,.25)" stroke-width="1.5"/>
+    <text x="337" y="162" text-anchor="middle" fill="#FCD34D" font-size="11" font-family="IBM Plex Mono">lambda-exec-role</text>
+    <rect x="260" y="215" width="155" height="36" rx="7" fill="rgba(245,158,11,.06)" stroke="rgba(245,158,11,.25)" stroke-width="1.5"/>
+    <text x="337" y="237" text-anchor="middle" fill="#FCD34D" font-size="11" font-family="IBM Plex Mono">rds-access-role</text>
+    <rect x="260" y="290" width="155" height="36" rx="7" fill="rgba(34,197,94,.06)" stroke="rgba(34,197,94,.25)" stroke-width="1"/>
+    <text x="337" y="312" text-anchor="middle" fill="#6EE7B7" font-size="11" font-family="IBM Plex Mono">readonly-role</text>
+    <!-- Admin role right-center CRITICAL -->
+    <rect x="490" y="130" width="155" height="50" rx="8" fill="rgba(239,68,68,.1)" stroke="rgba(239,68,68,.5)" stroke-width="2"/>
+    <text x="567" y="152" text-anchor="middle" fill="#F87171" font-size="11" font-family="IBM Plex Mono" font-weight="700">admin-role</text>
+    <text x="567" y="168" text-anchor="middle" fill="#F87171" font-size="9" font-family="IBM Plex Mono">AdministratorAccess</text>
+    <!-- Resources right -->
+    <circle cx="760" cy="100" r="28" fill="rgba(251,191,36,.1)" stroke="rgba(251,191,36,.6)" stroke-width="2"/>
+    <text x="760" y="97" text-anchor="middle" fill="#FBBF24" font-size="17">♔</text>
+    <text x="760" y="114" text-anchor="middle" fill="#FBBF24" font-size="9" font-family="IBM Plex Mono">S3-PII</text>
+    <circle cx="760" cy="200" r="22" fill="rgba(6,182,212,.08)" stroke="rgba(6,182,212,.3)" stroke-width="1.5"/>
+    <text x="760" y="196" text-anchor="middle" fill="#67E8F9" font-size="11" font-family="IBM Plex Mono">RDS</text>
+    <text x="760" y="210" text-anchor="middle" fill="#475569" font-size="8" font-family="IBM Plex Mono">prod-db</text>
+    <circle cx="760" cy="300" r="20" fill="rgba(37,99,235,.08)" stroke="rgba(37,99,235,.25)" stroke-width="1"/>
+    <text x="760" y="296" text-anchor="middle" fill="#93C5FD" font-size="10" font-family="IBM Plex Mono">EC2</text>
+    <text x="760" y="308" text-anchor="middle" fill="#475569" font-size="8" font-family="IBM Plex Mono">fleet</text>
+    <!-- Edges group→role -->
+    <line x1="170" y1="98" x2="260" y2="80" stroke="rgba(37,99,235,.3)" stroke-width="1.2" marker-end="url(#ig)"/>
+    <line x1="170" y1="158" x2="260" y2="158" stroke="rgba(37,99,235,.3)" stroke-width="1.2" marker-end="url(#ig)"/>
+    <line x1="170" y1="218" x2="260" y2="233" stroke="rgba(37,99,235,.2)" stroke-width="1" marker-end="url(#ig)"/>
+    <!-- ec2-processor CRITICAL edge to admin-role -->
+    <line x1="415" y1="80" x2="490" y2="150" stroke="rgba(239,68,68,.7)" stroke-width="2.5" marker-end="url(#ia)" stroke-dasharray="7,4"><animate attributeName="stroke-dashoffset" values="0;-22" dur=".9s" repeatCount="indefinite"/></line>
+    <text x="460" y="110" text-anchor="middle" fill="#F87171" font-size="9" font-family="IBM Plex Mono">iam:PassRole ⚠</text>
+    <!-- lambda→admin -->
+    <line x1="415" y1="158" x2="490" y2="158" stroke="rgba(245,158,11,.4)" stroke-width="1.5" marker-end="url(#ia)"/>
+    <!-- admin→resources -->
+    <line x1="645" y1="145" x2="732" y2="100" stroke="rgba(239,68,68,.5)" stroke-width="1.8" marker-end="url(#ia)"/>
+    <line x1="645" y1="158" x2="738" y2="196" stroke="rgba(37,99,235,.3)" stroke-width="1.2" marker-end="url(#ig)"/>
+    <line x1="645" y1="168" x2="740" y2="295" stroke="rgba(37,99,235,.25)" stroke-width="1" marker-end="url(#ig)"/>
+    <!-- rds role→rds -->
+    <line x1="415" y1="233" x2="738" y2="200" stroke="rgba(34,197,94,.25)" stroke-width="1" marker-end="url(#ig)"/>
+    <!-- Legend -->
+    <g transform="translate(14,395)"><rect width="340" height="24" rx="4" fill="rgba(0,0,0,.5)" stroke="rgba(245,158,11,.15)" stroke-width="1"/>
+    <line x1="10" y1="12" x2="26" y2="12" stroke="rgba(239,68,68,.7)" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="32" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">iam:PassRole (critical)</text>
+    <line x1="155" y1="12" x2="171" y2="12" stroke="rgba(245,158,11,.5)" stroke-width="1.5"/>
+    <text x="177" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">sts:AssumeRole</text>
+    <line x1="260" y1="12" x2="276" y2="12" stroke="rgba(34,197,94,.4)" stroke-width="1.2"/>
+    <text x="282" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">safe policy</text></g>
+  </svg>`,
+
+  /* 2 - Network */
+  ()=>`<svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <defs><marker id="na" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(6,182,212,.6)"/></marker></defs>
+    <rect width="860" height="430" fill="#00060F"/><pattern id="dp3" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r=".8" fill="rgba(6,182,212,.1)"/></pattern><rect width="860" height="430" fill="url(#dp3)"/>
+    <text x="430" y="20" text-anchor="middle" fill="rgba(6,182,212,.22)" font-size="11" font-family="IBM Plex Mono">NETWORK TOPOLOGY · VPC vpc-0a1b2c3d · 3 subnets · 1 public exposure</text>
+    <!-- Internet -->
+    <circle cx="60" cy="215" r="32" fill="rgba(37,99,235,.07)" stroke="rgba(37,99,235,.4)" stroke-width="1.5"/>
+    <text x="60" y="211" text-anchor="middle" fill="#60A5FA" font-size="18">⊕</text>
+    <text x="60" y="230" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">Internet</text>
+    <!-- IGW -->
+    <rect x="120" y="195" width="72" height="40" rx="6" fill="rgba(6,182,212,.08)" stroke="rgba(6,182,212,.4)" stroke-width="1.5"/>
+    <text x="156" y="212" text-anchor="middle" fill="#67E8F9" font-size="10" font-family="IBM Plex Mono">IGW</text>
+    <text x="156" y="226" text-anchor="middle" fill="#475569" font-size="8" font-family="IBM Plex Mono">igw-0a1b</text>
+    <!-- VPC boundary -->
+    <rect x="210" y="60" width="560" height="310" rx="14" fill="rgba(37,99,235,.025)" stroke="rgba(37,99,235,.12)" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <text x="220" y="80" fill="rgba(37,99,235,.4)" font-size="10" font-family="IBM Plex Mono">vpc-0a1b2c3d · 10.0.0.0/16</text>
+    <!-- Public subnet -->
+    <rect x="228" y="90" width="200" height="250" rx="8" fill="rgba(239,68,68,.03)" stroke="rgba(239,68,68,.18)" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="238" y="108" fill="rgba(239,68,68,.5)" font-size="9" font-family="IBM Plex Mono">public-subnet-1a</text>
+    <!-- ALB in public -->
+    <rect x="248" y="120" width="155" height="44" rx="7" fill="rgba(239,68,68,.08)" stroke="rgba(239,68,68,.35)" stroke-width="1.5"/>
+    <text x="325" y="139" text-anchor="middle" fill="#FCA5A5" font-size="10" font-family="IBM Plex Mono">app-load-balancer</text>
+    <text x="325" y="153" text-anchor="middle" fill="#F87171" font-size="9" font-family="IBM Plex Mono">0.0.0.0/0:443 ⚠</text>
+    <!-- EC2 in public -->
+    <rect x="248" y="196" width="155" height="44" rx="7" fill="rgba(37,99,235,.08)" stroke="rgba(37,99,235,.4)" stroke-width="1.5"/>
+    <text x="325" y="215" text-anchor="middle" fill="#93C5FD" font-size="10" font-family="IBM Plex Mono">i-0a1b2c3d</text>
+    <text x="325" y="229" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">sg-0a1b: 0.0.0.0/0:443</text>
+    <!-- Private subnet -->
+    <rect x="460" y="90" width="290" height="250" rx="8" fill="rgba(34,197,94,.02)" stroke="rgba(34,197,94,.15)" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="470" y="108" fill="rgba(34,197,94,.45)" font-size="9" font-family="IBM Plex Mono">private-subnet-1a · no direct internet</text>
+    <!-- RDS -->
+    <rect x="480" y="120" width="140" height="44" rx="7" fill="rgba(6,182,212,.07)" stroke="rgba(6,182,212,.3)" stroke-width="1.5"/>
+    <text x="550" y="139" text-anchor="middle" fill="#67E8F9" font-size="10" font-family="IBM Plex Mono">prod-postgres</text>
+    <text x="550" y="153" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">sg-rds: port 5432 only</text>
+    <!-- Secrets Manager -->
+    <rect x="480" y="196" width="140" height="44" rx="7" fill="rgba(139,92,246,.07)" stroke="rgba(139,92,246,.3)" stroke-width="1.5"/>
+    <text x="550" y="215" text-anchor="middle" fill="#C4B5FD" font-size="10" font-family="IBM Plex Mono">secrets-manager</text>
+    <text x="550" y="229" text-anchor="middle" fill="#64748B" font-size="9" font-family="IBM Plex Mono">prod-db-credentials</text>
+    <!-- S3 (regional, no VPC) -->
+    <rect x="650" y="196" width="88" height="44" rx="7" fill="rgba(251,191,36,.08)" stroke="rgba(251,191,36,.5)" stroke-width="2"/>
+    <text x="694" y="213" text-anchor="middle" fill="#FBBF24" font-size="13">♔</text>
+    <text x="694" y="229" text-anchor="middle" fill="#FBBF24" font-size="9" font-family="IBM Plex Mono">S3-PII</text>
+    <!-- Edges -->
+    <line x1="92" y1="215" x2="120" y2="215" stroke="rgba(239,68,68,.6)" stroke-width="2.5" marker-end="url(#na)" stroke-dasharray="5,3"><animate attributeName="stroke-dashoffset" values="0;-16" dur="1s" repeatCount="indefinite"/></line>
+    <line x1="192" y1="215" x2="228" y2="215" stroke="rgba(239,68,68,.55)" stroke-width="2.5" marker-end="url(#na)" stroke-dasharray="5,3"><animate attributeName="stroke-dashoffset" values="0;-16" dur="1s" repeatCount="indefinite"/></line>
+    <line x1="325" y1="164" x2="325" y2="196" stroke="rgba(239,68,68,.45)" stroke-width="1.8" marker-end="url(#na)"/>
+    <line x1="403" y1="218" x2="480" y2="218" stroke="rgba(6,182,212,.35)" stroke-width="1.5" marker-end="url(#na)"/>
+    <line x1="403" y1="225" x2="480" y2="225" stroke="rgba(139,92,246,.3)" stroke-width="1.2" marker-end="url(#na)"/>
+    <line x1="620" y1="218" x2="650" y2="218" stroke="rgba(239,68,68,.5)" stroke-width="2" marker-end="url(#na)" stroke-dasharray="5,3"><animate attributeName="stroke-dashoffset" values="0;-16" dur="1s" repeatCount="indefinite"/></line>
+    <!-- Legend -->
+    <g transform="translate(14,395)"><rect width="360" height="24" rx="4" fill="rgba(0,0,0,.5)" stroke="rgba(6,182,212,.12)" stroke-width="1"/>
+    <line x1="10" y1="12" x2="26" y2="12" stroke="rgba(239,68,68,.6)" stroke-width="2" stroke-dasharray="4,2"/>
+    <text x="32" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">Attack traffic (public)</text>
+    <line x1="160" y1="12" x2="176" y2="12" stroke="rgba(6,182,212,.4)" stroke-width="1.5"/>
+    <text x="182" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">Internal traffic (private)</text>
+    <rect x="295" y="6" width="12" height="12" rx="2" fill="rgba(239,68,68,.15)" stroke="rgba(239,68,68,.4)" stroke-width="1"/>
+    <text x="313" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">Public subnet</text></g>
+  </svg>`,
+
+  /* 3 - NHI */
+  ()=>`<svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <defs><marker id="nh" markerWidth="6" markerHeight="6" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="rgba(139,92,246,.6)"/></marker></defs>
+    <rect width="860" height="430" fill="#00060F"/><pattern id="dp4" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r=".8" fill="rgba(139,92,246,.1)"/></pattern><rect width="860" height="430" fill="url(#dp4)"/>
+    <text x="430" y="20" text-anchor="middle" fill="rgba(139,92,246,.25)" font-size="11" font-family="IBM Plex Mono">NON-HUMAN IDENTITIES · 847 assets · 23 NHIs · 4 unmanaged · 2026 #1 breach vector</text>
+    <!-- Center hub -->
+    <circle cx="430" cy="215" r="42" fill="rgba(139,92,246,.1)" stroke="rgba(139,92,246,.4)" stroke-width="2"/>
+    <circle cx="430" cy="215" r="28" fill="rgba(139,92,246,.06)" stroke="rgba(139,92,246,.25)" stroke-width="1.5"/>
+    <text x="430" y="210" text-anchor="middle" fill="#C4B5FD" font-size="11" font-family="IBM Plex Mono">AWS IAM</text>
+    <text x="430" y="225" text-anchor="middle" fill="#C4B5FD" font-size="10" font-family="IBM Plex Mono">Identity Hub</text>
+    <!-- NHI nodes around center -->
+    <!-- EC2 instance role - critical -->
+    <circle cx="170" cy="100" r="36" fill="rgba(239,68,68,.09)" stroke="rgba(239,68,68,.45)" stroke-width="2"/>
+    <text x="170" y="95" text-anchor="middle" fill="#F87171" font-size="10" font-family="IBM Plex Mono">ec2-processor</text>
+    <text x="170" y="109" text-anchor="middle" fill="#F87171" font-size="9" font-family="IBM Plex Mono">role ⚠ CRITICAL</text>
+    <text x="170" y="148" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">IMDSv1 exposed</text>
+    <!-- Lambda exec role -->
+    <circle cx="100" cy="270" r="32" fill="rgba(245,158,11,.08)" stroke="rgba(245,158,11,.35)" stroke-width="1.5"/>
+    <text x="100" y="265" text-anchor="middle" fill="#FCD34D" font-size="10" font-family="IBM Plex Mono">lambda-exec</text>
+    <text x="100" y="279" text-anchor="middle" fill="#FCD34D" font-size="9" font-family="IBM Plex Mono">HIGH RISK</text>
+    <text x="100" y="315" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">AssumeRole → admin</text>
+    <!-- GitHub Actions -->
+    <circle cx="240" cy="370" r="30" fill="rgba(37,99,235,.08)" stroke="rgba(37,99,235,.3)" stroke-width="1.5"/>
+    <text x="240" y="365" text-anchor="middle" fill="#93C5FD" font-size="10" font-family="IBM Plex Mono">github-actions</text>
+    <text x="240" y="378" text-anchor="middle" fill="#93C5FD" font-size="9" font-family="IBM Plex Mono">OIDC token</text>
+    <text x="240" y="408" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">overly broad trust</text>
+    <!-- EKS Service Acct -->
+    <circle cx="620" cy="370" r="30" fill="rgba(139,92,246,.07)" stroke="rgba(139,92,246,.28)" stroke-width="1.5"/>
+    <text x="620" y="365" text-anchor="middle" fill="#C4B5FD" font-size="10" font-family="IBM Plex Mono">eks-service-acct</text>
+    <text x="620" y="378" text-anchor="middle" fill="#C4B5FD" font-size="9" font-family="IBM Plex Mono">MEDIUM</text>
+    <text x="620" y="408" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">IRSA misconfigured</text>
+    <!-- CI/CD token -->
+    <circle cx="750" cy="270" r="30" fill="rgba(37,99,235,.07)" stroke="rgba(37,99,235,.25)" stroke-width="1.5"/>
+    <text x="750" y="265" text-anchor="middle" fill="#93C5FD" font-size="10" font-family="IBM Plex Mono">codepipeline</text>
+    <text x="750" y="279" text-anchor="middle" fill="#93C5FD" font-size="9" font-family="IBM Plex Mono">service role</text>
+    <text x="750" y="315" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">LOW · scoped</text>
+    <!-- RDS IAM auth -->
+    <circle cx="700" cy="100" r="30" fill="rgba(34,197,94,.07)" stroke="rgba(34,197,94,.25)" stroke-width="1.5"/>
+    <text x="700" y="95" text-anchor="middle" fill="#6EE7B7" font-size="10" font-family="IBM Plex Mono">rds-iam-auth</text>
+    <text x="700" y="108" text-anchor="middle" fill="#6EE7B7" font-size="9" font-family="IBM Plex Mono">SAFE ✓</text>
+    <text x="700" y="140" text-anchor="middle" fill="#64748B" font-size="8" font-family="IBM Plex Mono">properly scoped</text>
+    <!-- Edges to hub -->
+    <line x1="204" y1="116" x2="398" y2="197" stroke="rgba(239,68,68,.55)" stroke-width="2.5" stroke-dasharray="6,4"><animate attributeName="stroke-dashoffset" values="0;-20" dur=".9s" repeatCount="indefinite"/></line>
+    <line x1="130" y1="255" x2="393" y2="215" stroke="rgba(245,158,11,.4)" stroke-width="1.8" stroke-dasharray="5,3"><animate attributeName="stroke-dashoffset" values="0;-16" dur="1s" repeatCount="indefinite"/></line>
+    <line x1="265" y1="344" x2="408" y2="238" stroke="rgba(37,99,235,.3)" stroke-width="1.4" marker-end="url(#nh)"/>
+    <line x1="595" y1="345" x2="460" y2="238" stroke="rgba(139,92,246,.3)" stroke-width="1.4" marker-end="url(#nh)"/>
+    <line x1="722" y1="254" x2="468" y2="226" stroke="rgba(37,99,235,.25)" stroke-width="1.2" marker-end="url(#nh)"/>
+    <line x1="672" y1="116" x2="466" y2="197" stroke="rgba(34,197,94,.3)" stroke-width="1.2" marker-end="url(#nh)"/>
+    <!-- Stats box -->
+    <rect x="340" y="290" width="180" height="80" rx="7" fill="rgba(0,0,0,.5)" stroke="rgba(139,92,246,.2)" stroke-width="1"/>
+    <text x="430" y="312" text-anchor="middle" fill="var(--muted)" font-size="9" font-family="IBM Plex Mono">NHI INVENTORY</text>
+    <text x="350" y="330" fill="#F87171" font-size="10" font-family="IBM Plex Mono">2 Critical NHIs</text>
+    <text x="350" y="346" fill="#FCD34D" font-size="10" font-family="IBM Plex Mono">4 Unmanaged identities</text>
+    <text x="350" y="362" fill="#6EE7B7" font-size="10" font-family="IBM Plex Mono">17 Safe / scoped</text>
+    <!-- Legend -->
+    <g transform="translate(14,395)"><rect width="360" height="24" rx="4" fill="rgba(0,0,0,.5)" stroke="rgba(139,92,246,.12)" stroke-width="1"/>
+    <circle cx="14" cy="12" r="6" fill="rgba(239,68,68,.15)" stroke="rgba(239,68,68,.4)" stroke-width="1"/>
+    <text x="26" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">Critical NHI</text>
+    <circle cx="104" cy="12" r="6" fill="rgba(245,158,11,.12)" stroke="rgba(245,158,11,.3)" stroke-width="1"/>
+    <text x="116" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">High risk NHI</text>
+    <circle cx="208" cy="12" r="6" fill="rgba(34,197,94,.1)" stroke="rgba(34,197,94,.28)" stroke-width="1"/>
+    <text x="220" y="16" fill="#94A3B8" font-size="9" font-family="IBM Plex Mono">Safe / scoped NHI</text></g>
+  </svg>`,
+];
+
+/* ─── PATH LIST ─── */
+let activeFilter = 'all';
+
+function initPathList(){
+  const list = document.getElementById('pathList');
+  list.innerHTML = '';
+  PATHS.forEach((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'path-item' + (i===activePath?' sel':'');
+    el.dataset.sev = p.sev;
+    el.dataset.idx = i;
+    const l2label = p.l2 ? '· L2 CONFIRMED' : p.sev==='HIGH' ? '· L1 ONLY' : '· GRAPH ONLY';
+    const confW = p.conf + '%';
+    const confClr = p.sev==='CRITICAL'?'#F87171':p.sev==='HIGH'?'#FBBF24':p.sev==='MEDIUM'?'#60A5FA':'#4ADE80';
+    el.innerHTML = `<div class="path-sev" style="color:${p.color}">${p.sev} ${l2label}</div>
+      <div class="path-name">${p.name}</div>
+      <div class="path-meta">${p.meta}</div>
+      <div class="conf-bar"><div class="conf-fill" style="width:${confW};background:${confClr}"></div></div>`;
+    el.onclick = () => selectPath(i);
+    list.appendChild(el);
+  });
+  applyFilter();
+  selectPath(activePath, false);
+}
+
+function filterPaths(sev, btn){
+  activeFilter = sev;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  applyFilter();
+}
+
+function applyFilter(){
+  document.querySelectorAll('.path-item').forEach(el => {
+    const show = activeFilter==='all' || el.dataset.sev===activeFilter;
+    el.classList.toggle('hidden', !show);
+  });
+}
+
+function selectPath(idx, animate=true){
+  activePath = idx;
+  const p = PATHS[idx];
+  document.querySelectorAll('.path-item').forEach((el,i)=>el.classList.toggle('sel',i===idx));
+
+  // Update verdict
+  if(animate){
+    const vb = document.getElementById('verdictBox');
+    vb.style.opacity='0';
+    setTimeout(()=>{
+      updateVerdictContent(p);
+      vb.style.transition='opacity .3s';
+      vb.style.opacity='1';
+    },150);
+  } else { updateVerdictContent(p); }
+}
+
+function updateVerdictContent(p){
+  document.getElementById('verdictBox').style.borderColor = p.verdictBorder;
+  document.getElementById('verdictBox').style.background  = p.verdictBg;
+  document.getElementById('verdictPathId').textContent = p.id;
+  document.getElementById('verdictBody').innerHTML = p.verdict;
+  document.getElementById('confVal').textContent = p.conf+'%';
+  document.getElementById('confVal').style.color = p.confColor;
+  document.getElementById('d-id').textContent    = p.id;
+  document.getElementById('d-target').textContent= p.target;
+  document.getElementById('d-exp').textContent   = p.exp;
+  document.getElementById('d-cut').textContent   = p.cut;
+  document.getElementById('d-l2').innerHTML = p.l2
+    ? '<span class="badge b-green">CONFIRMED</span>'
+    : '<span class="badge b-blue">GRAPH ONLY</span>';
+  // MITRE
+  const ml = document.getElementById('mitreList');
+  ml.innerHTML = p.mitre.map(m=>`<span class="badge ${m.c}" style="justify-content:flex-start">${m.t}</span>`).join('');
+}
+
+/* ─── COPY CODE ─── */
+function copyCode(btn, id){
+  const el = document.getElementById(id);
+  const text = el.textContent || el.innerText;
+  navigator.clipboard.writeText(text).then(()=>{
+    btn.textContent='copied!';
+    showToast('Code copied to clipboard','green',2000);
+    setTimeout(()=>btn.textContent='copy',2000);
+  });
+}
+
+/* ─── TERMINAL ─── */
+const TERM_LINES = [
+  {t:'cmd', txt:'$ xseecyber simulate --path AP-0031 --mode safe --env acme-prod'},
+  {t:'out', txt:'→ Loading attack path: Internet → EC2 → IAM → S3-PII'},
+  {t:'out', txt:'→ Initializing isolated simulation environment...'},
+  {t:'out', txt:'→ Snapshotting IAM policies: 1,247 captured'},
+  {t:'out', txt:'→ SIMULATION_MODE=safe · no production resources modified'},
+  {t:'',    txt:''},
+  {t:'sec', txt:'[ STAGE 1 ] External Reconnaissance'},
+  {t:'out', txt:'  → Scanning 54.23.11.87 (public IP of i-0a1b2c3d)'},
+  {t:'out', txt:'  → Port 443 open · nginx/1.24.0 detected'},
+  {t:'warn',txt:'  ⚠ CVE-2023-44487 applicable · HTTP/2 Rapid Reset'},
+  {t:'ok',  txt:'  ✓ Stage 1 complete · entry point confirmed'},
+  {t:'',    txt:''},
+  {t:'sec', txt:'[ STAGE 2 ] Initial Access · EC2 Compromise'},
+  {t:'out', txt:'  → HTTP/2 exploit against nginx worker process'},
+  {t:'out', txt:'  → Requesting EC2 metadata: 169.254.169.254/latest/meta-data/'},
+  {t:'ok',  txt:'  ✓ IMDSv1 accessible · no token required'},
+  {t:'err', txt:'  ✗ IMDSv2 not enforced — CRITICAL MISCONFIGURATION'},
+  {t:'ok',  txt:'  ✓ Stage 2 complete · ec2-processor-role credentials obtained'},
+  {t:'',    txt:''},
+  {t:'sec', txt:'[ STAGE 3 ] Privilege Escalation'},
+  {t:'out', txt:'  → Credentials: AK:ASIA1B2C3D4E5F · Region: us-east-1'},
+  {t:'out', txt:'  → Calling iam:PassRole on arn:aws:iam::123456789012:role/admin-role'},
+  {t:'ok',  txt:'  ✓ PassRole succeeded · admin-role STS token obtained'},
+  {t:'warn',txt:'  ⚠ No CloudTrail alert triggered · invisible to monitoring'},
+  {t:'ok',  txt:'  ✓ Stage 3 complete · full admin access achieved'},
+  {t:'',    txt:''},
+  {t:'sec', txt:'[ STAGE 4 ] Data Exfiltration · Crown Jewel'},
+  {t:'out', txt:'  → Enumerating s3://acme-customer-pii/'},
+  {t:'out', txt:'  → Objects: 847,293 · Size: 2.3 GB · Type: PII records'},
+  {t:'err', txt:'  ✗ S3 access logging disabled · exfiltration undetectable'},
+  {t:'err', txt:'  ✗ No GuardDuty rule for bulk s3:GetObject'},
+  {t:'ok',  txt:'  ✓ Stage 4 complete · full data access demonstrated'},
+  {t:'',    txt:''},
+  {t:'box', txt:'  SIMULATION RESULT: EXPLOIT SUCCEEDED IN 4 STAGES'},
+  {t:'box', txt:'  Detection coverage on this path: 0%'},
+  {t:'box-g',txt:' 3 detection rules auto-generated from simulation trace'},
+];
+
+function setSpeed(s, btn){
+  termSpeed = s;
+  document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function replayTerminal(){
+  if(termTimer){ clearTimeout(termTimer); termTimer=null; }
+  const body = document.getElementById('termBody');
+  if(!body) return;
+  body.innerHTML = '';
+  termRunning = true;
+  let li=0, ci=0, currentSpan=null;
+
+  function tick(){
+    if(!termRunning) return;
+    if(li >= TERM_LINES.length){ addCursor(); termRunning=false; return; }
+    const line = TERM_LINES[li];
+    if(ci===0){
+      currentSpan = document.createElement('span');
+      let cls = 'tl ';
+      if(line.t==='box') cls+='box';
+      else if(line.t==='box-g') cls+='box-g';
+      else if(line.t==='sec') cls+='sec';
+      else cls+=line.t;
+      currentSpan.className = cls;
+      body.appendChild(currentSpan);
+      if(line.txt===''){
+        currentSpan.innerHTML='&nbsp;';
+        li++; ci=0;
+        termTimer=setTimeout(tick,20/termSpeed);
+        return;
+      }
+    }
+    if(ci < line.txt.length){
+      currentSpan.textContent += line.txt[ci];
+      ci++;
+      const base = line.t==='cmd' ? 22 : 6;
+      body.scrollTop=body.scrollHeight;
+      termTimer=setTimeout(tick, base/termSpeed);
+    } else {
+      li++; ci=0;
+      const pause = line.t==='cmd'?200:line.t==='sec'?100:line.t.startsWith('box')?50:20;
+      termTimer=setTimeout(tick, pause/termSpeed);
+    }
+  }
+
+  function addCursor(){
+    const sp=document.createElement('span');
+    sp.className='tl cmd';
+    sp.innerHTML='$ <span class="cursor-blink"></span>';
+    body.appendChild(sp);
+    body.scrollTop=body.scrollHeight;
+  }
+
+  tick();
+}
+
+/* ─── APPROVE ─── */
+function doApprove(){
+  if(approved) return;
+  approved=true;
+  const btn=document.getElementById('approveBtn');
+  const txt=document.getElementById('approveTxt');
+  const bar=document.getElementById('approveProgress');
+  const note=document.getElementById('approveNote');
+  btn.disabled=true;
+  btn.style.background='linear-gradient(135deg,#1D4ED8,#2563EB)';
+  txt.textContent='Applying fix via AWS SDK...';
+  bar.style.width='35%';
+  showToast('Remediation agent applying fix to AWS...','blue',4000);
+
+  approveTimer=setTimeout(()=>{
+    txt.textContent='Running L2 verification...';
+    bar.style.width='70%';
+    btn.style.background='linear-gradient(135deg,#0F4C75,#1565A0)';
+  },1600);
+
+  approveTimer=setTimeout(()=>{
+    txt.textContent='✓ Verified · Paths Confirmed Closed';
+    bar.style.width='100%';
+    btn.style.background='linear-gradient(135deg,#14532D,#166534)';
+    note.textContent='AP-0031 closed · L2 verified · Certificate generating...';
+    showToast('3 paths closed · Certificate generated','green',3000);
+  },3200);
+
+  approveTimer=setTimeout(()=>{ if(cur===3) goTo(5); },4600);
+}
+
+function approveReset(){
+  approved=false;
+  if(approveTimer){ clearTimeout(approveTimer); approveTimer=null; }
+  const btn=document.getElementById('approveBtn');
+  const txt=document.getElementById('approveTxt');
+  const bar=document.getElementById('approveProgress');
+  const note=document.getElementById('approveNote');
+  if(!btn) return;
+  btn.disabled=false; btn.style.background='';
+  txt.innerHTML='✓ &nbsp; APPROVE &amp; APPLY FIX';
+  bar.style.width='0%';
+  note.textContent='One click. Agent applies via AWS SDK → L2 re-validates → certificate generated.\nRollback available 24h if verification fails.';
+}
+
+/* ─── DOWNLOAD CERT ─── */
+function downloadCert(){
+  showToast('Generating signed PDF · Download starting...','blue',3000);
+  setTimeout(()=>showToast('Board PDF ready · XSEE-2026-04-05-AP0031.pdf','green',4000),1500);
+  // Simulate download trigger - creates an HTML file as the "evidence package"
+  const content = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>XSEE Certificate</title></head><body style="font-family:monospace;background:#010912;color:#eef4ff;padding:40px">
+<h1 style="color:#2563EB">XSEE BREACH PREVENTION CERTIFICATE</h1>
+<p>Organization: Acme Corp | AWS: 123456789012 | Date: April 5, 2026</p>
+<h2 style="color:#4ADE80">3 Critical Attack Paths Eliminated</h2>
+<p>Financial risk eliminated: $2.4M | Security score: 94 | Loop time: 28 minutes</p>
+<p>Verified by: XSEE L2 Validation Engine v2.4</p>
+<p>sha256: 8f3a9d2e1c4b7f6a0e9d3c8b5a2f1e4d7c0b9a3</p>
+</body></html>`;
+  const blob = new Blob([content], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href=url; a.download='XSEE-Certificate-2026-04-05.html';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+/* ─── INIT ─── */
+updateUI();
+runCounters();
+countersRun=true;
+
+// Init path list on load (screen 1 default not active but data ready)
+setTimeout(()=>{
+  initPathList();
+  switchGraph(0);
+}, 50);
+</script>
+</body>
+</html>

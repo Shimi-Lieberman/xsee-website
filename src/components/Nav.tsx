@@ -6,6 +6,16 @@ import SiteLogo from "@/components/SiteLogo";
 const REGISTER_URL = "https://app.xsee.io/register";
 const LOGIN_URL = "https://app.xsee.io/login";
 
+const NAV_LINKS = [
+  { href: "/#how", label: "Platform" },
+  { href: "/#engines", label: "Engines" },
+  { href: "/#compare", label: "Why Us" },
+  { href: "/free-scan", label: "Free Scan" },
+  { href: "/demo", label: "Demo" },
+  { href: "/#pricing", label: "Pricing" },
+  { href: "/#contact", label: "Contact" },
+] as const;
+
 export default function Nav() {
   return (
     <nav
@@ -16,24 +26,11 @@ export default function Nav() {
         <div className="nav-inner">
           <SiteLogo />
           <nav className="nav-links">
-            <Link href="/#how" className="nav-link">
-              Platform
-            </Link>
-            <Link href="/#engines" className="nav-link">
-              Engines
-            </Link>
-            <Link href="/#compare" className="nav-link">
-              Why Us
-            </Link>
-            <Link href="/free-scan" className="nav-link">
-              Free Scan
-            </Link>
-            <Link href="/#pricing" className="nav-link">
-              Pricing
-            </Link>
-            <Link href="/#contact" className="nav-link">
-              Contact
-            </Link>
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link key={href} href={href} className="nav-link">
+                {label}
+              </Link>
+            ))}
           </nav>
           <div className="hidden md:flex items-center gap-1.5 text-[11px] text-white/30 mr-2">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -65,6 +62,14 @@ export default function Nav() {
               </Link>
             </div>
           </div>
+        </div>
+        {/* Mobile: nav-links hidden below lg in globals; mirror links here */}
+        <div className="nav-mobile-links hidden max-[1024px]:flex flex-wrap items-center justify-center gap-x-2 gap-y-1 py-2 border-t border-white/[0.06] -mx-4 px-4 sm:mx-0 sm:px-0">
+          {NAV_LINKS.map(({ href, label }) => (
+            <Link key={`m-${href}`} href={href} className="nav-link text-xs py-1 px-2">
+              {label}
+            </Link>
+          ))}
         </div>
       </div>
     </nav>
