@@ -1204,11 +1204,15 @@
   color: #94a3b8;
 }
 
-/* ── Scroll Reveal Setup ── */
+/* ── Scroll Reveal Setup — visible by default; below-fold uses .reveal-on-scroll-pending ── */
 .reveal-on-scroll {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-on-scroll-pending:not(.in-view) {
   opacity: 0;
   transform: translateY(32px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal-on-scroll.in-view {
   opacity: 1;

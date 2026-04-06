@@ -46,7 +46,7 @@ export default function Home() {
       <main className="w-full max-w-[100vw] mx-auto">
         <Hero />
         <div
-          className="home-stats-strip reveal"
+          className="home-stats-strip"
           style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}
         >
           <div className="hero-stats">

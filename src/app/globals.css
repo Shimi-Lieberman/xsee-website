@@ -272,11 +272,14 @@ section { position: relative; }
 
 /* ━━━ SCROLL REVEAL ━━━ */
 /* .reveal / .reveal.in — see XSEE PREMIUM VISUAL SYSTEM at end of file */
-.reveal-left { opacity: 0; transform: translateX(-24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal-left { opacity: 1; transform: translateX(0); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal-left.side-reveal-pending:not(.in) { opacity: 0; transform: translateX(-24px); }
 .reveal-left.in { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 0; transform: translateX(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal-right { opacity: 1; transform: translateX(0); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal-right.side-reveal-pending:not(.in) { opacity: 0; transform: translateX(24px); }
 .reveal-right.in { opacity: 1; transform: translateX(0); }
-.reveal-scale { opacity: 0; transform: scale(0.97); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal-scale { opacity: 1; transform: scale(1); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal-scale.side-reveal-pending:not(.in) { opacity: 0; transform: scale(0.97); }
 .reveal-scale.in { opacity: 1; transform: scale(1); }
 
 /* ━━━ NAVBAR ━━━ */
@@ -1224,11 +1227,15 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
 .chat-send:hover:not(:disabled) { background: #D4006E; }
 .chat-send:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* Scroll animation (ScrollAnimator) */
+/* Scroll animation (ScrollAnimator) — visible by default; below-fold uses .animate-from-below */
 .animate-on-scroll {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
+}
+.animate-on-scroll.animate-from-below:not(.visible) {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.65s ease-out, transform 0.65s ease-out;
 }
 .animate-on-scroll.visible {
   opacity: 1;
@@ -1481,13 +1488,17 @@ footer .footer-inner {
    XSEE PREMIUM VISUAL SYSTEM
    ============================================ */
 
-/* Section reveal animation (ScrollAnimator uses .visible; GlobalScripts uses .in) */
+/* Section reveal — visible by default (LCP); below-fold uses .reveal-from-below */
 .reveal {
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 0.55s var(--ease-premium),
     transform 0.55s var(--ease-premium);
+}
+.reveal.reveal-from-below:not(.in):not(.visible) {
+  opacity: 0;
+  transform: translateY(24px);
 }
 .reveal.visible,
 .reveal.in {
@@ -1503,20 +1514,11 @@ footer .footer-inner {
 .animate-on-scroll.reveal-delay-2 { transition-delay: 0.3s; }
 .animate-on-scroll.reveal-delay-3 { transition-delay: 0.45s; }
 
-/* Hero word reveal */
+/* Hero headline words — visible immediately for LCP (no staggered fade-in) */
 .word-reveal {
   display: inline-block;
-  opacity: 0;
-  transform: translateY(18px);
-  animation: wordUp 0.55s var(--ease-premium) forwards;
-}
-.word-reveal:nth-child(1) { animation-delay: 0.05s; }
-.word-reveal:nth-child(2) { animation-delay: 0.18s; }
-.word-reveal:nth-child(3) { animation-delay: 0.31s; }
-.word-reveal:nth-child(4) { animation-delay: 0.44s; }
-.word-reveal:nth-child(5) { animation-delay: 0.57s; }
-@keyframes wordUp {
-  to { opacity: 1; transform: translateY(0); }
+  opacity: 1;
+  transform: none;
 }
 
 /* Fade in up utility (distinct keyframe name so hero fadeUp is unchanged) */
@@ -1762,20 +1764,6 @@ body {
   }
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition:
-    opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.reveal.in,
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .reveal-d1 {
   transition-delay: 0.12s;
 }
@@ -1786,26 +1774,6 @@ body {
 
 .reveal-d3 {
   transition-delay: 0.36s;
-}
-
-.word-reveal.wr-1 {
-  animation-delay: 0.12s;
-}
-
-.word-reveal.wr-2 {
-  animation-delay: 0.22s;
-}
-
-.word-reveal.wr-3 {
-  animation-delay: 0.36s;
-}
-
-.word-reveal.wr-4 {
-  animation-delay: 0.46s;
-}
-
-.word-reveal.wr-5 {
-  animation-delay: 0.56s;
 }
 
 .mesh-orb {

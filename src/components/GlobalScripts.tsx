@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { shouldAnimateRevealFromBelow } from "@/lib/viewportReveal";
 
 const TERM_LINES = [
   { ts: "09:41:02", type: "t-info", tag: "[INIT]", msg: "Connecting to AWS eu-central-1..." },
@@ -58,13 +59,29 @@ export default function GlobalScripts() {
     });
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.target.classList.add("in")),
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const t = e.target as HTMLElement;
+          t.classList.remove("side-reveal-pending");
+          t.classList.add("in");
+          io.unobserve(t);
+        });
+      },
       { threshold: 0.1 }
     );
-    /* .reveal → ScrollReveal (adds .visible + unobserve) */
-    document.querySelectorAll(".reveal-left, .reveal-right, .reveal-scale, .ps-panel").forEach((el) => io.observe(el));
+    document.querySelectorAll(".reveal-left, .reveal-right, .reveal-scale, .ps-panel").forEach((el) => {
+      const node = el as HTMLElement;
+      if (shouldAnimateRevealFromBelow(node)) {
+        node.classList.add("side-reveal-pending");
+        io.observe(node);
+      } else {
+        node.classList.remove("side-reveal-pending");
+        node.classList.add("in");
+      }
+    });
     return () => io.disconnect();
   }, []);
 
@@ -143,16 +160,29 @@ export default function GlobalScripts() {
     return () => io.disconnect();
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((el) => {
-          if (el.isIntersecting) el.target.classList.add("in-view");
+          if (!el.isIntersecting) return;
+          const t = el.target as HTMLElement;
+          t.classList.remove("reveal-on-scroll-pending");
+          t.classList.add("in-view");
+          revealObserver.unobserve(t);
         });
       },
       { threshold: 0.15 }
     );
-    document.querySelectorAll(".reveal-on-scroll").forEach((el) => revealObserver.observe(el));
+    document.querySelectorAll(".reveal-on-scroll").forEach((el) => {
+      const node = el as HTMLElement;
+      if (shouldAnimateRevealFromBelow(node)) {
+        node.classList.add("reveal-on-scroll-pending");
+        revealObserver.observe(node);
+      } else {
+        node.classList.remove("reveal-on-scroll-pending");
+        node.classList.add("in-view");
+      }
+    });
 
     return () => {
       revealObserver.disconnect();

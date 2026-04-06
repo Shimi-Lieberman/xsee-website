@@ -116,8 +116,7 @@ export default function Hero() {
             background: "rgba(255,255,255,0.04)",
             marginBottom: "40px",
             cursor: "pointer",
-            opacity: 0,
-            animation: "fadeUp 0.5s ease-out 0.1s forwards",
+            opacity: 1,
             textDecoration: "none",
           }}
         >
@@ -197,8 +196,7 @@ export default function Hero() {
             lineHeight: 1.7,
             maxWidth: "520px",
             marginBottom: "24px",
-            opacity: 0,
-            animation: "fadeUp 0.6s ease-out 0.7s forwards",
+            opacity: 1,
           }}
         >
           Your cloud is being mapped by AI attackers right now. Not theoretically. Actually. XSEE shows you exactly which
@@ -214,8 +212,7 @@ export default function Hero() {
             maxWidth: 440,
             lineHeight: 1.5,
             marginBottom: "28px",
-            opacity: 0,
-            animation: "fadeUp 0.6s ease-out 0.78s forwards",
+            opacity: 1,
           }}
         >
           Read-only AWS access · No agent installed · Your data never leaves your account
@@ -229,8 +226,7 @@ export default function Hero() {
             gap: "14px",
             flexWrap: "wrap",
             justifyContent: "center",
-            opacity: 0,
-            animation: "fadeUp 0.6s ease-out 0.85s forwards",
+            opacity: 1,
           }}
         >
           <Link
@@ -308,8 +304,7 @@ export default function Hero() {
             color: "rgba(255,255,255,0.32)",
             flexWrap: "wrap",
             justifyContent: "center",
-            opacity: 0,
-            animation: "fadeUp 0.6s ease-out 0.85s forwards",
+            opacity: 1,
           }}
         >
           {["Read-only IAM", "No agents", "Results in 30 min", "Free"].map((t, i) => (
@@ -338,8 +333,7 @@ export default function Hero() {
           maxWidth: "1100px",
           marginTop: "60px",
           padding: "0 24px 48px",
-          opacity: 0,
-          animation: "graphReveal 0.9s cubic-bezier(0.4,0,0.2,1) 1.05s forwards",
+          opacity: 1,
         }}
       >
         <div
