@@ -92,6 +92,7 @@ export default function Hero() {
       />
 
       <div
+        className="hero-inner"
         style={{
           position: "relative",
           zIndex: 2,
@@ -139,7 +140,7 @@ export default function Hero() {
           <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>›</span>
         </Link>
 
-        <div style={{ marginBottom: "28px", width: "100%" }}>
+        <div className="hero-h1" style={{ marginBottom: "28px", width: "100%" }}>
           <h1
             style={{
               fontSize: "clamp(60px, 9vw, 108px)",
@@ -323,6 +324,7 @@ export default function Hero() {
       </div>
 
       <div
+        className="hero-graph"
         style={{
           position: "relative",
           zIndex: 2,

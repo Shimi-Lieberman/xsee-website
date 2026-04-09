@@ -37,7 +37,7 @@ export default function Nav() {
               </Link>
             ))}
           </nav>
-          <div className="hidden md:flex items-center gap-1.5 text-[11px] text-white/45 mr-2">
+          <div className="nav-status hidden md:flex items-center gap-1.5 text-[11px] text-white/45 mr-2">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             All systems operational
           </div>
@@ -48,7 +48,7 @@ export default function Nav() {
             </Link>
             <Link
               href={LOGIN_URL}
-              className="text-sm text-white/65 hover:text-white transition-colors px-3 py-2.5 min-h-[44px] items-center hidden md:inline-flex"
+              className="nav-signin text-sm text-white/65 hover:text-white transition-colors px-3 py-2.5 min-h-[44px] items-center hidden md:inline-flex"
             >
               Sign in
             </Link>

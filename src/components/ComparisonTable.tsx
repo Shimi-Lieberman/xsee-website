@@ -30,7 +30,7 @@ export default function ComparisonTable() {
           </p>
           <div className="section-rule" />
         </div>
-        <div className="cmp-wrap reveal-on-scroll">
+        <div className="cmp-wrap compare-grid reveal-on-scroll">
           <table className="cmp-table" id="cmpTable">
             <thead>
               <tr>

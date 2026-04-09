@@ -69,6 +69,7 @@ export default function HowItWorks() {
             <Fragment key={step.n}>
               {i > 0 && (
                 <div
+                  className="arrow-col"
                   style={{
                     display: "flex",
                     alignItems: "center",

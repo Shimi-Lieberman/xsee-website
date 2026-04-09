@@ -412,9 +412,6 @@ section { position: relative; }
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.35);
 }
-@media (max-width: 768px) {
-  .nav-btn-trial { display: none; }
-}
 .nav-status-pill { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--brand); padding: 0 12px; border-right: 1px solid rgba(255,255,255,0.06); white-space: nowrap; flex-shrink: 0; }
 .nav-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); animation: pulseDot 2s ease-in-out infinite; }
 
@@ -2049,4 +2046,122 @@ main .section h2.display-lg {
 
 .section-eyebrow-dark {
   color: var(--ink-3);
+}
+
+/* Monospace stat numbers (Numbers moment) — block serif italic leaking into digits */
+.numbers-num {
+  font-style: normal !important;
+  font-family: var(--font-mono) !important;
+}
+
+/* ━━━ MOBILE POLISH (≤768px) — homepage sections; desktop unchanged above this breakpoint ━━━ */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .nav-status {
+    display: none !important;
+  }
+  .nav-signin {
+    display: none !important;
+  }
+  .nav-mobile-links {
+    display: none !important;
+  }
+  .nav-emergency {
+    display: none !important;
+  }
+  .nav-cta-group > a:not(.nav-btn-trial) {
+    display: none !important;
+  }
+  .nav-inner {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .numbers-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  .numbers-divider {
+    display: none !important;
+  }
+  .numbers-col {
+    padding: 0 24px !important;
+  }
+  .numbers-num {
+    font-size: clamp(80px, 22vw, 120px) !important;
+  }
+
+  .hero-inner {
+    padding: 0 20px !important;
+  }
+  .hero-h1 h1 {
+    font-size: clamp(48px, 12vw, 72px) !important;
+  }
+  .hero-h1 .hero-pink-line {
+    font-size: clamp(48px, 12vw, 72px) !important;
+  }
+  .hero-graph {
+    padding: 0 16px !important;
+  }
+
+  .strip-inner {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .numbers-moment {
+    padding: 60px 20px !important;
+  }
+
+  .nm-sub {
+    font-size: clamp(20px, 5vw, 28px) !important;
+    margin: 48px auto 32px !important;
+  }
+
+  .proof-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .how-three-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .how-three-grid .arrow-col {
+    display: none !important;
+  }
+
+  .cases-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pr-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .compare-grid {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ft-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 32px !important;
+  }
+
+  .ft-bottom {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  .engines-grid,
+  .testi-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

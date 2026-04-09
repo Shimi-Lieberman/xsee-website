@@ -50,7 +50,7 @@ export default function Testimonials() {
           </h2>
         </div>
 
-        <div className="testimonials-grid stagger-children">
+        <div className="testimonials-grid cases-grid stagger-children">
           {cards.map((cs) => (
             <div
               key={cs.outcome}

@@ -42,6 +42,7 @@ export function NumbersMoment() {
   return (
     <section
       ref={ref}
+      className="numbers-moment"
       style={{
         minHeight: "100vh",
         background: "var(--dark)",
@@ -95,7 +96,7 @@ export function NumbersMoment() {
       </div>
 
       <div
-        className="reveal"
+        className="reveal numbers-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "1fr auto 1fr",
@@ -105,12 +106,14 @@ export function NumbersMoment() {
           width: "100%",
         }}
       >
-        <div style={{ padding: "0 80px", textAlign: "center" }}>
+        <div className="numbers-col" style={{ padding: "0 80px", textAlign: "center" }}>
           <div
+            className="numbers-num"
             style={{
               fontSize: "clamp(100px,16vw,180px)",
               fontWeight: 900,
               fontFamily: "var(--font-mono)",
+              fontStyle: "normal",
               lineHeight: 0.85,
               letterSpacing: "-0.04em",
               color: "rgba(239,68,68,0.7)",
@@ -134,6 +137,7 @@ export function NumbersMoment() {
         </div>
 
         <div
+          className="numbers-divider"
           style={{
             width: "1px",
             height: "200px",
@@ -141,12 +145,14 @@ export function NumbersMoment() {
           }}
         />
 
-        <div style={{ padding: "0 80px", textAlign: "center" }}>
+        <div className="numbers-col" style={{ padding: "0 80px", textAlign: "center" }}>
           <div
+            className="numbers-num"
             style={{
               fontSize: "clamp(100px,16vw,180px)",
               fontWeight: 900,
               fontFamily: "var(--font-mono)",
+              fontStyle: "normal",
               lineHeight: 0.85,
               letterSpacing: "-0.04em",
               color: "var(--pink)",
@@ -171,7 +177,7 @@ export function NumbersMoment() {
       </div>
 
       <div
-        className="reveal"
+        className="reveal nm-sub"
         style={{
           fontSize: "clamp(22px,3vw,32px)",
           fontWeight: 900,

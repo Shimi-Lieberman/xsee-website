@@ -7,7 +7,7 @@ import { Analytics } from "@/lib/analytics";
 export default function Footer() {
   return (
     <footer style={{ background: "#030710", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-      <div className="max-w-6xl mx-auto w-full px-6 py-12 grid grid-cols-1 gap-10 footer-inner sm:grid-cols-2 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
+      <div className="ft-grid max-w-6xl mx-auto w-full px-6 py-12 grid grid-cols-1 gap-10 footer-inner sm:grid-cols-2 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
         <div>
           <Link
             href="/"
@@ -171,7 +171,7 @@ export default function Footer() {
       </div>
 
       <div
-        className="px-6 py-5 max-w-6xl mx-auto w-full flex items-center justify-between flex-wrap gap-4 footer-inner"
+        className="ft-bottom px-6 py-5 max-w-6xl mx-auto w-full flex items-center justify-between flex-wrap gap-4 footer-inner"
         style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
       >
         <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)" }}>

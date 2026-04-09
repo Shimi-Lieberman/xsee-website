@@ -49,7 +49,7 @@ export default function Home() {
           className="home-stats-strip"
           style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}
         >
-          <div className="hero-stats">
+          <div className="hero-stats strip-inner">
             <HeroSocialProofStats />
           </div>
         </div>

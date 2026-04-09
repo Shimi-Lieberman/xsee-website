@@ -149,7 +149,7 @@ export default function Pricing() {
           </p>
           <div className="section-rule" />
         </div>
-        <div className="pricing-grid stagger-children">
+        <div className="pricing-grid pr-grid stagger-children">
           {PLANS.map((plan) => (
             <div
               key={plan.tier}

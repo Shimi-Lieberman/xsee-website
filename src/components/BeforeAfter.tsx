@@ -52,7 +52,10 @@ export function BeforeAfter() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full" style={{ marginBottom: "36px" }}>
+        <div
+          className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full proof-grid"
+          style={{ marginBottom: "36px" }}
+        >
           <MagneticCard
             style={{
               background: "white",
