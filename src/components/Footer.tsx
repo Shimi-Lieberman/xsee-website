@@ -61,6 +61,7 @@ export default function Footer() {
           <p className="text-base leading-relaxed max-w-md mb-5 text-white/55">
             Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
           </p>
+          <p className="mb-5 text-[12px] leading-relaxed text-white/38">Built on Anthropic Claude</p>
           <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             All Systems Operational

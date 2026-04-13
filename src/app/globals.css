@@ -2071,7 +2071,7 @@ main .section h2.display-lg {
   .nav-emergency {
     display: none !important;
   }
-  .nav-cta-group > a:not(.nav-btn-trial) {
+  .nav-cta-group > a:not(.nav-btn-trial):not(.nav-cta-demo) {
     display: none !important;
   }
   .nav-inner {

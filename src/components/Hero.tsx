@@ -153,56 +153,31 @@ export default function Hero() {
             }}
           >
             <span className="word-reveal" style={{ animationDelay: "0ms", color: "#fff" }}>
-              Stop
-            </span>{" "}
-            <span className="word-reveal" style={{ animationDelay: "80ms", color: "#fff" }}>
-              guessing.
+              Stop guessing.
             </span>
+            <div
+              className="hero-pink-line"
+              style={{
+                fontSize: "clamp(60px, 9vw, 108px)",
+                fontWeight: 900,
+                lineHeight: 0.98,
+                letterSpacing: "-0.035em",
+                marginTop: "0.06em",
+              }}
+            >
+              <span
+                className="word-reveal"
+                style={{
+                  animationDelay: "200ms",
+                  color: "var(--pink)",
+                  fontFamily: "var(--font-serif)",
+                  fontStyle: "italic",
+                }}
+              >
+                Prove the breach.
+              </span>
+            </div>
           </h1>
-          <div
-            className="hero-pink-line"
-            style={{
-              fontSize: "clamp(60px, 9vw, 108px)",
-              fontWeight: 900,
-              lineHeight: 0.98,
-              letterSpacing: "-0.035em",
-              marginTop: "0.06em",
-            }}
-          >
-            <span
-              className="word-reveal"
-              style={{
-                animationDelay: "200ms",
-                color: "var(--pink)",
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-              }}
-            >
-              Prove
-            </span>{" "}
-            <span
-              className="word-reveal"
-              style={{
-                animationDelay: "280ms",
-                color: "var(--pink)",
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-              }}
-            >
-              the
-            </span>{" "}
-            <span
-              className="word-reveal"
-              style={{
-                animationDelay: "360ms",
-                color: "var(--pink)",
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-              }}
-            >
-              breach.
-            </span>
-          </div>
         </div>
 
         <p
@@ -211,41 +186,39 @@ export default function Hero() {
             fontSize: "18px",
             color: "rgba(255,255,255,0.45)",
             lineHeight: 1.7,
-            maxWidth: "520px",
-            marginBottom: "24px",
+            maxWidth: "640px",
+            marginBottom: "16px",
           }}
         >
-          Your cloud is being mapped by AI attackers right now. Not theoretically. Actually. XSEE shows you exactly which
-          paths reach your crown jewels — with cryptographic evidence for every single hop.
+          Cloud security tools generate thousands of findings. XSEE proves which ones are real attack paths — with live
+          AWS API evidence per hop, attack simulation, and a Breach Prevention Certificate when it&apos;s fixed. One human
+          decision per finding.
         </p>
 
         <p
-          className="font-mono hero-trust-line"
+          className="hero-icp-line"
           style={{
-            fontSize: 12,
-            color: "rgba(255,255,255,0.45)",
-            textAlign: "center",
-            maxWidth: 440,
-            lineHeight: 1.5,
+            fontSize: "13px",
+            color: "rgba(255,255,255,0.32)",
+            lineHeight: 1.6,
+            maxWidth: "640px",
             marginBottom: "28px",
           }}
         >
-          Read-only AWS access · No agent installed · Your data never leaves your account
+          Built for security teams at companies with 200–5,000 employees.
         </p>
 
         <div
           style={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             alignItems: "center",
             gap: "14px",
-            flexWrap: "wrap",
-            justifyContent: "center",
             opacity: 1,
           }}
         >
           <Link
-            href="/free-scan"
+            href="/demo"
             className="btn-shimmer hero-cta-primary"
             style={{
               display: "inline-flex",
@@ -261,66 +234,48 @@ export default function Hero() {
               textDecoration: "none",
               boxShadow: "0 0 50px rgba(255,31,143,0.4)",
             }}
-            onClick={() => Analytics.ctaClicked("hero", "free_scan")}
+            onClick={() => Analytics.ctaClicked("hero", "get_demo")}
           >
-            <span className="inline-flex items-center gap-2">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
-                <polygon points="5 3 19 12 5 21 5 3" />
-              </svg>
-              Run Free Scan — 30 minutes
-            </span>
+            Get a demo →
           </Link>
           <Link
-            href="/demo"
+            href="/free-scan"
             className="hero-cta-secondary"
             style={{
               display: "inline-flex",
               alignItems: "center",
+              justifyContent: "center",
               gap: "8px",
               background: "transparent",
-              color: "rgba(255,255,255,0.85)",
+              color: "rgba(255,255,255,0.75)",
               fontSize: "15px",
               fontWeight: 600,
               fontFamily: "var(--font-sans)",
               padding: "14px 28px",
               borderRadius: "14px",
               textDecoration: "none",
-              border: "1px solid rgba(255,255,255,0.2)",
+              border: "1px solid rgba(255,255,255,0.22)",
             }}
-            onClick={() => Analytics.ctaClicked("hero", "watch_demo")}
+            onClick={() => Analytics.ctaClicked("hero", "free_breach_report")}
           >
-            Watch Demo
+            Free Breach Report — connect in 15 min
           </Link>
         </div>
 
-        <div
+        <p
+          className="font-mono hero-trust-line"
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            fontSize: "11px",
-            color: "rgba(255,255,255,0.32)",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            opacity: 1,
+            fontSize: 12,
+            color: "rgba(255,255,255,0.45)",
+            textAlign: "center",
+            maxWidth: 520,
+            lineHeight: 1.5,
+            marginTop: "24px",
+            marginBottom: 0,
           }}
         >
-          {["Read-only IAM", "No agents", "Results in 30 min", "Free"].map((t, i) => (
-            <span key={t} style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              {i > 0 && (
-                <span
-                  style={{
-                    width: "3px",
-                    height: "3px",
-                    borderRadius: "50%",
-                    background: "rgba(255,255,255,0.15)",
-                  }}
-                />
-              )}
-              {t}
-            </span>
-          ))}
-        </div>
+          Read-only IAM. No agents. Your data never leaves your AWS environment.
+        </p>
       </div>
 
       <div

@@ -21,15 +21,16 @@ import ComparisonTable from "@/components/ComparisonTable";
 import Testimonials from "@/components/Testimonials";
 import TrustModel from "@/components/TrustModel";
 import Pricing from "@/components/Pricing";
+import SecurityComplianceTrustSection from "@/components/SecurityComplianceTrustSection";
 import ComplianceBar from "@/components/ComplianceBar";
 import CTABanner from "@/components/CTABanner";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "XSEE — Prove Every Attack Path is Real",
+  title: "XSEE — Stop guessing. Prove the breach.",
   description:
-    "XSEE proves which attack paths in your cloud are actually exploitable — with cryptographic evidence per hop, live AWS API validation, and AI attacker simulation. Not theory. Proof.",
+    "Cloud security tools generate thousands of findings. XSEE proves which ones are real attack paths — with live AWS API evidence per hop, attack simulation, and a Breach Prevention Certificate when it's fixed.",
 };
 
 /** Hero-adjacent subheadline under “Live Intelligence” (replaces legacy read-only IAM one-liner). */
@@ -45,6 +46,7 @@ export default function Home() {
       <Nav />
       <main className="w-full max-w-[100vw] mx-auto">
         <Hero />
+        <SecurityComplianceTrustSection />
         <div
           className="home-stats-strip"
           style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}
