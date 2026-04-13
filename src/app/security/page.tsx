@@ -2,12 +2,176 @@ import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import Footer from "@/components/Footer";
+import CopyEmailButton from "@/components/CopyEmailButton";
 
 export const metadata: Metadata = {
   title: "Security & Trust — XSEE",
   description:
-    "How XSEE handles your AWS credentials, data, and access. Read-only IAM, ephemeral credentials, no data stored after scan.",
+    "How XSEE protects your environment and your data. Compliance status, read-only IAM, infrastructure security, and responsible disclosure.",
 };
+
+const H2 = "text-xl font-bold text-white mb-6";
+
+function IconShield({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconStar({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconLock({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconCloud({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconKey({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="7.5" cy="15.5" r="5.5" stroke="currentColor" strokeWidth="2" />
+      <path d="M21 2l-9.6 9.6M15.5 7.5l3 3L22 7l-3-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconUserCheck({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+      <path d="M8 12l2.5 2.5L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+const COMPLIANCE_CARDS = [
+  {
+    title: "SOC 2 Type II",
+    status: "In Progress",
+    statusVariant: "amber" as const,
+    description:
+      "Audit underway. Expected completion Q3 2026. Report available under NDA upon request.",
+    Icon: IconShield,
+  },
+  {
+    title: "CSA STAR Level 1",
+    status: "In Progress",
+    statusVariant: "amber" as const,
+    description: "Cloud Security Alliance self-assessment. Submission in progress.",
+    Icon: IconStar,
+  },
+  {
+    title: "GDPR",
+    status: "Compliant",
+    statusVariant: "green" as const,
+    description: "Data Processing Agreement available on request. EU data handling compliant.",
+    Icon: IconLock,
+  },
+  {
+    title: "AWS Hosted",
+    status: "Active",
+    statusVariant: "green" as const,
+    description: "Hosted on AWS us-east-1. AES-256 encryption at rest and in transit.",
+    Icon: IconCloud,
+  },
+];
+
+const TRUST_POINTS = [
+  {
+    title: "Read-only IAM role",
+    description:
+      "You create the role. XSEE never writes to your environment. No resource creation, modification, or deletion — ever.",
+    Icon: IconShield,
+  },
+  {
+    title: "No agents installed",
+    description:
+      "Zero footprint inside your infrastructure. Nothing running in your workloads. Nothing installed on your instances.",
+    Icon: IconCloud,
+  },
+  {
+    title: "Credentials ephemeral",
+    description:
+      "XSEE assumes your role only during active scans. Sessions expire automatically. No persistent access to your account.",
+    Icon: IconKey,
+  },
+  {
+    title: "Your data never leaves your environment",
+    description:
+      "XSEE reads AWS API metadata only — resource IDs, policies, relationships. No file contents, no PII, no workload data.",
+    Icon: IconLock,
+  },
+  {
+    title: "Every action requires human approval",
+    description:
+      "No automated write actions without explicit CISO approval. Every change cryptographically logged to approving identity.",
+    Icon: IconUserCheck,
+  },
+];
+
+const INFRA_FACTS: { label: string; value: string }[] = [
+  { label: "Hosting", value: "AWS us-east-1" },
+  { label: "Encryption", value: "AES-256 at rest and in transit" },
+  { label: "Database", value: "AWS RDS PostgreSQL — encrypted" },
+  { label: "TLS", value: "1.2+ enforced everywhere" },
+  { label: "Secrets", value: "AWS Secrets Manager" },
+  { label: "Auth", value: "JWT with httpOnly cookies" },
+  { label: "Access", value: "MFA required for all admin access" },
+  { label: "Monitoring", value: "AWS CloudTrail + GuardDuty" },
+];
+
+function StatusBadge({ status, variant }: { status: string; variant: "amber" | "green" }) {
+  const isAmber = variant === "amber";
+  return (
+    <span
+      className="shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold font-mono uppercase tracking-wide"
+      style={{
+        background: isAmber ? "rgba(245,158,11,0.12)" : "rgba(34,197,94,0.12)",
+        color: isAmber ? "#fbbf24" : "#4ade80",
+        border: `1px solid ${isAmber ? "rgba(245,158,11,0.35)" : "rgba(34,197,94,0.35)"}`,
+      }}
+    >
+      {status}
+    </span>
+  );
+}
 
 export default function SecurityPage() {
   return (
@@ -15,217 +179,143 @@ export default function SecurityPage() {
       <ScrollProgressBar />
       <Nav />
       <div style={{ background: "#050d1a", minHeight: "100vh", paddingTop: "80px" }}>
-        <div className="page-container-sm">
-          <div className="mb-16">
-            <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/25 font-mono mb-4">
-              Security & Trust
-            </div>
-            <h1 className="text-4xl font-black text-white mb-4">
-              Security is our product.
-              <br />
-              It has to be our practice too.
-            </h1>
-            <p className="text-white/45 text-lg">
-              XSEE requires access to your AWS environment. Here is exactly what we access, what we store, and how you can revoke us in one click.
+        <div className="page-container-sm max-w-3xl">
+          <header className="mb-14">
+            <h1 className="text-4xl font-black tracking-tight text-white mb-4">Security &amp; Trust</h1>
+            <p className="text-lg leading-relaxed text-white/45">
+              How XSEE protects your environment and your data.
             </p>
-          </div>
+          </header>
 
-          <div className="mb-14">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span style={{ color: "#FF1B8D" }}>01</span>
-              How XSEE accesses your AWS environment
+          {/* Section 1 — Compliance */}
+          <section className="mb-16" aria-labelledby="sec-compliance">
+            <h2 id="sec-compliance" className={H2}>
+              Compliance
             </h2>
-            <div className="space-y-4 mb-6">
-              {[
-                {
-                  step: "1",
-                  title: "You create a read-only IAM role",
-                  detail: "Uses AWS managed ReadOnlyAccess policy. Takes under 2 minutes. You control it entirely.",
-                },
-                {
-                  step: "2",
-                  title: "You paste the Role ARN into XSEE",
-                  detail: "XSEE assumes the role via cross-account trust. We never see your AWS credentials.",
-                },
-                {
-                  step: "3",
-                  title: "Scan runs — credentials expire",
-                  detail: "STS tokens are ephemeral. They expire automatically. We never store them.",
-                },
-                {
-                  step: "4",
-                  title: "You can revoke access in one click",
-                  detail: "Delete the IAM role in your AWS console. XSEE immediately loses all access.",
-                },
-              ].map((item) => (
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {COMPLIANCE_CARDS.map(({ title, status, statusVariant, description, Icon }) => (
                 <div
-                  key={item.step}
-                  className="flex gap-4 p-4 rounded-xl"
+                  key={title}
+                  className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-white p-5 pt-6 shadow-sm"
+                >
+                  <div className="absolute right-4 top-4">
+                    <StatusBadge status={status} variant={statusVariant} />
+                  </div>
+                  <div className="flex gap-4 pr-14">
+                    <div
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-600"
+                      aria-hidden
+                    >
+                      <Icon className="text-slate-700" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="mb-2 text-base font-bold text-slate-900">{title}</h3>
+                      <p className="text-sm leading-relaxed text-slate-600">{description}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Section 2 — How XSEE connects */}
+          <section className="mb-16" aria-labelledby="sec-how-connects">
+            <h2 id="sec-how-connects" className={H2}>
+              How XSEE connects to your AWS account
+            </h2>
+            <div className="space-y-4">
+              {TRUST_POINTS.map(({ title, description, Icon }) => (
+                <div
+                  key={title}
+                  className="flex gap-4 rounded-xl p-5"
                   style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   <div
-                    className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-black font-mono"
-                    style={{ background: "rgba(255,27,141,0.12)", color: "#FF1B8D" }}
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#FF1B8D]"
+                    style={{ background: "rgba(255,27,141,0.12)", border: "1px solid rgba(255,27,141,0.2)" }}
+                    aria-hidden
                   >
-                    {item.step}
+                    <Icon className="text-[#FF1B8D]" />
                   </div>
-                  <div>
-                    <div className="text-sm font-semibold text-white mb-1">{item.title}</div>
-                    <div className="text-sm text-white/40">{item.detail}</div>
+                  <div className="min-w-0">
+                    <h3 className="mb-1.5 text-sm font-semibold text-white">{title}</h3>
+                    <p className="text-sm leading-relaxed text-white/45">{description}</p>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
-              <div
-                className="flex items-center justify-between px-4 py-2.5"
-                style={{ background: "rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-              >
-                <span className="text-[10px] font-mono text-white/35 uppercase tracking-wider">Trust policy</span>
-                <span className="text-[10px] text-white/25">Copy</span>
-              </div>
-              <pre className="p-4 text-xs font-mono text-white/60 overflow-x-auto" style={{ background: "#080c14" }}>
-                {`{
-  "Version": "2012-10-17",
-  "Statement": [{
-    "Effect": "Allow",
-    "Principal": {
-      "AWS": "arn:aws:iam::722375386510:root"
-    },
-    "Action": "sts:AssumeRole"
-  }]
-}`}
-              </pre>
-            </div>
-          </div>
+          </section>
 
-          <div className="mb-14">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span style={{ color: "#FF1B8D" }}>02</span>
-              What data XSEE stores
-            </h2>
-            <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.07)" }}>
-              <table className="w-full text-sm">
-                <thead>
-                  <tr
-                    style={{ background: "rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
-                  >
-                    {["Data type", "Stored?", "Retention", "Encrypted"].map((h) => (
-                      <th
-                        key={h}
-                        className="text-left px-4 py-3 text-[10px] font-bold uppercase tracking-wider text-white/30 font-mono"
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    ["AWS credentials", "Never", "N/A", "N/A"],
-                    ["Scan results (findings)", "Yes", "90 days", "AES-256"],
-                    ["Asset metadata", "Yes", "While connected", "AES-256"],
-                    ["CloudTrail logs", "Never", "Not retained", "N/A"],
-                    ["Source code", "Never accessed", "N/A", "N/A"],
-                    ["Your application data", "Never accessed", "N/A", "N/A"],
-                  ].map((row, i) => (
-                    <tr key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                      <td className="px-4 py-3 text-white/70 font-mono text-xs">{row[0]}</td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`text-xs font-bold font-mono ${
-                            row[1] === "Never" || row[1] === "Never accessed" ? "text-emerald-400" : "text-white/50"
-                          }`}
-                        >
-                          {row[1]}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-white/35 text-xs">{row[2]}</td>
-                      <td className="px-4 py-3 text-white/35 text-xs">{row[3]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div className="mb-14">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span style={{ color: "#FF1B8D" }}>03</span>
+          {/* Section 3 — Infrastructure */}
+          <section className="mb-16" aria-labelledby="sec-infra">
+            <h2 id="sec-infra" className={H2}>
               Infrastructure
             </h2>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "Hosting", value: "AWS us-east-1" },
-                { label: "Encryption at rest", value: "AES-256" },
-                { label: "Encryption in transit", value: "TLS 1.3" },
-                { label: "Database", value: "AWS RDS · encrypted" },
-                { label: "Third-party analytics", value: "None on platform" },
-                { label: "Agent required", value: "Never" },
-              ].map((item) => (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {INFRA_FACTS.map((row) => (
                 <div
-                  key={item.label}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg"
+                  key={row.label}
+                  className="rounded-lg px-4 py-3"
                   style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
-                  <span className="text-xs text-white/35">{item.label}</span>
-                  <span className="text-xs font-semibold text-white/70 font-mono">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mb-14">
-            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-              <span style={{ color: "#FF1B8D" }}>04</span>
-              Compliance roadmap
-            </h2>
-            <div className="space-y-3">
-              {[
-                { standard: "SOC 2 Type II", status: "In progress", target: "Q3 2026", color: "#f97316" },
-                { standard: "ISO 27001", status: "Planned", target: "Q4 2026", color: "#eab308" },
-                { standard: "GDPR", status: "Compliant", target: "DPA available on request", color: "#22c55e" },
-                { standard: "AWS Partner Network", status: "Application submitted", target: "2026", color: "#3b82f6" },
-              ].map((item) => (
-                <div
-                  key={item.standard}
-                  className="flex items-center justify-between px-4 py-3 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
-                >
-                  <span className="text-sm font-semibold text-white/70">{item.standard}</span>
-                  <div className="flex items-center gap-4">
-                    <span className="text-xs text-white/30">{item.target}</span>
-                    <span
-                      className="text-[10px] font-bold px-2.5 py-1 rounded-full font-mono"
-                      style={{
-                        background: `${item.color}15`,
-                        color: item.color,
-                        border: `1px solid ${item.color}30`,
-                      }}
-                    >
-                      {item.status}
-                    </span>
+                  <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-white/30 font-mono">
+                    {row.label}
                   </div>
+                  <div className="text-sm font-medium leading-snug text-white/75">{row.value}</div>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          <div
-            className="rounded-xl p-6"
-            style={{ background: "rgba(255,27,141,0.05)", border: "1px solid rgba(255,27,141,0.15)" }}
-          >
-            <h2 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-              <span style={{ color: "#FF1B8D" }}>05</span>
-              Report a vulnerability
+          {/* Section 4 — Disclosure */}
+          <section className="mb-16" aria-labelledby="sec-disclosure">
+            <h2 id="sec-disclosure" className={H2}>
+              Responsible Disclosure
             </h2>
-            <p className="text-white/45 text-sm leading-relaxed mb-4">
-              Found a security issue in XSEE? We take this seriously. Email us with full details — we commit to acknowledging within 24 hours and resolving critical issues within 72 hours.
+            <p className="mb-6 text-sm leading-relaxed text-white/45">
+              If you discover a security vulnerability in XSEE, we ask that you report it to us responsibly. We commit to
+              acknowledging all reports within 48 hours and resolving critical issues within 7 days.
             </p>
-            <a href="mailto:security@xsee.io" className="text-sm font-bold" style={{ color: "#FF1B8D" }}>
-              security@xsee.io →
-            </a>
-          </div>
+            <div
+              className="mb-5 flex flex-col gap-4 rounded-xl p-5 sm:flex-row sm:items-center sm:justify-between"
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+            >
+              <div>
+                <div className="mb-1 text-[10px] font-mono font-bold uppercase tracking-wider text-white/30">Email</div>
+                <a href="mailto:security@xsee.io" className="text-base font-semibold text-[#FF1B8D] hover:underline">
+                  security@xsee.io
+                </a>
+              </div>
+              <CopyEmailButton email="security@xsee.io" />
+            </div>
+            <p className="text-xs leading-relaxed text-white/32">
+              XSEE will not pursue legal action against researchers who follow responsible disclosure guidelines.
+            </p>
+          </section>
+
+          {/* Section 5 — Documents */}
+          <section className="mb-8" aria-labelledby="sec-docs">
+            <h2 id="sec-docs" className={H2}>
+              Security Documents
+            </h2>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <a
+                href="mailto:security@xsee.io?subject=SOC2%20Report%20Request"
+                className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/10"
+              >
+                Request SOC 2 Report →
+              </a>
+              <a
+                href="mailto:security@xsee.io?subject=DPA%20Request"
+                className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/10"
+              >
+                Request DPA →
+              </a>
+            </div>
+            <p className="mt-5 text-xs leading-relaxed text-white/35">
+              SOC 2 Type II report available under NDA. DPA available upon request for GDPR compliance.
+            </p>
+          </section>
         </div>
       </div>
       <Footer />

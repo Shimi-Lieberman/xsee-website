@@ -61,7 +61,28 @@ export default function Footer() {
           <p className="text-base leading-relaxed max-w-md mb-5 text-white/55">
             Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
           </p>
-          <p className="mb-5 text-[12px] leading-relaxed text-white/38">Built on Anthropic Claude</p>
+          <Link
+            href="/security"
+            className="mb-4 inline-flex text-[13px] font-semibold text-white/55 transition-colors hover:text-[#FF1B8D]"
+          >
+            Security &amp; Trust →
+          </Link>
+          <div className="mb-5 flex flex-wrap gap-2">
+            {[
+              "SOC 2 Type II (in progress)",
+              "CSA STAR (in progress)",
+              "GDPR Compliant",
+              "AWS Hosted",
+              "Built on Anthropic Claude",
+            ].map((label) => (
+              <span
+                key={label}
+                className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] font-medium leading-tight text-white/45"
+              >
+                {label}
+              </span>
+            ))}
+          </div>
           <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             All Systems Operational
@@ -122,7 +143,7 @@ export default function Footer() {
           </div>
           {[
             { label: "About", href: "#" },
-            { label: "Security", href: "/security" },
+            { label: "Security & Trust", href: "/security" },
             { label: "Blog", href: "#" },
             { label: "Careers", href: "#" },
             { label: "Contact", href: "/#contact" },
@@ -182,7 +203,7 @@ export default function Footer() {
           {[
             { label: "Terms", href: "/terms" },
             { label: "Privacy", href: "/privacy" },
-            { label: "Security", href: "/security" },
+            { label: "Security & Trust", href: "/security" },
             { label: "Refunds", href: "/refunds" },
           ].map((link) => (
             <Link
