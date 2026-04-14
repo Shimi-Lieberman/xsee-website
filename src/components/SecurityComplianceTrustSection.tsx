@@ -35,18 +35,18 @@ export default function SecurityComplianceTrustSection() {
       style={{ background: "var(--dark)" }}
       aria-labelledby="security-compliance-heading"
     >
-      <div className="mx-auto w-full max-w-5xl px-6 py-10 sm:px-8">
-        <h2 id="security-compliance-heading" className="section-eyebrow mb-6 sm:mb-8">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-6 py-10 text-center sm:px-8">
+        <h2 id="security-compliance-heading" className="section-eyebrow mb-6 w-full text-center sm:mb-8">
           Security &amp; Compliance
         </h2>
-        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center sm:gap-3">
+        <div className="flex w-full flex-wrap items-center justify-center gap-6">
           {BADGES.map((b) => (
             <div
               key={b.label}
-              className="inline-flex min-w-0 items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-3 py-2 text-left sm:inline-flex"
+              className="inline-flex min-w-0 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-3 py-2 text-center"
             >
               <CheckIcon />
-              <span className="min-w-0 text-[11px] leading-snug text-white/45 sm:text-[11px]">
+              <span className="min-w-0 text-center text-[11px] leading-snug text-white/45 sm:text-[11px]">
                 {b.label}
                 {b.inProgress ? (
                   <>
