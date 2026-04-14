@@ -86,6 +86,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${fontVariables} font-sans antialiased`} suppressHydrationWarning>
+      <head>
+        <meta name="google-site-verification" content="pXNBoP04Acdko2NmE4Ks-ssGEPFuPCubz79TPxjMW8Q" />
+      </head>
       <body
         className={`${fontVariables} font-sans antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
         suppressHydrationWarning
