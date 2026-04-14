@@ -24,7 +24,7 @@ function CheckIcon() {
       strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="shrink-0 text-emerald-500/70"
+      className="security-compliance-trust-check"
       aria-hidden
     >
       <path d="M20 6L9 17l-5-5" />
@@ -40,29 +40,21 @@ export default function SecurityComplianceTrustSection() {
       aria-labelledby="security-compliance-heading"
     >
       <div className="security-compliance-trust-inner">
-        <h2
-          id="security-compliance-heading"
-          className="security-compliance-trust-heading section-eyebrow mb-6 sm:mb-8"
-        >
+        <h2 id="security-compliance-heading" className="security-compliance-trust-heading">
           Security &amp; Compliance
         </h2>
         <div className="security-compliance-trust-rows">
           {BADGE_ROWS.map((row, rowIndex) => (
             <div key={rowIndex} className="security-compliance-trust-row">
               {row.map((b) => (
-                <div
-                  key={b.label}
-                  className="inline-flex min-w-0 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-3 py-2 text-center"
-                >
+                <div key={b.label} className="security-compliance-trust-badge">
                   <CheckIcon />
-                  <span className="min-w-0 text-center text-[11px] leading-snug text-white/45 sm:text-[11px]">
+                  <span>
                     {b.label}
                     {b.inProgress ? (
                       <>
                         {" "}
-                        <span className="whitespace-nowrap text-[10px] font-medium text-amber-400/55">
-                          (in progress)
-                        </span>
+                        <span className="security-compliance-trust-in-progress">(in progress)</span>
                       </>
                     ) : null}
                   </span>
