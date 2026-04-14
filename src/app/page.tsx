@@ -4,6 +4,7 @@ import { ScrollTracker } from "@/components/ScrollTracker";
 import GlobalScripts from "@/components/GlobalScripts";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import HomeProofSections from "@/components/HomeProofSections";
 import { BeforeAfter } from "@/components/BeforeAfter";
 import HeroSocialProofStats from "@/components/HeroSocialProofStats";
 import { NumbersMoment } from "@/components/NumbersMoment";
@@ -45,6 +46,7 @@ export default function Home() {
       <Nav />
       <main className="w-full max-w-[100vw] mx-auto">
         <Hero />
+        <HomeProofSections />
         <div
           className="home-stats-strip"
           style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}
