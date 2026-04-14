@@ -44,12 +44,11 @@ export function NumbersMoment() {
       ref={ref}
       className="numbers-moment"
       style={{
-        minHeight: "100vh",
         background: "var(--dark)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         padding: "80px 48px",
         position: "relative",
         overflow: "hidden",

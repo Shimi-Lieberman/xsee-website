@@ -1540,6 +1540,66 @@ footer .footer-inner {
   justify-content: center;
   width: 100%;
 }
+/* Homepage — Security & Compliance band (SOC 2 badges); explicit rows + centering */
+.security-compliance-trust {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.security-compliance-trust-inner {
+  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .security-compliance-trust-inner {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.security-compliance-trust-heading {
+  display: block;
+  width: 100%;
+  text-align: center !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.security-compliance-trust-rows {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.security-compliance-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px 32px;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
 .home-stats-strip .hero-stats {
   border-top-color: #e2e8f0;
 }
