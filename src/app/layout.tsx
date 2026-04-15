@@ -44,6 +44,9 @@ const fontVariables = `${dmSans.variable} ${dmMono.variable} ${instrumentSerif.v
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xsee.io"),
+  verification: {
+    google: "pXNBoP04Acdko2NmE4Ks-ssGEPFuPCubz79TPxjMW8Q",
+  },
   title: "XSEE — Prove Every Attack Path is Real",
   description:
     "Cloud Attack Intelligence. XSEE discovers, validates, and simulates attack paths against your live AWS environment — with cryptographic evidence per hop. Not theory. Proof.",
@@ -86,9 +89,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${fontVariables} font-sans antialiased`} suppressHydrationWarning>
-      <head>
-        <meta name="google-site-verification" content="pXNBoP04Acdko2NmE4Ks-ssGEPFuPCubz79TPxjMW8Q" />
-      </head>
       <body
         className={`${fontVariables} font-sans antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
         suppressHydrationWarning
