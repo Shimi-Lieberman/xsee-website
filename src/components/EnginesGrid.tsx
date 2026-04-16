@@ -80,9 +80,9 @@ const ENGINES = [
   },
   {
     num: "06",
-    label: "PLAYBOOKS",
-    title: "Operational Playbooks",
-    desc: "Findings don't close themselves. XSEE's Kanban-style playbooks take each finding from detection through remediation to verified closure. Assign to team members. Track status. Re-scan automatically when a fix is applied. Full audit trail for your compliance team.",
+    label: "AUTONOMOUS AGENTS",
+    title: "Autonomous Security Loop",
+    desc: "XSEE's AI agents handle every stage of the security loop automatically. The Investigation Agent analyzes every new critical path with Claude AI and proposes a specific fix. The Board Report Agent emails your CISO a board-ready PDF every Monday. The Threat Hunt Agent checks new CVEs from NVD and CISA KEV against your assets every night — before you hear about it elsewhere. You approve once. Everything else is XSEE.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none" className="engine-icon-svg" style={{ transition: "color 0.25s" }}>
         <rect x={3} y={2} width={16} height={18} rx={2} stroke="currentColor" strokeWidth={1.4} fill="currentColor" fillOpacity={0.05} />
@@ -96,6 +96,20 @@ const ENGINES = [
       </svg>
     ),
   },
+  {
+    num: "07",
+    label: "EVIDENCE & CERTIFICATION",
+    title: "Breach Prevention Certificate",
+    desc: "When a path is fixed and L2 re-validates closure, XSEE generates a cryptographic evidence package — before/after AWS API proof per hop, timestamped, SHA-256 signed, downloadable PDF. The Breach Prevention Certificate is the only document in security that proves a breach path was open, validated as exploitable, fixed, and verified closed. Board-ready. SOC2-ready. Audit-proof.",
+    icon: (
+      <svg width={22} height={22} viewBox="0 0 22 22" fill="none" className="engine-icon-svg" style={{ transition: "color 0.25s" }}>
+        <rect x={4} y={2.5} width={14} height={17} rx={2} stroke="currentColor" strokeWidth={1.4} fill="currentColor" fillOpacity={0.05} />
+        <line x1={7} y1={7} x2={15} y2={7} stroke="currentColor" strokeWidth={1.2} opacity={0.7} />
+        <line x1={7} y1={10.5} x2={15} y2={10.5} stroke="currentColor" strokeWidth={1.2} opacity={0.7} />
+        <path d="M11 13.5l1.1 2.1 2.3.3-1.7 1.6.4 2.3-2.1-1.1-2.1 1.1.4-2.3-1.7-1.6 2.3-.3L11 13.5z" fill="#F59E0B" />
+      </svg>
+    ),
+  },
 ];
 
 export default function EnginesGrid() {
@@ -105,10 +119,10 @@ export default function EnginesGrid() {
         <div className="section-head reveal">
           <span className="section-eyebrow section-eyebrow-dark">Platform architecture</span>
           <h2 className="display-lg" style={{ color: "#0f172a" }}>
-            Six engines. One purpose.
+            Seven engines. One autonomous loop.
           </h2>
           <p style={{ color: "#64748b" }}>
-            Proving whether your cloud can be breached — and closing the loop if it can.
+            From discovery to verified closure — automatically. One human decision per finding.
           </p>
           <div className="section-rule" />
         </div>

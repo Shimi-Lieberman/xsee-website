@@ -12,6 +12,9 @@ export const COMPARISON_ROWS = [
   { cap: "Transparent SMB pricing", xsee: "From $1,200/mo", wiz: "Enterprise only", prisma: "Enterprise only", xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Full 7-stage security loop", xsee: "End-to-end", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "NHI validation", xsee: "Full mapping + L2", wiz: "Partial", prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
+  { cap: "Nightly CVE threat hunting", xsee: "Auto-matches new CVEs to your assets nightly", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
+  { cap: "Weekly board report (auto-generated PDF)", xsee: "Emailed to CISO every Monday automatically", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
+  { cap: "Autonomous investigation agent", xsee: "Investigates every critical path automatically", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
 ];
 
 export default function ComparisonTable() {
