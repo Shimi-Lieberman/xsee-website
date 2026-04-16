@@ -218,7 +218,7 @@ export default function Footer() {
         </div>
         <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.32)", fontFamily: "var(--font-mono)" }} className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          v1.4.0 · All systems operational
+          v1.5.0 · All systems operational
         </div>
       </div>
     </footer>

@@ -106,12 +106,12 @@ export default function Hero() {
         }}
       >
         <Link
-          href="/free-scan"
+          href="/changelog"
           style={{
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            padding: "5px 14px 5px 5px",
+            padding: "5px 14px",
             borderRadius: "100px",
             border: "1px solid rgba(255,255,255,0.09)",
             background: "rgba(255,255,255,0.04)",
@@ -121,23 +121,9 @@ export default function Hero() {
             textDecoration: "none",
           }}
         >
-          <span
-            style={{
-              fontSize: "9px",
-              fontWeight: 800,
-              padding: "2px 8px",
-              borderRadius: "100px",
-              background: "rgba(255,27,141,0.15)",
-              color: "#FF1B8D",
-              letterSpacing: "0.1em",
-            }}
-          >
-            NEW
-          </span>
           <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
-            AI attacker simulation now in XseeCyber 2.0
+            NEW Autonomous agents now live — Investigation · Board Report · Threat Hunt ›
           </span>
-          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>›</span>
         </Link>
 
         <div className="hero-h1" style={{ marginBottom: "28px", width: "100%" }}>

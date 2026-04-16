@@ -8,14 +8,46 @@ export const metadata: Metadata = {
   description: "What's new in XSEE. Platform updates, new engines, and improvements.",
 };
 
-const releases = [
+type Release = {
+  date: string;
+  version: string;
+  tag: "New Feature" | "Improvement" | "Fix";
+  title: string;
+  description?: string;
+  details?: string[];
+};
+
+const releases: Release[] = [
+  {
+    date: "April 2026",
+    version: "v1.5.0",
+    tag: "New Feature" as const,
+    title: "Autonomous Agents — now live",
+    details: [
+      "Investigation Agent: auto-investigates every new critical path with Claude AI. Produces verdict, confidence score, fix plan, compliance impact, board summary.",
+      "Board Report Agent: weekly PDF emailed to CISO every Monday automatically. No action required.",
+      "Threat Hunt Agent: nightly CVE matching via NVD + CISA KEV against your asset inventory. Finds threats before you hear about them elsewhere.",
+      "Remediation Agent: applies approved fixes via AWS SDK. Only activates after explicit human approval. Auto-reverts if L2 re-validation fails.",
+      "Configurable schedules: every agent schedule is configurable per org in Settings → Agent Schedules.",
+      "War Room: full-screen real-time investigation command center. Opens automatically on new critical path.",
+      "Autonomous Runs: complete audit trail of every AI action and human decision. Replaces manual Playbooks.",
+      "Accept Risk: suppress false positives with required reason and 90-day auto-expiry.",
+      "Overview redesigned as Command Center: live loop status, approval queue, activity feed.",
+      "Evidence Package PDF: premium board-ready redesign with dark cover and pink accents.",
+    ],
+  },
   {
     date: "March 2026",
-    version: "v1.4",
+    version: "v1.4.0",
     tag: "New Feature" as const,
-    title: "Ransomware Readiness Score",
-    description:
-      "Board-ready ransomware exposure score (0–100) with validated attack paths mapped to ransomware TTPs. Exportable PDF report. Available on all plans.",
+    title: "Evidence Package PDF + Breach Prevention Certificate",
+    details: [
+      "Evidence Package PDF: 6-section cryptographic proof document per finding. Downloadable from any path.",
+      "Breach Prevention Certificate: board-ready PDF issued automatically when path is verified closed.",
+      "Approval Queue: every proposed fix requires human approval before execution.",
+      "XseeCyber 2.0: AI attacker simulation added alongside human attacker models.",
+      "Detection Coverage Score: per-path measurement of what your tools actually catch.",
+    ],
   },
   {
     date: "February 2026",
@@ -73,7 +105,16 @@ export default function ChangelogPage() {
                   <span className="text-xs text-slate-500">{r.date}</span>
                 </div>
                 <h2 className="mb-2 text-xl font-bold text-white">{r.title}</h2>
-                <p className="text-slate-400 leading-relaxed">{r.description}</p>
+                {r.description ? (
+                  <p className="text-slate-400 leading-relaxed">{r.description}</p>
+                ) : null}
+                {r.details ? (
+                  <ul className="list-disc pl-5 text-slate-400 leading-relaxed space-y-1.5">
+                    {r.details.map((detail) => (
+                      <li key={detail}>{detail}</li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ol>
