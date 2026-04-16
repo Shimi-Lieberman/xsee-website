@@ -22,11 +22,11 @@ const PLANS = [
     per: "/mo",
     feats: [
       "1 AWS account · Up to 100 assets",
-      "All 6 intelligence engines",
+      "All 7 engines + autonomous agents",
       "L2 validated attack paths",
       "XseeCyber simulation",
       "AI security analyst",
-      "Operational Playbooks",
+      "Autonomous Runs audit log",
       "Evidence packages",
       "Email support",
     ],
@@ -44,11 +44,13 @@ const PLANS = [
     feats: [
       "Up to 5 AWS accounts",
       "Up to 1,000 assets",
-      "All 6 intelligence engines",
+      "All 7 engines + autonomous agents",
       "XseeCyber live mode",
       "AI security analyst",
       "Detection Coverage Score",
-      "Operational Playbooks",
+      "Autonomous Runs audit log",
+      "Weekly board report (auto-generated)",
+      "Nightly CVE threat hunting",
       "Priority support",
       "Annual discount available",
     ],
@@ -65,10 +67,12 @@ const PLANS = [
     per: "",
     feats: [
       "Unlimited accounts & assets",
-      "All 6 intelligence engines",
+      "All 7 engines + autonomous agents",
       "Custom reporting & dashboards",
       "SSO / SAML integration",
       "Self-hosted deployment",
+      "Autonomous remediation agent",
+      "Configurable agent schedules",
       "Optional XSEE Agent (real-time)",
       "Dedicated customer engineer",
       "SLA guarantee",
@@ -144,7 +148,7 @@ export default function Pricing() {
             from day one.
           </h2>
           <p style={{ color: "#64748b" }}>
-            Every plan includes the full six-engine platform. No gating. No enterprise add-ons for core proof capabilities.{" "}
+            Every plan includes all 7 engines and autonomous agents. No gating. No enterprise add-ons for core proof capabilities.{" "}
             <strong style={{ color: "#0f172a" }}>14-day free trial. No credit card required.</strong>
           </p>
           <div className="section-rule" />
