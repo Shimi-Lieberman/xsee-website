@@ -6,7 +6,6 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import HomeProofSections from "@/components/HomeProofSections";
 import { BeforeAfter } from "@/components/BeforeAfter";
-import HeroSocialProofStats from "@/components/HeroSocialProofStats";
 import { NumbersMoment } from "@/components/NumbersMoment";
 import AttackGraphPreview from "@/components/AttackGraphPreview";
 import DetectionCoverageChart from "@/components/DetectionCoverageChart";
@@ -49,14 +48,6 @@ export default function Home() {
         <Hero />
         <HomeProofSections />
         <SecurityComplianceTrustSection />
-        <div
-          className="home-stats-strip"
-          style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}
-        >
-          <div className="hero-stats strip-inner">
-            <HeroSocialProofStats />
-          </div>
-        </div>
         <NumbersMoment />
         <div className="reveal" style={{ background: "var(--dark)" }}>
           <BeforeAfter />
