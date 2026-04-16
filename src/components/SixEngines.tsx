@@ -7,7 +7,7 @@ import {
   Network,
   Zap,
   Bot,
-  BookOpen,
+  Award,
 } from "lucide-react";
 import SectionFadeIn from "./SectionFadeIn";
 
@@ -48,11 +48,18 @@ const engines = [
     color: "#0891B2",
   },
   {
-    title: "Operational Playbooks",
-    description: "Track fixes from detection to verified closed.",
-    tag: "Automation Engine",
-    icon: BookOpen,
+    title: "Autonomous Agents",
+    description: "Investigation, board reporting, threat hunting, and remediation agents run continuously.",
+    tag: "Autonomous Agent Engine",
     color: "#EF4444",
+    icon: Bot,
+  },
+  {
+    title: "Evidence & Certification",
+    description: "Evidence Package PDF plus Breach Prevention Certificate for every verified closure.",
+    tag: "Evidence Engine",
+    icon: Award,
+    color: "#22C55E",
   },
 ];
 
@@ -67,7 +74,7 @@ export default function SixEngines() {
         </SectionFadeIn>
         <SectionFadeIn>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-500">
-            Six engines. One platform. Attack paths validated with exploit-level proof, remediation in Terraform/CLI/CloudFormation.
+            Seven engines. One platform. Attack paths validated with exploit-level proof, remediation in Terraform/CLI/CloudFormation.
           </p>
         </SectionFadeIn>
 

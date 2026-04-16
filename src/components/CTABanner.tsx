@@ -69,7 +69,7 @@ export default function CTABanner() {
             <div className="cta-option-badge">FULL PLATFORM</div>
             <h3 className="cta-option-title">Start Free Trial</h3>
             <p className="cta-option-body">
-              14-day full access to all 6 engines. See your Detection Coverage Score. Generate evidence packages. After trial: Starter $1,200/mo, Professional $2,500/mo —{" "}
+              14-day full access to seven engines + autonomous agents. See your Detection Coverage Score. Generate evidence packages. After trial: Starter $1,200/mo, Professional $2,500/mo —{" "}
               <Link href="#pricing" style={{ color: "var(--blue-light)", textDecoration: "underline", textUnderlineOffset: 3 }}>
                 view plans
               </Link>
