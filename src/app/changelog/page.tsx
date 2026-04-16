@@ -10,8 +10,16 @@ export const metadata: Metadata = {
 
 const releases = [
   {
+    date: "April 2026",
+    version: "v1.5.0",
+    tag: "New Feature" as const,
+    title: "Autonomous Agents + Evidence & Certification Engine",
+    description:
+      "Launch of autonomous Investigation, Board Report, Threat Hunt, and Remediation agents. Added Engine 07 for Evidence & Certification with Evidence Package PDF exports and Breach Prevention Certificate issuance.",
+  },
+  {
     date: "March 2026",
-    version: "v1.4",
+    version: "v1.4.0",
     tag: "New Feature" as const,
     title: "Ransomware Readiness Score",
     description:

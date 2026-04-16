@@ -106,7 +106,7 @@ export default function Hero() {
         }}
       >
         <Link
-          href="/free-scan"
+          href="/changelog"
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -135,7 +135,7 @@ export default function Hero() {
             NEW
           </span>
           <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
-            AI attacker simulation now in XseeCyber 2.0
+            Autonomous agents now live — Investigation · Board Report · Threat Hunt
           </span>
           <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>›</span>
         </Link>

@@ -80,19 +80,31 @@ const ENGINES = [
   },
   {
     num: "06",
-    label: "PLAYBOOKS",
-    title: "Operational Playbooks",
-    desc: "Findings don't close themselves. XSEE's Kanban-style playbooks take each finding from detection through remediation to verified closure. Assign to team members. Track status. Re-scan automatically when a fix is applied. Full audit trail for your compliance team.",
+    label: "AUTONOMOUS AGENTS",
+    title: "Autonomous Agents",
+    desc: "Investigation Agent, Board Report Agent, Threat Hunt Agent, and Remediation Agent run continuously on your validated paths. They investigate, summarize, hunt, and prep fixes automatically while your team keeps full approval control.",
     icon: (
       <svg width={22} height={22} viewBox="0 0 22 22" fill="none" className="engine-icon-svg" style={{ transition: "color 0.25s" }}>
-        <rect x={3} y={2} width={16} height={18} rx={2} stroke="currentColor" strokeWidth={1.4} fill="currentColor" fillOpacity={0.05} />
-        <line x1={9} y1={5} x2={9} y2={17} stroke="currentColor" strokeWidth={1} opacity={0.3} />
-        <line x1={15} y1={5} x2={15} y2={17} stroke="currentColor" strokeWidth={1} opacity={0.3} />
-        <rect x={4.5} y={5.5} width={3} height={2.5} rx={0.5} fill="#EF4444" fillOpacity={0.8} />
-        <rect x={4.5} y={9.5} width={3} height={2.5} rx={0.5} fill="#EF4444" fillOpacity={0.5} />
-        <rect x={10.5} y={5.5} width={3} height={2.5} rx={0.5} fill="#F59E0B" fillOpacity={0.8} />
-        <rect x={16.5} y={5.5} width={3} height={2.5} rx={0.5} fill="#10B981" fillOpacity={0.8} />
-        <polyline points="17.2,6.5 17.8,7.2 19,6" stroke="white" strokeWidth={1} strokeLinecap="round" strokeLinejoin="round" />
+        <rect x={4} y={5} width={14} height={11} rx={3} stroke="currentColor" strokeWidth={1.4} fill="currentColor" fillOpacity={0.05} />
+        <circle cx={8} cy={10.5} r={1.2} fill="currentColor" fillOpacity={0.85} />
+        <circle cx={14} cy={10.5} r={1.2} fill="currentColor" fillOpacity={0.85} />
+        <path d="M8 13.5C9.1 14.3 10 14.6 11 14.6C12 14.6 12.9 14.3 14 13.5" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" />
+        <line x1={11} y1={2.5} x2={11} y2={5} stroke="currentColor" strokeWidth={1.3} strokeLinecap="round" />
+        <circle cx={11} cy={2.3} r={1.1} fill="#F59E0B" />
+      </svg>
+    ),
+  },
+  {
+    num: "07",
+    label: "EVIDENCE & CERTIFICATION",
+    title: "Evidence & Certification",
+    desc: "Every validated path ships with an Evidence Package PDF and Breach Prevention Certificate. Share cryptographic proof with leadership, auditors, and incident response teams without manual report building.",
+    icon: (
+      <svg width={22} height={22} viewBox="0 0 22 22" fill="none" className="engine-icon-svg" style={{ transition: "color 0.25s" }}>
+        <path d="M6 2.5H13.5L18 7V18.5C18 19.3 17.3 20 16.5 20H6C5.2 20 4.5 19.3 4.5 18.5V4C4.5 3.2 5.2 2.5 6 2.5Z" stroke="currentColor" strokeWidth={1.4} fill="currentColor" fillOpacity={0.05} />
+        <path d="M13.5 2.5V7H18" stroke="currentColor" strokeWidth={1.2} />
+        <polyline points="7.5,11 9.5,13 13.8,8.7" stroke="#10B981" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 16.2H14.5" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" opacity={0.7} />
       </svg>
     ),
   },
@@ -105,7 +117,7 @@ export default function EnginesGrid() {
         <div className="section-head reveal">
           <span className="section-eyebrow section-eyebrow-dark">Platform architecture</span>
           <h2 className="display-lg" style={{ color: "#0f172a" }}>
-            Six engines. One purpose.
+            Seven engines. One purpose.
           </h2>
           <p style={{ color: "#64748b" }}>
             Proving whether your cloud can be breached — and closing the loop if it can.

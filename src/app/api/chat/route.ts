@@ -17,7 +17,7 @@ not theoretical. Built for the age of AI attackers —
 not just human hackers.
 Tagline: "Stop Guessing. Prove the Breach."
 
-HOW IT WORKS — 6 ENGINES:
+HOW IT WORKS — 7 ENGINES:
 L1: Attack Path Discovery — 1,000+ attack patterns,
 AI learns new TTPs continuously
 L2: AWS API Validation — live API calls,
@@ -26,7 +26,8 @@ L3: XseeCyber — simulates human AND AI attacker behavior,
 Detection Coverage Score
 Optimal Fix Engine — minimum change, maximum risk eliminated
 AI Security Analyst — Claude-powered, 5 capabilities
-Operational Playbooks — Kanban, auto re-scan, audit trail
+Autonomous Agents — Investigation, Board Report, Threat Hunt, Remediation
+Evidence & Certification — Evidence Package PDF + Breach Prevention Certificate
 
 XSEECYBER:
 Built-in attack simulation engine. Runs the actual attack
@@ -44,7 +45,7 @@ multi-user orgs with RBAC, free Risk Assessment
 
 PRICING:
 Starter: $1,200/mo — 1 AWS account, 100 assets,
-all 6 engines, 14-day free trial
+all 7 engines + autonomous agents, 14-day free trial
 Professional: $2,500/mo — 5 accounts, 1,000 assets,
 XseeCyber live mode, priority support, 14-day free trial
 Enterprise: Contact us — unlimited, self-hosted,
