@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { initializePaddle, type Paddle } from "@paddle/paddle-js";
+import { ShieldCheck } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 
 const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
@@ -138,7 +139,7 @@ export default function Pricing() {
   );
 
   return (
-    <section className="section sec-light animate-on-scroll !pb-8" style={{ background: "transparent" }} id="pricing">
+    <section className="section sec-light animate-on-scroll" style={{ background: "transparent" }} id="pricing">
       <div className="max-w-6xl mx-auto w-full px-6 pricing-inner">
         <div className="section-head reveal">
           <span className="section-eyebrow section-eyebrow-dark">Pricing</span>
@@ -220,22 +221,40 @@ export default function Pricing() {
                 ))}
               </ul>
               {plan.checkout === "enterprise" ? (
-                <Link
-                  href="#contact"
-                  className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
-                  style={{ width: "100%", justifyContent: "center" }}
-                >
-                  <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
-                </Link>
+                <>
+                  <Link
+                    href="#contact"
+                    className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
+                    style={{ width: "100%", justifyContent: "center" }}
+                  >
+                    <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
+                  </Link>
+                  <div
+                    className="mt-3 flex items-start justify-center gap-2 text-center"
+                    style={{ fontSize: 13, color: "rgba(15,23,42,0.55)", lineHeight: 1.5 }}
+                  >
+                    <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
+                    <span>14-day free trial · No credit card required · Cancel anytime</span>
+                  </div>
+                </>
               ) : (
-                <button
-                  type="button"
-                  className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
-                  style={{ width: "100%", justifyContent: "center" }}
-                  onClick={() => handlePlanClick(plan.checkout)}
-                >
-                  <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
-                </button>
+                <>
+                  <button
+                    type="button"
+                    className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
+                    style={{ width: "100%", justifyContent: "center" }}
+                    onClick={() => handlePlanClick(plan.checkout)}
+                  >
+                    <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
+                  </button>
+                  <div
+                    className="mt-3 flex items-start justify-center gap-2 text-center"
+                    style={{ fontSize: 13, color: "rgba(15,23,42,0.55)", lineHeight: 1.5 }}
+                  >
+                    <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
+                    <span>14-day free trial · No credit card required · Cancel anytime</span>
+                  </div>
+                </>
               )}
             </div>
           ))}

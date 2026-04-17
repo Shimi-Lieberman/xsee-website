@@ -97,7 +97,7 @@ export default function Home() {
           <CompleteLoopSection />
         </div>
         <div className="sec-transition sec-dark-to-light" />
-        <div className="reveal" style={{ background: "white" }}>
+        <div className="reveal" style={{ background: "#030810" }}>
           <EnginesGrid />
         </div>
         <div className="sec-transition sec-light-to-dark" />

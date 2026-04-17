@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ShieldCheck } from "lucide-react";
 import Nav from "@/components/Nav";
 import { Analytics } from "@/lib/analytics";
 import TrustModel from "@/components/TrustModel";
@@ -354,6 +355,13 @@ export default function FreeScanPage() {
                       {status === "loading" ? "Queuing scan..." : "Request Demo →"}
                     </span>
                   </button>
+                  <div
+                    className="mt-3 flex items-start justify-center gap-2 text-center"
+                    style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", lineHeight: 1.5 }}
+                  >
+                    <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
+                    <span>Only 2 permissions required. You can revoke access in 10 seconds.</span>
+                  </div>
                   <p className="free-scan-note mt-4">
                     No commitment · Read-only IAM · Report delivered in 30 min
                   </p>

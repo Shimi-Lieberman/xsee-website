@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Mono, DM_Sans, Instrument_Serif } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import Script from "next/script";
 import "./globals.css";
 import "./xsee-elite.css";
@@ -17,30 +18,7 @@ export const viewport: Viewport = {
   themeColor: "#050810",
 };
 
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "900"],
-  style: ["normal", "italic"],
-  variable: "--font-dm-sans",
-  display: "swap",
-});
-
-const dmMono = DM_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-dm-mono",
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["italic"],
-  variable: "--font-instrument-serif",
-  display: "swap",
-});
-
-const fontVariables = `${dmSans.variable} ${dmMono.variable} ${instrumentSerif.variable}`;
+const fontVariables = `${GeistSans.variable} ${GeistMono.variable}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xsee.io"),

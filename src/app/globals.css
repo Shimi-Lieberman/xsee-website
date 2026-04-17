@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --color-primary: #FF1B8D;
   --color-primary-dark: #D4006E;
   --color-primary-mid: #FF4BA6;
@@ -92,10 +92,10 @@
   --text-secondary: #94AABF;
   --text-muted: #3D5470;
   --text-inverse: #040B18;
-  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-dm-mono), ui-monospace, monospace;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   /* Metronic typography (v9.4.7) */
-  --font-family-base: var(--font-dm-sans, "DM Sans"), ui-sans-serif, system-ui, sans-serif;
+  --font-family-base: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --text-xs: 0.75rem;
   --text-xs--line-height: calc(1 / 0.75);
   --text-2xs: 0.6875rem;
@@ -554,7 +554,7 @@ section { position: relative; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ━━━ SECTION COMMON ━━━ */
-.section { padding: 120px 0; }
+.section { padding: 96px 0; }
 .section-alt { background: var(--bg-surface); }
 .section-head { text-align: center; max-width: 640px; margin: 0 auto 72px; }
 .section-head .eyebrow { display: block; margin-bottom: 14px; }
@@ -783,7 +783,7 @@ section { position: relative; }
 .pricing-note { text-align: center; margin-top: 20px; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.06em; }
 
 /* ━━━ CTA ━━━ */
-.cta-section { padding: 80px 0; }
+.cta-section { padding: 96px 0; }
 .cta-two-options { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 900px; margin: 0 auto; }
 .cta-option { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 40px 32px; position: relative; display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
 .cta-option-badge { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; padding: 4px 10px; border-radius: 4px; margin-bottom: 16px; }
@@ -911,7 +911,7 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
   .engines-grid, .pricing-grid, .testi-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .container { padding: 0 20px; }
-  .section { padding: 80px 0; }
+  .section { padding: 64px 0; }
   h1.display-xl { font-size: 2.25rem; }
   .stat-num { font-size: 36px; }
   .cta-actions { flex-direction: column; }
@@ -1543,7 +1543,7 @@ footer .footer-inner {
 /* Homepage — Security & Compliance band (SOC 2 badges); tight, centered */
 .security-compliance-trust {
   width: 100%;
-  padding: 16px 24px !important;
+  padding: 96px 24px !important;
   text-align: center;
   box-sizing: border-box;
 }
@@ -1878,11 +1878,12 @@ footer .footer-inner {
   --dark: #050810;
   --dark-2: #080c18;
   --dark-3: #0c1120;
-  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-serif: ui-serif, Georgia, "Times New Roman", serif;
 }
 
 body {
   font-family: var(--font-sans);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -2223,7 +2224,7 @@ main .section h2.display-lg {
   }
 
   .numbers-moment {
-    padding: 60px 20px !important;
+    padding: 64px 20px !important;
   }
 
   .nm-sub {
