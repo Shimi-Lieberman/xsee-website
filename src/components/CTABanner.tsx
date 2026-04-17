@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ShieldCheck } from "lucide-react";
 
 export default function CTABanner() {
   return (
@@ -64,6 +65,13 @@ export default function CTABanner() {
             <Link href="/free-scan" className="btn btn-primary btn-shimmer">
               <span className="relative z-[2]">Run Free Scan →</span>
             </Link>
+            <div
+              className="mt-3 flex items-start justify-center gap-2 text-center"
+              style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", maxWidth: 360, margin: "0 auto" }}
+            >
+              <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
+              <span>Read-only access. No agents deployed. Results in 30 minutes.</span>
+            </div>
           </div>
           <div className="cta-option cta-option-platform">
             <div className="cta-option-badge">FULL PLATFORM</div>
@@ -83,6 +91,13 @@ export default function CTABanner() {
             >
               Start Free Trial →
             </Link>
+            <div
+              className="mt-3 flex items-start justify-center gap-2 text-center"
+              style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", maxWidth: 360, margin: "0 auto" }}
+            >
+              <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
+              <span>Read-only access. No agents deployed. Results in 30 minutes.</span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ShieldCheck } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 
 const PATH_ROWS = [
@@ -248,20 +249,27 @@ export default function Hero() {
           </Link>
         </div>
 
-        <p
-          className="font-mono hero-trust-line"
+        <div
+          className="hero-trust-line"
           style={{
-            fontSize: 12,
-            color: "rgba(255,255,255,0.45)",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            fontSize: 13,
+            color: "rgba(255,255,255,0.35)",
             textAlign: "center",
             maxWidth: 520,
             lineHeight: 1.5,
             marginTop: "24px",
             marginBottom: 0,
+            marginLeft: "auto",
+            marginRight: "auto",
           }}
         >
-          Read-only IAM. No agents. Your data never leaves your AWS environment.
-        </p>
+          <ShieldCheck size={12} color="#4ade80" aria-hidden style={{ flexShrink: 0 }} />
+          <span>Read-only IAM · No agents · Your data never leaves your AWS environment</span>
+        </div>
       </div>
 
       <div

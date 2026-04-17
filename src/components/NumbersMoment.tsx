@@ -49,7 +49,7 @@ export function NumbersMoment() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        padding: "80px 48px",
+        padding: "96px 48px",
         position: "relative",
         overflow: "hidden",
       }}
