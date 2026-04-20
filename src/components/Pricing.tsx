@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { initializePaddle, type Paddle } from "@paddle/paddle-js";
@@ -14,82 +15,105 @@ const PADDLE_PRO_PRICE_ID = process.env.NEXT_PUBLIC_PADDLE_PRO_PRICE_ID ?? "";
 
 const REGISTER_FALLBACK = "https://app.xsee.io/register";
 
-const PLANS = [
+const FOUNDING_PILL_STYLE: CSSProperties = {
+  display: "inline-block",
+  marginTop: 10,
+  marginBottom: 4,
+  padding: "4px 10px",
+  borderRadius: 999,
+  fontSize: 11,
+  fontWeight: 600,
+  letterSpacing: "0.02em",
+  background: "rgba(233,30,140,0.15)",
+  color: "#e91e8c",
+  border: "1px solid rgba(233,30,140,0.3)",
+};
+
+type PlanCheckout = "trial" | "starter" | "pro";
+
+const PLANS: {
+  tier: string;
+  title: string;
+  desc: string;
+  price: string;
+  per: string;
+  annualLabel?: string;
+  feats: string[];
+  dim: string[];
+  cta: string;
+  featured: boolean;
+  founding: boolean;
+  checkout: PlanCheckout;
+}[] = [
   {
-    tier: "// Starter",
-    title: "For Small Teams",
-    desc: "Prove exploitability on a single AWS account.",
-    price: "$1,200",
-    per: "/mo",
+    tier: "// Free Trial",
+    title: "Free Trial",
+    desc: "14 days • Full product • No credit card",
+    price: "$0",
+    per: "",
     feats: [
-      "1 AWS account · Up to 100 assets",
-      "All 7 engines + autonomous agents",
-      "L2 validated attack paths",
-      "XseeCyber simulation",
-      "AI security analyst",
-      "Autonomous Runs audit log",
-      "Evidence packages",
-      "Email support",
-    ],
-    dim: [],
-    cta: "Start Free Trial",
-    featured: false,
-    checkout: "starter" as const,
-  },
-  {
-    tier: "// Professional",
-    title: "For Growing Teams",
-    desc: "Full platform for teams managing multiple AWS environments.",
-    price: "$2,500",
-    per: "/month",
-    feats: [
-      "Up to 5 AWS accounts",
-      "Up to 1,000 assets",
-      "All 7 engines + autonomous agents",
-      "XseeCyber live mode",
-      "AI security analyst",
-      "Detection Coverage Score",
-      "Autonomous Runs audit log",
-      "Weekly board report (auto-generated)",
-      "Nightly CVE threat hunting",
-      "Priority support",
-      "Annual discount available",
+      "1 AWS account",
+      "Full L1 + L2 + L3 scanning",
+      "Unlimited findings",
+      "Claude AI investigation",
+      "Breach Prevention Certificate",
     ],
     dim: [],
     cta: "Start Free Trial →",
-    featured: true,
-    checkout: "pro" as const,
+    featured: false,
+    founding: false,
+    checkout: "trial",
   },
   {
-    tier: "// Enterprise",
-    title: "For Large Orgs",
-    desc: "Unlimited scale, dedicated support, and self-hosted option.",
-    price: "Contact us",
-    per: "",
+    tier: "// Starter",
+    title: "Starter",
+    desc: "For the cost of one day of incident response, XSEE watches your crown jewels 24/7 and proves every risk is real.",
+    price: "$1,800",
+    per: "/ month",
+    annualLabel: "Annual: $21,600 / year (save 0%)",
     feats: [
-      "Unlimited accounts & assets",
-      "All 7 engines + autonomous agents",
-      "Autonomous remediation agent",
-      "Configurable agent schedules",
-      "Custom reporting & dashboards",
-      "SSO / SAML integration",
-      "Self-hosted deployment",
-      "Optional XSEE Agent (real-time)",
-      "Dedicated customer engineer",
-      "SLA guarantee",
-      "Custom integrations",
+      "1 AWS account",
+      "L1 + L2 + L3 validation",
+      "Unlimited attack paths",
+      "Claude AI Engine",
+      "Breach Prevention Certificate",
+      "2 users",
+      "Email support",
     ],
     dim: [],
-    cta: "Contact Sales",
+    cta: "Subscribe →",
+    featured: true,
+    founding: true,
+    checkout: "starter",
+  },
+  {
+    tier: "// Growth",
+    title: "Growth",
+    desc: "We detect changes to your attack surface in 60 seconds. You know about new paths before attackers do.",
+    price: "$3,500",
+    per: "/ month",
+    annualLabel: "Annual: $42,000 / year",
+    feats: [
+      "Up to 3 AWS accounts",
+      "Everything in Starter",
+      "Real-time Detection Agent (60s alerts)",
+      "UEBA behavioral analysis",
+      "Scheduled automatic scans",
+      "Slack + email notifications",
+      "10 users",
+      "Priority support",
+    ],
+    dim: [],
+    cta: "Subscribe →",
     featured: false,
-    checkout: "enterprise" as const,
+    founding: true,
+    checkout: "pro",
   },
 ];
 
-function priceIdForCheckout(kind: "starter" | "pro" | "enterprise"): string {
+function priceIdForCheckout(kind: "starter" | "pro"): string {
   if (kind === "starter") return PADDLE_STARTER_PRICE_ID;
-  if (kind === "pro") return PADDLE_PRO_PRICE_ID;
-  return "";
+  return PADDLE_PRO_PRICE_ID;
 }
 
 export default function Pricing() {
@@ -126,7 +150,7 @@ export default function Pricing() {
     window.location.href = REGISTER_FALLBACK;
   }, [paddleReady]);
 
-  const handlePlanClick = useCallback(
+  const handlePaidClick = useCallback(
     (kind: "starter" | "pro") => {
       if (kind === "starter") {
         Analytics.ctaClicked("pricing", "starter_trial");
@@ -144,14 +168,8 @@ export default function Pricing() {
         <div className="section-head reveal">
           <span className="section-eyebrow section-eyebrow-dark">Pricing</span>
           <h2 className="display-lg" style={{ color: "#0f172a" }}>
-            Know your breach risk
-            <br />
-            from day one.
+            See your real attack paths in 15 minutes — no credit card, no sales call, no theory.
           </h2>
-          <p style={{ color: "#64748b" }}>
-            Every plan includes all 7 engines and autonomous agents. No gating. No enterprise add-ons for core proof capabilities.{" "}
-            <strong style={{ color: "#0f172a" }}>14-day free trial. No credit card required.</strong>
-          </p>
           <div className="section-rule" />
         </div>
         <div className="pricing-grid pr-grid stagger-children">
@@ -194,6 +212,7 @@ export default function Pricing() {
               )}
               <div className="pricing-tier font-mono">{plan.tier}</div>
               <h3>{plan.title}</h3>
+              {plan.founding && <span style={FOUNDING_PILL_STYLE}>Founding Price</span>}
               <p className="pricing-desc">{plan.desc}</p>
               <div className="pricing-amount">
                 <span
@@ -206,10 +225,13 @@ export default function Pricing() {
                 >
                   {plan.price}
                 </span>
-                {plan.per && (
-                  <span className="pricing-per">{plan.per}</span>
-                )}
+                {plan.per ? <span className="pricing-per">{plan.per}</span> : null}
               </div>
+              {plan.annualLabel ? (
+                <p style={{ fontSize: 14, color: "#64748b", marginTop: 8, marginBottom: 0, lineHeight: 1.5 }}>
+                  {plan.annualLabel}
+                </p>
+              ) : null}
               <ul className="pricing-feats">
                 {plan.feats.map((f) => (
                   <li key={f}>{f}</li>
@@ -220,14 +242,17 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              {plan.checkout === "enterprise" ? (
+              {plan.checkout === "trial" ? (
                 <>
                   <Link
-                    href="#contact"
-                    className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
+                    href={REGISTER_FALLBACK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-primary btn-shimmer"
                     style={{ width: "100%", justifyContent: "center" }}
+                    onClick={() => Analytics.ctaClicked("pricing", "free_trial_card")}
                   >
-                    <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
+                    <span>{plan.cta}</span>
                   </Link>
                   <div
                     className="mt-3 flex items-start justify-center gap-2 text-center"
@@ -243,7 +268,11 @@ export default function Pricing() {
                     type="button"
                     className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
                     style={{ width: "100%", justifyContent: "center" }}
-                    onClick={() => handlePlanClick(plan.checkout)}
+                    onClick={() => {
+                      if (plan.checkout === "starter" || plan.checkout === "pro") {
+                        handlePaidClick(plan.checkout);
+                      }
+                    }}
                   >
                     <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
                   </button>
@@ -259,27 +288,33 @@ export default function Pricing() {
             </div>
           ))}
         </div>
-        <div
+        <p
           style={{
             textAlign: "center",
-            padding: "16px 24px",
-            background: "white",
-            border: "1px solid rgba(0,0,0,0.07)",
-            borderRadius: "12px",
-            maxWidth: "560px",
-            margin: "32px auto 0",
-            fontSize: "13px",
+            fontSize: 14,
             color: "#64748b",
+            maxWidth: "640px",
+            margin: "32px auto 0",
+            lineHeight: 1.65,
           }}
         >
-          Average XSEE customer proves{" "}
-          <strong style={{ color: "#0f172a" }}>$18.5M</strong>
-          {" "}in validated exposure on their first scan. At $1,200/mo, that&apos;s a{" "}
-          <strong style={{ color: "#FF1B8D" }}>15,000× ROI</strong>
-          {" "}before the trial ends.
-        </div>
+          The average cloud breach costs $4.88M. XSEE needs to prevent ONE breach by ONE percent to pay for itself.
+        </p>
+        <p
+          style={{
+            textAlign: "center",
+            fontSize: 12,
+            color: "#94a3b8",
+            maxWidth: "560px",
+            margin: "16px auto 0",
+            lineHeight: 1.55,
+          }}
+        >
+          Founding prices available for first 10 customers. Price increases to $2,500/$5,000 after that.
+        </p>
         <p className="pricing-note">
-          14-day free trial · No credit card required · Starter $1,200/mo · Professional $2,500/mo · Enterprise: contact us · Annual billing: 25% discount
+          14-day free trial · No credit card required · Founding Starter $1,800/mo · Founding Growth $3,500/mo · Annual
+          options shown on cards
         </p>
       </div>
     </section>
