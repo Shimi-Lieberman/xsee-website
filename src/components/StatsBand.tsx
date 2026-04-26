@@ -2,52 +2,36 @@
 
 import { useRef, useState, useEffect } from "react";
 
-function useCountUpInt(target: number, duration: number, enabled: boolean) {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!enabled) return;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(ease * target));
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [enabled, target, duration]);
-  return value;
-}
-
-function useCountUpFloat(target: number, duration: number, enabled: boolean, decimals: number) {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!enabled) return;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 3);
-      const v = ease * target;
-      setValue(Number(v.toFixed(decimals)));
-      if (progress < 1) requestAnimationFrame(tick);
-    };
-    requestAnimationFrame(tick);
-  }, [enabled, target, duration, decimals]);
-  return value;
-}
-
 const STATS = [
-  { key: "patterns", label: "Attack patterns in XSEE's engine", color: "#FF1B8D", kind: "int" as const, target: 1000, suffix: "+" },
-  { key: "engines", label: "Engines in the autonomous loop", color: "#F97316", kind: "int" as const, target: 7, suffix: "" },
-  { key: "conf", label: "Avg exploit confidence score", color: "#4ade80", kind: "int" as const, target: 92, suffix: "%" },
-  { key: "time", label: "Time to first proven breach path", color: "#F59E0B", kind: "static" as const, display: "<30m" },
+  {
+    key: "patterns",
+    label: "Attack patterns in XSEE's engine",
+    color: "#FF1B8D",
+    display: "1,000+",
+  },
+  {
+    key: "engines",
+    label: "Engines in the autonomous loop",
+    color: "#F97316",
+    display: "7",
+  },
+  {
+    key: "conf",
+    label: "Avg exploit confidence score",
+    color: "#4ade80",
+    display: "92%",
+  },
+  {
+    key: "time",
+    label: "Time to first proven breach path",
+    color: "#F59E0B",
+    display: "<30m",
+  },
   {
     key: "exposure",
     label: "Avg financial exposure on first scan",
     color: "#EAB308",
-    kind: "money" as const,
-    target: 18.5,
-    prefix: "$",
-    suffix: "M",
+    display: "$3.2M",
   },
 ] as const;
 
@@ -113,11 +97,6 @@ export default function StatsBand() {
     };
   }, []);
 
-  const n1000 = useCountUpInt(1000, 1200, countersVisible);
-  const n7 = useCountUpInt(7, 1000, countersVisible);
-  const n92 = useCountUpInt(92, 1200, countersVisible);
-  const money = useCountUpFloat(18.5, 1200, countersVisible, 1);
-
   const popStyle = {
     animation: countersVisible ? "count-up-pop 0.6s ease-out both" : "none",
   } as const;
@@ -135,33 +114,7 @@ export default function StatsBand() {
             }}
           >
             <div className="stat-num" style={{ color: s.color }}>
-              {s.kind === "static" ? (
-                s.display
-              ) : s.kind === "money" ? (
-                <>
-                  {s.prefix}
-                  {money}
-                  <span className="sfx" style={{ color: s.color }}>
-                    {s.suffix}
-                  </span>
-                </>
-              ) : s.key === "patterns" ? (
-                <>
-                  {n1000.toLocaleString()}
-                  <span className="sfx" style={{ color: s.color }}>
-                    {s.suffix}
-                  </span>
-                </>
-              ) : s.key === "engines" ? (
-                <>{n7}</>
-              ) : (
-                <>
-                  {n92}
-                  <span className="sfx" style={{ color: s.color }}>
-                    {s.suffix}
-                  </span>
-                </>
-              )}
+              {s.display}
             </div>
             <div className="stat-lbl">{s.label}</div>
           </div>

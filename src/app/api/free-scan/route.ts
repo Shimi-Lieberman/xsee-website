@@ -99,10 +99,7 @@ export async function POST(request: Request) {
     if (!company) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    if (!awsRoleArn) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-    if (!ARN_REGEX.test(awsRoleArn)) {
+    if (awsRoleArn && !ARN_REGEX.test(awsRoleArn)) {
       return NextResponse.json(
         { error: "Invalid AWS Role ARN format" },
         { status: 400 }
@@ -114,6 +111,9 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    const roleArnForDb = awsRoleArn || null;
+    const regionForDb = awsRoleArn ? awsRegion || "us-east-1" : null;
 
     const ipAddress =
       request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
@@ -134,8 +134,8 @@ export async function POST(request: Request) {
         ${full_name},
         ${work_email},
         ${company},
-        ${awsRoleArn},
-        ${awsRegion},
+        ${roleArnForDb},
+        ${regionForDb},
         ${remediationRoleArn || null},
         ${ipAddress},
         ${userAgent},
@@ -143,14 +143,16 @@ export async function POST(request: Request) {
       )
     `;
 
-    const platformPayload: PlatformSubmitBody = {
-      name: full_name,
-      email: work_email,
-      company,
-      role_arn: awsRoleArn,
-      region: awsRegion,
-    };
-    const platform = await forwardToPlatform(platformPayload);
+    const platform =
+      awsRoleArn && ARN_REGEX.test(awsRoleArn)
+        ? await forwardToPlatform({
+            name: full_name,
+            email: work_email,
+            company,
+            role_arn: awsRoleArn,
+            region: awsRegion || "us-east-1",
+          })
+        : { ok: false as const };
 
     const ts = new Date().toISOString();
     const adminText = [
@@ -159,8 +161,8 @@ export async function POST(request: Request) {
       `Name: ${full_name}`,
       `Email: ${work_email}`,
       `Company: ${company}`,
-      `Role ARN: ${awsRoleArn}`,
-      `Region: ${awsRegion}`,
+      awsRoleArn ? `Role ARN: ${awsRoleArn}` : "Role ARN: (not provided — follow-up scheduled)",
+      awsRoleArn ? `Region: ${awsRegion}` : "",
       `Remediation ARN: ${remediationRoleArn || "Not provided"}`,
       `Time: ${ts}`,
       platform.scan_id ? `Scan ID: ${platform.scan_id}` : "",
@@ -188,8 +190,9 @@ export async function POST(request: Request) {
       ``,
       `We received your free scan request for ${company}. We'll reach out within one business day to schedule your scan.`,
       ``,
-      `Your Role ARN: ${awsRoleArn}`,
-      `Region: ${awsRegion}`,
+      ...(awsRoleArn
+        ? [`Your Role ARN: ${awsRoleArn}`, `Region: ${awsRegion}`, ``]
+        : [`We'll send you secure instructions to connect your read-only IAM role.`, ``]),
       ``,
       `— The XSEE Team`,
       `sales@xsee.io`,

@@ -1,47 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 
 export function NumbersMoment() {
-  const [count1, setCount1] = useState(0);
-  const [count2, setCount2] = useState(0);
-  const ref = useRef<HTMLElement>(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting && !started.current) {
-          started.current = true;
-          const t1 = performance.now();
-          const tick1 = (now: number) => {
-            const p = Math.min((now - t1) / 2000, 1);
-            const ease = 1 - (1 - p) ** 3;
-            setCount1(Math.round(ease * 4000));
-            if (p < 1) requestAnimationFrame(tick1);
-          };
-          requestAnimationFrame(tick1);
-          const t2 = performance.now();
-          const tick2 = (now: number) => {
-            const p = Math.min((now - t2) / 1200, 1);
-            const ease = 1 - (1 - p) ** 3;
-            setCount2(Math.round(ease * 3));
-            if (p < 1) requestAnimationFrame(tick2);
-          };
-          requestAnimationFrame(tick2);
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
+  const count1 = 4000;
+  const count2 = 3;
 
   return (
     <section
-      ref={ref}
       className="numbers-moment"
       style={{
         background: "var(--dark)",
@@ -224,7 +190,7 @@ export function NumbersMoment() {
               e.currentTarget.style.boxShadow = "0 0 40px rgba(255,31,143,0.35)";
             }}
           >
-            Run Free Scan — See yours →
+            Run Free Scan →
           </Link>
           <p
             style={{

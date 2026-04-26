@@ -59,7 +59,7 @@ const VS_WIZ_EXTRA = [
   },
   {
     cap: "Pricing transparency",
-    xsee: "Published from $1,200/mo",
+    xsee: "Published from $1,800/mo",
     wiz: "Enterprise quote only",
     prisma: "Enterprise quote only",
     xseeChk: true,

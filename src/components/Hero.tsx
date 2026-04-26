@@ -173,13 +173,13 @@ export default function Hero() {
             fontSize: "18px",
             color: "rgba(255,255,255,0.45)",
             lineHeight: 1.7,
-            maxWidth: "640px",
+            maxWidth: "720px",
             marginBottom: "16px",
           }}
         >
-          Cloud security tools generate thousands of findings. XSEE proves which ones are real attack paths — with live
-          AWS API evidence per hop, attack simulation, and a Breach Prevention Certificate when it&apos;s fixed. One human
-          decision per finding.
+          Your scanner sees 4,000 issues. Three of them lead to your production database. XSEE finds the three — with
+          live AWS API proof per hop, attack simulation on your actual graph, and a signed certificate when each one is
+          closed. One human decision per finding.
         </p>
 
         <p
@@ -268,7 +268,9 @@ export default function Hero() {
           }}
         >
           <ShieldCheck size={12} color="#4ade80" aria-hidden style={{ flexShrink: 0 }} />
-          <span>Read-only IAM · No agents · Your data never leaves your AWS environment</span>
+          <span>
+            2 min to connect · 30 min to first proof · Read-only IAM · No agents · Your data never leaves AWS
+          </span>
         </div>
       </div>
 

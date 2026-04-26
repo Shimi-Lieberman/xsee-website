@@ -8,14 +8,6 @@ import TrustModel from "@/components/TrustModel";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import Footer from "@/components/Footer";
 
-const AWS_REGIONS = [
-  { value: "us-east-1", label: "us-east-1 (N. Virginia)" },
-  { value: "us-west-2", label: "us-west-2 (Oregon)" },
-  { value: "eu-west-1", label: "eu-west-1 (Ireland)" },
-  { value: "eu-central-1", label: "eu-central-1 (Frankfurt)" },
-  { value: "ap-southeast-1", label: "ap-southeast-1 (Singapore)" },
-];
-
 const TRUST_ACCOUNT_ID = "722375386510";
 
 const REMEDIATION_POLICY = `{
@@ -38,10 +30,7 @@ export default function FreeScanPage() {
     fullName: "",
     email: "",
     company: "",
-    awsRoleArn: "",
-    awsRegion: "us-east-1",
     website: "",
-    remediation_role_arn: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
@@ -64,7 +53,9 @@ export default function FreeScanPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
+          full_name: formData.fullName,
+          work_email: formData.email,
+          company: formData.company,
           website: formData.website,
         }),
       });
@@ -169,8 +160,11 @@ export default function FreeScanPage() {
             <div className="free-scan-step">
               <div className="free-scan-step-num">3</div>
               <div>
-                <h3>Paste below and run</h3>
-                <p>Paste your Role ARN in the form below and we&apos;ll start the scan.</p>
+                <h3>Request your scan</h3>
+                <p>
+                  Submit the form below with your work details. We&apos;ll email you secure onboarding steps and can
+                  collect your Role ARN when you&apos;re ready.
+                </p>
               </div>
             </div>
 
@@ -222,7 +216,7 @@ export default function FreeScanPage() {
                   Copy policy JSON
                 </button>
                 <p style={{ marginTop: 16 }}>
-                  After creating the role, copy the ARN. Add it to the form below as{" "}
+                  After creating the role, copy the ARN. Reply to your onboarding email with it as{" "}
                   <strong>Remediation Role ARN (optional)</strong>.
                 </p>
                 <div className="free-scan-callout">
@@ -272,32 +266,30 @@ export default function FreeScanPage() {
                       onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                     />
                   </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label className="form-label">Full name (required)</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        placeholder="Alex Johnson"
-                        value={formData.fullName}
-                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label">Work email (required)</label>
-                      <input
-                        type="email"
-                        className="form-input"
-                        placeholder="alex@company.com"
-                        value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        required
-                      />
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Name</label>
+                    <input
+                      type="text"
+                      className="form-input"
+                      placeholder="Alex Johnson"
+                      value={formData.fullName}
+                      onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                      required
+                    />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Company name (required)</label>
+                    <label className="form-label">Work email</label>
+                    <input
+                      type="email"
+                      className="form-input"
+                      placeholder="alex@company.com"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Company</label>
                     <input
                       type="text"
                       className="form-input"
@@ -307,52 +299,12 @@ export default function FreeScanPage() {
                       required
                     />
                   </div>
-                  <div className="form-group">
-                    <label className="form-label">AWS Role ARN (required)</label>
-                    <input
-                      type="text"
-                      className="form-input"
-                      placeholder="arn:aws:iam::123456789012:role/xsee-free-scan-role"
-                      value={formData.awsRoleArn}
-                      onChange={(e) => setFormData({ ...formData, awsRoleArn: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Remediation Role ARN (optional)</label>
-                    <input
-                      type="text"
-                      name="remediation_role_arn"
-                      className="form-input"
-                      placeholder="arn:aws:iam::YOUR_ACCOUNT_ID:role/xsee-remediation-role"
-                      value={formData.remediation_role_arn}
-                      onChange={(e) =>
-                        setFormData({ ...formData, remediation_role_arn: e.target.value })
-                      }
-                      autoComplete="off"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label" htmlFor="free-scan-aws-region">
-                      AWS Region
-                    </label>
-                    <select
-                      id="free-scan-aws-region"
-                      className="form-select"
-                      value={formData.awsRegion}
-                      onChange={(e) => setFormData({ ...formData, awsRegion: e.target.value })}
-                    >
-                      {AWS_REGIONS.map((r) => (
-                        <option key={r.value} value={r.value}>{r.label}</option>
-                      ))}
-                    </select>
-                  </div>
                   {status === "error" && error && (
                     <p className="text-sm" style={{ color: "var(--red)" }}>{error}</p>
                   )}
                   <button type="submit" disabled={status === "loading"} className="btn btn-primary btn-lg btn-shimmer free-scan-submit">
                     <span className="relative z-[2]">
-                      {status === "loading" ? "Queuing scan..." : "Request Demo →"}
+                      {status === "loading" ? "Submitting..." : "Run Free Scan →"}
                     </span>
                   </button>
                   <div

@@ -46,7 +46,6 @@ const PLANS: {
   desc: string;
   price: string;
   per: string;
-  annualLabel?: string;
   feats: string[];
   dim: string[];
   cta: string;
@@ -79,7 +78,6 @@ const PLANS: {
     desc: "For the cost of one day of incident response, XSEE watches your crown jewels 24/7 and proves every risk is real.",
     price: "$1,800",
     per: "/ month",
-    annualLabel: "Annual: $21,600 / year",
     feats: [
       "1 AWS account",
       "L1 + L2 + L3 validation",
@@ -101,7 +99,6 @@ const PLANS: {
     desc: "We detect changes to your attack surface in 60 seconds. You know about new paths before attackers do.",
     price: "$3,500",
     per: "/ month",
-    annualLabel: "Annual: $42,000 / year",
     feats: [
       "Up to 3 AWS accounts",
       "Everything in Starter",
@@ -278,11 +275,6 @@ export default function Pricing() {
                 </p>
               </div>
 
-              {plan.annualLabel ? (
-                <p style={{ fontSize: 14, color: "#64748b", marginTop: 0, marginBottom: 8, lineHeight: 1.5 }}>
-                  {plan.annualLabel}
-                </p>
-              ) : null}
               <p className="pricing-desc">{plan.desc}</p>
               <ul className="pricing-feats">
                 {plan.feats.map((f) => (
@@ -381,7 +373,7 @@ export default function Pricing() {
             lineHeight: 1.55,
           }}
         >
-          Founding prices available for first 10 customers · 7 spots remaining
+          7 spots remaining at founding price
         </p>
         <p className="pricing-note">
           14-day free trial · No credit card required · Starter $1,800/mo (founding) · Pro $3,500/mo (founding)

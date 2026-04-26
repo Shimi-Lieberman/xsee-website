@@ -26,6 +26,8 @@ export async function ensureMarketingSchema(): Promise<void> {
   `;
 
   await sql`ALTER TABLE free_scan_requests ADD COLUMN IF NOT EXISTS remediation_role_arn TEXT`;
+  await sql`ALTER TABLE free_scan_requests ALTER COLUMN aws_role_arn DROP NOT NULL`;
+  await sql`ALTER TABLE free_scan_requests ALTER COLUMN aws_region DROP NOT NULL`;
 
   await sql`
     CREATE TABLE IF NOT EXISTS emergency_requests (
