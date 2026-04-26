@@ -5,120 +5,200 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Changelog — XSEE",
-  description: "What's new in XSEE. Platform updates, new engines, and improvements.",
+  description: "What shipped in XSEE. Public shiplog of platform releases.",
 };
 
-type Release = {
-  date: string;
-  version: string;
-  tag: "New Feature" | "Improvement" | "Fix";
-  title: string;
-  description?: string;
-  details?: string[];
-};
+const BADGE_STYLE = {
+  display: "inline-block",
+  padding: "2px 8px",
+  borderRadius: 4,
+  fontSize: 12,
+  fontWeight: 600,
+  fontFamily: "var(--font-mono)",
+  letterSpacing: "0.02em",
+  background: "rgba(234, 179, 8, 0.10)",
+  color: "#fbbf24",
+  border: "1px solid rgba(234, 179, 8, 0.2)",
+} as const;
+
+type Feature = { title: string; body: string };
+
+type Release = { date: string; version: string; features: Feature[] };
 
 const releases: Release[] = [
   {
-    date: "April 2026",
-    version: "v1.5.0",
-    tag: "New Feature" as const,
-    title: "Autonomous Agents — now live",
-    details: [
-      "Investigation Agent: auto-investigates every new critical path with Claude AI. Produces verdict, confidence score, fix plan, compliance impact, board summary.",
-      "Board Report Agent: weekly PDF emailed to CISO every Monday automatically. No action required.",
-      "Threat Hunt Agent: nightly CVE matching via NVD + CISA KEV against your asset inventory. Finds threats before you hear about them elsewhere.",
-      "Remediation Agent: applies approved fixes via AWS SDK. Only activates after explicit human approval. Auto-reverts if L2 re-validation fails.",
-      "Configurable schedules: every agent schedule is configurable per org in Settings → Agent Schedules.",
-      "War Room: full-screen real-time investigation command center. Opens automatically on new critical path.",
-      "Autonomous Runs: complete audit trail of every AI action and human decision. Replaces manual Playbooks.",
-      "Accept Risk: suppress false positives with required reason and 90-day auto-expiry.",
-      "Overview redesigned as Command Center: live loop status, approval queue, activity feed.",
-      "Evidence Package PDF: premium board-ready redesign with dark cover and pink accents.",
+    date: "April 26, 2026",
+    version: "v0.9",
+    features: [
+      {
+        title: "Explorer Graph — 5 tabs with real data",
+        body: "All 5 Explorer tabs (Attack Paths, Network, CI/CD, NHI, IAM) now show real AWS data from your environment. Every node is a real resource with its actual name, ARN, and risk level.",
+      },
+      {
+        title: "L2 Evidence Layer",
+        body: "Every edge on the attack graph shows whether XSEE called the AWS API and what it returned. Click any edge to see the AWS requestId — cryptographic proof the hop is real. No other tool shows this.",
+      },
+      {
+        title: "Choke Points + Blast Radius",
+        body: "Right-click any node to see its blast radius — every resource an attacker could reach from that point. Nodes appearing in 3+ attack paths are highlighted as choke points: fixing one closes multiple paths simultaneously.",
+      },
+      {
+        title: "Cinematic Breach Simulation",
+        body: "Watch an attacker move through your real infrastructure. Pink cursor traverses each hop. Detection gaps show as silent invisible steps. Crown jewel reached: financial counter climbs to your actual exposure. BREACH SUCCESSFUL.",
+      },
+      {
+        title: "Breach Prevention Certificate",
+        body: "When a path is validated, fixed, and re-validated — XSEE issues a signed certificate. Board-ready. Timestamped. Verifiable by third parties via SHA-256 hash.",
+      },
     ],
   },
   {
-    date: "March 2026",
-    version: "v1.4.0",
-    tag: "New Feature" as const,
-    title: "Evidence Package PDF + Breach Prevention Certificate",
-    details: [
-      "Evidence Package PDF: 6-section cryptographic proof document per finding. Downloadable from any path.",
-      "Breach Prevention Certificate: board-ready PDF issued automatically when path is verified closed.",
-      "Approval Queue: every proposed fix requires human approval before execution.",
-      "XseeCyber 2.0: AI attacker simulation added alongside human attacker models.",
-      "Detection Coverage Score: per-path measurement of what your tools actually catch.",
+    date: "April 19, 2026",
+    version: "v0.8",
+    features: [
+      {
+        title: "Ransomware Readiness Score",
+        body: "Every environment gets a 0–100 Ransomware Readiness Score. CRITICAL means an attacker can delete your backups with no recovery path. The score is connected to your real attack paths — not a questionnaire.",
+      },
+      {
+        title: "Optimal Cut-Point",
+        body: "XSEE identifies the single fix that closes the most validated attack paths simultaneously. Shown as ⚡ Priority Fix badge on the path and in Stage 5.",
+      },
+      {
+        title: "Autonomous Loop",
+        body: "One scan trigger runs all 7 stages automatically: Discover → Validate → Simulate → Prioritize → Fix → Verify → Certify. One human decision. Everything else: XSEE.",
+      },
     ],
   },
   {
-    date: "February 2026",
-    version: "v1.3",
-    tag: "New Feature" as const,
-    title: "NHI Full Inventory + L2 Validation",
-    description:
-      "Complete Non-Human Identity mapping — Lambda roles, CI/CD tokens, AI agent identities. Dormant NHI detection. L2-validated attack paths through every NHI.",
+    date: "April 12, 2026",
+    version: "v0.7",
+    features: [
+      {
+        title: "L2 Validation — Live AWS API per hop",
+        body: "XSEE calls iam:SimulatePrincipalPolicy for every hop in every attack path. Result: ALLOW or DENY with AWS requestId. Theoretical paths are separated from proven exploitable paths.",
+      },
+      {
+        title: "XseeCyber — Breach Simulation Engine",
+        body: "Active attacker simulation on your real AWS graph. MITRE ATT&CK cloud matrix with 45 techniques across 10 tactics. Detection gap scoring per technique. AI-generated attack variants.",
+      },
+      {
+        title: "Claude AI Engine",
+        body: "5 capabilities: explain path, explain remediation, investigate story, executive risk summary, ask anything. Streaming responses. Every investigation generates a board-ready narrative.",
+      },
+    ],
   },
-  {
-    date: "February 2026",
-    version: "v1.2",
-    tag: "Improvement" as const,
-    title: "CI/CD Pipeline Security + OIDC Misconfiguration Detection",
-    description:
-      "Attack paths through CI/CD pipelines. GitHub Actions OIDC misconfiguration detection. Privilege escalation via pipeline roles validated by L2.",
-  },
-  {
-    date: "January 2026",
-    version: "v1.1",
-    tag: "New Feature" as const,
-    title: "Financial Exposure Per Path",
-    description:
-      "Every attack path now shows validated financial exposure using IBM Cost of a Data Breach methodology ($164/record). Crown jewel assets tagged with blast radius.",
-  },
-] as const;
-
-const tagClass: Record<string, string> = {
-  "New Feature": "bg-sky-500/20 text-sky-300 border-sky-500/30",
-  Improvement: "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
-  Fix: "bg-amber-500/20 text-amber-300 border-amber-500/30",
-};
+];
 
 export default function ChangelogPage() {
   return (
     <>
       <ScrollProgressBar />
       <Nav />
-      <main className="min-h-screen pb-8 w-full" style={{ paddingTop: 88 }}>
-        <section className="page-container-sm">
-          <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-white">Changelog</h1>
-          <p className="mb-14 text-slate-400">Platform updates, new engines, and improvements.</p>
+      <main
+        style={{
+          background: "#030810",
+          minHeight: "100vh",
+          paddingTop: 88,
+          paddingBottom: 48,
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 800,
+            margin: "0 auto",
+            padding: "80px 24px",
+            width: "100%",
+            boxSizing: "border-box",
+          }}
+        >
+          <h1
+            style={{
+              color: "#fff",
+              fontSize: "clamp(28px, 4vw, 36px)",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              margin: "0 0 12px",
+              fontFamily: "var(--font-sans)",
+            }}
+          >
+            Changelog
+          </h1>
+          <p
+            style={{
+              color: "rgba(148, 163, 184, 0.9)",
+              fontSize: 14,
+              lineHeight: 1.6,
+              margin: "0 0 48px",
+              maxWidth: 560,
+            }}
+          >
+            What shipped. New capabilities and improvements to the XSEE platform.
+          </p>
 
-          <ol className="relative border-l border-white/10 pl-8">
-            {releases.map((r) => (
-              <li key={r.version} className="mb-14 last:mb-0">
-                <span className="absolute -left-1.5 mt-2 h-3 w-3 rounded-full bg-[#ff2d78]" />
-                <div className="mb-2 flex flex-wrap items-center gap-3">
-                  <span className="font-mono text-sm font-bold text-white">{r.version}</span>
-                  <span
-                    className={`rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${tagClass[r.tag]}`}
+          {releases.map((release, releaseIndex) => (
+            <article
+              key={release.version}
+              style={{
+                borderBottom:
+                  releaseIndex < releases.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                paddingBottom: releaseIndex < releases.length - 1 ? 48 : 0,
+                marginBottom: releaseIndex < releases.length - 1 ? 48 : 0,
+              }}
+            >
+              <header
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  gap: "12px 16px",
+                  marginBottom: 28,
+                }}
+              >
+                <span
+                  style={{
+                    color: "rgba(255,255,255,0.88)",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    lineHeight: 1.6,
+                    fontFamily: "var(--font-sans)",
+                  }}
+                >
+                  {release.date}
+                </span>
+                <span style={BADGE_STYLE}>{release.version}</span>
+              </header>
+
+              {release.features.map((feature) => (
+                <div key={feature.title} style={{ marginBottom: 26 }}>
+                  <h2
+                    style={{
+                      color: "#fff",
+                      fontSize: 15,
+                      fontWeight: 600,
+                      lineHeight: 1.5,
+                      margin: "0 0 8px",
+                      fontFamily: "var(--font-sans)",
+                    }}
                   >
-                    {r.tag}
-                  </span>
-                  <span className="text-xs text-slate-500">{r.date}</span>
+                    {feature.title}
+                  </h2>
+                  <p
+                    style={{
+                      color: "#94a3b8",
+                      fontSize: 13,
+                      lineHeight: 1.6,
+                      margin: 0,
+                      fontFamily: "var(--font-sans)",
+                    }}
+                  >
+                    {feature.body}
+                  </p>
                 </div>
-                <h2 className="mb-2 text-xl font-bold text-white">{r.title}</h2>
-                {r.description ? (
-                  <p className="text-slate-400 leading-relaxed">{r.description}</p>
-                ) : null}
-                {r.details ? (
-                  <ul className="list-disc pl-5 text-slate-400 leading-relaxed space-y-1.5">
-                    {r.details.map((detail) => (
-                      <li key={detail}>{detail}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </li>
-            ))}
-          </ol>
-        </section>
+              ))}
+            </article>
+          ))}
+        </div>
       </main>
       <Footer />
     </>
