@@ -29,6 +29,15 @@ const FOUNDING_PILL_STYLE: CSSProperties = {
   border: "1px solid rgba(233,30,140,0.3)",
 };
 
+const PRICE_BLOCK: CSSProperties = {
+  background: "#0b1220",
+  borderRadius: 12,
+  padding: "20px 18px",
+  marginTop: 14,
+  marginBottom: 12,
+  border: "1px solid rgba(255,255,255,0.08)",
+};
+
 type PlanCheckout = "trial" | "starter" | "pro";
 
 const PLANS: {
@@ -87,8 +96,8 @@ const PLANS: {
     checkout: "starter",
   },
   {
-    tier: "// Growth",
-    title: "Growth",
+    tier: "// Pro",
+    title: "Pro",
     desc: "We detect changes to your attack surface in 60 seconds. You know about new paths before attackers do.",
     price: "$3,500",
     per: "/ month",
@@ -231,25 +240,50 @@ export default function Pricing() {
               <div className="pricing-tier font-mono">{plan.tier}</div>
               <h3>{plan.title}</h3>
               {plan.founding && <span style={FOUNDING_PILL_STYLE}>Founding Price</span>}
-              <p className="pricing-desc">{plan.desc}</p>
-              <div className="pricing-amount">
-                <span
-                  className="pricing-num font-mono"
-                  style={
-                    plan.price === "Contact us"
-                      ? { fontSize: "28px", lineHeight: "1.2" }
-                      : undefined
-                  }
+
+              <div style={PRICE_BLOCK}>
+                <div
+                  style={{
+                    fontSize: 11,
+                    fontWeight: 600,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.45)",
+                    marginBottom: 8,
+                  }}
                 >
-                  {plan.price}
-                </span>
-                {plan.per ? <span className="pricing-per">{plan.per}</span> : null}
+                  {plan.checkout === "trial" ? "Free trial" : plan.title}
+                </div>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
+                  <span
+                    style={{
+                      fontSize: 44,
+                      fontWeight: 800,
+                      color: "#fff",
+                      fontFamily: "var(--font-mono)",
+                      letterSpacing: "-0.03em",
+                      lineHeight: 1,
+                    }}
+                  >
+                    {plan.price}
+                  </span>
+                  {plan.checkout !== "trial" ? (
+                    <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.45)" }}>/month</span>
+                  ) : (
+                    <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.45)" }}>· 14 days</span>
+                  )}
+                </div>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginTop: 16, marginBottom: 0, lineHeight: 1.5 }}>
+                  14-day free trial • No credit card required
+                </p>
               </div>
+
               {plan.annualLabel ? (
-                <p style={{ fontSize: 14, color: "#64748b", marginTop: 8, marginBottom: 0, lineHeight: 1.5 }}>
+                <p style={{ fontSize: 14, color: "#64748b", marginTop: 0, marginBottom: 8, lineHeight: 1.5 }}>
                   {plan.annualLabel}
                 </p>
               ) : null}
+              <p className="pricing-desc">{plan.desc}</p>
               <ul className="pricing-feats">
                 {plan.feats.map((f) => (
                   <li key={f}>{f}</li>
@@ -350,7 +384,7 @@ export default function Pricing() {
           Founding prices available for first 10 customers · 7 spots remaining
         </p>
         <p className="pricing-note">
-          14-day free trial · No credit card required · Starter $1,800/mo (founding) · Growth $3,500/mo (founding)
+          14-day free trial · No credit card required · Starter $1,800/mo (founding) · Pro $3,500/mo (founding)
         </p>
       </div>
     </section>

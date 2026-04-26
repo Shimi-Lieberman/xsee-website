@@ -179,7 +179,7 @@ export default function SecurityPage() {
       <ScrollProgressBar />
       <Nav />
       <div style={{ background: "#050d1a", minHeight: "100vh", paddingTop: "80px" }}>
-        <div className="page-container-sm max-w-3xl">
+        <div className="w-full max-w-[720px] mx-auto px-6">
           <header className="mb-14">
             <h1 className="text-4xl font-black tracking-tight text-white mb-4">Security &amp; Trust</h1>
             <p className="text-lg leading-relaxed text-white/45">
@@ -272,10 +272,26 @@ export default function SecurityPage() {
             <h2 id="sec-disclosure" className={H2}>
               Responsible Disclosure
             </h2>
-            <p className="mb-6 text-sm leading-relaxed text-white/45">
-              If you discover a security vulnerability in XSEE, we ask that you report it to us responsibly. We commit to
-              acknowledging all reports within 48 hours and resolving critical issues within 7 days.
+            <p className="mb-4 text-sm leading-relaxed text-white/45">
+              Report vulnerabilities to{" "}
+              <a href="mailto:security@xsee.io" className="font-semibold text-[#FF1B8D] hover:underline">
+                security@xsee.io
+              </a>
+              . We provide <strong className="text-white/60">48-hour acknowledgement</strong> on all reports and target{" "}
+              <strong className="text-white/60">7 days</strong> to remediate or publish a mitigation plan for critical
+              issues.
             </p>
+            <ul className="mb-6 list-disc space-y-2 pl-5 text-sm leading-relaxed text-white/45">
+              <li>We will not pursue legal action against good-faith researchers who follow these guidelines.</li>
+              <li>Public disclosure should wait at least 90 days from our acknowledgement unless we agree otherwise.</li>
+              <li>
+                PGP key: available on request at{" "}
+                <a href="mailto:security@xsee.io" className="text-[#FF1B8D] hover:underline">
+                  security@xsee.io
+                </a>
+                .
+              </li>
+            </ul>
             <div
               className="mb-5 flex flex-col gap-4 rounded-xl p-5 sm:flex-row sm:items-center sm:justify-between"
               style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
@@ -288,9 +304,6 @@ export default function SecurityPage() {
               </div>
               <CopyEmailButton email="security@xsee.io" />
             </div>
-            <p className="text-xs leading-relaxed text-white/32">
-              XSEE will not pursue legal action against researchers who follow responsible disclosure guidelines.
-            </p>
           </section>
 
           {/* Section 5 — Documents */}

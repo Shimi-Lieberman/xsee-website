@@ -65,7 +65,7 @@ export default function Footer() {
             href="/security"
             className="mb-4 inline-flex text-[13px] font-semibold text-white/55 transition-colors hover:text-[#FF1B8D]"
           >
-            Security &amp; Trust →
+            Security →
           </Link>
           <div className="mb-5 flex flex-wrap gap-2">
             {[
@@ -143,7 +143,7 @@ export default function Footer() {
           </div>
           {[
             { label: "About", href: "#" },
-            { label: "Security & Trust", href: "/security" },
+            { label: "Security", href: "/security" },
             { label: "Blog", href: "#" },
             { label: "Careers", href: "#" },
             { label: "Contact", href: "/#contact" },
@@ -177,8 +177,9 @@ export default function Footer() {
             { label: "Documentation", href: "#" },
             { label: "API Reference", href: "#" },
             { label: "Status", href: "#" },
-            { label: "Terms", href: "/terms" },
-            { label: "Privacy", href: "/privacy" },
+            { label: "Security", href: "/security" },
+            { label: "Terms of Service", href: "/terms" },
+            { label: "Privacy Policy", href: "/privacy" },
             { label: "Refunds", href: "/refunds" },
           ].map((link) => (
             <Link
@@ -201,9 +202,9 @@ export default function Footer() {
         </div>
         <div className="flex items-center gap-5 flex-wrap">
           {[
-            { label: "Terms", href: "/terms" },
-            { label: "Privacy", href: "/privacy" },
-            { label: "Security & Trust", href: "/security" },
+            { label: "Privacy Policy", href: "/privacy" },
+            { label: "Terms of Service", href: "/terms" },
+            { label: "Security", href: "/security" },
             { label: "Refunds", href: "/refunds" },
           ].map((link) => (
             <Link
