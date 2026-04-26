@@ -70,7 +70,7 @@ const PLANS: {
     desc: "For the cost of one day of incident response, XSEE watches your crown jewels 24/7 and proves every risk is real.",
     price: "$1,800",
     per: "/ month",
-    annualLabel: "Annual: $21,600 / year (save 0%)",
+    annualLabel: "Annual: $21,600 / year",
     feats: [
       "1 AWS account",
       "L1 + L2 + L3 validation",
@@ -165,6 +165,24 @@ export default function Pricing() {
   return (
     <section className="section sec-light animate-on-scroll" style={{ background: "transparent" }} id="pricing">
       <div className="max-w-6xl mx-auto w-full px-6 pricing-inner">
+        <style>{`
+          .pricing-page-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 900px;
+            margin: 40px auto 0;
+            padding: 20px 16px;
+            background: rgba(15, 23, 42, 0.04);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+          }
+          @media (max-width: 640px) {
+            .pricing-page-stats {
+              grid-template-columns: 1fr 1fr;
+            }
+          }
+        `}</style>
         <div className="section-head reveal">
           <span className="section-eyebrow section-eyebrow-dark">Pricing</span>
           <h2 className="display-lg" style={{ color: "#0f172a" }}>
@@ -288,6 +306,25 @@ export default function Pricing() {
             </div>
           ))}
         </div>
+        <div className="pricing-page-stats reveal">
+          {(
+            [
+              { val: "1,000+", sub: "attack patterns", color: "#e91e8c" },
+              { val: "7", sub: "engines", color: "#f97316" },
+              { val: "92%", sub: "avg exploit confidence", color: "#4ade80" },
+              { val: "$3.2M", sub: "avg financial exposure proven on first scan", color: "#fbbf24" },
+            ] as const
+          ).map((s) => (
+            <div key={s.sub} style={{ textAlign: "center", padding: "4px 8px" }}>
+              <div className="font-mono" style={{ fontSize: 22, fontWeight: 800, color: s.color, lineHeight: 1.2 }}>
+                {s.val}
+              </div>
+              <div style={{ fontSize: 11, color: "#64748b", marginTop: 6, lineHeight: 1.35 }}>
+                {s.sub}
+              </div>
+            </div>
+          ))}
+        </div>
         <p
           style={{
             textAlign: "center",
@@ -310,11 +347,10 @@ export default function Pricing() {
             lineHeight: 1.55,
           }}
         >
-          Founding prices available for first 10 customers. Price increases to $2,500/$5,000 after that.
+          Founding prices available for first 10 customers · 7 spots remaining
         </p>
         <p className="pricing-note">
-          14-day free trial · No credit card required · Founding Starter $1,800/mo · Founding Growth $3,500/mo · Annual
-          options shown on cards
+          14-day free trial · No credit card required · Starter $1,800/mo (founding) · Growth $3,500/mo (founding)
         </p>
       </div>
     </section>
