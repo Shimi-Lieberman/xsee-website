@@ -46,3 +46,12 @@ next-env.d.ts
 
 # Metronic vendor bundle (local reference only; do not commit)
 /metronic-v9.4.7/
+
+# secrets and local duplicates
+token.txt
+*.token
+*.secret
+* 2.tsx
+* 2.css
+* 2.js
+* 2.json
