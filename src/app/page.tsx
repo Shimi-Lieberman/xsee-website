@@ -1,28 +1,26 @@
 import type { Metadata } from "next";
+import "./homepage.css";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { ScrollTracker } from "@/components/ScrollTracker";
 import GlobalScripts from "@/components/GlobalScripts";
-import Nav from "@/components/Nav";
-import Hero from "@/components/Hero";
-import HomeProofSections from "@/components/HomeProofSections";
-import { BeforeAfter } from "@/components/BeforeAfter";
-import HeroSocialProofStats from "@/components/HeroSocialProofStats";
-import { NumbersMoment } from "@/components/NumbersMoment";
-import AttackGraphPreview from "@/components/AttackGraphPreview";
-import DetectionCoverageChart from "@/components/DetectionCoverageChart";
-import TrustStrip from "@/components/TrustStrip";
-import ProblemSolution from "@/components/ProblemSolution";
+import AnnouncementBar from "@/components/homepage/AnnouncementBar";
+import HomeNav from "@/components/homepage/HomeNav";
+import HomeHero from "@/components/homepage/HomeHero";
+import TrustedByStrip from "@/components/homepage/TrustedByStrip";
+import ProblemSection from "@/components/homepage/ProblemSection";
+import ProofSection from "@/components/homepage/ProofSection";
+import HomepageStatsBand from "@/components/homepage/StatsBand";
+import ZeroWriteSection from "@/components/homepage/ZeroWriteSection";
 import AiAttackerSection from "@/components/AiAttackerSection";
-import StatsBand from "@/components/StatsBand";
+import DetectionCoverageChart from "@/components/DetectionCoverageChart";
 import TerminalSection from "@/components/TerminalSection";
-import HowItWorks from "@/components/HowItWorks";
-import CompleteLoopSection from "@/components/CompleteLoopSection";
+import LoopSection from "@/components/homepage/LoopSection";
+import CertificateSection from "@/components/homepage/CertificateSection";
+import ComparisonSection from "@/components/homepage/ComparisonSection";
 import EnginesGrid from "@/components/EnginesGrid";
-import ComparisonTable from "@/components/ComparisonTable";
 import Testimonials from "@/components/Testimonials";
-import TrustModel from "@/components/TrustModel";
-import Pricing from "@/components/Pricing";
 import SecurityComplianceTrustSection from "@/components/SecurityComplianceTrustSection";
+import Pricing from "@/components/Pricing";
 import ComplianceBar from "@/components/ComplianceBar";
 import CTABanner from "@/components/CTABanner";
 import ContactForm from "@/components/ContactForm";
@@ -34,9 +32,8 @@ export const metadata: Metadata = {
     "Cloud security tools generate thousands of findings. XSEE proves which ones are real attack paths — with live AWS API evidence per hop, attack simulation, and a Breach Prevention Certificate when it's fixed.",
 };
 
-/** Hero-adjacent subheadline under “Live Intelligence” (replaces legacy read-only IAM one-liner). */
-const HOME_LIVE_INTEL_SUBHEADLINE =
-  "Starts read-only. Optionally add one-click remediation — you approve every fix, XSEE applies and verifies automatically.";
+const TERMINAL_SUBHEADLINE =
+  "Starts read-only. Optionally add one-click remediation — you approve every fix; your Lambda applies it (in your AWS account), and XSEE re-verifies by re-running the original attack simulation. Nothing changes without you.";
 
 export default function Home() {
   return (
@@ -44,90 +41,52 @@ export default function Home() {
       <ScrollTracker />
       <ScrollProgressBar />
       <GlobalScripts />
-      <Nav />
-      <main className="w-full max-w-[100vw] mx-auto">
-        <Hero />
-        <HomeProofSections />
-        <SecurityComplianceTrustSection />
-        <div
-          className="home-stats-strip"
-          style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}
-        >
-          <div className="hero-stats strip-inner">
-            <HeroSocialProofStats />
+      <div className="hp-page min-h-screen">
+        <AnnouncementBar />
+        <HomeNav />
+        <main className="w-full max-w-[100vw] mx-auto">
+          <HomeHero />
+          <TrustedByStrip />
+          <ProblemSection />
+          <ProofSection />
+          <HomepageStatsBand />
+          <ZeroWriteSection />
+          <div className="reveal" style={{ background: "var(--dark)" }}>
+            <AiAttackerSection />
           </div>
-        </div>
-        <NumbersMoment />
-        <div className="reveal" style={{ background: "var(--dark)" }}>
-          <BeforeAfter />
-        </div>
-        <div className="reveal" style={{ background: "white", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
-          <TrustStrip />
-        </div>
-        <div className="reveal">
-          <AttackGraphPreview />
-        </div>
-        <div className="reveal">
-          <DetectionCoverageChart />
-        </div>
-        <div className="sec-transition sec-dark-to-light" />
-        <div className="reveal">
-          <ProblemSolution />
-        </div>
-        <div className="sec-transition sec-light-to-dark" />
-        <div className="reveal">
-          <AiAttackerSection />
-        </div>
-        <div className="sec-transition sec-dark-to-light" />
-        <StatsBand />
-        <div className="reveal" style={{ background: "var(--dark)" }}>
-          <TerminalSection subheadline={HOME_LIVE_INTEL_SUBHEADLINE} />
-        </div>
-        <div
-          className="sec-transition sec-tint-to-dark"
-          style={{ background: "linear-gradient(to bottom,#040B18,#040B18)" }}
-        />
-        <div
-          className="reveal dot-texture"
-          style={{ background: "#f4f4f2", position: "relative", overflow: "hidden" }}
-        >
-          <HowItWorks />
-        </div>
-        <div className="reveal" style={{ background: "var(--dark)" }}>
-          <CompleteLoopSection />
-        </div>
-        <div className="sec-transition sec-dark-to-light" />
-        <div className="reveal" style={{ background: "#030810" }}>
-          <EnginesGrid />
-        </div>
-        <div className="sec-transition sec-light-to-dark" />
-        <div style={{ background: "var(--dark)" }}>
-          <ComparisonTable />
-        </div>
-        <div className="sec-transition sec-dark-to-light" />
-        <div className="reveal" style={{ background: "white" }}>
-          <Testimonials />
-        </div>
-        <div className="sec-transition sec-light-to-tint" />
-        <div className="reveal" style={{ background: "white" }}>
-          <TrustModel />
-        </div>
-        <div
-          className="reveal dot-texture"
-          style={{ background: "#f4f4f2", position: "relative", overflow: "hidden" }}
-        >
-          <Pricing />
-        </div>
-        <div className="reveal" style={{ background: "#0c1120" }}>
-          <ComplianceBar />
-        </div>
-        <div style={{ background: "var(--dark)" }}>
+          <div className="reveal">
+            <DetectionCoverageChart />
+          </div>
+          <div className="reveal" style={{ background: "var(--dark)" }}>
+            <TerminalSection subheadline={TERMINAL_SUBHEADLINE} />
+          </div>
+          <LoopSection />
+          <CertificateSection />
+          <ComparisonSection />
+          <div className="reveal" style={{ background: "#030810" }}>
+            <EnginesGrid />
+          </div>
+          <div className="reveal" style={{ background: "white" }}>
+            <Testimonials />
+          </div>
+          <div className="reveal" style={{ background: "white" }}>
+            <SecurityComplianceTrustSection />
+          </div>
+          <div
+            className="reveal dot-texture"
+            style={{ background: "#f4f4f2", position: "relative", overflow: "hidden" }}
+          >
+            <Pricing />
+          </div>
+          <div className="reveal" style={{ background: "#0c1120" }}>
+            <ComplianceBar />
+          </div>
           <CTABanner />
-        </div>
-        <div className="sec-transition sec-dark-to-light" />
-        <ContactForm />
-        <Footer />
-      </main>
+          <div className="sec-transition sec-dark-to-light" />
+          <ContactForm />
+          <Footer />
+        </main>
+      </div>
     </>
   );
 }
