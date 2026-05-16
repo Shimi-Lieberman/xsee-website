@@ -29,7 +29,7 @@ export default function HeroSocialProofStats() {
         <div className="sp-num font-mono">
           $3.2<span>M</span>
         </div>
-        <div className="sp-lbl">Avg financial exposure proven on first scan</div>
+        <div className="sp-lbl">Avg business impact proven on first scan</div>
       </div>
     </div>
   );

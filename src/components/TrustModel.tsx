@@ -151,7 +151,7 @@ export default function TrustModel({ variant = "full" }: TrustModelProps) {
                 >
                   <Wrench size={22} strokeWidth={1.75} aria-hidden />
                 </div>
-                <h3 className="text-lg font-bold text-white tracking-tight">Role 2 — Remediation Agent</h3>
+                <h3 className="text-lg font-bold text-white tracking-tight">Your remediation agent</h3>
               </div>
               <span
                 className="font-mono text-[10px] font-semibold uppercase tracking-wider shrink-0"
@@ -179,9 +179,9 @@ export default function TrustModel({ variant = "full" }: TrustModelProps) {
                 color: "rgba(203,213,225,0.88)",
               }}
             >
-              <div>✓ ec2:RevokeSecurityGroupIngress</div>
-              <div>✓ iam:DetachRolePolicy</div>
-              <div>✓ s3:PutBucketPublicAccessBlock</div>
+              <div>✓ ec2:RevokeSecurityGroupIngress — your-lambda only</div>
+              <div>✓ iam:DetachRolePolicy — your-lambda only</div>
+              <div>✓ s3:PutBucketPublicAccessBlock — your-lambda only</div>
               <div style={{ color: "rgba(239,68,68,0.85)" }}>
                 ✗ DeleteRole ✗ CreateUser ✗ DeleteBucket
               </div>

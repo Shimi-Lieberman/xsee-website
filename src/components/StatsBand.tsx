@@ -29,7 +29,7 @@ const STATS = [
   },
   {
     key: "exposure",
-    label: "Avg financial exposure on first scan",
+    label: "Avg business impact on first scan",
     color: "#EAB308",
     display: "$3.2M",
   },

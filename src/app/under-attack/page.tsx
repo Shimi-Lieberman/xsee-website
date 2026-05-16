@@ -100,7 +100,7 @@ export default function UnderAttackPage() {
                   time: "25–30 min",
                   title: "Prioritized containment report delivered",
                   detail:
-                    "Active paths, blast radius, immediate containment actions — ranked by financial exposure.",
+                    "Active paths, blast radius, immediate containment actions — ranked by estimated business impact.",
                   color: "#22c55e",
                 },
               ].map((step, i) => (

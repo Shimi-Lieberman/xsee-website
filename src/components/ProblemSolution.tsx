@@ -7,14 +7,14 @@ export default function ProblemSolution() {
           <h2 className="display-lg">
             Your scanner is lying to you.
             <br />
-            Not maliciously — it just can't tell{" "}
+            Not maliciously — it just can&apos;t tell{" "}
             <span style={{ color: "var(--blue-light)" }}>the difference between noise and a breach.</span>
           </h2>
           <p>
             Your scanner flagged 4,000 issues last month. Your team triaged for three weeks. You fixed 200 findings. None of them were the three paths that actually reached your production database.
           </p>
           <p>
-            The attacker didn't care about your CVSS scores. They followed the graph. And now AI-powered attackers are doing it 10,000 times faster than any human ever could. Your current tools were not built for this.
+            The attacker didn&apos;t care about your CVSS scores. They followed the graph. And now AI-powered attackers are doing it 10,000 times faster than any human ever could. Your current tools were not built for this.
           </p>
           <div className="section-rule" />
         </div>
@@ -91,7 +91,7 @@ export default function ProblemSolution() {
               </li>
               <li className="ps-item">
                 <span className="ps-icon">✓</span>
-                <span className="ps-item-text">Financial exposure per path ($3.2M average)</span>
+                <span className="ps-item-text">Business impact per path ($3.2M average)</span>
               </li>
               <li className="ps-item">
                 <span className="ps-icon">✓</span>

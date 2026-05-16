@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Link from "next/link";
 import { Analytics } from "@/lib/analytics";
 
 const CARDS = [
@@ -137,7 +136,7 @@ export default function ContactForm() {
           <div className="reveal-right">
             <div className="form-box">
               <h3 className="form-title">Request Your Free Risk Assessment</h3>
-              <p className="form-sub">We'll reach out within one business day to schedule the scan.</p>
+              <p className="form-sub">We&apos;ll reach out within one business day to schedule the scan.</p>
               <form
                 onSubmit={handleSubmit}
                 className="form-fields"

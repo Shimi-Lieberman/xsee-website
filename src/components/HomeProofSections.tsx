@@ -27,7 +27,7 @@ const LOOP_STEPS = [
     title: "Prioritize",
     Icon: ArrowUp,
     description:
-      "Financial exposure, crown jewel proximity, confidence score — one risk ranking.",
+      "Business impact, crown jewel proximity, confidence score — one risk ranking.",
   },
   {
     number: "⑤",
@@ -109,7 +109,7 @@ export default function HomeProofSections() {
             <span className="section-eyebrow">Breach Prevention Certificate</span>
             <h2 className="display-lg">The first platform that certifies a breach path is closed.</h2>
             <p>
-              When XSEE fixes a path, we re-run L2 validation, confirm closure, and issue a Breach
+              After you approve a fix, XSEE re-runs L2 validation, confirms closure, and issues a Breach
               Prevention Certificate. Timestamped. Signed. Board-ready.
             </p>
             <Link href="/demo" className="home-certificate-cta">

@@ -15,11 +15,7 @@ const REMEDIATION_POLICY = `{
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": [
-        "ec2:RevokeSecurityGroupIngress",
-        "iam:DetachRolePolicy",
-        "s3:PutBucketPublicAccessBlock"
-      ],
+      "Action": [ "ec2:RevokeSecurityGroupIngress", "iam:DetachRolePolicy", "s3:PutBucketPublicAccessBlock" ], /* your-lambda */
       "Resource": "*"
     }
   ]

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run check:forbidden && next build",
+    "check:forbidden": "bash scripts/check-forbidden-patterns.sh",
     "start": "next start",
     "lint": "eslint"
   },

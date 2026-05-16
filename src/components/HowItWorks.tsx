@@ -19,7 +19,7 @@ const STEPS = [
   {
     n: "03",
     title: "Certify",
-    desc: "One recommended fix. You approve. XSEE applies it and re-validates automatically. If the path no longer validates — it's closed. A before/after evidence package is generated, timestamped, and signed. Board-ready. SOC2-ready. The loop is closed. (1 human decision · everything else is XSEE)",
+    desc: "One recommended fix. You approve. After approval, the change runs in your account and XSEE re-validates automatically. If the path no longer validates — it's closed. A before/after evidence package is generated, timestamped, and signed. Board-ready. SOC2-ready. The loop is closed. (1 human decision · everything else is XSEE)",
     Icon: Award,
   },
 ] as const;

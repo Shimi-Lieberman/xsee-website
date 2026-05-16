@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "metronic-v9.4.7/**",
+    "scripts/**",
   ]),
 ]);
 

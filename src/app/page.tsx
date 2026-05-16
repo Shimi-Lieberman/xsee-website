@@ -24,6 +24,7 @@ import Pricing from "@/components/Pricing";
 import ComplianceBar from "@/components/ComplianceBar";
 import CTABanner from "@/components/CTABanner";
 import ContactForm from "@/components/ContactForm";
+import BuiltByStrip from "@/components/homepage/BuiltByStrip";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -81,6 +82,7 @@ export default function Home() {
           <div className="reveal" style={{ background: "#0c1120" }}>
             <ComplianceBar />
           </div>
+          <BuiltByStrip />
           <CTABanner />
           <div className="sec-transition sec-dark-to-light" />
           <ContactForm />

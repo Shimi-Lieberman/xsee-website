@@ -1,5 +1,7 @@
 "use client";
 
+import { Check, X } from "lucide-react";
+
 const BRAND = "var(--color-primary)";
 
 function BoundaryDiagram() {
@@ -117,64 +119,168 @@ function BoundaryDiagram() {
   );
 }
 
-const COMPARE = [
+function RoleCard({
+  tag,
+  status,
+  name,
+  sub,
+  summary,
+  allows,
+  denies,
+  accent,
+}: {
+  tag: string;
+  status: string;
+  name: string;
+  sub: string;
+  summary: string;
+  allows: string[];
+  denies: string[];
+  accent?: boolean;
+}) {
+  return (
+    <div
+      className={`flex h-full flex-col overflow-hidden rounded-xl border bg-[var(--hp-elevated)] ${
+        accent ? "border-[color:rgba(255,27,141,0.4)]" : "border-[var(--hp-line)]"
+      }`}
+    >
+      <div className="border-b border-[var(--hp-line)] px-6 py-5">
+        <div className="flex items-center justify-between gap-3">
+          <span
+            className={`hp-mono text-[11px] ${accent ? "text-[var(--hp-brand)]" : "text-[var(--hp-ink3)]"}`}
+            style={{ letterSpacing: "0.14em" }}
+          >
+            {tag}
+          </span>
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 hp-mono text-[10.5px] ${
+              accent
+                ? "border-[color:rgba(16,185,129,0.4)] bg-[rgba(16,185,129,0.08)] text-[var(--hp-ok)]"
+                : "border-[var(--hp-line2)] bg-[var(--hp-elevated)] text-[var(--hp-ink2)]"
+            }`}
+            style={{ letterSpacing: "0.1em" }}
+          >
+            <span className={accent ? "hp-green-dot" : "hp-amber-dot"} aria-hidden />
+            {status}
+          </span>
+        </div>
+        <h3 className="mt-3 text-[20px] font-semibold text-[var(--hp-ink)]" style={{ letterSpacing: "-0.02em" }}>
+          {name}
+        </h3>
+        <p className="mt-1 text-[12.5px] text-[var(--hp-ink3)]">{sub}</p>
+      </div>
+      <div className="flex flex-1 flex-col px-6 py-5">
+        <p className="text-[13.5px] leading-[1.6] text-[var(--hp-ink2)]">{summary}</p>
+        <div className="mt-6 space-y-2">
+          {allows.map((a) => (
+            <div key={a} className="flex items-center gap-2 hp-mono text-[11.5px] text-[var(--hp-ink2)]">
+              <Check className="h-3.5 w-3.5 shrink-0 text-[var(--hp-ok)]" aria-hidden />
+              <span className="min-w-0 truncate">{a}</span>
+            </div>
+          ))}
+          {denies.map((d) => (
+            <div key={d} className="flex items-center gap-2 hp-mono text-[11.5px] text-[var(--hp-ink3)]">
+              <X className="h-3.5 w-3.5 shrink-0 text-[var(--hp-ink4)]" aria-hidden />
+              <span className="min-w-0 truncate line-through decoration-[var(--hp-ink4)]">{d}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const VENDOR_COMPARE = [
   { name: "Wiz", value: "Write access required", muted: true },
   { name: "Cortex", value: "Write access required", muted: true },
   { name: "Orca", value: "Limited write", muted: true },
-  { name: "XSEE", value: "Zero write", muted: false },
+  { name: "XSEE", value: "Zero write · ever", muted: false },
 ] as const;
 
 export default function ZeroWriteSection() {
   return (
     <section id="trust" className="hp-section" aria-labelledby="zero-write-title">
       <div className="hp-container">
-        <p className="hp-eyebrow mb-6">Trust architecture</p>
+        <p className="hp-eyebrow mb-6">Zero-trust access model</p>
         <h2
           id="zero-write-title"
           className="font-semibold text-[var(--hp-ink)]"
-          style={{ fontSize: "clamp(48px, 6vw, 80px)", lineHeight: 1.02, letterSpacing: "-0.04em" }}
+          style={{ fontSize: "clamp(40px, 5.4vw, 72px)", lineHeight: 1.02, letterSpacing: "-0.04em" }}
         >
-          Zero write access. <span className="text-[var(--hp-ink3)]">Ever.</span>
+          Read-only by default.
+          <span className="text-[var(--hp-ink3)]"> Write access only when you approve it.</span>
         </h2>
-        <p className="mt-7 text-[18px] text-[var(--hp-ink2)] max-w-[720px] leading-[1.55]">
-          Most cloud security vendors need write access to your AWS account to fix anything. If any of them gets
-          compromised, an attacker inherits the keys to your cloud. XSEE is different by design.
+        <p className="mt-7 max-w-[760px] text-[17px] leading-[1.55] text-[var(--hp-ink2)]">
+          XSEE uses two separate IAM roles with completely different permission scopes. You create both. You control both.
+          You can revoke either in 10 seconds.
         </p>
-        <div className="mt-16 hp-card p-6 lg:p-10">
+
+        <div className="mt-14 hp-card p-6 lg:p-10">
           <BoundaryDiagram />
         </div>
-        <div className="mt-10 rounded-xl border border-[var(--hp-line)] bg-[var(--hp-overlay)] p-7 lg:p-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <div className="lg:col-span-4">
-              <p className="hp-eyebrow mb-3">Threat model</p>
-              <p className="text-[20px] lg:text-[22px] text-[var(--hp-ink)] font-medium leading-[1.3] max-w-[320px]" style={{ letterSpacing: "-0.01em" }}>
-                If XSEE is compromised, what can the attacker do?
-              </p>
-            </div>
-            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                "Read your read-only attack surface — the same data shown in our reports. Nothing more.",
-                "Push messages to your SQS queue. Your Lambda decides whether to apply them — gated by IAM policies you control.",
-                "Nothing else. The blast radius is bounded by AWS IAM, not by trust in XSEE.",
-              ].map((text, i) => (
-                <div key={text}>
-                  <div className="hp-mono text-[11px] text-[var(--hp-ink3)] mb-2">{String(i + 1).padStart(2, "0")}</div>
-                  <p className="text-[14px] text-[var(--hp-ink2)] leading-[1.55]">{text}</p>
-                </div>
-              ))}
-            </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          <RoleCard
+            tag="XSEE · SCANNER ROLE"
+            status="ALWAYS ACTIVE"
+            name="XSEE Scanner"
+            sub="Always read-only · always on"
+            summary="Uses AWS ReadOnlyAccess managed policy. Discovers assets, validates attack paths, reads IAM policies and security-group rules. Cannot write, delete, or modify anything. Ever."
+            allows={["Describe* · List* · Get*", "iam:SimulatePrincipalPolicy", "iam:GetRolePolicy"]}
+            denies={["All write actions", "All delete actions", "All create actions"]}
+            accent
+          />
+          <RoleCard
+            tag="YOUR · REMEDIATION LAMBDA ROLE"
+            status="HUMAN-GATED"
+            name="Your remediation Lambda role"
+            sub="Optional · scoped · runs in your AWS account"
+            summary={
+              "Activated only when you choose automated remediation in your account. " +
+              "You define exactly which write actions your-lambda may call — nothing else. " +
+              "Every fix requires your explicit approval. YOU CONTROL the IAM trust policy and function code."
+            }
+            allows={[
+              "Scoped writes you enumerate — executed only by your-lambda after your approval",
+              "Example calls (your-lambda): ec2:RevokeSecurityGroupIngress — via your-lambda only",
+              "Example calls (your-lambda): iam:DetachRolePolicy — via your-lambda only",
+              "Example calls (your-lambda): s3:PutBucketPublicAccessBlock — via your-lambda only",
+            ]}
+            denies={["iam:DeleteRole", "iam:CreateUser", "s3:DeleteBucket"]}
+          />
+        </div>
+
+        <div className="mt-10 flex flex-col gap-6 rounded-xl border border-[var(--hp-line)] bg-[var(--hp-overlay)] p-7 lg:flex-row lg:items-center lg:gap-10 lg:p-8">
+          <div className="lg:max-w-[420px]">
+            <p className="hp-eyebrow mb-2 text-[var(--hp-ink3)]">Complete audit trail</p>
+            <p className="text-[16px] leading-[1.45] text-[var(--hp-ink)]">
+              Every action by either role is logged, timestamped, cryptographically signed, and tied to a human approval
+              token.
+            </p>
+          </div>
+          <div className="hidden flex-1 rounded-lg border border-[var(--hp-line)] bg-[var(--hp-elevated)] px-4 py-3 hp-mono text-[11.5px] leading-[1.7] text-[var(--hp-ink3)] lg:block">
+            <span className="text-[var(--hp-ok)]">2026-05-16T08:14:02Z</span> scanner · iam:SimulatePrincipalPolicy · sig…a3f2c8
+            <br />
+            <span className="text-[var(--hp-ok)]">2026-05-16T08:14:11Z</span> scanner · ec2:DescribeInstances · sig…7b1e44
+            <br />
+            <span className="text-[var(--hp-brand)]">2026-05-16T09:02:31Z</span> remediation · your-lambda · ec2:RevokeSecurityGroupIngress · approved by ops@acme
           </div>
         </div>
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-3">
-          {COMPARE.map((c) => (
+
+        <div className="mt-16 grid grid-cols-2 gap-3 md:grid-cols-4">
+          {VENDOR_COMPARE.map((c) => (
             <div
               key={c.name}
-              className={`rounded-[10px] p-5 border bg-[var(--hp-elevated)] ${
+              className={`rounded-[10px] border bg-[var(--hp-elevated)] p-5 ${
                 c.muted ? "border-[var(--hp-line)]" : "border-[color:rgba(255,27,141,0.4)]"
               }`}
             >
-              <p className={`hp-eyebrow mb-3 ${c.muted ? "text-[var(--hp-ink3)]" : "text-[var(--hp-brand)]"}`}>{c.name}</p>
-              <p className={`text-[15px] font-medium leading-tight ${c.muted ? "text-[var(--hp-ink2)]" : "text-[var(--hp-ink)]"}`}>
+              <p className={`hp-eyebrow mb-3 ${c.muted ? "text-[var(--hp-ink3)]" : "text-[var(--hp-brand)]"}`}>
+                {c.name}
+              </p>
+              <p
+                className={`text-[15px] font-medium leading-tight ${c.muted ? "text-[var(--hp-ink2)]" : "text-[var(--hp-ink)]"}`}
+              >
                 {c.value}
               </p>
             </div>
