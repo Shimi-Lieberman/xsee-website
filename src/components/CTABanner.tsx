@@ -3,82 +3,54 @@ import { ShieldCheck } from "lucide-react";
 
 export default function CTABanner() {
   return (
-    <section
-      className="cta-section sec-deepblack animate-on-scroll reveal"
-      id="get-started"
-      style={{
-        position: "relative",
-        overflow: "hidden",
-        padding: "130px 48px",
-        background: "var(--dark)",
-      }}
-    >
+    <section id="get-started" className="hp-section relative overflow-hidden" aria-labelledby="cta-title">
       <div
-        className="mesh-orb"
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden
         style={{
-          width: "560px",
-          height: "560px",
-          background: "radial-gradient(circle, rgba(255,31,143,0.12), transparent 70%)",
-          top: "20%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          animation: "orbDrift1 14s ease-in-out infinite",
+          background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,27,141,0.12), transparent 70%)",
         }}
       />
-      <div className="container" style={{ position: "relative", zIndex: 2 }}>
-        <div className="section-head" style={{ textAlign: "center", marginBottom: 56 }}>
-          <span className="section-eyebrow">Get started</span>
+      <div className="hp-container relative z-[1]">
+        <div className="text-center mb-14">
+          <p className="hp-eyebrow mb-4">Get started</p>
           <h2
-            className="display-lg"
-            style={{
-              fontSize: "clamp(42px,6vw,76px)",
-              fontWeight: 900,
-              color: "white",
-              letterSpacing: "-0.03em",
-            }}
+            id="cta-title"
+            className="font-semibold text-[var(--hp-ink)] mx-auto max-w-[920px]"
+            style={{ fontSize: "clamp(42px, 6vw, 76px)", lineHeight: 1.05, letterSpacing: "-0.03em" }}
           >
             The breach your scanner missed is
             <br />
-            <em
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                color: "var(--pink)",
-              }}
-            >
-              already in your graph.
-            </em>
+            <span className="text-[var(--hp-brand)]">already in your graph.</span>
           </h2>
-          <p style={{ fontSize: "17px", color: "rgba(255,255,255,0.4)", maxWidth: "520px", margin: "20px auto 0" }}>
-            Most teams find out during an incident. XSEE gives you the proof before the attacker does. One IAM role. Thirty
-            minutes. The truth about your cloud.
+          <p className="text-[17px] text-[var(--hp-ink2)] max-w-[520px] mx-auto mt-5 leading-[1.55]">
+            Most teams find out during an incident. XSEE gives you the proof before the attacker does. One IAM role.
+            Thirty minutes. The truth about your cloud.
           </p>
-          <div className="section-rule" style={{ margin: "20px auto 0" }} />
         </div>
-        <div className="cta-two-options reveal-on-scroll">
-          <div className="cta-option cta-option-free">
-            <div className="cta-option-badge">FREE</div>
-            <h3 className="cta-option-title">Free Risk Assessment</h3>
-            <p className="cta-option-body">
-              Connect your AWS account with read-only IAM. XSEE scans your environment, validates attack paths, and delivers a ranked HTML report in 30 minutes. No commitment. No credit card. No agents. 14-day free trial · No credit card required · Read-only IAM · Results in 30 minutes
+        <div className="cta-two-options reveal-on-scroll grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[960px] mx-auto">
+          <div className="hp-card p-8">
+            <p className="hp-eyebrow text-[var(--hp-brand)] mb-3">FREE</p>
+            <h3 className="text-xl font-semibold text-[var(--hp-ink)] mb-3">Free Risk Assessment</h3>
+            <p className="text-[14px] text-[var(--hp-ink2)] leading-[1.6] mb-6">
+              Connect your AWS account with read-only IAM. XSEE scans your environment, validates attack paths, and
+              delivers a ranked HTML report in 30 minutes. No commitment. No credit card. No agents.
             </p>
-            <Link href="/free-scan" className="btn btn-primary btn-shimmer">
-              <span className="relative z-[2]">Run Free Scan →</span>
+            <Link href="/free-scan" className="hp-btn-primary w-full justify-center">
+              Run Free Scan →
             </Link>
-            <div
-              className="mt-3 flex items-start justify-center gap-2 text-center"
-              style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", maxWidth: 360, margin: "0 auto" }}
-            >
-              <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
+            <div className="mt-4 flex items-start justify-center gap-2 text-center text-[13px] text-[var(--hp-ink3)]">
+              <ShieldCheck size={12} color="#10b981" className="mt-0.5 shrink-0" aria-hidden />
               <span>Read-only access. No agents deployed. Results in 30 minutes.</span>
             </div>
           </div>
-          <div className="cta-option cta-option-platform">
-            <div className="cta-option-badge">FULL PLATFORM</div>
-            <h3 className="cta-option-title">Start Free Trial</h3>
-            <p className="cta-option-body">
-              14-day full access to All 7 engines + autonomous agents. See your Detection Coverage Score. Generate evidence packages. After trial: Starter $1,800/mo, Pro $3,500/mo —{" "}
-              <Link href="#pricing" style={{ color: "var(--blue-light)", textDecoration: "underline", textUnderlineOffset: 3 }}>
+          <div className="hp-card p-8">
+            <p className="hp-eyebrow text-[var(--hp-ink3)] mb-3">FULL PLATFORM</p>
+            <h3 className="text-xl font-semibold text-[var(--hp-ink)] mb-3">Start Free Trial</h3>
+            <p className="text-[14px] text-[var(--hp-ink2)] leading-[1.6] mb-6">
+              14-day full access to all 7 engines + autonomous agents. See your Detection Coverage Score. Generate
+              evidence packages. After trial: Starter $1,800/mo, Pro $3,500/mo —{" "}
+              <Link href="#pricing" className="text-[var(--hp-brand)] underline underline-offset-2">
                 view plans
               </Link>
               .
@@ -87,15 +59,12 @@ export default function CTABanner() {
               href="https://app.xsee.io/register"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-secondary"
+              className="hp-btn-ghost w-full justify-center border-[var(--hp-line2)]"
             >
               Start Free Trial →
             </Link>
-            <div
-              className="mt-3 flex items-start justify-center gap-2 text-center"
-              style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", maxWidth: 360, margin: "0 auto" }}
-            >
-              <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
+            <div className="mt-4 flex items-start justify-center gap-2 text-center text-[13px] text-[var(--hp-ink3)]">
+              <ShieldCheck size={12} color="#10b981" className="mt-0.5 shrink-0" aria-hidden />
               <span>Read-only access. No agents deployed. Results in 30 minutes.</span>
             </div>
           </div>
