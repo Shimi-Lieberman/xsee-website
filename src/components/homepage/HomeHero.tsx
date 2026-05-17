@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 
@@ -34,14 +35,14 @@ function HopNode({
 }) {
   return (
     <div
-      className={`shrink-0 select-none rounded-lg border bg-[var(--hp-elevated)] px-3 py-2.5 min-w-[132px] ${
+      className={`w-[148px] shrink-0 select-none rounded-[8px] border bg-[var(--hp-elevated)] px-3.5 py-3 ${
         final ? "hp-final-anim" : "hp-hop-anim"
       }`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="hp-eyebrow text-[10px] leading-none mb-1.5">{kind}</div>
-      <div className="text-[13px] font-medium text-[var(--hp-ink)] leading-tight">{label}</div>
-      <div className="hp-mono text-[10px] text-[var(--hp-ink3)] mt-1 leading-none">{id}</div>
+      <div className="hp-eyebrow mb-2 text-[10px] leading-none">{kind}</div>
+      <div className="text-[13px] font-medium leading-[1.3] text-[var(--hp-ink)]">{label}</div>
+      <div className="hp-mono mt-1.5 text-[10.5px] leading-none text-[var(--hp-ink3)]">{id}</div>
     </div>
   );
 }
@@ -49,8 +50,8 @@ function HopNode({
 function HopArrow({ call, delay }: { call: string; delay: number }) {
   const markerId = `arrow-${call.replace(/\W/g, "")}`;
   return (
-    <div className="flex flex-col items-center px-2 min-w-[140px]">
-      <svg viewBox="0 0 120 14" className="w-full h-3.5" aria-hidden>
+    <div className="flex min-w-[120px] flex-1 flex-col items-center self-start px-3 pt-5">
+      <svg viewBox="0 0 120 14" className="h-3 w-full text-[var(--hp-line2)]" aria-hidden>
         <defs>
           <marker id={markerId} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M0 0 L10 5 L0 10 z" fill="currentColor" />
@@ -61,16 +62,19 @@ function HopArrow({ call, delay }: { call: string; delay: number }) {
           y1="7"
           x2="118"
           y2="7"
-          stroke="#3A3A44"
-          strokeWidth="1.25"
+          stroke="currentColor"
+          strokeWidth="1.4"
           markerEnd={`url(#${markerId})`}
-          className="hp-arrow-anim text-[var(--hp-line2)]"
+          className="hp-arrow-anim"
           style={{ animationDelay: `${delay}ms` }}
         />
       </svg>
-      <div className="hp-mono text-[10.5px] text-[var(--hp-ink3)] mt-2 text-center leading-tight hp-foot-anim" style={{ animationDelay: `${delay + 100}ms` }}>
+      <div
+        className="hp-mono mt-3 text-center text-[10.5px] leading-[1.5] text-[var(--hp-ink3)] hp-foot-anim"
+        style={{ animationDelay: `${delay + 100}ms` }}
+      >
         {call}
-        <div className="text-[var(--hp-ok)] mt-0.5 inline-flex items-center gap-1 justify-center">
+        <div className="mt-1 inline-flex items-center justify-center gap-1 text-[var(--hp-ok)]">
           <span className="hp-green-dot" style={{ boxShadow: "none" }} />
           <span>success</span>
         </div>
@@ -80,41 +84,58 @@ function HopArrow({ call, delay }: { call: string; delay: number }) {
 }
 
 function HeroLiveCard() {
+  const [sec, setSec] = useState(134);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setSec((s) => (s > 0 ? s - 1 : 240));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const mm = String(Math.floor(sec / 60)).padStart(2, "0");
+  const ss = String(sec % 60).padStart(2, "0");
+
   return (
-    <div className="hp-card w-full lg:max-w-[360px] overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--hp-line)]">
+    <div className="hp-card w-full overflow-hidden lg:max-w-[380px]">
+      <div className="flex items-center justify-between border-b border-[var(--hp-line)] px-5 py-4">
         <div className="flex items-center gap-2.5">
           <span className="hp-pink-dot" />
           <span className="hp-eyebrow text-[var(--hp-ink2)]">Live · monitoring</span>
         </div>
         <span className="hp-mono text-[11px] text-[var(--hp-ink3)]">acme-prod</span>
       </div>
-      <div className="px-5 py-5">
-        <p className="text-[13px] text-[var(--hp-ink2)] leading-[1.55]">
+      <div className="px-5 py-6">
+        <p className="text-[13px] leading-[1.6] text-[var(--hp-ink2)]">
           Last scan found
-          <span className="text-[var(--hp-ink)] font-medium"> 3 paths</span> reaching prod data.
-          <span className="text-[var(--hp-ink)] font-medium"> 21 fixes</span> proposed. One human decision per fix.
+          <span className="font-medium text-[var(--hp-ink)]"> 3 paths</span> reaching prod data.
+          <span className="font-medium text-[var(--hp-ink)]"> 21 fixes</span> proposed. One human decision per fix.
         </p>
-        <div className="mt-4 pt-4 border-t border-[var(--hp-line)] grid grid-cols-3 gap-3">
+        <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[var(--hp-line)] pt-5">
           <div>
-            <div className="hp-eyebrow text-[10px] leading-none mb-1.5">scan</div>
-            <div className="hp-mono text-[var(--hp-ink)] text-[15px]">2m ago</div>
+            <div className="hp-eyebrow mb-2 text-[10px] leading-none">scan</div>
+            <div className="hp-mono text-[15px] leading-none text-[var(--hp-ink)]">2m&nbsp;ago</div>
           </div>
           <div>
-            <div className="hp-eyebrow text-[10px] leading-none mb-1.5">paths</div>
-            <div className="hp-mono text-[var(--hp-ink)] text-[15px]">3</div>
+            <div className="hp-eyebrow mb-2 text-[10px] leading-none">paths</div>
+            <div className="hp-mono text-[15px] leading-none text-[var(--hp-ink)]">3</div>
           </div>
           <div>
-            <div className="hp-eyebrow text-[10px] leading-none mb-1.5">closed</div>
-            <div className="hp-mono text-[var(--hp-ok)] text-[15px]">17</div>
+            <div className="hp-eyebrow mb-2 text-[10px] leading-none">closed</div>
+            <div className="hp-mono text-[15px] leading-none text-[var(--hp-ok)]">17</div>
           </div>
         </div>
-        <div className="mt-4 pt-4 border-t border-[var(--hp-line)] flex items-center justify-between">
+        <div className="mt-5 flex items-center justify-between border-t border-[var(--hp-line)] pt-5">
           <div className="hp-eyebrow text-[10px]">Next scan</div>
-          <div className="hp-mono text-[var(--hp-ink)] text-[13px] tabular-nums">02:14</div>
+          <div className="hp-mono text-[13px] tabular-nums text-[var(--hp-ink)]">
+            {mm}:{ss}
+          </div>
         </div>
-        <div className="mt-3 relative h-[2px] w-full bg-[var(--hp-line)] rounded-full overflow-hidden" aria-hidden>
-          <div className="absolute top-0 left-[20%] h-full w-[36%] bg-[var(--hp-brand)] rounded-full opacity-80" />
+        <div className="relative mt-3 h-[2px] w-full overflow-hidden rounded-full bg-[var(--hp-line)]" aria-hidden>
+          <div
+            className="hp-hero-live-bar absolute top-0 left-0 h-full w-[36%] rounded-full bg-[var(--hp-brand)] opacity-90"
+            style={{ animation: "hpHeroLiveSlide 2.4s ease-in-out infinite" }}
+          />
         </div>
       </div>
     </div>
@@ -123,8 +144,8 @@ function HeroLiveCard() {
 
 export default function HomeHero() {
   return (
-    <section id="top" className="relative pt-[72px] lg:pt-[96px] pb-[120px] lg:pb-[160px] px-6 lg:px-10 overflow-hidden">
-      <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden>
+    <section id="top" className="relative overflow-hidden px-6 pb-16 pt-[72px] lg:pb-24 lg:pt-[96px] lg:px-10">
+      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
         <div
           className="absolute"
           style={{
@@ -136,21 +157,33 @@ export default function HomeHero() {
             filter: "blur(8px)",
           }}
         />
+        <div
+          className="absolute bottom-0 right-[8%] top-0 w-px"
+          style={{
+            background: "linear-gradient(to bottom, transparent, var(--hp-line) 18%, var(--hp-line) 82%, transparent)",
+          }}
+        />
+        <div
+          className="absolute left-0 right-0 top-[52%] hidden h-px lg:block"
+          style={{
+            background: "linear-gradient(to right, transparent, var(--hp-line) 30%, var(--hp-line) 70%, transparent)",
+          }}
+        />
       </div>
       <div className="hp-container relative">
-        <div className="flex flex-wrap items-center gap-3 mb-12 lg:mb-16">
+        <div className="mb-12 flex flex-wrap items-center gap-3 lg:mb-16">
           <div className="inline-flex items-center gap-2">
             <span className="hp-pink-dot" />
             <span className="hp-eyebrow">Cloud attack intelligence · AWS</span>
           </div>
-          <span className="hidden sm:inline text-[var(--hp-ink4)]">·</span>
+          <span className="hidden text-[var(--hp-ink4)] sm:inline">·</span>
           <Link
             href="/changelog"
-            className="hidden sm:inline-flex items-center gap-1.5 hp-mono text-[10.5px] text-[var(--hp-ink3)] hover:text-[var(--hp-ink2)] transition-colors"
+            className="hidden items-center gap-1.5 hp-mono text-[10.5px] text-[var(--hp-ink3)] transition-colors hover:text-[var(--hp-ink2)] sm:inline-flex"
             style={{ letterSpacing: "0.14em" }}
           >
-            v0.9 · NOW LIVE
-            <ArrowRight className="w-3 h-3" aria-hidden />
+            v0.9 · AUTONOMOUS AGENTS LIVE
+            <ArrowRight className="h-3 w-3" aria-hidden />
           </Link>
         </div>
         <h1
@@ -163,45 +196,64 @@ export default function HomeHero() {
             <span className="hp-breach-anim">breach.</span>
           </span>
         </h1>
-        <div className="mt-12 lg:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="mt-14 grid grid-cols-1 gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
-            <p className="text-[18px] lg:text-[19px] leading-[1.55] text-[var(--hp-ink2)] max-w-[640px]">
-              Your scanner sees 4,000 findings. Three of them actually reach production. XSEE finds the three — with live
-              AWS API evidence per hop, attack simulation, and a signed Breach Prevention Certificate when each path is
-              closed.
+            <p
+              className="max-w-[600px] text-[18px] leading-[1.6] text-[var(--hp-ink2)] lg:text-[19px]"
+              style={{ textWrap: "pretty" }}
+            >
+              Your scanner sees 4,000 issues. Three of them lead to your production database. XSEE finds the three —
+              with live AWS API proof per hop, attack simulation on your actual graph, and a signed certificate when each
+              one is closed.
+              <span className="text-[var(--hp-ink)]"> One human decision per finding.</span>
             </p>
-            <div className="mt-7 hp-mono text-[12px] text-[var(--hp-ink3)] leading-[1.7]">
-              Zero write access <span className="text-[var(--hp-ink4)] mx-1.5">·</span>
-              No agents <span className="text-[var(--hp-ink4)] mx-1.5">·</span>
-              Your data never leaves AWS <span className="text-[var(--hp-ink4)] mx-1.5">·</span>
-              Read-only IAM
+            <p className="mt-6 text-[13.5px] leading-[1.5] text-[var(--hp-ink3)]">
+              Built for security teams at companies with 200–5,000 employees.
+            </p>
+            <div className="hp-mono mt-8 text-[12px] leading-[1.8] text-[var(--hp-ink3)]">
+              2&nbsp;min to connect <span className="mx-1.5 text-[var(--hp-ink4)]">·</span>
+              30&nbsp;min to first proof <span className="mx-1.5 text-[var(--hp-ink4)]">·</span>
+              Read-only IAM <span className="mx-1.5 text-[var(--hp-ink4)]">·</span>
+              No agents <span className="mx-1.5 text-[var(--hp-ink4)]">·</span>
+              Your data never leaves AWS
             </div>
             <div className="mt-10 flex flex-wrap items-center gap-3">
-              <Link href="/demo" className="hp-btn-primary" onClick={() => Analytics.ctaClicked("hero", "get_demo")}>
-                Get a demo
-                <ArrowRight className="w-4 h-4" aria-hidden />
+              <Link
+                href="/free-scan"
+                className="hp-btn-primary"
+                onClick={() => Analytics.ctaClicked("hero", "free_breach_report")}
+              >
+                Free breach report
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
-              <Link href="#proof" className="hp-btn-ghost">
-                See a live attack path
-                <ArrowDown className="w-4 h-4" aria-hidden />
+              <Link href="/demo" className="hp-btn-ghost" onClick={() => Analytics.ctaClicked("hero", "get_demo")}>
+                Get a demo
+                <ArrowDown className="h-4 w-4" aria-hidden />
+              </Link>
+              <Link
+                href="/under-attack"
+                className="hp-mono inline-flex h-12 items-center gap-1.5 px-1 text-[13px] text-[var(--hp-ink3)] transition-colors hover:text-[var(--hp-brand)]"
+                style={{ letterSpacing: "0.1em" }}
+              >
+                UNDER&nbsp;ATTACK?
               </Link>
             </div>
           </div>
-          <div className="lg:col-span-5 lg:flex lg:justify-end lg:items-start">
+          <div className="lg:col-span-5 lg:flex lg:items-start lg:justify-end">
             <HeroLiveCard />
           </div>
         </div>
-        <div className="mt-20 lg:mt-24">
-          <div className="flex items-center justify-between mb-6">
+        <div className="mt-24 lg:mt-28">
+          <div className="mb-7 flex items-center justify-between">
             <p className="hp-eyebrow">Path · live evidence</p>
-            <div className="hidden sm:flex items-center gap-2 hp-eyebrow">
+            <div className="hidden items-center gap-2 hp-eyebrow sm:flex">
               <span className="hp-green-dot" />
               <span>verified · signed</span>
             </div>
           </div>
-          <div className="hp-card px-6 lg:px-10 py-10 lg:py-12 hp-dotgrid">
-            <div className="overflow-x-auto -mx-2 px-2 sm:mx-0 sm:px-0 sm:overflow-visible">
-              <div className="flex items-stretch min-w-[920px] sm:min-w-0 justify-between">
+          <div className="hp-card hp-dotgrid px-6 py-8 lg:px-10 lg:py-9">
+            <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0">
+              <div className="flex min-w-[980px] items-start justify-between sm:min-w-0">
                 {HOPS.map((h, i) => (
                   <div key={h.id} className="contents">
                     <HopNode {...h} />
@@ -210,10 +262,10 @@ export default function HomeHero() {
                 ))}
               </div>
             </div>
-            <p className="hp-mono text-[11.5px] text-[var(--hp-ink3)] mt-7 hp-foot-anim" style={{ animationDelay: "2900ms" }}>
-              1.2&nbsp;seconds <span className="text-[var(--hp-ink4)] mx-2">·</span>
-              4&nbsp;hops <span className="text-[var(--hp-ink4)] mx-2">·</span>
-              92% exploit confidence <span className="text-[var(--hp-ink4)] mx-2">·</span>
+            <p className="hp-mono mt-8 text-[11.5px] leading-[1.6] text-[var(--hp-ink3)] hp-foot-anim" style={{ animationDelay: "2900ms" }}>
+              1.2&nbsp;seconds <span className="mx-2 text-[var(--hp-ink4)]">·</span>
+              4&nbsp;hops <span className="mx-2 text-[var(--hp-ink4)]">·</span>
+              92% exploit confidence <span className="mx-2 text-[var(--hp-ink4)]">·</span>
               <span className="text-[var(--hp-ok)]">signed</span>
             </p>
           </div>

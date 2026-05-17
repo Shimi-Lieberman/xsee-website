@@ -15,7 +15,6 @@ import HomepageStatsBand from "@/components/homepage/StatsBand";
 import ZeroWriteSection from "@/components/homepage/ZeroWriteSection";
 import AiAttackerSection from "@/components/homepage/AiAttackerSection";
 import DetectionSection from "@/components/homepage/DetectionSection";
-import TerminalSection from "@/components/homepage/TerminalSection";
 import LoopSection from "@/components/homepage/LoopSection";
 import QuoteSection from "@/components/homepage/QuoteSection";
 import CertificateSection from "@/components/homepage/CertificateSection";
@@ -35,9 +34,6 @@ export const metadata: Metadata = {
     "Cloud security tools generate thousands of findings. XSEE proves which ones are real attack paths — with live AWS API evidence per hop, attack simulation, and a Breach Prevention Certificate when it's fixed.",
 };
 
-const TERMINAL_SUBHEADLINE =
-  "Starts read-only. Optionally add one-click remediation — you approve every fix; your Lambda applies it (in your AWS account), and XSEE re-verifies by re-running the original attack simulation. Nothing changes without you.";
-
 export default function Home() {
   return (
     <>
@@ -56,7 +52,6 @@ export default function Home() {
           <ProofSection />
           <AiAttackerSection />
           <DetectionSection />
-          <TerminalSection subheadline={TERMINAL_SUBHEADLINE} />
           <HomepageStatsBand />
           <EnginesSection />
           <ZeroWriteSection />
