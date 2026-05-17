@@ -17,11 +17,11 @@ export default function HomepageStatsBand() {
             <p className="hp-eyebrow mb-5">Production telemetry</p>
             <h2
               id="stats-title"
-              className="font-semibold text-[var(--hp-ink)] max-w-[720px]"
-              style={{ fontSize: "clamp(32px, 4vw, 52px)", lineHeight: 1.08, letterSpacing: "-0.03em" }}
+              className="hp-h-display hp-h-display--wide"
+              style={{ fontSize: "clamp(32px, 4vw, 52px)" }}
             >
-              Numbers from the loop.
-              <span className="text-[var(--hp-ink3)]"> Real customer environments.</span>
+              <span className="block">The platform in numbers.</span>
+              <span className="block text-[var(--hp-ink3)]">What XSEE proves, every day.</span>
             </h2>
           </div>
           <div className="hp-mono text-[11.5px] text-[var(--hp-ink3)] inline-flex items-center gap-2">

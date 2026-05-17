@@ -8,7 +8,9 @@ import HomeNav from "@/components/homepage/HomeNav";
 import HomeHero from "@/components/homepage/HomeHero";
 import TrustedByStrip from "@/components/homepage/TrustedByStrip";
 import ProblemSection from "@/components/homepage/ProblemSection";
+import ProofLoopSection from "@/components/homepage/ProofLoopSection";
 import ProofSection from "@/components/homepage/ProofSection";
+import HomeScrollReveal from "@/components/homepage/HomeScrollReveal";
 import HomepageStatsBand from "@/components/homepage/StatsBand";
 import ZeroWriteSection from "@/components/homepage/ZeroWriteSection";
 import AiAttackerSection from "@/components/AiAttackerSection";
@@ -45,10 +47,12 @@ export default function Home() {
       <div className="hp-page min-h-screen">
         <AnnouncementBar />
         <HomeNav />
-        <main className="w-full max-w-[100vw] mx-auto">
+        <main className="hp-page-main w-full max-w-[100vw] mx-auto">
+          <HomeScrollReveal />
           <HomeHero />
           <TrustedByStrip />
           <ProblemSection />
+          <ProofLoopSection />
           <ProofSection />
           <HomepageStatsBand />
           <ZeroWriteSection />

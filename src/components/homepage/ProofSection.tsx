@@ -190,12 +190,13 @@ export default function ProofSection() {
         <p className="hp-eyebrow mb-5">Live on your account · 30 minutes</p>
         <h2
           id="proof-title"
-          className="font-semibold text-[var(--hp-ink)] max-w-[920px]"
-          style={{ fontSize: "clamp(34px, 4.4vw, 56px)", lineHeight: 1.08, letterSpacing: "-0.03em" }}
+          className="hp-h-display hp-h-display--wide"
+          style={{ fontSize: "clamp(34px, 4.4vw, 56px)" }}
         >
-          This is what XSEE finds in your AWS environment.
+          <span className="block">This is what XSEE finds</span>
+          <span className="block text-[var(--hp-ink3)]">in your AWS environment.</span>
         </h2>
-        <p className="mt-5 text-[16px] text-[var(--hp-ink2)] max-w-[640px]">
+        <p className="mt-8 text-[16px] leading-[1.6] text-[var(--hp-ink2)] max-w-[620px]">
           Connect a read-only IAM role. XSEE builds the attack graph, validates each hop against the live AWS API, and
           writes a signed Receipt for every path that reaches production data.
         </p>

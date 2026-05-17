@@ -1,4 +1,5 @@
 /* Homepage redesign — dark tokens mapped to site --color-primary (#FF1B8D) */
+@import "./homepage-proof-loop.css";
 
 .hp-page {
   --hp-base: #0a0a0c;
@@ -13,6 +14,14 @@
   --hp-brand: var(--color-primary);
   --hp-brand-glow: rgba(255, 27, 141, 0.25);
   --hp-ok: #10b981;
+
+  /* Section rhythm — single scale (handoff sec-pad) */
+  --sec-pad-y: 112px;
+  --sec-pad-y-lg: 144px;
+  --head-gap: 32px;
+  --eyebrow-gap: 20px;
+  --body-gap: 56px;
+
   background: var(--hp-base);
   color: var(--hp-ink);
 }
@@ -116,14 +125,47 @@
 }
 
 .hp-page .hp-section {
-  padding: 120px 24px;
+  padding: var(--sec-pad-y) 24px;
   border-top: 1px solid var(--hp-line);
 }
 
 @media (min-width: 1024px) {
   .hp-page .hp-section {
-    padding: 160px 40px;
+    padding: var(--sec-pad-y-lg) 40px;
   }
+}
+
+/* Two-tone headline block pattern */
+.hp-page .hp-h-display {
+  font-weight: 600;
+  color: var(--hp-ink);
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+
+.hp-page .hp-h-display--wide {
+  max-width: 28ch;
+}
+
+.hp-page .hp-h-display .block {
+  display: block;
+}
+
+/* Scroll reveal — IO + scroll fallback (homepage only) */
+.hp-page .hp-scroll-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.hp-page .hp-scroll-reveal.is-in {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hp-page .hp-container {
@@ -242,4 +284,73 @@
     var(--hp-line) var(--loop-progress, 0%),
     var(--hp-line) 100%
   );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-page [class^="pl-"],
+  .hp-page [class*=" pl-"] {
+    animation: none !important;
+  }
+  .hp-page .pl-finding {
+    opacity: 0.22 !important;
+    transform: none !important;
+  }
+  .hp-page .pl-scanline {
+    opacity: 0 !important;
+  }
+  .hp-page .pl-findings-badge {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hp-page .pl-divider {
+    opacity: 1 !important;
+  }
+  .hp-page .pl-path-base {
+    opacity: 1 !important;
+  }
+  .hp-page .pl-path-draw {
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+  .hp-page .pl-path-close {
+    opacity: 0 !important;
+  }
+  .hp-page .pl-hop-box {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hp-page .pl-comet {
+    opacity: 0 !important;
+  }
+  .hp-page .pl-api-label {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hp-page .pl-target {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hp-page .pl-target-halo {
+    opacity: 0.4 !important;
+  }
+  .hp-page .pl-target-pulse {
+    opacity: 0 !important;
+  }
+  .hp-page .pl-cert {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hp-page .pl-phase-1 {
+    background: rgba(255, 27, 141, 0.12);
+    border-color: rgba(255, 27, 141, 0.55);
+    color: var(--hp-brand);
+  }
+  .hp-page .pl-caption-1 {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .hp-page .hp-scroll-reveal {
+    opacity: 1;
+    transform: none;
+  }
 }

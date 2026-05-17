@@ -24,14 +24,15 @@ export default function ComparisonSection() {
         <p className="hp-eyebrow mb-6">The competitive landscape</p>
         <h2
           id="compare-title"
-          className="font-semibold text-[var(--hp-ink)] max-w-[920px]"
-          style={{ fontSize: "clamp(34px, 4.4vw, 56px)", lineHeight: 1.08, letterSpacing: "-0.03em" }}
+          className="hp-h-display hp-h-display--wide"
+          style={{ fontSize: "clamp(34px, 4.6vw, 60px)" }}
         >
-          Where vendors actually differ.
+          <span className="block">Every other tool finds problems.</span>
+          <span className="block text-[var(--hp-ink3)]">XSEE is the only one that proves them.</span>
         </h2>
-        <p className="mt-5 text-[16px] text-[var(--hp-ink2)] max-w-[720px] leading-[1.55]">
-          Every CNAPP claims &quot;least privilege&quot; and &quot;comprehensive visibility.&quot; Here&apos;s what happens when one of them
-          gets compromised.
+        <p className="mt-8 text-[16px] leading-[1.6] text-[var(--hp-ink2)] max-w-[680px]">
+          Other platforms show you theoretical paths and generic simulations. XSEE validates your specific paths with live
+          AWS API evidence and simulates AI attackers. No other platform closes the full loop.
         </p>
         <div className="mt-14 hp-card overflow-hidden">
           <div className="overflow-x-auto">
