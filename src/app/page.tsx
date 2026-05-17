@@ -15,7 +15,7 @@ import HomepageStatsBand from "@/components/homepage/StatsBand";
 import ZeroWriteSection from "@/components/homepage/ZeroWriteSection";
 import AiAttackerSection from "@/components/homepage/AiAttackerSection";
 import DetectionSection from "@/components/homepage/DetectionSection";
-import TerminalSection from "@/components/TerminalSection";
+import TerminalSection from "@/components/homepage/TerminalSection";
 import LoopSection from "@/components/homepage/LoopSection";
 import QuoteSection from "@/components/homepage/QuoteSection";
 import CertificateSection from "@/components/homepage/CertificateSection";

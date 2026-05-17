@@ -354,3 +354,176 @@
     transform: none;
   }
 }
+
+/* Terminal — Live Intelligence (scoped to hp-page) */
+.hp-page .hp-terminal-window {
+  background: var(--hp-overlay);
+  border: 1px solid rgba(255, 27, 141, 0.22);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255, 27, 141, 0.06),
+    0 24px 64px rgba(0, 0, 0, 0.45),
+    0 0 80px rgba(255, 27, 141, 0.05);
+}
+
+.hp-page .hp-terminal-window::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 27, 141, 0.45), transparent);
+}
+
+.hp-page .hp-terminal-chrome {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--hp-elevated);
+  border-bottom: 1px solid var(--hp-line);
+}
+
+.hp-page .hp-terminal-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hp-page .hp-terminal-dot--red {
+  background: #ff5f57;
+}
+
+.hp-page .hp-terminal-dot--yellow {
+  background: #febc2e;
+}
+
+.hp-page .hp-terminal-dot--green {
+  background: #28c840;
+}
+
+.hp-page .hp-terminal-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--hp-ink3);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.hp-page .hp-terminal-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--hp-brand);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.hp-page .hp-terminal-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--hp-brand);
+  animation: hpTerminalPulse 2s ease-in-out infinite;
+}
+
+@keyframes hpTerminalPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.hp-page .hp-terminal-body {
+  padding: 20px 24px;
+  height: 340px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.8;
+  background: #0a0a0e;
+}
+
+.hp-page .hp-terminal-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hp-page .hp-terminal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 27, 141, 0.25);
+  border-radius: 2px;
+}
+
+.hp-page .hp-terminal-body .tl {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  opacity: 0;
+  transform: translateX(-8px);
+  animation: hpTerminalLineIn 0.25s ease forwards;
+}
+
+@keyframes hpTerminalLineIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hp-page .hp-terminal-body .t-ts {
+  color: var(--hp-ink3);
+  flex-shrink: 0;
+}
+
+.hp-page .hp-terminal-body .t-ok {
+  color: var(--hp-ok);
+  font-weight: 500;
+}
+
+.hp-page .hp-terminal-body .t-warn {
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+.hp-page .hp-terminal-body .t-err {
+  color: #f87171;
+  font-weight: 500;
+}
+
+.hp-page .hp-terminal-body .t-info {
+  color: var(--hp-brand);
+  font-weight: 500;
+}
+
+.hp-page .hp-terminal-body .t-msg {
+  color: var(--hp-ink2);
+}
+
+.hp-page .hp-terminal-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 14px;
+  margin-left: 4px;
+  border-radius: 1px;
+  background: var(--hp-brand);
+  vertical-align: middle;
+  animation: hpTerminalBlink 1s step-end infinite;
+}
+
+@keyframes hpTerminalBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
