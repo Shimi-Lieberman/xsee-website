@@ -59,6 +59,15 @@ grep invariants (src/) → 0 matches in .ts/.tsx for live homepage paths
 
 Tier-2A invariants: no “XSEE applies…”, no “we re-run L2…”, no Role 2 remediation agent copy on homepage components.
 
+## Follow-up pass — handoff zip regression fixes (`fix/marketing-handoff-regressions`)
+
+| # | Fix |
+|---|-----|
+| 2 | Removed `min-h-[480px]` / `min-h-[420px]` from Proof product mock — card sizes to content |
+| 6 | CTA headline: `hp-h-display` two-block wrap (“missed” / “is already in your graph.”) |
+| 7 | Trial card footnote: “14-day full access. Cancel any time. No card required.” |
+| — | Hero display clamp `132px` → `112px`, `maxWidth: 14ch` |
+
 ## Deferred polish (explicitly not in this pass)
 
 1. **Headline “Ever.” clip check** — verify `overflow`/line-height on narrow viewports (375px) for zero-write `hp-h-display`; adjust if descender clips.

@@ -153,7 +153,10 @@ export default function HomeHero() {
             <ArrowRight className="w-3 h-3" aria-hidden />
           </Link>
         </div>
-        <h1 className="font-semibold text-[var(--hp-ink)]" style={{ fontSize: "clamp(54px, 9.4vw, 132px)", lineHeight: 0.95, letterSpacing: "-0.04em" }}>
+        <h1
+          className="font-semibold text-[var(--hp-ink)]"
+          style={{ fontSize: "clamp(52px, 8.4vw, 112px)", lineHeight: 0.98, letterSpacing: "-0.04em", maxWidth: "14ch" }}
+        >
           <span className="block">Stop guessing.</span>
           <span className="block">
             Prove the&nbsp;

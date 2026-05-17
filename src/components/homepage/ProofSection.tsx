@@ -83,7 +83,7 @@ function ReceiptPanel() {
   const [tab, setTab] = useState<(typeof TABS)[number]>("Evidence");
 
   return (
-    <div className="flex flex-col h-full min-h-[420px]">
+    <div className="flex flex-col">
       <div className="px-5 py-4 border-b border-[var(--hp-line)]">
         <p className="hp-eyebrow text-[var(--hp-ink3)] mb-1.5">Receipt · Path 0042</p>
         <p className="text-[15px] font-medium text-[var(--hp-ink)] leading-tight">
@@ -217,7 +217,7 @@ export default function ProofSection() {
               <span>monitoring · 2m ago</span>
             </div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-5 min-h-[480px]">
+          <div className="grid grid-cols-1 lg:grid-cols-5 lg:items-stretch">
             <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-[var(--hp-line)]">
               <div className="px-5 py-3 border-b border-[var(--hp-line)] flex items-center justify-between">
                 <p className="hp-eyebrow text-[var(--hp-ink3)]">Attack graph · prod-eu-west-1</p>

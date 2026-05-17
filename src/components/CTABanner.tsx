@@ -8,27 +8,26 @@ export default function CTABanner() {
         className="absolute inset-0 pointer-events-none"
         aria-hidden
         style={{
-          background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,27,141,0.12), transparent 70%)",
+          background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 27, 141, 0.12), transparent 70%)",
         }}
       />
       <div className="hp-container relative z-[1]">
         <div className="text-center mb-14">
-          <p className="hp-eyebrow mb-4">Get started</p>
+          <p className="hp-eyebrow mb-5">Get started</p>
           <h2
             id="cta-title"
-            className="font-semibold text-[var(--hp-ink)] mx-auto max-w-[920px]"
-            style={{ fontSize: "clamp(42px, 6vw, 76px)", lineHeight: 1.05, letterSpacing: "-0.03em" }}
+            className="hp-h-display mx-auto text-center"
+            style={{ fontSize: "clamp(42px, 6vw, 76px)" }}
           >
-            The breach your scanner missed is
-            <br />
-            <span className="text-[var(--hp-brand)]">already in your graph.</span>
+            <span className="block">The breach your scanner missed</span>
+            <span className="block text-[var(--hp-brand)]">is already in your graph.</span>
           </h2>
-          <p className="text-[17px] text-[var(--hp-ink2)] max-w-[520px] mx-auto mt-5 leading-[1.55]">
+          <p className="mt-8 text-[17px] text-[var(--hp-ink2)] max-w-[520px] mx-auto leading-[1.55]">
             Most teams find out during an incident. XSEE gives you the proof before the attacker does. One IAM role.
             Thirty minutes. The truth about your cloud.
           </p>
         </div>
-        <div className="cta-two-options reveal-on-scroll grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[960px] mx-auto">
+        <div className="cta-two-options reveal-on-scroll grid grid-cols-1 md:grid-cols-2 gap-5 max-w-[960px] mx-auto">
           <div className="hp-card p-8">
             <p className="hp-eyebrow text-[var(--hp-brand)] mb-3">FREE</p>
             <h3 className="text-xl font-semibold text-[var(--hp-ink)] mb-3">Free Risk Assessment</h3>
@@ -65,7 +64,7 @@ export default function CTABanner() {
             </Link>
             <div className="mt-4 flex items-start justify-center gap-2 text-center text-[13px] text-[var(--hp-ink3)]">
               <ShieldCheck size={12} color="#10b981" className="mt-0.5 shrink-0" aria-hidden />
-              <span>Read-only access. No agents deployed. Results in 30 minutes.</span>
+              <span>14-day full access. Cancel any time. No card required.</span>
             </div>
           </div>
         </div>
