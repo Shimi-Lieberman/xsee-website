@@ -54,36 +54,31 @@ export default function Home() {
           <ProblemSection />
           <ProofLoopSection />
           <ProofSection />
-          <HomepageStatsBand />
-          <ZeroWriteSection />
-          <div className="reveal" style={{ background: "var(--dark)" }}>
+          <div style={{ background: "var(--dark)" }}>
             <AiAttackerSection />
           </div>
-          <div className="reveal">
-            <DetectionCoverageChart />
-          </div>
-          <div className="reveal" style={{ background: "var(--dark)" }}>
+          <DetectionCoverageChart />
+          <div style={{ background: "var(--dark)" }}>
             <TerminalSection subheadline={TERMINAL_SUBHEADLINE} />
           </div>
+          <HomepageStatsBand />
+          <div style={{ background: "#030810" }}>
+            <EnginesGrid />
+          </div>
+          <ZeroWriteSection />
           <LoopSection />
           <CertificateSection />
           <ComparisonSection />
-          <div className="reveal" style={{ background: "#030810" }}>
-            <EnginesGrid />
-          </div>
-          <div className="reveal" style={{ background: "white" }}>
+          <div style={{ background: "white" }}>
             <Testimonials />
           </div>
-          <div className="reveal" style={{ background: "white" }}>
+          <div style={{ background: "white" }}>
             <SecurityComplianceTrustSection />
           </div>
-          <div
-            className="reveal dot-texture"
-            style={{ background: "#f4f4f2", position: "relative", overflow: "hidden" }}
-          >
+          <div className="dot-texture" style={{ background: "#f4f4f2", position: "relative", overflow: "hidden" }}>
             <Pricing />
           </div>
-          <div className="reveal" style={{ background: "#0c1120" }}>
+          <div style={{ background: "#0c1120" }}>
             <ComplianceBar />
           </div>
           <BuiltByStrip />

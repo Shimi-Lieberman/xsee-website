@@ -153,8 +153,8 @@
   display: block;
 }
 
-/* Scroll reveal — IO + scroll fallback (homepage only) */
-.hp-page .hp-scroll-reveal {
+/* Scroll reveal — only below-fold nodes receive .hp-scroll-reveal (see HomeScrollReveal) */
+.hp-page .hp-scroll-reveal:not(.is-in) {
   opacity: 0;
   transform: translateY(14px);
   transition:
@@ -349,7 +349,7 @@
     opacity: 1 !important;
     visibility: visible !important;
   }
-  .hp-page .hp-scroll-reveal {
+  .hp-page .hp-scroll-reveal:not(.is-in) {
     opacity: 1;
     transform: none;
   }
