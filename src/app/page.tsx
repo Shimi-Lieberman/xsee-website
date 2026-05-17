@@ -13,14 +13,14 @@ import ProofSection from "@/components/homepage/ProofSection";
 import HomeScrollReveal from "@/components/homepage/HomeScrollReveal";
 import HomepageStatsBand from "@/components/homepage/StatsBand";
 import ZeroWriteSection from "@/components/homepage/ZeroWriteSection";
-import AiAttackerSection from "@/components/AiAttackerSection";
-import DetectionCoverageChart from "@/components/DetectionCoverageChart";
+import AiAttackerSection from "@/components/homepage/AiAttackerSection";
+import DetectionSection from "@/components/homepage/DetectionSection";
 import TerminalSection from "@/components/TerminalSection";
 import LoopSection from "@/components/homepage/LoopSection";
+import QuoteSection from "@/components/homepage/QuoteSection";
 import CertificateSection from "@/components/homepage/CertificateSection";
 import ComparisonSection from "@/components/homepage/ComparisonSection";
-import EnginesGrid from "@/components/EnginesGrid";
-import Testimonials from "@/components/Testimonials";
+import EnginesSection from "@/components/homepage/EnginesSection";
 import SecurityComplianceTrustSection from "@/components/SecurityComplianceTrustSection";
 import Pricing from "@/components/Pricing";
 import ComplianceBar from "@/components/ComplianceBar";
@@ -54,24 +54,16 @@ export default function Home() {
           <ProblemSection />
           <ProofLoopSection />
           <ProofSection />
-          <div style={{ background: "var(--dark)" }}>
-            <AiAttackerSection />
-          </div>
-          <DetectionCoverageChart />
-          <div style={{ background: "var(--dark)" }}>
-            <TerminalSection subheadline={TERMINAL_SUBHEADLINE} />
-          </div>
+          <AiAttackerSection />
+          <DetectionSection />
+          <TerminalSection subheadline={TERMINAL_SUBHEADLINE} />
           <HomepageStatsBand />
-          <div style={{ background: "#030810" }}>
-            <EnginesGrid />
-          </div>
+          <EnginesSection />
           <ZeroWriteSection />
           <LoopSection />
+          <QuoteSection />
           <CertificateSection />
           <ComparisonSection />
-          <div style={{ background: "white" }}>
-            <Testimonials />
-          </div>
           <div style={{ background: "white" }}>
             <SecurityComplianceTrustSection />
           </div>
