@@ -1,95 +1,88 @@
 # Marketing homepage refinement — implementation record
 
 **Handoff:** `https://api.anthropic.com/v1/design/h/iKWKCs4eggB8SSLOTGYUkg`  
+**Verified export:** `XSEE Homepage (3).html` / `design_handoff_xsee_marketing/source/homepage/src/app.jsx`  
 **Repo:** [Shimi-Lieberman/xsee-website](https://github.com/Shimi-Lieberman/xsee-website)  
-**Date:** 2026-05-16  
-**Scope:** xsee.io marketing homepage only (not app.xsee.io / Phase 8 product pages)
+**Branch:** `polish/marketing-refinement-may17` (rebased onto `main`, not merged)  
+**Refinement commit (historical):** `a7c3a8b` — sec-pad, `.hp-h-display`, ProofLoop, ZeroWrite rebuild
 
-## Strategic diff (live main → handoff)
+## Rebase & integration (2026-05-18)
 
-| Area | Change class | Summary |
-|------|----------------|---------|
-| Section rhythm | VISUAL | Single `--sec-pad-y` / `--sec-pad-y-lg` scale (112px / 144px) replaces ad-hoc 120px / 160px on `.hp-section` |
-| Headlines | VISUAL + COPY layout | `.hp-h-display` two-line `.block` pattern + `text-wrap: balance` + 22ch / 28ch max-width on Problem, Proof Loop, Proof, Stats, Comparison, Zero-write |
-| Proof loop | NEW SECTION | `ProofLoopSection` after Problem: 12s CSS cycle SEE→CHAIN→PROVE→CLOSE; phase chips; **single caption per phase** (`visibility` + `steps(1)` — no crossfade overlap) |
-| Zero-trust | STRUCTURAL + COPY | Tier-2A copy restored; role cards on 22px baseline grid; horizontal `FlowStrip` with **solid** IAM boundary divider; vendor strip in framed subsection |
-| Scroll reveal | NEW MODULE | `HomeScrollReveal`: IO + scroll fallback + periodic re-tag (iframe-safe hybrid from handoff `app.jsx`) |
-| Preserved sections | UNCHANGED | Pricing, `layout.tsx`, AiAttacker, Detection, Terminal (subheadline), Engines, Testimonials, SecurityCompliance, ComplianceBar, Contact, Footer |
+`git rebase main` on `polish/marketing-refinement-may17` fast-forwarded to current `main` (`aae40ba`). No conflict files — refinement from `a7c3a8b` is already in history via later commits; branch tip inherits:
 
-**Classification:** POLISH + one additive section (Proof Loop). Not a full redesign.
+| Commit | What |
+|--------|------|
+| `a7c3a8b` | ProofLoop, ZeroWrite, sec-pad, hp-h-display, HomeScrollReveal (initial) |
+| `fda8484` | Hero clamp 112px, Proof min-heights, CTA two-tone + trial footnote |
+| `a0064b3` | HomeScrollReveal below-fold only (no above-fold opacity:0) |
+| `afacdab` | AI / Detection / Engines / Quote hp-section components |
+| `38ef649` | Terminal hp-section (removed from homepage in composition pass) |
+| `aae40ba` | Design System (2) tokens `#050810`, hero parity |
 
-## What landed
+**Conflict resolution policy:** N/A (clean rebase). Rule for future conflicts: **main** for `HomeScrollReveal` / scroll-reveal; **branch** for refinement CSS and homepage components.
 
-### CSS (`src/app/homepage.css`, `src/app/homepage-proof-loop.css`)
+## Section order (`page.tsx` — matches `app.jsx`)
 
-- Spacing tokens: `--sec-pad-y`, `--sec-pad-y-lg`, `--head-gap`, `--eyebrow-gap`, `--body-gap`
-- `.hp-h-display` / `.hp-h-display--wide` headline pattern
-- `.hp-scroll-reveal` + `.is-in` (700ms lift/fade)
-- Full `pl-*` keyframe suite (12s master cycle) + `prefers-reduced-motion` static fallbacks
-- Brand pink via existing `--color-primary` / `--hp-brand` (#FF1B8D)
+```text
+Hero → TrustedBy → Problem → ProofLoop → Proof
+→ AI → Detection → Stats → Engines → ZeroWrite
+→ Loop → Quote → Certificate → Comparison → Pricing → BuiltBy
+→ [production] CTABanner → ContactForm → Footer
+```
 
-### Components
+**Removed from homepage (not in export / breaks dark flow):**
 
-| File | Role |
-|------|------|
-| `src/components/homepage/ProofLoopSection.tsx` | Proof loop stage SVG + section shell (~485 LOC) |
-| `src/components/homepage/HomeScrollReveal.tsx` | Client-side reveal initializer |
-| `src/components/homepage/ZeroWriteSection.tsx` | Handoff zero-write layout (FlowStrip, role cards, vendor frame) |
-| `src/app/page.tsx` | Inserts `ProofLoopSection` after Problem; `hp-page-main` + `HomeScrollReveal` |
+- Legacy `TerminalSection` on homepage
+- `Testimonials` white band
+- `SecurityComplianceTrustSection` white band
+- `#f4f4f2` dot-texture wrapper around `Pricing`
+- `ComplianceBar` block
 
-### Headline / copy updates (homepage components)
+**Production-only (after BuiltBy, before Footer):** `CTABanner` (`hp-section` dark), `ContactForm` (`sec-light` — known light tail; not in export).
 
-- **Problem:** two-line h-display
-- **Proof:** two-line h-display; body spacing `mt-8`
-- **Stats:** handoff two-line title
-- **Comparison:** handoff headline + intro spacing
-- **Zero-write:** “Zero write access. / Ever.” + single read-only XSEE role (no second write role marketing)
+## Tokens & hero
 
-### Section order (`page.tsx`)
+- `.hp-page` base: `#050810` (Design System README)
+- Hero `h1`: `clamp(52px, 8.4vw, 112px)`, `maxWidth: 14ch` (`fda8484` / handoff README)
+- Pink: `#FF1B8D` via `--color-primary` / `--hp-brand`
+- Fonts: Geist via `geist/font` in `layout.tsx` (export uses Google Fonts link — minor metric delta possible)
 
-`Hero → TrustedBy → Problem → **ProofLoop** → Proof → Stats → ZeroWrite → …` (preserved blocks unchanged)
+## CSS load / collisions (diagnostic)
+
+- `homepage.css` imported from `page.tsx`; bundled in production CSS chunk.
+- `.hp-section` padding uses `--sec-pad-y` / `--sec-pad-y-lg` (112px / 144px) — not overridden by globals when scoped under `.hp-page`.
+- `HomeScrollReveal` (`a0064b3`): only below-fold nodes get `hp-scroll-reveal`; `#proof-loop` and `#get-started` excluded.
+- Legacy `globals.css` `.reveal` no longer wraps homepage sections (removed `className="reveal"` wrappers).
+
+## Diagnostic screenshots (post-rebase composition)
+
+Captured at **http://localhost:3017** (production `npm run start`), viewport **1440×900**:
+
+| File | Purpose |
+|------|---------|
+| `.diagnostic-screenshots-refinement-may17/00-full-page.png` | Full-page scroll |
+| `.diagnostic-screenshots-refinement-may17/01-hero-at-first-paint.png` | Hero + LIVE card |
+| `.diagnostic-screenshots-refinement-may17/02-proof-loop-mid-cycle.png` | ProofLoop ~6s |
+| `.diagnostic-screenshots-refinement-may17/03-zero-write.png` | Zero-write (`#trust`) |
+
+**Post-rebase checks:** hero LIVE card does not overlap headline; ProofLoop captions `steps(1)` (one visible); `#problem-title` opacity 1 at first paint.
 
 ## Verification
 
-```text
-npm run build          → exit 0
-check:forbidden        → passed
-grep invariants (src/) → 0 matches in .ts/.tsx for live homepage paths
+```bash
+npm run build          # exit 0
+npm run check:forbidden  # passed
 ```
 
-Tier-2A invariants: no “XSEE applies…”, no “we re-run L2…”, no Role 2 remediation agent copy on homepage components.
+Tier-2A: no forbidden remediation copy on homepage paths.
 
-## Follow-up pass — handoff zip regression fixes (`fix/marketing-handoff-regressions`)
+## Deferred / known deltas vs standalone HTML
 
-| # | Fix |
-|---|-----|
-| 2 | Removed `min-h-[480px]` / `min-h-[420px]` from Proof product mock — card sizes to content |
-| 6 | CTA headline: `hp-h-display` two-block wrap (“missed” / “is already in your graph.”) |
-| 7 | Trial card footnote: “14-day full access. Cancel any time. No card required.” |
-| — | Hero display clamp `132px` → `112px`, `maxWidth: 14ch` |
+1. **`Pricing.tsx`** — not restyled to `hp-section`; cards use inline dark styles; no white wrapper on homepage.
+2. **`ContactForm`** — `sec-light` tail section (production).
+3. **Ch unit at large display sizes** — `28ch` on `.hp-h-display--wide` resolves to ~1000px+ at 60px font; block spans + grid columns control line length in practice.
 
-## Deferred polish (explicitly not in this pass)
+## Locked decisions
 
-1. **Headline “Ever.” clip check** — verify `overflow`/line-height on narrow viewports (375px) for zero-write `hp-h-display`; adjust if descender clips.
-2. **Caption baseline nudge (increment 03)** — optional 1–2px vertical align on Proof Loop phase caption row vs. phase chips if design QA wants tighter optical alignment.
-
-## Files touched (approx.)
-
-| Path | ~LOC |
-|------|------|
-| `homepage.css` | +115 |
-| `homepage-proof-loop.css` | +243 (new) |
-| `ProofLoopSection.tsx` | +485 (new) |
-| `HomeScrollReveal.tsx` | +75 (new) |
-| `ZeroWriteSection.tsx` | ~300 (rewrite) |
-| `page.tsx` + 4 section TSX | ~40 |
-
-**Total:** ~1.2k LOC touched/added.
-
-## Locked decisions honored
-
-- Pink: `#FF1B8D` via `--color-primary`
-- Fonts: Geist (no handoff Google extras in production)
-- `Pricing.tsx`, `layout.tsx`: untouched
-- No new `package.json` dependencies
-- Tailwind v4 repo setup (no CDN)
+- Do not edit `Pricing.tsx` / `layout.tsx` in refinement passes unless explicitly scoped.
+- Do not merge to `main` until QA signs off on rebased branch screenshots vs export.
