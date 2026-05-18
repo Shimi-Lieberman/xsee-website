@@ -83,6 +83,31 @@ function HopArrow({ call, delay }: { call: string; delay: number }) {
   );
 }
 
+function HeroAttackPath() {
+  return (
+    <>
+      <div className="relative">
+        <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0">
+          <div className="flex min-w-[980px] items-start sm:min-w-0">
+            {HOPS.map((h, i) => (
+              <div key={h.id} className="contents">
+                <HopNode {...h} />
+                {i < HOPS.length - 1 && <HopArrow {...CALLS[i]} />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <p className="hp-mono mt-8 text-[11.5px] leading-[1.6] text-[var(--hp-ink3)] hp-foot-anim" style={{ animationDelay: "2900ms" }}>
+        1.2&nbsp;seconds <span className="mx-2 text-[var(--hp-ink4)]">·</span>
+        4&nbsp;hops <span className="mx-2 text-[var(--hp-ink4)]">·</span>
+        92% exploit confidence <span className="mx-2 text-[var(--hp-ink4)]">·</span>
+        <span className="text-[var(--hp-ok)]">signed</span>
+      </p>
+    </>
+  );
+}
+
 function HeroLiveCard() {
   const [sec, setSec] = useState(134);
 
@@ -97,20 +122,20 @@ function HeroLiveCard() {
   const ss = String(sec % 60).padStart(2, "0");
 
   return (
-    <div className="hp-card w-full overflow-hidden lg:max-w-[380px]">
+    <div className="hp-card w-full max-w-[380px] shrink-0 overflow-hidden">
       <div className="flex items-center justify-between border-b border-[var(--hp-line)] px-5 py-4">
-        <div className="flex items-center gap-2.5">
-          <span className="hp-pink-dot" />
-          <span className="hp-eyebrow text-[var(--hp-ink2)]">Live · monitoring</span>
+        <div className="flex min-w-0 items-center gap-2.5">
+          <span className="hp-pink-dot shrink-0" />
+          <span className="hp-eyebrow truncate text-[var(--hp-ink2)]">Live · monitoring</span>
         </div>
-        <span className="hp-mono text-[11px] text-[var(--hp-ink3)]">acme-prod</span>
+        <span className="hp-mono shrink-0 pl-3 text-[11px] text-[var(--hp-ink3)]">acme-prod</span>
       </div>
       <div className="px-5 py-6">
-        <p className="text-[13px] leading-[1.6] text-[var(--hp-ink2)]">
+        <div className="text-[13px] leading-[1.6] text-[var(--hp-ink2)]">
           Last scan found
           <span className="font-medium text-[var(--hp-ink)]"> 3 paths</span> reaching prod data.
           <span className="font-medium text-[var(--hp-ink)]"> 21 fixes</span> proposed. One human decision per fix.
-        </p>
+        </div>
         <div className="mt-6 grid grid-cols-3 gap-3 border-t border-[var(--hp-line)] pt-5">
           <div>
             <div className="hp-eyebrow mb-2 text-[10px] leading-none">scan</div>
@@ -127,7 +152,7 @@ function HeroLiveCard() {
         </div>
         <div className="mt-5 flex items-center justify-between border-t border-[var(--hp-line)] pt-5">
           <div className="hp-eyebrow text-[10px]">Next scan</div>
-          <div className="hp-mono text-[13px] tabular-nums text-[var(--hp-ink)]">
+          <div className="hp-mono shrink-0 text-[13px] tabular-nums text-[var(--hp-ink)]">
             {mm}:{ss}
           </div>
         </div>
@@ -144,8 +169,8 @@ function HeroLiveCard() {
 
 export default function HomeHero() {
   return (
-    <section id="top" className="relative overflow-hidden px-6 pb-16 pt-[72px] lg:pb-24 lg:pt-[96px] lg:px-10">
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
+    <section id="top" className="relative px-6 pb-16 pt-[72px] lg:px-10 lg:pb-24 lg:pt-[96px]">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
         <div
           className="absolute"
           style={{
@@ -170,7 +195,8 @@ export default function HomeHero() {
           }}
         />
       </div>
-      <div className="hp-container relative">
+
+      <div className="relative mx-auto max-w-[1400px]">
         <div className="mb-12 flex flex-wrap items-center gap-3 lg:mb-16">
           <div className="inline-flex items-center gap-2">
             <span className="hp-pink-dot" />
@@ -186,6 +212,7 @@ export default function HomeHero() {
             <ArrowRight className="h-3 w-3" aria-hidden />
           </Link>
         </div>
+
         <h1
           className="font-semibold text-[var(--hp-ink)]"
           style={{ fontSize: "clamp(52px, 8.4vw, 112px)", lineHeight: 0.98, letterSpacing: "-0.04em", maxWidth: "14ch" }}
@@ -196,8 +223,9 @@ export default function HomeHero() {
             <span className="hp-breach-anim">breach.</span>
           </span>
         </h1>
+
         <div className="mt-14 grid grid-cols-1 gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <p
               className="max-w-[600px] text-[18px] leading-[1.6] text-[var(--hp-ink2)] lg:text-[19px]"
               style={{ textWrap: "pretty" }}
@@ -239,35 +267,22 @@ export default function HomeHero() {
               </Link>
             </div>
           </div>
-          <div className="lg:col-span-5 lg:flex lg:items-start lg:justify-end">
+
+          <div className="min-w-0 lg:col-span-5 lg:flex lg:items-start lg:justify-end">
             <HeroLiveCard />
           </div>
         </div>
+
         <div className="mt-24 lg:mt-28">
           <div className="mb-7 flex items-center justify-between">
-            <p className="hp-eyebrow">Path · live evidence</p>
+            <div className="hp-eyebrow">Path · live evidence</div>
             <div className="hidden items-center gap-2 hp-eyebrow sm:flex">
               <span className="hp-green-dot" />
               <span>verified · signed</span>
             </div>
           </div>
-          <div className="hp-card hp-dotgrid px-6 py-8 lg:px-10 lg:py-9">
-            <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0">
-              <div className="flex min-w-[980px] items-start justify-between sm:min-w-0">
-                {HOPS.map((h, i) => (
-                  <div key={h.id} className="contents">
-                    <HopNode {...h} />
-                    {i < HOPS.length - 1 && <HopArrow {...CALLS[i]} />}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <p className="hp-mono mt-8 text-[11.5px] leading-[1.6] text-[var(--hp-ink3)] hp-foot-anim" style={{ animationDelay: "2900ms" }}>
-              1.2&nbsp;seconds <span className="mx-2 text-[var(--hp-ink4)]">·</span>
-              4&nbsp;hops <span className="mx-2 text-[var(--hp-ink4)]">·</span>
-              92% exploit confidence <span className="mx-2 text-[var(--hp-ink4)]">·</span>
-              <span className="text-[var(--hp-ok)]">signed</span>
-            </p>
+          <div className="hp-card hp-dotgrid overflow-hidden px-6 py-8 lg:px-10 lg:py-9">
+            <HeroAttackPath />
           </div>
         </div>
       </div>

@@ -1,22 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
-import SiteLogo from "@/components/SiteLogo";
 import { Analytics } from "@/lib/analytics";
 
-const REGISTER_URL = "https://app.xsee.io/register";
 const LOGIN_URL = "https://app.xsee.io/login";
 
+/** Matches verified export `Nav` — Platform / Engines / Why us / Pricing / Docs + Sign in / Free scan / Get a demo */
 const NAV_LINKS = [
   { href: "/#proof", label: "Platform" },
   { href: "/#engines", label: "Engines" },
-  { href: "/#compare", label: "Why Us" },
-  { href: "/free-scan", label: "Free Scan" },
-  { href: "/demo", label: "Demo" },
+  { href: "/#compare", label: "Why us" },
   { href: "/#pricing", label: "Pricing" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/changelog", label: "Docs" },
 ] as const;
 
 export default function HomeNav() {
@@ -32,53 +30,65 @@ export default function HomeNav() {
   return (
     <header
       className={`sticky top-0 inset-x-0 z-50 transition-colors duration-200 ${
-        scrolled ? "bg-[var(--hp-base)]/85 backdrop-blur-md border-b border-[var(--hp-line)]" : "bg-[var(--hp-base)] border-b border-transparent"
+        scrolled
+          ? "bg-[var(--hp-base)]/85 backdrop-blur-md border-b border-[var(--hp-line)]"
+          : "bg-[var(--hp-base)] border-b border-transparent"
       }`}
     >
-      <div className="hp-container px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
-        <SiteLogo href="/#top" />
-        <nav className="hidden lg:flex items-center gap-6" aria-label="Primary">
+      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-6 lg:px-10">
+        <Link href="/#top" className="flex shrink-0 items-center gap-2.5" aria-label="XSEE home">
+          <Image
+            src="/logo-symbol-only.svg"
+            width={18}
+            height={18}
+            alt=""
+            className="h-[18px] w-[18px] shrink-0"
+            style={{ background: "transparent" }}
+          />
+          <span className="text-[15px] font-semibold tracking-[0.02em] text-[var(--hp-ink)]">XSEE</span>
+          <span
+            className="hp-mono ml-1.5 hidden border-l border-[var(--hp-line)] pl-2.5 text-[10.5px] text-[var(--hp-ink3)] lg:inline"
+            style={{ letterSpacing: "0.14em" }}
+          >
+            CLOUD ATTACK INTELLIGENCE
+          </span>
+        </Link>
+
+        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
           {NAV_LINKS.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="text-[13px] text-[var(--hp-ink2)] hover:text-[var(--hp-ink)] transition-colors"
-              onClick={label === "Demo" ? () => Analytics.ctaClicked("nav", "demo_link") : undefined}
+              className="text-[13px] text-[var(--hp-ink2)] transition-colors hover:text-[var(--hp-ink)]"
             >
               {label}
             </Link>
           ))}
         </nav>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className="hidden md:flex items-center gap-1.5 text-[11px] text-[var(--hp-ink3)] mr-1">
-            <span className="hp-green-dot" style={{ boxShadow: "none" }} />
-            All systems operational
-          </div>
-          <Link href={LOGIN_URL} className="hidden sm:inline text-[13px] text-[var(--hp-ink2)] hover:text-[var(--hp-ink)] transition-colors">
+
+        <div className="flex items-center gap-3">
+          <Link
+            href={LOGIN_URL}
+            className="hidden items-center gap-1.5 text-[12px] text-[var(--hp-ink3)] transition-colors hover:text-[var(--hp-ink)] lg:inline-flex"
+          >
             Sign in
           </Link>
           <Link
-            href="/#contact"
-            className="inline-flex items-center gap-1.5 h-[34px] px-3.5 rounded-lg bg-[var(--hp-ink)] text-[var(--hp-base)] text-[13px] font-medium hover:opacity-90 transition-opacity"
-            onClick={() => Analytics.ctaClicked("nav", "book_demo")}
+            href="/free-scan"
+            className="hidden h-[34px] items-center gap-1.5 rounded-[8px] border border-[var(--hp-line)] px-3.5 text-[13px] text-[var(--hp-ink2)] transition-colors hover:border-[var(--hp-line2)] hover:text-[var(--hp-ink)] sm:inline-flex"
+            onClick={() => Analytics.ctaClicked("nav", "free_scan")}
           >
-            Get a demo
-            <ArrowRight className="w-3.5 h-3.5" aria-hidden />
+            Free scan
           </Link>
           <Link
-            href={REGISTER_URL}
-            className="hidden xl:inline-flex text-[13px] text-[var(--hp-brand)] hover:opacity-90 transition-opacity"
+            href="/demo"
+            className="inline-flex h-[34px] items-center gap-1.5 rounded-[8px] bg-[var(--hp-ink)] px-3.5 text-[13px] font-medium text-[var(--hp-base)] transition-colors hover:bg-white"
+            onClick={() => Analytics.ctaClicked("nav", "get_demo")}
           >
-            Start Free Trial →
+            Get a demo
+            <ArrowRight className="h-3.5 w-3.5" aria-hidden />
           </Link>
         </div>
-      </div>
-      <div className="lg:hidden border-t border-[var(--hp-line)] px-4 py-2 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-        {NAV_LINKS.map(({ href, label }) => (
-          <Link key={`m-${href}`} href={href} className="text-[11px] text-[var(--hp-ink2)] hover:text-[var(--hp-ink)]">
-            {label}
-          </Link>
-        ))}
       </div>
     </header>
   );
