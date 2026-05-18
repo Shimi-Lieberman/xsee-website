@@ -1,10 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 
+type SiteLogoProps = {
+  /** Defaults to `/`. Homepage nav uses `/#top` for in-page anchor. */
+  href?: string;
+};
+
 /** Same mark + wordmark + tagline as the header nav — reuse everywhere for consistency. */
-export default function SiteLogo() {
+export default function SiteLogo({ href = "/" }: SiteLogoProps) {
   return (
-    <Link href="/" className="nav-logo" aria-label="XSEE home">
+    <Link href={href} className="nav-logo" aria-label="XSEE home">
       <span className="nav-logo-inner" aria-hidden="true">
         <span className="nav-logo-mark-wrap">
           <Image
