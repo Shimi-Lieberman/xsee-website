@@ -36,9 +36,7 @@ export default function HomeNav() {
       }`}
     >
       <div className="hp-container px-6 lg:px-10 h-16 flex items-center justify-between gap-4">
-        <Link href="/#top" className="shrink-0">
-          <SiteLogo />
-        </Link>
+        <SiteLogo href="/#top" />
         <nav className="hidden lg:flex items-center gap-6" aria-label="Primary">
           {NAV_LINKS.map(({ href, label }) => (
             <Link
