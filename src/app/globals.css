@@ -131,7 +131,8 @@
 }
 
 /* ━━━ RESET & BASE ━━━ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; -webkit-font-smoothing: antialiased; }
+ul, ol, menu, dialog, fieldset, legend, button, input, textarea, select { padding: 0; }
 html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
