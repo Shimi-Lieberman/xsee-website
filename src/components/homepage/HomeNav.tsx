@@ -35,7 +35,10 @@ export default function HomeNav() {
           : "bg-[var(--hp-base)] border-b border-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4 px-6 lg:px-10">
+      <div
+        className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4"
+        style={{ paddingLeft: "clamp(24px, 5vw, 40px)", paddingRight: "clamp(24px, 5vw, 40px)" }}
+      >
         <Link href="/#top" className="flex shrink-0 items-center gap-2.5" aria-label="XSEE home">
           <Image
             src="/logo-symbol-only.svg"
@@ -48,7 +51,7 @@ export default function HomeNav() {
           <span className="text-[15px] font-semibold tracking-[0.02em] text-[var(--hp-ink)]">XSEE</span>
           <span
             className="hp-mono ml-1.5 hidden border-l border-[var(--hp-line)] pl-2.5 text-[10.5px] text-[var(--hp-ink3)] lg:inline"
-            style={{ letterSpacing: "0.14em" }}
+            style={{ letterSpacing: "0.14em", paddingLeft: 10, marginLeft: 6 }}
           >
             CLOUD ATTACK INTELLIGENCE
           </span>
@@ -75,18 +78,20 @@ export default function HomeNav() {
           </Link>
           <Link
             href="/free-scan"
-            className="hidden h-[34px] items-center gap-1.5 rounded-[8px] border border-[var(--hp-line)] px-3.5 text-[13px] text-[var(--hp-ink2)] transition-colors hover:border-[var(--hp-line2)] hover:text-[var(--hp-ink)] sm:inline-flex"
+            className="hidden h-[34px] items-center gap-1.5 rounded-[8px] border border-[var(--hp-line)] text-[13px] text-[var(--hp-ink2)] transition-colors hover:border-[var(--hp-line2)] hover:text-[var(--hp-ink)] sm:inline-flex"
+            style={{ paddingLeft: 14, paddingRight: 14 }}
             onClick={() => Analytics.ctaClicked("nav", "free_scan")}
           >
             Free scan
           </Link>
           <Link
             href="/demo"
-            className="inline-flex h-[34px] items-center gap-1.5 rounded-[8px] bg-[var(--hp-ink)] px-3.5 text-[13px] font-medium text-[var(--hp-base)] transition-colors hover:bg-white"
+            className="inline-flex h-[34px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-[8px] bg-[var(--hp-ink)] text-[13px] font-medium transition-colors hover:bg-white"
+            style={{ color: "var(--hp-base)", paddingLeft: 14, paddingRight: 14 }}
             onClick={() => Analytics.ctaClicked("nav", "get_demo")}
           >
             Get a demo
-            <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+            <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden style={{ color: "var(--hp-base)" }} />
           </Link>
         </div>
       </div>

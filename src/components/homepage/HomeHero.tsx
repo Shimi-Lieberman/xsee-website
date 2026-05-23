@@ -35,10 +35,10 @@ function HopNode({
 }) {
   return (
     <div
-      className={`w-[148px] shrink-0 select-none rounded-[8px] border bg-[var(--hp-elevated)] px-3.5 py-3 ${
+      className={`w-[148px] shrink-0 select-none rounded-[8px] border bg-[var(--hp-elevated)] ${
         final ? "hp-final-anim" : "hp-hop-anim"
       }`}
-      style={{ animationDelay: `${delay}ms` }}
+      style={{ animationDelay: `${delay}ms`, padding: "12px 14px" }}
     >
       <div className="hp-eyebrow mb-2 text-[10px] leading-none">{kind}</div>
       <div className="text-[13px] font-medium leading-[1.3] text-[var(--hp-ink)]">{label}</div>
@@ -86,9 +86,9 @@ function HopArrow({ call, delay }: { call: string; delay: number }) {
 function HeroAttackPath() {
   return (
     <>
-      <div className="relative">
-        <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0">
-          <div className="flex min-w-[980px] items-start sm:min-w-0">
+      <div className="relative max-w-full">
+        <div className="overflow-x-auto max-w-full lg:overflow-x-visible">
+          <div className="flex w-full min-w-0 items-start justify-between">
             {HOPS.map((h, i) => (
               <div key={h.id} className="contents">
                 <HopNode {...h} />
@@ -169,7 +169,16 @@ function HeroLiveCard() {
 
 export default function HomeHero() {
   return (
-    <section id="top" className="relative px-6 pb-16 pt-[72px] lg:px-10 lg:pb-24 lg:pt-[96px]">
+    <section
+      id="top"
+      className="relative"
+      style={{
+        paddingTop: "clamp(72px, 8vw, 96px)",
+        paddingBottom: "clamp(64px, 8vw, 96px)",
+        paddingLeft: "clamp(24px, 5vw, 40px)",
+        paddingRight: "clamp(24px, 5vw, 40px)",
+      }}
+    >
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
         <div
           className="absolute"
@@ -196,7 +205,7 @@ export default function HomeHero() {
         />
       </div>
 
-      <div className="relative mx-auto max-w-[1400px]">
+      <div className="relative mx-auto w-full max-w-[1400px]">
         <div className="mb-12 flex flex-wrap items-center gap-3 lg:mb-16">
           <div className="inline-flex items-center gap-2">
             <span className="hp-pink-dot" />
@@ -281,7 +290,10 @@ export default function HomeHero() {
               <span>verified · signed</span>
             </div>
           </div>
-          <div className="hp-card hp-dotgrid overflow-hidden px-6 py-8 lg:px-10 lg:py-9">
+          <div
+            className="hp-card hp-dotgrid overflow-hidden"
+            style={{ padding: "clamp(32px, 4vw, 36px) clamp(24px, 5vw, 40px)" }}
+          >
             <HeroAttackPath />
           </div>
         </div>
