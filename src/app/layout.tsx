@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
+import { Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import "./xsee-elite.css";
 import "./legal-pages.css";
+import "./polish-v2-foundation.css";
 import ChatWidget from "@/components/ChatWidget";
 import { ClarityInit } from "@/components/ClarityInit";
 import { PostHogProvider } from "@/components/PostHogProvider";
@@ -19,6 +21,14 @@ export const viewport: Viewport = {
 };
 
 const fontVariables = `${GeistSans.variable} ${GeistMono.variable}`;
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  style: ["italic"],
+  weight: ["400"],
+  variable: "--font-v2-serif",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.xsee.io"),
@@ -66,7 +76,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fontVariables} font-sans antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${fontVariables} ${instrumentSerif.variable} font-sans antialiased`} suppressHydrationWarning>
       <body
         className={`${fontVariables} font-sans antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
         suppressHydrationWarning
