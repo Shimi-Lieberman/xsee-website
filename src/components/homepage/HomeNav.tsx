@@ -8,7 +8,6 @@ import { Analytics } from "@/lib/analytics";
 
 const LOGIN_URL = "https://app.xsee.io/login";
 
-/** Matches verified export `Nav` — Platform / Engines / Why us / Pricing / Docs + Sign in / Free scan / Get a demo */
 const NAV_LINKS = [
   { href: "/#proof", label: "Platform" },
   { href: "/#engines", label: "Engines" },
@@ -21,80 +20,68 @@ export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <header
-      className={`sticky top-0 inset-x-0 z-50 transition-colors duration-200 ${
-        scrolled
-          ? "bg-[var(--hp-base)]/85 backdrop-blur-md border-b border-[var(--hp-line)]"
-          : "bg-[var(--hp-base)] border-b border-transparent"
-      }`}
-    >
-      <div
-        className="mx-auto flex h-16 max-w-[1400px] items-center justify-between gap-4"
-        style={{ paddingLeft: "clamp(24px, 5vw, 40px)", paddingRight: "clamp(24px, 5vw, 40px)" }}
+    <>
+      <header
+        className="v2-polish fixed inset-x-0 top-0 z-50 transition-all duration-300"
+        style={{
+          backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
+          WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
+          background: scrolled ? "rgba(6, 8, 15, 0.72)" : "transparent",
+          borderBottom: scrolled ? "1px solid #11151F" : "1px solid transparent",
+        }}
       >
-        <Link href="/#top" className="flex shrink-0 items-center gap-2.5" aria-label="XSEE home">
-          <Image
-            src="/logo-symbol-only.svg"
-            width={18}
-            height={18}
-            alt=""
-            className="h-[18px] w-[18px] shrink-0"
-            style={{ background: "transparent" }}
-          />
-          <span className="text-[15px] font-semibold tracking-[0.02em] text-[var(--hp-ink)]">XSEE</span>
-          <span
-            className="hp-mono ml-1.5 hidden border-l border-[var(--hp-line)] pl-2.5 text-[10.5px] text-[var(--hp-ink3)] lg:inline"
-            style={{ letterSpacing: "0.14em", paddingLeft: 10, marginLeft: 6 }}
-          >
-            CLOUD ATTACK INTELLIGENCE
-          </span>
-        </Link>
+        <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between px-6 lg:px-10">
+          <Link href="/#top" className="group flex shrink-0 items-center gap-2.5" aria-label="XSEE home">
+            <Image
+              src="/logo-symbol-only.svg"
+              width={22}
+              height={22}
+              alt=""
+              className="h-[22px] w-[22px] shrink-0 transition-transform duration-300 group-hover:rotate-3"
+              style={{ background: "transparent" }}
+            />
+            <span className="text-[15px] font-semibold tracking-tight text-[var(--v2-ink)]">xsee</span>
+          </Link>
 
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
-          {NAV_LINKS.map(({ href, label }) => (
+          <nav className="hidden items-center gap-9 md:flex" aria-label="Primary">
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="text-[13.5px] text-[var(--v2-ink2)] transition-colors duration-200 hover:text-[var(--v2-ink)]"
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2.5">
             <Link
-              key={href}
-              href={href}
-              className="text-[13px] text-[var(--hp-ink2)] transition-colors hover:text-[var(--hp-ink)]"
+              href={LOGIN_URL}
+              className="hidden px-3 py-2 text-[13px] text-[var(--v2-ink2)] transition-colors duration-200 hover:text-[var(--v2-ink)] sm:inline-flex"
             >
-              {label}
+              Sign in
             </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
-          <Link
-            href={LOGIN_URL}
-            className="hidden items-center gap-1.5 text-[12px] text-[var(--hp-ink3)] transition-colors hover:text-[var(--hp-ink)] lg:inline-flex"
-          >
-            Sign in
-          </Link>
-          <Link
-            href="/free-scan"
-            className="hidden h-[34px] items-center gap-1.5 rounded-[8px] border border-[var(--hp-line)] text-[13px] text-[var(--hp-ink2)] transition-colors hover:border-[var(--hp-line2)] hover:text-[var(--hp-ink)] sm:inline-flex"
-            style={{ paddingLeft: 14, paddingRight: 14 }}
-            onClick={() => Analytics.ctaClicked("nav", "free_scan")}
-          >
-            Free scan
-          </Link>
-          <Link
-            href="/demo"
-            className="inline-flex h-[34px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-[8px] bg-[var(--hp-ink)] text-[13px] font-medium transition-colors hover:bg-white"
-            style={{ color: "var(--hp-base)", paddingLeft: 14, paddingRight: 14 }}
-            onClick={() => Analytics.ctaClicked("nav", "get_demo")}
-          >
-            Get a demo
-            <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden style={{ color: "var(--hp-base)" }} />
-          </Link>
+            <Link
+              href="/free-scan"
+              className="btn-pink inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)]"
+              onClick={() => Analytics.ctaClicked("nav", "free_breach_report")}
+            >
+              Free breach report
+              <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
+            </Link>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+      {/* Reserve space — fixed header is out of document flow */}
+      <div className="h-[64px] shrink-0" aria-hidden />
+    </>
   );
 }
