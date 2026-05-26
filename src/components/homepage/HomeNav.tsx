@@ -8,19 +8,27 @@ import { Analytics } from "@/lib/analytics";
 
 const LOGIN_URL = "https://app.xsee.io/login";
 
+/** v2 nav labels — hrefs preserved from prior mapping where sections exist */
 const NAV_LINKS = [
-  { href: "/#proof", label: "Platform" },
-  { href: "/#engines", label: "Engines" },
-  { href: "/#compare", label: "Why us" },
+  { href: "/#proof", label: "Product" },
+  { href: "/#how", label: "How it works" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/changelog", label: "Docs" },
 ] as const;
 
+/** Matches AnnouncementBar height (h-9) */
+const ANNOUNCEMENT_OFFSET_PX = 36;
+
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
+  const [pastAnnouncement, setPastAnnouncement] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      setPastAnnouncement(y > ANNOUNCEMENT_OFFSET_PX);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
@@ -29,8 +37,9 @@ export default function HomeNav() {
   return (
     <>
       <header
-        className="v2-polish fixed inset-x-0 top-0 z-50 transition-all duration-300"
+        className="v2-polish fixed inset-x-0 z-50 transition-all duration-300"
         style={{
+          top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
           backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
           background: scrolled ? "rgba(6, 8, 15, 0.72)" : "transparent",
@@ -71,7 +80,7 @@ export default function HomeNav() {
             </Link>
             <Link
               href="/free-scan"
-              className="btn-pink inline-flex h-9 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)]"
+              className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)]"
               onClick={() => Analytics.ctaClicked("nav", "free_breach_report")}
             >
               Free breach report
@@ -80,7 +89,6 @@ export default function HomeNav() {
           </div>
         </div>
       </header>
-      {/* Reserve space — fixed header is out of document flow */}
       <div className="h-[64px] shrink-0" aria-hidden />
     </>
   );

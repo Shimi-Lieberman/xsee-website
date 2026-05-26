@@ -3,23 +3,23 @@ import { ArrowRight } from "lucide-react";
 
 export default function AnnouncementBar() {
   return (
-    <div className="relative border-b border-[var(--hp-line)] bg-[var(--hp-base)]">
-      <div className="hp-container px-6 lg:px-10 h-9 flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2.5 text-[12px] text-[var(--hp-ink2)] min-w-0">
-          <span className="hp-green-dot" style={{ boxShadow: "none" }} />
-          <span className="hidden sm:inline hp-mono text-[var(--hp-ink3)]" style={{ letterSpacing: "0.1em" }}>
+    <div className="v2-polish sticky top-0 z-[60] h-9 border-b border-[var(--v2-line)] bg-[var(--v2-base)]">
+      <div className="mx-auto flex h-9 max-w-[1400px] items-center justify-between gap-4 px-6 lg:px-10">
+        <div className="flex min-w-0 items-center gap-2.5 text-[12px] text-[var(--v2-ink2)]">
+          <span className="green-dot" style={{ boxShadow: "none" }} />
+          <span className="v2-mono hidden text-[var(--v2-ink3)] sm:inline" style={{ letterSpacing: "0.1em" }}>
             AUTONOMOUS AGENTS
           </span>
-          <span className="hidden sm:inline text-[var(--hp-ink4)]">·</span>
+          <span className="hidden text-[var(--v2-ink4)] sm:inline">·</span>
           <span className="truncate">Investigation · Board Report · Threat Hunt — now live</span>
         </div>
         <Link
           href="/changelog"
-          className="inline-flex items-center gap-1.5 text-[12px] text-[var(--hp-ink)] hover:text-[var(--hp-brand)] transition-colors shrink-0"
+          className="inline-flex shrink-0 items-center gap-1.5 text-[12px] text-[var(--v2-ink)] transition-colors duration-200 hover:text-[var(--v2-brand)]"
         >
           <span className="hidden sm:inline">Changelog</span>
           <span className="sm:hidden">Log</span>
-          <ArrowRight className="w-3 h-3" aria-hidden />
+          <ArrowRight className="h-3 w-3" aria-hidden />
         </Link>
       </div>
     </div>
