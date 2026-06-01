@@ -41,7 +41,7 @@ export default function HomeHero() {
       </div>
 
       <div className="relative mx-auto max-w-[1400px]">
-        <div className="mb-10 flex flex-wrap items-center gap-3 lg:mb-14">
+        <div className="mb-8 flex flex-wrap items-center gap-3 lg:mb-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--v2-line)] px-3 py-1.5">
             <span className="pink-dot dot-pulse" />
             <span className="v2-mono text-[10.5px] tracking-[0.14em] text-[var(--v2-ink2)]">v1.5 · AUTONOMOUS AGENTS LIVE</span>
@@ -49,7 +49,10 @@ export default function HomeHero() {
           <span className="v2-eyebrow hidden text-[var(--v2-ink3)] md:inline">Cloud attack intelligence · AWS</span>
         </div>
 
-        <h1 className="display display-xxl text-[var(--v2-ink)]" style={{ maxWidth: "15ch" }}>
+        <h1
+          className="display text-[var(--v2-ink)]"
+          style={{ maxWidth: "15ch", fontSize: "clamp(44px, 6vw, 84px)", lineHeight: 0.96 }}
+        >
           <span className="block">Prove</span>
           <span className="block">
             the breach{" "}
@@ -64,7 +67,7 @@ export default function HomeHero() {
           </span>
         </h1>
 
-        <div className="mt-14 grid grid-cols-1 items-end gap-10 lg:mt-20 lg:grid-cols-12 lg:gap-12">
+        <div className="mt-10 grid grid-cols-1 items-end gap-10 lg:mt-12 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-7">
             <p
               className="text-[18px] leading-[1.55] text-[var(--v2-ink2)] lg:text-[20px]"
@@ -106,16 +109,64 @@ export default function HomeHero() {
           </div>
 
           <div className="lg:col-span-5 lg:pl-6">
-            <div className="max-w-[420px] border-l border-[var(--v2-line)] pl-6">
-              <div className="v2-eyebrow mb-3">The thesis</div>
-              <p
-                className="serif-accent text-[28px] leading-[1.18] tracking-tight text-[var(--v2-ink)] lg:text-[34px]"
-                style={{ textWrap: "pretty" }}
-              >
-                Every breach has a path. We&nbsp;prove&nbsp;it before they walk it.
-              </p>
-              <div className="mt-6 flex items-center gap-3 text-[12.5px] text-[var(--v2-ink3)]">
-                <span className="v2-mono">— xsee thesis · 2026</span>
+            <div
+              className="relative ml-auto max-w-[440px] overflow-hidden rounded-[14px] border border-[var(--v2-line)] p-5 lg:p-6"
+              style={{ background: "#0a0e1a" }}
+            >
+              <div
+                className="glow-brand-soft pointer-events-none absolute -z-0"
+                style={{ right: "-140px", top: "-160px", width: "360px", height: "360px" }}
+                aria-hidden
+              />
+              {/* Top status row */}
+              <div className="relative flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="pink-dot dot-pulse" />
+                  <span className="v2-mono text-[10.5px] tracking-[0.16em] text-[var(--v2-ink2)]">LIVE · MONITORING</span>
+                </div>
+                <span className="v2-mono text-[10.5px] tracking-[0.1em] text-[var(--v2-ink3)]">acme-prod</span>
+              </div>
+
+              {/* Main stat block */}
+              <div className="mt-6">
+                <p className="text-[19px] leading-[1.4] text-[var(--v2-ink)] lg:text-[21px]" style={{ textWrap: "pretty" }}>
+                  Last scan found <span className="text-[var(--v2-brand2)]">3 paths</span> reaching prod data. 21 fixes
+                  proposed.
+                </p>
+                <p className="mt-2 text-[13px] text-[var(--v2-ink3)]">One human decision per fix.</p>
+              </div>
+
+              <div className="my-5 h-px bg-[var(--v2-line)]" />
+
+              {/* Stats row */}
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <div className="v2-eyebrow mb-1.5">Scan</div>
+                  <div className="v2-mono text-[18px] leading-none text-[var(--v2-ink)]">2m ago</div>
+                </div>
+                <div>
+                  <div className="v2-eyebrow mb-1.5">Paths</div>
+                  <div className="v2-mono text-[18px] leading-none text-[var(--v2-brand2)]">3</div>
+                </div>
+                <div>
+                  <div className="v2-eyebrow mb-1.5">Closed</div>
+                  <div className="v2-mono text-[18px] leading-none text-[var(--v2-ink)]">17</div>
+                </div>
+              </div>
+
+              <div className="my-5 h-px bg-[var(--v2-line)]" />
+
+              {/* Next-scan progress row */}
+              <div>
+                <div className="v2-eyebrow mb-2.5">Next scan</div>
+                <div className="flex items-center gap-3">
+                  <div className="h-[3px] flex-1 overflow-hidden rounded-full bg-[var(--v2-line)]">
+                    <div className="h-full w-2/5 rounded-full bg-[var(--v2-brand)]" />
+                  </div>
+                  <span className="v2-mono inline-block animate-pulse text-[12px] text-[var(--v2-ink2)]" style={{ animationDuration: "2400ms" }}>
+                    02:04
+                  </span>
+                </div>
               </div>
             </div>
           </div>
