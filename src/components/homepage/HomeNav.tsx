@@ -42,7 +42,7 @@ export default function HomeNav() {
           top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
           backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
-          background: scrolled ? "rgba(6, 8, 15, 0.72)" : "transparent",
+          background: scrolled ? "rgba(6, 8, 15, 0.92)" : "transparent",
           borderBottom: scrolled ? "1px solid #11151F" : "1px solid transparent",
         }}
       >
