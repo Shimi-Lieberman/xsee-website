@@ -145,7 +145,7 @@ export default function EnginesSection() {
   return (
     <section id="engines" className="hp-section border-t border-[var(--hp-line)]" aria-labelledby="engines-title">
       <div className="hp-container">
-        <div className="mb-14 grid grid-cols-1 gap-10 lg:grid-cols-12">
+        <div className="mb-20 grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <p className="hp-eyebrow mb-6">Platform · 7 engines</p>
             <h2
