@@ -292,6 +292,39 @@
   }
 }
 
+/* ── Hero LIVE monitoring widget ── */
+.v2-polish .hero-live-scan {
+  background: linear-gradient(90deg, transparent, rgba(255, 27, 141, 0.55), transparent);
+  transform: translateX(-100%);
+  animation: v2HeroLiveScan 4.2s var(--v2-ease-premium) infinite;
+}
+
+@keyframes v2HeroLiveScan {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  64%,
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-polish .hero-live-scan {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
 /* ── Hero attack-graph (hg-*) ── */
 @keyframes v2HgFinding {
   0% {
