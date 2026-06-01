@@ -86,7 +86,7 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
         </g>
       </g>
 
-      <g className="hg-label" style={style}>
+      <g className="hg-node-label" style={style}>
         <text
           x={x + 50}
           y={y + 22}

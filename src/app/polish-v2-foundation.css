@@ -435,6 +435,33 @@
   animation: v2HgLabel 12s ease infinite;
 }
 
+/* Node labels appear in lockstep with the node box (22-26%) so the box
+   is never briefly empty. Fades out with the node at 92-100%. */
+@keyframes v2HgNodeLabel {
+  0%,
+  22% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  26% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  92% {
+    opacity: 1;
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.v2-polish .hg-node-label {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: v2HgNodeLabel 12s ease infinite;
+}
+
 /* Signed receipt — appears in CLOSE (79-83%), fades in lockstep with nodes (92-100%) */
 @keyframes v2HgSigned {
   0%,
@@ -979,6 +1006,7 @@
 
   .v2-polish .hg-node,
   .v2-polish .hg-label,
+  .v2-polish .hg-node-label,
   .v2-polish .hg-edge {
     opacity: 1 !important;
     transform: none !important;
