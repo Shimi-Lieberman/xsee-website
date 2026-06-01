@@ -39,20 +39,34 @@ function AICard({
   accent?: boolean;
 }) {
   return (
-    <div className={`hp-card flex h-full flex-col p-8 lg:p-9 ${accent ? "border-[color:rgba(255,27,141,0.4)]" : ""}`}>
-      <div className="mb-8 flex items-center justify-between">
+    <div
+      className={`hp-card hp-ai-card group flex h-full flex-col p-8 lg:p-9 ${
+        accent ? "hp-ai-card--accent" : ""
+      }`}
+    >
+      <div className="flex items-center justify-between">
         <span
-          className={`hp-mono text-[11px] ${accent ? "text-[var(--hp-brand)]" : "text-[var(--hp-ink3)]"}`}
-          style={{ letterSpacing: "0.14em" }}
+          className={`hp-mono text-[12px] ${accent ? "text-[var(--hp-brand)]" : "text-[var(--hp-ink3)]"}`}
+          style={{ letterSpacing: "0.2em" }}
         >
           {n}
         </span>
         {accent ? <span className="hp-pink-dot" aria-hidden /> : null}
       </div>
-      <h3 className="mb-4 text-[20px] font-semibold leading-[1.25] text-[var(--hp-ink)] lg:text-[22px]" style={{ letterSpacing: "-0.02em" }}>
-        {title}
-      </h3>
-      <p className="text-[14px] leading-[1.7] text-[var(--hp-ink2)]">{body}</p>
+      <div
+        className={`mt-5 h-px w-full transition-colors duration-300 ${
+          accent ? "bg-[color:rgba(255,27,141,0.3)]" : "bg-[var(--hp-line)] group-hover:bg-[var(--hp-line2)]"
+        }`}
+      />
+      <div className="mt-9">
+        <h3
+          className="mb-4 text-[20px] font-semibold leading-[1.25] text-[var(--hp-ink)] lg:text-[22px]"
+          style={{ letterSpacing: "-0.02em" }}
+        >
+          {title}
+        </h3>
+        <p className="text-[14px] leading-[1.7] text-[var(--hp-ink2)]">{body}</p>
+      </div>
     </div>
   );
 }
@@ -72,7 +86,7 @@ export default function AiAttackerSection() {
         aria-hidden
       />
       <div className="hp-container relative">
-        <div className="mb-16 grid grid-cols-1 gap-10 lg:mb-20 lg:grid-cols-12">
+        <div className="mb-12 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <p className="hp-eyebrow mb-5">The new threat</p>
             <h2 id="ai-title" className="hp-h-display" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
@@ -80,13 +94,16 @@ export default function AiAttackerSection() {
               <span className="block text-[var(--hp-ink3)]">AI attackers are a different category.</span>
             </h2>
           </div>
-          <div className="lg:col-span-4 lg:col-start-9">
-            <p className="text-[16px] leading-[1.65] text-[var(--hp-ink2)]">
+          <div className="lg:col-span-4 lg:col-start-9 lg:pb-2">
+            <div className="mb-5 h-px w-12 bg-[var(--hp-brand)]" aria-hidden />
+            <p className="text-[16px] leading-[1.65] text-[var(--hp-ink2)] lg:text-[17px]">
               XSEE simulates AI attacker behavior — so you can measure your defenses against the threat that&apos;s
               actually coming. Not the one your SIEM was built for.
             </p>
           </div>
         </div>
+
+        <div className="mb-12 h-px w-full bg-[var(--hp-line)] lg:mb-14" aria-hidden />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 lg:gap-5">
           {CARDS.map((c) => (
