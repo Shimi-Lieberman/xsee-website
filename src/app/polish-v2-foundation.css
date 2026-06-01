@@ -435,6 +435,34 @@
   animation: v2HgLabel 12s ease infinite;
 }
 
+/* Signed receipt — appears in CLOSE (79-83%), fades in lockstep with nodes (92-100%) */
+@keyframes v2HgSigned {
+  0%,
+  79% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  83% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+.v2-polish .hg-signed {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: v2HgSigned 12s ease infinite;
+}
+
 @keyframes v2HgComet {
   0%,
   42% {

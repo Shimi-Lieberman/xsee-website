@@ -349,7 +349,7 @@ export default function AttackGraphCinematic() {
                 </circle>
                 <path id={`edge-path-${i}`} d={d} fill="none" stroke="none" />
 
-                <g className="hg-label" style={{ animationDelay: `${e.delay + 200}ms` }}>
+                <g className="hg-label" style={{ animationDelay: `${e.to.delay}ms` }}>
                   <text
                     x={(x1 + x2) / 2}
                     y={y1 === y2 ? y1 - 14 : (y1 + y2) / 2}
@@ -369,7 +369,7 @@ export default function AttackGraphCinematic() {
             <GraphNode key={n.id} {...n} w={NODE_W} h={NODE_H} />
           ))}
 
-          <g className="hg-label" style={{ animationDelay: "8500ms" }}>
+          <g className="hg-signed">
             <g transform="translate(950, 410)">
               <rect x="0" y="0" width="220" height="76" rx="10" fill="#0F1320" stroke="rgba(16,185,129,0.45)" strokeWidth="1" />
               <circle cx="22" cy="38" r="13" fill="rgba(16,185,129,0.16)" stroke="rgba(16,185,129,0.55)" strokeWidth="1" />
