@@ -253,7 +253,11 @@ export default function AttackGraphCinematic() {
         </div>
       </div>
 
-      <div className="card-dark dotgrid-dark relative overflow-hidden rounded-[14px]" style={{ aspectRatio: "1200 / 520" }}>
+      <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div
+        className="card-dark dotgrid-dark relative mx-auto min-w-[760px] overflow-hidden rounded-[14px] sm:min-w-0"
+        style={{ aspectRatio: "1200 / 520" }}
+      >
         <div
           className="pointer-events-none absolute"
           style={{
@@ -420,6 +424,7 @@ export default function AttackGraphCinematic() {
           <span className="text-[var(--v2-ink4)]">·</span>
           <span>EVIDENCE: AWS CLOUDTRAIL</span>
         </div>
+      </div>
       </div>
     </div>
   );
