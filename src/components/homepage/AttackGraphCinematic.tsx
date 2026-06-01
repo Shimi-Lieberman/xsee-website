@@ -278,6 +278,11 @@ export default function AttackGraphCinematic() {
               <stop offset="0%" stopColor="#FF4FA3" stopOpacity="1" />
               <stop offset="100%" stopColor="#FF1B8D" stopOpacity="0" />
             </radialGradient>
+            <linearGradient id="scanGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#FF1B8D" stopOpacity="0" />
+              <stop offset="65%" stopColor="#FF1B8D" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="#FF4FA3" stopOpacity="0.9" />
+            </linearGradient>
           </defs>
 
           {findings.map((f, i) => (
