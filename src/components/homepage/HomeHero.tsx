@@ -9,7 +9,7 @@ export default function HomeHero() {
   return (
     <section
       id="top"
-      className="v2-polish relative overflow-hidden px-6 pb-20 pt-[120px] lg:px-10 lg:pb-28 lg:pt-[160px]"
+      className="v2-polish relative -mt-10 overflow-hidden px-6 pb-20 pt-6 lg:-mt-14 lg:px-10 lg:pb-28 lg:pt-8"
     >
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
         <div
