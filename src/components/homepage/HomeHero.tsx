@@ -12,7 +12,14 @@ export default function HomeHero() {
       id="top"
       className="v2-polish relative overflow-hidden px-6 pb-20 pt-[104px] lg:px-10 lg:pb-28 lg:pt-[128px]"
     >
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to right, transparent, #000 4%, #000 96%, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, #000 4%, #000 96%, transparent)",
+        }}
+        aria-hidden
+      >
         <div
           className="glow-brand absolute"
           style={{
