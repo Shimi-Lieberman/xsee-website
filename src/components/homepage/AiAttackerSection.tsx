@@ -86,10 +86,7 @@ export default function AiAttackerSection() {
         aria-hidden
       />
       <div className="hp-container relative">
-        <div
-          className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end"
-          style={{ marginBottom: "3.5rem" }}
-        >
+        <div className="mb-14 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
             <p className="hp-eyebrow mb-5">The new threat</p>
             <h2 id="ai-title" className="hp-h-display" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
@@ -106,7 +103,7 @@ export default function AiAttackerSection() {
           </div>
         </div>
 
-        <div className="h-px w-full bg-[var(--hp-line)]" style={{ marginBottom: "3.5rem" }} aria-hidden />
+        <div className="mb-14 h-px w-full bg-[var(--hp-line)]" aria-hidden />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 lg:gap-5">
           {CARDS.map((c) => (
