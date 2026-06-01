@@ -10,7 +10,7 @@ export default function HomeHero() {
   return (
     <section
       id="top"
-      className="v2-polish relative overflow-hidden px-6 pb-20 pt-[104px] lg:px-10 lg:pb-28 lg:pt-[128px]"
+      className="v2-polish relative overflow-hidden px-6 pb-20 pt-3 lg:px-10 lg:pb-28 lg:pt-5"
     >
       <div
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -48,8 +48,8 @@ export default function HomeHero() {
         <div className="grain" />
       </div>
 
-      <div className="relative mx-auto max-w-[1400px]">
-        <div className="mb-8 flex flex-wrap items-center gap-3 lg:mb-10">
+      <div className="relative mx-auto flex max-w-[1400px] flex-col gap-7 lg:gap-9">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--v2-line)] px-3 py-1.5">
             <span className="pink-dot dot-pulse" />
             <span className="v2-mono text-[10.5px] tracking-[0.14em] text-[var(--v2-ink2)]">v1.5 · AUTONOMOUS AGENTS LIVE</span>
@@ -75,8 +75,8 @@ export default function HomeHero() {
           </span>
         </h1>
 
-        <div className="mt-12 grid grid-cols-1 items-start gap-10 lg:mt-16 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7">
+        <div className="grid grid-cols-1 items-start gap-10 pt-1 lg:grid-cols-12 lg:gap-12 lg:pt-2">
+          <div className="flex flex-col gap-8 lg:col-span-7">
             <p
               className="text-[18px] leading-[1.55] text-[var(--v2-ink2)] lg:text-[20px]"
               style={{ textWrap: "pretty", maxWidth: "54ch" }}
@@ -86,7 +86,7 @@ export default function HomeHero() {
               and a signed certificate the moment each path is closed.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/free-scan"
                 className="btn-pink inline-flex h-12 items-center gap-2 rounded-full px-5 text-[14.5px] font-medium text-white"
@@ -105,7 +105,7 @@ export default function HomeHero() {
               </Link>
             </div>
 
-            <div className="v2-mono mt-10 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] tracking-[0.14em] text-[var(--v2-ink3)]">
+            <div className="v2-mono flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] tracking-[0.14em] text-[var(--v2-ink3)]">
               <span>2 MIN TO CONNECT</span>
               <span className="text-[var(--v2-ink4)]">·</span>
               <span>READ-ONLY IAM</span>
@@ -123,10 +123,10 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="mt-24 lg:mt-32">
-          <div className="mb-7 flex items-end justify-between">
-            <div>
-              <div className="v2-eyebrow mb-2">Path · live evidence</div>
+        <div className="flex flex-col gap-6 pt-10 lg:gap-7 lg:pt-16">
+          <div className="flex items-end justify-between">
+            <div className="flex flex-col gap-2">
+              <div className="v2-eyebrow">Path · live evidence</div>
               <h2 className="display text-[22px] font-medium tracking-tight text-[var(--v2-ink)] lg:text-[26px]">
                 Watch a breach path build itself.
               </h2>
@@ -139,7 +139,7 @@ export default function HomeHero() {
 
           <AttackGraphCinematic />
 
-          <div className="v2-mono mt-6 flex flex-wrap items-center justify-between gap-4 text-[11.5px] text-[var(--v2-ink3)]">
+          <div className="v2-mono flex flex-wrap items-center justify-between gap-4 text-[11.5px] text-[var(--v2-ink3)]">
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               <span>
                 <span className="text-[var(--v2-ink)]">1.2s</span> · scan-to-proof
