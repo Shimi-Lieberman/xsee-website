@@ -191,8 +191,13 @@ export default function Pricing() {
         `}</style>
         <div className="section-head reveal">
           <span className="section-eyebrow section-eyebrow-dark">Pricing</span>
-          <h2 className="display-lg" style={{ color: "#0f172a" }}>
-            See your real attack paths in 15 minutes — no credit card, no sales call, no theory.
+          <h2 className="display-lg" style={{ color: "var(--hp-ink)" }}>
+            See your real attack paths{" "}
+            <span style={{ color: "var(--pink)" }}>in 15 minutes</span>
+            <span style={{ color: "var(--hp-ink2)" }}>
+              {" "}
+              — no credit card, no sales call, no theory.
+            </span>
           </h2>
           <div className="section-rule" />
         </div>

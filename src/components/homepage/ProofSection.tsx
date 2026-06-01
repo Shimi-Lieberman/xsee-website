@@ -14,13 +14,75 @@ const EVIDENCE = [
 
 const TABS = ["Overview", "Engineering", "Evidence", "Audit"] as const;
 
+type GNode = { x: number; y: number; kind: string; label: string; id: string; target?: boolean };
+
+const NODE_W = 150;
+const NODE_H = 66;
+
+function GraphCard({ n }: { n: GNode }) {
+  const cardFill = n.target ? "#1A0E1A" : "#0F1320";
+  const cardStroke = n.target ? "rgba(255,27,141,0.55)" : "var(--hp-line)";
+  return (
+    <g>
+      {n.target && (
+        <rect
+          x={n.x - 8}
+          y={n.y - 8}
+          width={NODE_W + 16}
+          height={NODE_H + 16}
+          rx={16}
+          fill="none"
+          stroke="rgba(255,27,141,0.18)"
+        />
+      )}
+      <rect
+        x={n.x}
+        y={n.y}
+        width={NODE_W}
+        height={NODE_H}
+        rx={10}
+        fill={cardFill}
+        stroke={cardStroke}
+        strokeWidth={1}
+        filter={n.target ? "url(#proofTargetShadow)" : "url(#proofNodeShadow)"}
+      />
+      <text
+        x={n.x + 14}
+        y={n.y + 20}
+        fill="var(--hp-ink3)"
+        fontFamily="var(--font-geist-mono), Geist Mono, monospace"
+        fontSize={9.5}
+        letterSpacing={1}
+      >
+        {n.kind}
+      </text>
+      <text x={n.x + 14} y={n.y + 38} fill="var(--hp-ink)" fontSize={13} fontWeight={500}>
+        {n.label}
+      </text>
+      <text
+        x={n.x + 14}
+        y={n.y + 54}
+        fill="var(--hp-ink3)"
+        fontFamily="var(--font-geist-mono), Geist Mono, monospace"
+        fontSize={10.5}
+      >
+        {n.id}
+      </text>
+      <circle cx={n.x + NODE_W - 9} cy={n.y + 11} r={3} fill="#FF1B8D" />
+      <circle cx={n.x + NODE_W - 9} cy={n.y + 11} r={6.5} fill="none" stroke="rgba(255,27,141,0.25)" />
+    </g>
+  );
+}
+
 function AttackGraph() {
-  const nodes = [
-    { x: 16, y: 24, kind: "INTERNET", label: "Internet", id: "0.0.0.0/0", crit: true },
-    { x: 200, y: 24, kind: "ALB", label: "Public ALB", id: "alb-prod-edge", crit: true },
-    { x: 384, y: 24, kind: "EC2", label: "EC2 Instance", id: "i-0a3f2c8d", crit: true },
-    { x: 568, y: 24, kind: "IAM ROLE", label: "svc-app-prod", id: "role/svc-app", crit: true },
-    { x: 752, y: 78, kind: "RDS", label: "prod-postgres", id: "prod-postgres-01", crit: true },
+  // Funnel layout: a top row of four hops draining diagonally into the
+  // production database, which sits centered at the bottom as the focal point.
+  const nodes: GNode[] = [
+    { x: 8, y: 40, kind: "INTERNET", label: "Internet", id: "0.0.0.0/0" },
+    { x: 196, y: 40, kind: "ALB", label: "Public ALB", id: "alb-prod-edge" },
+    { x: 384, y: 40, kind: "EC2", label: "EC2 Instance", id: "i-0a3f2c8d" },
+    { x: 572, y: 40, kind: "IAM ROLE", label: "svc-app-prod", id: "role/svc-app" },
+    { x: 305, y: 232, kind: "RDS", label: "prod-postgres", id: "prod-postgres-01", target: true },
   ];
   const edges: [number, number][] = [
     [0, 1],
@@ -28,53 +90,73 @@ function AttackGraph() {
     [2, 3],
     [3, 4],
   ];
-  const w = 920;
-  const h = 200;
-  const nx = (n: (typeof nodes)[0]) => n.x + 74;
-  const ny = (n: (typeof nodes)[0]) => n.y + 22;
+  const cx = (n: GNode) => n.x + NODE_W / 2;
 
   return (
-    <div className="relative hp-dotgrid" style={{ width: "100%", height: h + 48 }}>
-      <svg viewBox={`0 0 ${w} ${h + 48}`} preserveAspectRatio="none" className="absolute inset-0 w-full h-full" aria-hidden>
+    <div className="hp-dotgrid w-full">
+      <svg viewBox="0 0 730 330" className="w-full h-auto" aria-hidden>
         <defs>
-          <marker id="gh-arrow-pink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <marker
+            id="gh-arrow-pink"
+            viewBox="0 0 10 10"
+            refX="8"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
             <path d="M0 0 L10 5 L0 10 z" fill="#FF1B8D" />
           </marker>
+          <filter id="proofNodeShadow" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="6" stdDeviation="10" floodColor="#04060C" floodOpacity="0.5" />
+          </filter>
+          <filter id="proofTargetShadow" x="-60%" y="-60%" width="220%" height="220%">
+            <feDropShadow dx="0" dy="6" stdDeviation="14" floodColor="#FF1B8D" floodOpacity="0.3" />
+          </filter>
         </defs>
+
         {edges.map(([a, b], i) => {
           const A = nodes[a];
           const B = nodes[b];
-          const x1 = nx(A);
-          const y1 = ny(A);
-          const x2 = nx(B);
-          const y2 = ny(B);
-          const cx = (x1 + x2) / 2;
-          const d = `M ${x1 + 50} ${y1} C ${cx} ${y1}, ${cx} ${y2}, ${x2 - 74} ${y2}`;
+          if (B.target) {
+            // Diagonal drop from IAM's bottom edge into the RDS top edge.
+            const x1 = cx(A);
+            const y1 = A.y + NODE_H;
+            const x2 = cx(B);
+            const y2 = B.y;
+            const d = `M ${x1} ${y1} C ${x1} ${(y1 + y2) / 2}, ${x2} ${(y1 + y2) / 2}, ${x2} ${y2 - 6}`;
+            return (
+              <path
+                key={i}
+                d={d}
+                fill="none"
+                stroke={BRAND}
+                strokeWidth={1.4}
+                strokeOpacity={0.85}
+                markerEnd="url(#gh-arrow-pink)"
+              />
+            );
+          }
+          // Straight horizontal hop along the top row.
+          const y = A.y + NODE_H / 2;
+          const d = `M ${A.x + NODE_W} ${y} L ${B.x - 6} ${y}`;
           return (
-            <path key={i} d={d} fill="none" stroke={BRAND} strokeWidth={1.4} strokeOpacity={0.85} markerEnd="url(#gh-arrow-pink)" />
+            <path
+              key={i}
+              d={d}
+              fill="none"
+              stroke={BRAND}
+              strokeWidth={1.4}
+              strokeOpacity={0.85}
+              markerEnd="url(#gh-arrow-pink)"
+            />
           );
         })}
-      </svg>
-      <div className="absolute inset-0">
+
         {nodes.map((n) => (
-          <div
-            key={n.id}
-            className={`absolute rounded-lg border bg-[var(--hp-elevated)] px-2.5 py-2 w-[148px] ${
-              n.crit ? "border-[color:rgba(255,27,141,0.35)]" : "border-[var(--hp-line)]"
-            }`}
-            style={{ left: n.x, top: n.y }}
-          >
-            <div className="hp-eyebrow text-[9.5px] leading-none mb-1">{n.kind}</div>
-            <div className="text-[12px] font-medium text-[var(--hp-ink)] leading-tight truncate">{n.label}</div>
-            <div className="hp-mono text-[10px] text-[var(--hp-ink3)] mt-0.5 truncate">{n.id}</div>
-            {n.crit && (
-              <div className="absolute -top-1.5 -right-1.5">
-                <span className="hp-pink-dot" />
-              </div>
-            )}
-          </div>
+          <GraphCard key={n.id} n={n} />
         ))}
-      </div>
+      </svg>
     </div>
   );
 }
@@ -200,7 +282,7 @@ export default function ProofSection() {
           Connect a read-only IAM role. XSEE builds the attack graph, validates each hop against the live AWS API, and
           writes a signed Receipt for every path that reaches production data.
         </p>
-        <div className="mt-14 hp-card overflow-hidden">
+        <div className="mt-16 hp-card overflow-hidden">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--hp-line)] bg-[var(--hp-base)]/40">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5" aria-hidden>
@@ -218,17 +300,15 @@ export default function ProofSection() {
             </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-5 lg:items-stretch">
-            <div className="lg:col-span-3 border-b lg:border-b-0 lg:border-r border-[var(--hp-line)]">
+            <div className="flex flex-col lg:col-span-3 border-b lg:border-b-0 lg:border-r border-[var(--hp-line)]">
               <div className="px-5 py-3 border-b border-[var(--hp-line)] flex items-center justify-between">
                 <p className="hp-eyebrow text-[var(--hp-ink3)]">Attack graph · prod-eu-west-1</p>
                 <div className="flex items-center gap-2 hp-mono text-[11px] text-[var(--hp-ink3)]">
                   <span className="hp-pink-dot" />3 critical paths
                 </div>
               </div>
-              <div className="p-4 lg:p-6 overflow-x-auto">
-                <div className="min-w-[920px]">
-                  <AttackGraph />
-                </div>
+              <div className="flex flex-1 items-center p-4 lg:p-6">
+                <AttackGraph />
               </div>
             </div>
             <div className="lg:col-span-2 bg-[var(--hp-elevated)]/40">

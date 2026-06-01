@@ -50,6 +50,63 @@
   border-color: var(--hp-line);
 }
 
+/* AI-attacker feature cards — top accent rule + hover lift for more presence */
+.hp-page .hp-ai-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 250px;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.hp-page .hp-ai-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hp-line2), transparent);
+  opacity: 0.6;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.hp-page .hp-ai-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--hp-line2);
+  background: var(--hp-overlay);
+}
+
+.hp-page .hp-ai-card:hover::before {
+  opacity: 1;
+}
+
+.hp-page .hp-ai-card--accent {
+  border-color: rgba(255, 27, 141, 0.4);
+}
+
+.hp-page .hp-ai-card--accent::before {
+  background: linear-gradient(90deg, transparent, var(--hp-brand), transparent);
+  opacity: 0.85;
+}
+
+.hp-page .hp-ai-card--accent:hover {
+  border-color: rgba(255, 27, 141, 0.6);
+  box-shadow: 0 18px 48px rgba(255, 27, 141, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-page .hp-ai-card {
+    transition: none;
+  }
+  .hp-page .hp-ai-card:hover {
+    transform: none;
+  }
+}
+
 .hp-page .hp-dotgrid {
   background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 18px 18px;

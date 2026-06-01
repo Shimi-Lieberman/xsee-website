@@ -211,7 +211,7 @@ export default function ZeroWriteSection() {
           an attacker inherits the keys to your cloud. XSEE is different by design — we never hold write access, ever.
         </p>
 
-        <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2">
+        <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
           <RoleCard
             tag="XSEE · READ-ONLY"
             status="ALWAYS ACTIVE"

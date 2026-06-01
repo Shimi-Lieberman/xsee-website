@@ -30,24 +30,22 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
           <circle
             cx={cx}
             cy={cy}
-            r="58"
+            r="52"
             className="hg-halo hg-halo-1"
             fill="none"
             stroke="#FF1B8D"
             strokeWidth="1.5"
             opacity="0"
-            style={{ transformOrigin: `${cx}px ${cy}px` }}
           />
           <circle
             cx={cx}
             cy={cy}
-            r="58"
+            r="52"
             className="hg-halo hg-halo-2"
             fill="none"
             stroke="#FF1B8D"
             strokeWidth="1"
             opacity="0"
-            style={{ transformOrigin: `${cx}px ${cy}px` }}
           />
         </>
       )}
@@ -62,6 +60,7 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
           fill={isTarget ? "#1A0E1A" : "#0F1320"}
           stroke={isTarget ? "rgba(255,27,141,0.55)" : "#262C3E"}
           strokeWidth="1"
+          filter={isTarget ? "url(#targetShadow)" : "url(#nodeShadow)"}
         />
         <rect x={x} y={y} width={w} height="1" fill="rgba(255,255,255,0.06)" rx="10" />
         <rect
@@ -86,7 +85,7 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
         </g>
       </g>
 
-      <g className="hg-label" style={style}>
+      <g className="hg-node-label" style={style}>
         <text
           x={x + 50}
           y={y + 22}
@@ -127,8 +126,8 @@ export default function AttackGraphCinematic() {
   const nodes = [
     {
       id: "0.0.0.0/0",
-      x: 60,
-      y: 220,
+      x: 96,
+      y: 221,
       kind: "INTERNET",
       label: "Public",
       delay: 0,
@@ -141,8 +140,8 @@ export default function AttackGraphCinematic() {
     },
     {
       id: "alb-prod-edge",
-      x: 288,
-      y: 220,
+      x: 374,
+      y: 221,
       kind: "ALB",
       label: "Edge LB",
       delay: 150,
@@ -155,8 +154,8 @@ export default function AttackGraphCinematic() {
     },
     {
       id: "i-0a3f2c8d",
-      x: 516,
-      y: 160,
+      x: 652,
+      y: 150,
       kind: "EC2",
       label: "App server",
       delay: 300,
@@ -169,8 +168,8 @@ export default function AttackGraphCinematic() {
     },
     {
       id: "svc-app-prod",
-      x: 516,
-      y: 290,
+      x: 652,
+      y: 292,
       kind: "IAM ROLE",
       label: "svc-app",
       delay: 450,
@@ -183,8 +182,8 @@ export default function AttackGraphCinematic() {
     },
     {
       id: "prod-postgres",
-      x: 744,
-      y: 220,
+      x: 930,
+      y: 221,
       kind: "TARGET",
       label: "Prod DB",
       delay: 600,
@@ -253,7 +252,11 @@ export default function AttackGraphCinematic() {
         </div>
       </div>
 
-      <div className="card-dark dotgrid-dark relative overflow-hidden rounded-[14px]" style={{ aspectRatio: "1200 / 520" }}>
+      <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div
+        className="card-dark dotgrid-dark relative mx-auto min-w-[760px] overflow-hidden rounded-[14px] sm:min-w-0"
+        style={{ aspectRatio: "1200 / 520" }}
+      >
         <div
           className="pointer-events-none absolute"
           style={{
@@ -278,6 +281,17 @@ export default function AttackGraphCinematic() {
               <stop offset="0%" stopColor="#FF4FA3" stopOpacity="1" />
               <stop offset="100%" stopColor="#FF1B8D" stopOpacity="0" />
             </radialGradient>
+            <linearGradient id="scanGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="#FF1B8D" stopOpacity="0" />
+              <stop offset="65%" stopColor="#FF1B8D" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="#FF4FA3" stopOpacity="0.9" />
+            </linearGradient>
+            <filter id="nodeShadow" x="-40%" y="-40%" width="180%" height="180%">
+              <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#04060C" floodOpacity="0.55" />
+            </filter>
+            <filter id="targetShadow" x="-60%" y="-60%" width="220%" height="220%">
+              <feDropShadow dx="0" dy="8" stdDeviation="16" floodColor="#FF1B8D" floodOpacity="0.28" />
+            </filter>
           </defs>
 
           {findings.map((f, i) => (
@@ -343,19 +357,6 @@ export default function AttackGraphCinematic() {
                   </animateMotion>
                 </circle>
                 <path id={`edge-path-${i}`} d={d} fill="none" stroke="none" />
-
-                <g className="hg-label" style={{ animationDelay: `${e.delay + 200}ms` }}>
-                  <text
-                    x={(x1 + x2) / 2}
-                    y={y1 === y2 ? y1 - 14 : (y1 + y2) / 2}
-                    textAnchor="middle"
-                    fill="#A6ADC1"
-                    fontFamily="var(--font-geist-mono), Geist Mono, monospace"
-                    fontSize="10.5"
-                  >
-                    {e.call}
-                  </text>
-                </g>
               </g>
             );
           })}
@@ -364,8 +365,49 @@ export default function AttackGraphCinematic() {
             <GraphNode key={n.id} {...n} w={NODE_W} h={NODE_H} />
           ))}
 
-          <g className="hg-label" style={{ animationDelay: "8500ms" }}>
-            <g transform="translate(950, 410)">
+          {/* Edge labels drawn ABOVE nodes as chips so they never get clipped
+              or struck through by the connector lines. */}
+          {edges.map((e, i) => {
+            const x1 = NCX(e.from);
+            const y1 = NCY(e.from);
+            const x2 = NCX(e.to);
+            const y2 = NCY(e.to);
+            // Even column spacing means the midpoint clears both nodes; the
+            // target hop just picks up a pink tint below.
+            const toTarget = "isTarget" in e.to && e.to.isTarget === true;
+            const lx = (x1 + x2) / 2;
+            const ly = y1 === y2 ? y1 : (y1 + y2) / 2;
+            const chipW = e.call.length * 6.3 + 18;
+            const chipH = 20;
+
+            return (
+              <g key={`lbl-${i}`} className="hg-label" style={{ animationDelay: `${e.to.delay}ms` }}>
+                <rect
+                  x={lx - chipW / 2}
+                  y={ly - chipH / 2}
+                  width={chipW}
+                  height={chipH}
+                  rx={chipH / 2}
+                  fill="#0B0F1A"
+                  stroke={toTarget ? "rgba(255,27,141,0.4)" : "rgba(255,255,255,0.1)"}
+                  strokeWidth="1"
+                />
+                <text
+                  x={lx}
+                  y={ly + 3.5}
+                  textAnchor="middle"
+                  fill={toTarget ? "#FF8FC2" : "#C2C8D6"}
+                  fontFamily="var(--font-geist-mono), Geist Mono, monospace"
+                  fontSize="10.5"
+                >
+                  {e.call}
+                </text>
+              </g>
+            );
+          })}
+
+          <g className="hg-signed">
+            <g transform="translate(892, 402)">
               <rect x="0" y="0" width="220" height="76" rx="10" fill="#0F1320" stroke="rgba(16,185,129,0.45)" strokeWidth="1" />
               <circle cx="22" cy="38" r="13" fill="rgba(16,185,129,0.16)" stroke="rgba(16,185,129,0.55)" strokeWidth="1" />
               <path
@@ -415,6 +457,7 @@ export default function AttackGraphCinematic() {
           <span className="text-[var(--v2-ink4)]">·</span>
           <span>EVIDENCE: AWS CLOUDTRAIL</span>
         </div>
+      </div>
       </div>
     </div>
   );

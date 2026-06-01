@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 
 const LOGIN_URL = "https://app.xsee.io/login";
@@ -22,6 +22,7 @@ const ANNOUNCEMENT_OFFSET_PX = 36;
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
   const [pastAnnouncement, setPastAnnouncement] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -34,15 +35,24 @@ export default function HomeNav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close the mobile menu when resizing up to desktop
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) setMenuOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <>
       <header
-        className="v2-polish fixed inset-x-0 z-50 transition-all duration-300"
+        className="v2-polish fixed inset-x-0 z-50 overflow-x-clip transition-all duration-300"
         style={{
           top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
           backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
-          background: scrolled ? "rgba(6, 8, 15, 0.72)" : "transparent",
+          background: scrolled ? "rgba(6, 8, 15, 0.92)" : "transparent",
           borderBottom: scrolled ? "1px solid #11151F" : "1px solid transparent",
         }}
       >
@@ -86,7 +96,51 @@ export default function HomeNav() {
               Free breach report
               <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
             </Link>
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav-panel"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--v2-line)] text-[var(--v2-ink2)] transition-colors duration-200 hover:text-[var(--v2-ink)] md:hidden"
+            >
+              {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
+            </button>
           </div>
+        </div>
+
+        {/* Mobile slide-down panel */}
+        <div
+          id="mobile-nav-panel"
+          className="overflow-hidden border-[var(--v2-line)] transition-[max-height,opacity] duration-300 ease-out md:hidden"
+          style={{
+            maxHeight: menuOpen ? 320 : 0,
+            opacity: menuOpen ? 1 : 0,
+            borderTopWidth: menuOpen ? 1 : 0,
+            background: "rgba(6, 8, 15, 0.98)",
+            backdropFilter: "saturate(160%) blur(14px)",
+            WebkitBackdropFilter: "saturate(160%) blur(14px)",
+          }}
+        >
+          <nav className="mx-auto flex max-w-[1400px] flex-col gap-1 px-6 py-4" aria-label="Mobile">
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-3 py-3 text-[15px] text-[var(--v2-ink2)] transition-colors duration-200 hover:bg-[var(--v2-line)] hover:text-[var(--v2-ink)]"
+              >
+                {label}
+              </Link>
+            ))}
+            <Link
+              href={LOGIN_URL}
+              onClick={() => setMenuOpen(false)}
+              className="mt-1 rounded-lg border-t border-[var(--v2-line)] px-3 pb-3 pt-4 text-[15px] text-[var(--v2-ink2)] transition-colors duration-200 hover:text-[var(--v2-ink)]"
+            >
+              Sign in
+            </Link>
+          </nav>
         </div>
       </header>
       <div className="h-[64px] shrink-0" aria-hidden />

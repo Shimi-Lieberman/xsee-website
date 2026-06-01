@@ -101,9 +101,9 @@ function ProofLoopStage() {
   };
 
   return (
-    <div className="relative w-full" style={{ aspectRatio: '1200 / 620' }}>
+    <div className="relative w-full" style={{ aspectRatio: '1200 / 712' }}>
       <svg
-        viewBox="0 0 1200 620"
+        viewBox="0 0 1200 712"
         className="absolute inset-0 w-full h-full"
         preserveAspectRatio="xMidYMid meet"
       >
@@ -130,7 +130,7 @@ function ProofLoopStage() {
             <stop offset="100%" stopColor="white" stopOpacity="0"/>
           </linearGradient>
           <mask id="plCloudMask">
-            <rect x="0" y="0" width="440" height="620" fill="url(#plCloudFade)"/>
+            <rect x="0" y="0" width="440" height="712" fill="url(#plCloudFade)"/>
           </mask>
           {/* Subtle dot pattern for cert backing */}
           <pattern id="plCertGrid" width="6" height="6" patternUnits="userSpaceOnUse">
@@ -337,8 +337,8 @@ function ProofLoopStage() {
           </text>
         </g>
 
-        {/* ─── Phase 4: Certificate — lands below the paths, doesn't overlap ─── */}
-        <g transform="translate(600, 555)" className="pl-cert-wrap">
+        {/* ─── Phase 4: Certificate — lands in its own lane below the paths ─── */}
+        <g transform="translate(600, 588)" className="pl-cert-wrap">
           <g className="pl-cert">
             {/* Backing card */}
             <rect x="-260" y="-44" width="520" height="88" rx="10" fill="#0C1320" stroke="#FF1B8D" strokeOpacity="0.55" strokeWidth="1.4"/>
@@ -425,7 +425,8 @@ function ProofLoopStage() {
               <span className="hp-mono text-[10.5px] text-[var(--hp-brand)] shrink-0 mt-0.5" style={{ letterSpacing: '0.16em' }}>{p.i}</span>
               <span className="flex-1">
                 <span className="text-[15px] text-[var(--hp-ink)] leading-[1.45]" style={{ letterSpacing: '-0.005em' }}>{p.text}</span>
-                <span className="text-[12px] text-[var(--hp-ink3)] ml-2 hp-mono" style={{ letterSpacing: "0.04em" }}>
+                <span className="text-[var(--hp-ink4)] mx-2 select-none" aria-hidden="true">·</span>
+                <span className="text-[12px] text-[var(--hp-ink3)] hp-mono" style={{ letterSpacing: "0.04em" }}>
                   {p.sub}
                 </span>
               </span>

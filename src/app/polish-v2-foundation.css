@@ -152,31 +152,35 @@
 }
 
 .v2-polish .pink-dot {
+  --dot-glow: 255, 27, 141;
   background: var(--v2-brand);
-  box-shadow: 0 0 0 4px rgba(255, 27, 141, 0.12);
+  box-shadow: 0 0 0 4px rgba(var(--dot-glow), 0.12);
 }
 
 .v2-polish .green-dot {
+  --dot-glow: 16, 185, 129;
   background: var(--v2-ok);
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12);
+  box-shadow: 0 0 0 4px rgba(var(--dot-glow), 0.12);
 }
 
 .v2-polish .amber-dot {
+  --dot-glow: 245, 158, 11;
   background: var(--v2-warn);
-  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.12);
+  box-shadow: 0 0 0 4px rgba(var(--dot-glow), 0.12);
 }
 
 .v2-polish .dot-pulse {
   animation: v2DotPulse 2.2s ease-in-out infinite;
 }
 
+/* Tone-aware: pulses the dot's own color via --dot-glow (pink/green/amber). */
 @keyframes v2DotPulse {
   0%,
   100% {
-    box-shadow: 0 0 0 4px rgba(255, 27, 141, 0.1);
+    box-shadow: 0 0 0 4px rgba(var(--dot-glow, 255, 27, 141), 0.12);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(255, 27, 141, 0.04);
+    box-shadow: 0 0 0 8px rgba(var(--dot-glow, 255, 27, 141), 0.03);
   }
 }
 
@@ -279,6 +283,20 @@
   transform: translateY(0);
 }
 
+/* ── Hero on-load entrance (staggered fade-up) ── */
+.v2-polish .hero-rise {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: v2HeroRise 0.9s var(--v2-ease-premium) both;
+}
+
+@keyframes v2HeroRise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ── Section padding helper ── */
 .v2-polish .v2-sec-pad {
   padding-top: var(--v2-sec-pad-y);
@@ -289,6 +307,39 @@
   .v2-polish .v2-sec-pad {
     padding-top: var(--v2-sec-pad-y-lg);
     padding-bottom: var(--v2-sec-pad-y-lg);
+  }
+}
+
+/* ── Hero LIVE monitoring widget ── */
+.v2-polish .hero-live-scan {
+  background: linear-gradient(90deg, transparent, rgba(255, 27, 141, 0.55), transparent);
+  transform: translateX(-100%);
+  animation: v2HeroLiveScan 4.2s var(--v2-ease-premium) infinite;
+}
+
+@keyframes v2HeroLiveScan {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  64%,
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-polish .hero-live-scan {
+    animation: none !important;
+    opacity: 0 !important;
   }
 }
 
@@ -400,6 +451,61 @@
   transform-origin: center;
   transform-box: fill-box;
   animation: v2HgLabel 12s ease infinite;
+}
+
+/* Node labels appear in lockstep with the node box (22-26%) so the box
+   is never briefly empty. Fades out with the node at 92-100%. */
+@keyframes v2HgNodeLabel {
+  0%,
+  22% {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  26% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  92% {
+    opacity: 1;
+  }
+  98%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.v2-polish .hg-node-label {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: v2HgNodeLabel 12s ease infinite;
+}
+
+/* Signed receipt — appears in CLOSE (79-83%), fades in lockstep with nodes (92-100%) */
+@keyframes v2HgSigned {
+  0%,
+  79% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  83% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  98%,
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+}
+
+.v2-polish .hg-signed {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: v2HgSigned 12s ease infinite;
 }
 
 @keyframes v2HgComet {
@@ -918,6 +1024,7 @@
 
   .v2-polish .hg-node,
   .v2-polish .hg-label,
+  .v2-polish .hg-node-label,
   .v2-polish .hg-edge {
     opacity: 1 !important;
     transform: none !important;
@@ -936,6 +1043,12 @@
   .v2-polish .v2-reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .v2-polish .hero-rise {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
   }
 
   .v2-polish .num-strike::after {
