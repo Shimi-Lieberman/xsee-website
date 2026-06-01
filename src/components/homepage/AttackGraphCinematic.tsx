@@ -30,24 +30,22 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
           <circle
             cx={cx}
             cy={cy}
-            r="58"
+            r="52"
             className="hg-halo hg-halo-1"
             fill="none"
             stroke="#FF1B8D"
             strokeWidth="1.5"
             opacity="0"
-            style={{ transformOrigin: `${cx}px ${cy}px` }}
           />
           <circle
             cx={cx}
             cy={cy}
-            r="58"
+            r="52"
             className="hg-halo hg-halo-2"
             fill="none"
             stroke="#FF1B8D"
             strokeWidth="1"
             opacity="0"
-            style={{ transformOrigin: `${cx}px ${cy}px` }}
           />
         </>
       )}
@@ -352,19 +350,6 @@ export default function AttackGraphCinematic() {
                   </animateMotion>
                 </circle>
                 <path id={`edge-path-${i}`} d={d} fill="none" stroke="none" />
-
-                <g className="hg-label" style={{ animationDelay: `${e.to.delay}ms` }}>
-                  <text
-                    x={(x1 + x2) / 2}
-                    y={y1 === y2 ? y1 - 14 : (y1 + y2) / 2}
-                    textAnchor="middle"
-                    fill="#A6ADC1"
-                    fontFamily="var(--font-geist-mono), Geist Mono, monospace"
-                    fontSize="10.5"
-                  >
-                    {e.call}
-                  </text>
-                </g>
               </g>
             );
           })}
@@ -372,6 +357,48 @@ export default function AttackGraphCinematic() {
           {nodes.map((n) => (
             <GraphNode key={n.id} {...n} w={NODE_W} h={NODE_H} />
           ))}
+
+          {/* Edge labels drawn ABOVE nodes as chips so they never get clipped
+              or struck through by the connector lines. */}
+          {edges.map((e, i) => {
+            const x1 = NCX(e.from);
+            const y1 = NCY(e.from);
+            const x2 = NCX(e.to);
+            const y2 = NCY(e.to);
+            // Bias the label toward the source on the final (target) hop so the
+            // chip stays clear of the Prod DB node.
+            const toTarget = "isTarget" in e.to && e.to.isTarget === true;
+            const t = toTarget ? 0.4 : 0.5;
+            const lx = x1 + (x2 - x1) * t;
+            const ly = y1 === y2 ? y1 : y1 + (y2 - y1) * t;
+            const chipW = e.call.length * 6.3 + 18;
+            const chipH = 20;
+
+            return (
+              <g key={`lbl-${i}`} className="hg-label" style={{ animationDelay: `${e.to.delay}ms` }}>
+                <rect
+                  x={lx - chipW / 2}
+                  y={ly - chipH / 2}
+                  width={chipW}
+                  height={chipH}
+                  rx={chipH / 2}
+                  fill="#0B0F1A"
+                  stroke={toTarget ? "rgba(255,27,141,0.4)" : "rgba(255,255,255,0.1)"}
+                  strokeWidth="1"
+                />
+                <text
+                  x={lx}
+                  y={ly + 3.5}
+                  textAnchor="middle"
+                  fill={toTarget ? "#FF8FC2" : "#C2C8D6"}
+                  fontFamily="var(--font-geist-mono), Geist Mono, monospace"
+                  fontSize="10.5"
+                >
+                  {e.call}
+                </text>
+              </g>
+            );
+          })}
 
           <g className="hg-signed">
             <g transform="translate(950, 410)">
