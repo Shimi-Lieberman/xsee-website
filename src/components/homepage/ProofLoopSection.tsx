@@ -425,7 +425,8 @@ function ProofLoopStage() {
               <span className="hp-mono text-[10.5px] text-[var(--hp-brand)] shrink-0 mt-0.5" style={{ letterSpacing: '0.16em' }}>{p.i}</span>
               <span className="flex-1">
                 <span className="text-[15px] text-[var(--hp-ink)] leading-[1.45]" style={{ letterSpacing: '-0.005em' }}>{p.text}</span>
-                <span className="text-[12px] text-[var(--hp-ink3)] ml-2 hp-mono" style={{ letterSpacing: "0.04em" }}>
+                <span className="text-[var(--hp-ink4)] mx-2 select-none" aria-hidden="true">·</span>
+                <span className="text-[12px] text-[var(--hp-ink3)] hp-mono" style={{ letterSpacing: "0.04em" }}>
                   {p.sub}
                 </span>
               </span>
