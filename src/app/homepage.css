@@ -17,8 +17,8 @@
   --hp-ok: #10b981;
 
   /* Section rhythm — single scale (handoff sec-pad) */
-  --sec-pad-y: 112px;
-  --sec-pad-y-lg: 144px;
+  --sec-pad-y: 120px;
+  --sec-pad-y-lg: 168px;
   --head-gap: 32px;
   --eyebrow-gap: 20px;
   --body-gap: 56px;
