@@ -169,7 +169,14 @@ export default function Pricing() {
   );
 
   return (
-    <section className="section sec-light animate-on-scroll" style={{ background: "transparent" }} id="pricing">
+    <section
+      className="section sec-light animate-on-scroll"
+      style={{
+        background:
+          "radial-gradient(120% 80% at 50% 0%, rgba(255,27,141,0.07), transparent 60%), linear-gradient(180deg, #ffffff 0%, #fdf6fa 100%)",
+      }}
+      id="pricing"
+    >
       <div className="max-w-6xl mx-auto w-full px-6 pricing-inner">
         <style>{`
           .pricing-page-stats {
