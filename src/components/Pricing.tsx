@@ -181,18 +181,20 @@ export default function Pricing() {
             background: rgba(233,30,140,0.08);
             border: 1px solid rgba(233,30,140,0.2);
           }
-          .pr-head h2 {
-            color: #0b1220 !important;
-            font-size: clamp(2rem, 4.4vw, 3.1rem);
+          .pr-head .pr-title {
+            color: #0b1220;
+            font-family: var(--font-sans);
+            font-size: clamp(1.9rem, 3.4vw, 2.85rem);
             font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.08;
-            max-width: 20ch;
+            letter-spacing: -0.025em;
+            line-height: 1.14;
+            max-width: 24ch;
             margin: 22px auto 0;
             text-wrap: balance;
+            scroll-margin-top: 120px;
           }
-          .pr-head .pr-accent { color: #ff1f8f; }
-          .pr-head .pr-sub { color: #475569; font-weight: 700; }
+          .pr-head .pr-title .pr-accent { color: #ff1f8f; }
+          .pr-head .pr-title .pr-sub { color: #475569; font-weight: 700; }
 
           .pr-grid {
             display: grid;
@@ -368,9 +370,8 @@ export default function Pricing() {
 
         <div className="section-head reveal pr-head" style={{ marginBottom: 0 }}>
           <span className="pr-eyebrow">Pricing</span>
-          <h2 className="display-lg">
-            See your real attack paths{" "}
-            <span className="pr-accent">in 15 minutes</span>
+          <h2 className="pr-title">
+            See your real attack paths <span className="pr-accent">in 15 minutes</span>
             <span className="pr-sub"> — no credit card, no sales call, no theory.</span>
           </h2>
         </div>
