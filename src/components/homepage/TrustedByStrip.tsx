@@ -11,7 +11,7 @@ const LOGOS = [
 
 export default function TrustedByStrip() {
   return (
-    <section className="px-6 lg:px-10 py-16 lg:py-[88px] border-t border-[var(--hp-line)]" aria-label="Trusted by">
+    <section className="hp-section px-6 lg:px-10" aria-label="Trusted by">
       <div className="hp-container">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-7 lg:gap-12">
           <div className="lg:max-w-[280px]">
