@@ -17,8 +17,8 @@
   --hp-ok: #10b981;
 
   /* Section rhythm — single scale (handoff sec-pad) */
-  --sec-pad-y: 120px;
-  --sec-pad-y-lg: 168px;
+  --sec-pad-y: 148px;
+  --sec-pad-y-lg: 216px;
   --head-gap: 32px;
   --eyebrow-gap: 20px;
   --body-gap: 56px;
@@ -183,8 +183,19 @@
 }
 
 .hp-page .hp-section {
+  position: relative;
   padding: var(--sec-pad-y) 24px;
-  border-top: 1px solid var(--hp-line);
+}
+
+.hp-page .hp-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 88%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hp-line), transparent);
 }
 
 @media (min-width: 1024px) {
