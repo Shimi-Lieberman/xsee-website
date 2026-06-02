@@ -2,37 +2,21 @@
 
 import { useRef, useState } from "react";
 import { Analytics } from "@/lib/analytics";
+import { ScanSearch, ShieldCheck, FileCheck2 } from "lucide-react";
 
 const CARDS = [
   {
-    icon: (
-      <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <path d="M9 2L3 9h5l-1 5 6-7H8L9 2Z" stroke="#FF1B8D" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" fill="rgba(255, 27, 141,0.1)" />
-      </svg>
-    ),
+    icon: <ScanSearch size={20} strokeWidth={1.75} />,
     title: "Live environment analysis",
     desc: "We run live analysis on your actual AWS environment using our full attack pattern library — not a staged walkthrough.",
   },
   {
-    icon: (
-      <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <rect x={3} y={7.5} width={10} height={7} rx={1.5} stroke="#FF1B8D" strokeWidth={1.3} />
-        <path d="M5.5 7.5V5a2.5 2.5 0 015 0v2.5" stroke="#FF1B8D" strokeWidth={1.3} strokeLinecap="round" />
-        <circle cx={8} cy={11} r={1} fill="#FF1B8D" />
-      </svg>
-    ),
+    icon: <ShieldCheck size={20} strokeWidth={1.75} />,
     title: "Zero-touch access",
     desc: "Read-only IAM role — no agents, no code deployment, nothing installed. Works in under 2 minutes.",
   },
   {
-    icon: (
-      <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <rect x={2.5} y={2.5} width={11} height={11} rx={1.5} stroke="#FF1B8D" strokeWidth={1.3} />
-        <line x1={5} y1={5.5} x2={11} y2={5.5} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
-        <line x1={5} y1={8} x2={11} y2={8} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
-        <line x1={5} y1={10.5} x2={8.5} y2={10.5} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
-      </svg>
-    ),
+    icon: <FileCheck2 size={20} strokeWidth={1.75} />,
     title: "Full report delivered",
     desc: "Validated attack graph + ranked exposures + fix recommendations + evidence packages. Yours, no strings.",
   },
