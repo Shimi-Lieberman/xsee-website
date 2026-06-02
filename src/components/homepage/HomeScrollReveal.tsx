@@ -9,6 +9,7 @@ const TAG_SELECTORS = [
   ".hp-page-main section > .hp-container > .hp-eyebrow",
   ".hp-page-main section > .hp-container > p.hp-eyebrow",
   ".hp-page-main section .hp-card",
+  ".hp-page-main section .hp-step",
 ];
 
 function shouldTagForReveal(el: Element): boolean {

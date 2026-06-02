@@ -36,8 +36,8 @@
   --v2-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ── v2 section rhythm ── */
-  --v2-sec-pad-y: 112px;
-  --v2-sec-pad-y-lg: 160px;
+  --v2-sec-pad-y: 140px;
+  --v2-sec-pad-y-lg: 208px;
 }
 
 /* ── Scope root ── */
@@ -113,13 +113,13 @@
 
 /* ── Atmospherics ── */
 .v2-polish .glow-brand {
-  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.22), rgba(255, 27, 141, 0) 70%);
-  filter: blur(8px);
+  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.13), rgba(255, 27, 141, 0) 72%);
+  filter: blur(10px);
 }
 
 .v2-polish .glow-brand-soft {
-  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.1), rgba(255, 27, 141, 0) 70%);
-  filter: blur(12px);
+  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.06), rgba(255, 27, 141, 0) 72%);
+  filter: blur(14px);
 }
 
 .v2-polish .dotgrid-dark {

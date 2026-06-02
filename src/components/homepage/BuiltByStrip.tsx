@@ -11,8 +11,8 @@ const COMPANIES: readonly [string, string][] = [
 export default function BuiltByStrip() {
   return (
     <section
-      className="hp-section border-t border-b-0"
-      style={{ paddingTop: "80px", paddingBottom: "80px", background: "var(--hp-base)" }}
+      className="hp-section"
+      style={{ background: "var(--hp-base)" }}
       aria-labelledby="built-by-title"
     >
       <div className="hp-container">

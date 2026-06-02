@@ -10,7 +10,7 @@ export default function HomeHero() {
   return (
     <section
       id="top"
-      className="v2-polish relative overflow-hidden px-6 pb-20 pt-3 lg:px-10 lg:pb-28 lg:pt-5"
+      className="v2-polish relative overflow-hidden px-6 pb-24 pt-6 lg:px-10 lg:pb-36 lg:pt-10"
     >
       <div
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
@@ -48,7 +48,7 @@ export default function HomeHero() {
         <div className="grain" />
       </div>
 
-      <div className="relative mx-auto flex max-w-[1400px] flex-col gap-7 lg:gap-9">
+      <div className="relative mx-auto flex max-w-[1400px] flex-col gap-9 lg:gap-12">
         <div className="hero-rise flex flex-wrap items-center gap-3" style={{ animationDelay: "0.04s" }}>
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--v2-line)] px-3 py-1.5">
             <span className="pink-dot dot-pulse" />
@@ -78,12 +78,11 @@ export default function HomeHero() {
         <div className="grid grid-cols-1 items-start gap-10 pt-1 lg:grid-cols-12 lg:gap-12 lg:pt-2">
           <div className="flex flex-col gap-8 lg:col-span-7">
             <p
-              className="hero-rise text-[18px] leading-[1.55] text-[var(--v2-ink2)] lg:text-[20px]"
-              style={{ textWrap: "pretty", maxWidth: "54ch", animationDelay: "0.2s" }}
+              className="hero-rise text-[19px] leading-[1.6] text-[var(--v2-ink2)] lg:text-[22px]"
+              style={{ textWrap: "pretty", maxWidth: "46ch", animationDelay: "0.2s" }}
             >
-              Your scanner sees four thousand findings. Three of them lead to your production database. xsee finds those three —{" "}
-              <span className="text-[var(--v2-ink)]">with live AWS evidence per hop,</span> attack simulation on your actual graph,
-              and a signed certificate the moment each path is closed.
+              Your scanner returns four thousand findings. Three of them reach your production database.{" "}
+              <span className="text-[var(--v2-ink)]">xsee proves exactly those three</span> — then signs each path off the moment it&apos;s closed.
             </p>
 
             <div className="hero-rise flex flex-wrap items-center gap-3" style={{ animationDelay: "0.28s" }}>
@@ -132,7 +131,7 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="hero-rise flex flex-col gap-6 pt-10 lg:gap-7 lg:pt-16" style={{ animationDelay: "0.44s" }}>
+        <div className="hero-rise flex flex-col gap-7 pt-16 lg:gap-9 lg:pt-28" style={{ animationDelay: "0.44s" }}>
           <div className="flex items-end justify-between">
             <div className="flex flex-col gap-2">
               <div className="v2-eyebrow">Path · live evidence</div>

@@ -8,6 +8,7 @@ import HomeNav from "@/components/homepage/HomeNav";
 import HomeHero from "@/components/homepage/HomeHero";
 import TrustedByStrip from "@/components/homepage/TrustedByStrip";
 import ProblemSection from "@/components/homepage/ProblemSection";
+import ProcessStepper from "@/components/homepage/ProcessStepper";
 import ProofLoopSection from "@/components/homepage/ProofLoopSection";
 import ProofSection from "@/components/homepage/ProofSection";
 import HomeScrollReveal from "@/components/homepage/HomeScrollReveal";
@@ -55,6 +56,7 @@ export default function Home() {
           <HomeHero />
           <TrustedByStrip />
           <ProblemSection />
+          <ProcessStepper />
           <ProofLoopSection />
           <ProofSection />
           <AiAttackerSection />

@@ -11,7 +11,7 @@ const LOGOS = [
 
 export default function TrustedByStrip() {
   return (
-    <section className="px-6 lg:px-10 py-16 lg:py-[88px] border-t border-[var(--hp-line)]" aria-label="Trusted by">
+    <section className="hp-section px-6 lg:px-10" aria-label="Trusted by">
       <div className="hp-container">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-7 lg:gap-12">
           <div className="lg:max-w-[280px]">
@@ -20,16 +20,17 @@ export default function TrustedByStrip() {
               Cloud security teams generate signed Receipts on XSEE every day.
             </p>
           </div>
-          <div className="flex-1 lg:max-w-[860px]">
-            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-x-6 lg:gap-x-8 gap-y-7 items-center">
+          <div className="flex-1 lg:max-w-[920px]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 lg:gap-4">
               {LOGOS.map((logo) => (
-                <span
+                <div
                   key={logo.name}
-                  className={`text-[var(--hp-ink3)] hover:text-[var(--hp-ink2)] transition-colors duration-200 ${logo.className}`}
-                  style={logo.style}
+                  className="hp-logo-pill flex items-center justify-center px-4 py-5"
                 >
-                  {logo.name}
-                </span>
+                  <span className={`hp-logo-mark ${logo.className}`} style={logo.style}>
+                    {logo.name}
+                  </span>
+                </div>
               ))}
             </div>
           </div>

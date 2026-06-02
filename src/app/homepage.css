@@ -17,8 +17,8 @@
   --hp-ok: #10b981;
 
   /* Section rhythm — single scale (handoff sec-pad) */
-  --sec-pad-y: 112px;
-  --sec-pad-y-lg: 144px;
+  --sec-pad-y: 148px;
+  --sec-pad-y-lg: 216px;
   --head-gap: 32px;
   --eyebrow-gap: 20px;
   --body-gap: 56px;
@@ -28,11 +28,31 @@
 }
 
 .hp-page .hp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--hp-ink3);
+}
+
+/* Leading accent marker — a short pink rule that gives every section a
+   consistent, confident opening cadence (Orca-style eyebrows). */
+.hp-page .hp-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--hp-brand);
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
+/* Allow opting out where a marker would crowd the layout */
+.hp-page .hp-eyebrow.hp-eyebrow--bare::before {
+  display: none;
 }
 
 .hp-page .hp-mono {
@@ -43,11 +63,85 @@
 .hp-page .hp-card {
   background: var(--hp-elevated);
   border: 1px solid var(--hp-line);
-  border-radius: 12px;
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 22px 44px -24px rgba(0, 0, 0, 0.7);
+  transition:
+    transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.32s ease,
+    box-shadow 0.32s ease;
+}
+
+/* Opt-in hover lift for interactive cards (kept off static content cards by default) */
+.hp-page .hp-card-lift:hover {
+  transform: translateY(-4px);
+  border-color: var(--hp-line2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 30px 60px -28px rgba(0, 0, 0, 0.78);
+}
+
+/* Light-band cards get a soft, airy shadow instead of the heavy dark one */
+.hp-page .hp-light .hp-card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 10px 30px -14px rgba(20, 22, 40, 0.12);
+}
+
+.hp-page .hp-light .hp-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 18px 42px -16px rgba(20, 22, 40, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-page .hp-card {
+    transition: none;
+  }
+  .hp-page .hp-card-lift:hover {
+    transform: none;
+  }
 }
 
 .hp-page .hp-hairline {
   border-color: var(--hp-line);
+}
+
+/* Logo wall — soft pill cards with hover lift + color reveal */
+.hp-page .hp-logo-pill {
+  border-radius: 12px;
+  border: 1px solid var(--hp-line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.hp-page .hp-logo-mark {
+  color: var(--hp-ink3);
+  transition: color 0.3s ease;
+}
+
+.hp-page .hp-logo-pill:hover {
+  transform: translateY(-3px);
+  border-color: var(--hp-line2);
+  background: var(--hp-elevated);
+}
+
+.hp-page .hp-logo-pill:hover .hp-logo-mark {
+  color: var(--hp-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-page .hp-logo-pill {
+    transition: none;
+  }
+  .hp-page .hp-logo-pill:hover {
+    transform: none;
+  }
 }
 
 /* AI-attacker feature cards — top accent rule + hover lift for more presence */
@@ -110,6 +204,40 @@
 .hp-page .hp-dotgrid {
   background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 18px 18px;
+}
+
+/* Process stepper — Connect → Certificate */
+.hp-page .hp-step-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid var(--hp-line2);
+  background: var(--hp-elevated);
+  color: var(--hp-brand);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 10px 24px -16px rgba(0, 0, 0, 0.7);
+}
+
+.hp-page .hp-step-line {
+  flex: 1;
+  height: 1px;
+  margin-left: 14px;
+  background: linear-gradient(90deg, var(--hp-line2), transparent);
+}
+
+/* On mobile/stacked layout the horizontal connector reads awkwardly — hide it */
+@media (max-width: 1023px) {
+  .hp-page .hp-step-line {
+    display: none;
+  }
 }
 
 .hp-page .hp-pink-dot {
@@ -183,8 +311,43 @@
 }
 
 .hp-page .hp-section {
+  position: relative;
   padding: var(--sec-pad-y) 24px;
-  border-top: 1px solid var(--hp-line);
+}
+
+.hp-page .hp-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1100px, 88%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hp-line), transparent);
+}
+
+/* Light interlude band — white + soft pink wash to break up the dark flow.
+   Re-maps the --hp-* tokens locally so token-driven children flip automatically. */
+.hp-page .hp-light {
+  --hp-base: #fdf6fa;
+  --hp-elevated: #ffffff;
+  --hp-overlay: #ffffff;
+  --hp-ink: #0b1220;
+  --hp-ink2: #424b5e;
+  --hp-ink3: #6a7388;
+  --hp-ink4: #c2bcc9;
+  --hp-line: #efdde9;
+  --hp-line2: #e4d2de;
+  --hp-brand-glow: rgba(255, 27, 141, 0.1);
+  color: var(--hp-ink);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 27, 141, 0.06), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #fdf6fa 100%);
+}
+
+/* On a light band the gradient hairline reads stronger — soften it down. */
+.hp-page .hp-light.hp-section::before {
+  background: linear-gradient(90deg, transparent, rgba(11, 18, 32, 0.08), transparent);
 }
 
 @media (min-width: 1024px) {
@@ -224,6 +387,57 @@
 .hp-page .hp-scroll-reveal.is-in {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Staggered reveal for the process stepper steps */
+.hp-page .hp-step.hp-scroll-reveal:nth-child(1) {
+  transition-delay: 0ms;
+}
+.hp-page .hp-step.hp-scroll-reveal:nth-child(2) {
+  transition-delay: 80ms;
+}
+.hp-page .hp-step.hp-scroll-reveal:nth-child(3) {
+  transition-delay: 160ms;
+}
+.hp-page .hp-step.hp-scroll-reveal:nth-child(4) {
+  transition-delay: 240ms;
+}
+.hp-page .hp-step.hp-scroll-reveal:nth-child(5) {
+  transition-delay: 320ms;
+}
+
+/* Primary CTA — subtle sheen sweep on hover (premium micro-interaction) */
+.hp-page .hp-btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.hp-page .hp-btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transform: skewX(-18deg);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.hp-page .hp-btn-primary:hover::after {
+  left: 140%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-page .hp-btn-primary::after {
+    display: none;
+  }
 }
 
 .hp-page .hp-container {
