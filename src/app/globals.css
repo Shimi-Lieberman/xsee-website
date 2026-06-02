@@ -1397,6 +1397,16 @@ footer .footer-inner {
   padding-right: 1.5rem;
 }
 
+/* Match the two contact pillars to equal height — stretch the form card to
+   fill the row and let the message field absorb the extra space. */
+@media (min-width: 1024px) {
+  #contact .reveal-right { display: flex; }
+  #contact .reveal-right .form-box { display: flex; flex-direction: column; width: 100%; }
+  #contact .reveal-right .form-fields { flex: 1 1 auto; }
+  #contact .reveal-right .form-grow { flex: 1 1 auto; display: flex; flex-direction: column; }
+  #contact .reveal-right .form-grow .form-textarea { flex: 1 1 auto; height: 100%; }
+}
+
 /* ── TESTIMONIALS / CASE STUDIES ── */
 .testimonials-inner {
   width: 100%;

@@ -226,7 +226,7 @@ export default function ContactForm() {
                     </select>
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group form-grow">
                   <label className="form-label">Message (optional)</label>
                   <textarea
                     className="form-textarea"
