@@ -6,19 +6,25 @@ import { ScanSearch, ShieldCheck, FileCheck2 } from "lucide-react";
 
 const CARDS = [
   {
-    icon: <ScanSearch size={20} strokeWidth={1.75} />,
-    title: "Live environment analysis",
-    desc: "We run live analysis on your actual AWS environment using our full attack pattern library — not a staged walkthrough.",
-  },
-  {
-    icon: <ShieldCheck size={20} strokeWidth={1.75} />,
+    icon: <ShieldCheck size={18} strokeWidth={2} />,
+    step: "01",
     title: "Zero-touch access",
-    desc: "Read-only IAM role — no agents, no code deployment, nothing installed. Works in under 2 minutes.",
+    desc: "Connect a read-only IAM role — no agents, no code deployment, nothing installed. Live in under 2 minutes.",
+    meta: "~2 min setup",
   },
   {
-    icon: <FileCheck2 size={20} strokeWidth={1.75} />,
-    title: "Full report delivered",
-    desc: "Validated attack graph + ranked exposures + fix recommendations + evidence packages. Yours, no strings.",
+    icon: <ScanSearch size={18} strokeWidth={2} />,
+    step: "02",
+    title: "Live environment analysis",
+    desc: "We run a full attack-graph analysis on your real AWS environment with 1,000+ patterns — never a staged walkthrough.",
+    meta: "1,000+ patterns",
+  },
+  {
+    icon: <FileCheck2 size={18} strokeWidth={2} />,
+    step: "03",
+    title: "Validated report delivered",
+    desc: "Ranked exposures, exact attack paths, fix recommendations, and evidence packages. Yours to keep, no strings.",
+    meta: "Delivered in 30 min",
   },
 ];
 
@@ -105,17 +111,26 @@ export default function ContactForm() {
             <p className="mb-8">
               We connect to your AWS account with read-only IAM access, run a full attack graph analysis using 1,000+ attack patterns, and show you the exact paths that reach your crown-jewel assets. You keep the validated HTML report — no commitment required.
             </p>
-            <div className="contact-points">
+            <ol className="rd-steps">
               {CARDS.map((c, i) => (
-                <div key={c.title} className={`c-point reveal-on-scroll ${i === 1 ? "reveal-delay-1" : i === 2 ? "reveal-delay-2" : ""}`}>
-                  <div className="c-ico">{c.icon}</div>
-                  <div>
-                    <div className="c-ttl">{c.title}</div>
-                    <div className="c-dsc">{c.desc}</div>
+                <li
+                  key={c.title}
+                  className={`rd-step reveal-on-scroll ${i === 1 ? "reveal-delay-1" : i === 2 ? "reveal-delay-2" : ""}`}
+                >
+                  <div className="rd-rail">
+                    <span className="rd-node">{c.icon}</span>
                   </div>
-                </div>
+                  <div className="rd-body">
+                    <div className="rd-head">
+                      <span className="rd-step-num">{c.step}</span>
+                      <h3 className="rd-title">{c.title}</h3>
+                    </div>
+                    <p className="rd-desc">{c.desc}</p>
+                    <span className="rd-meta">{c.meta}</span>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
           <div className="reveal-right">
             <div className="form-box">
