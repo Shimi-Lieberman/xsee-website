@@ -125,6 +125,12 @@
   transition: color 0.3s ease;
 }
 
+/* Brand marks sit monochrome at rest, then reveal their true color on hover */
+.hp-page .hp-logo-svg {
+  fill: var(--hp-ink3);
+  transition: fill 0.3s ease;
+}
+
 .hp-page .hp-logo-pill:hover {
   transform: translateY(-3px);
   border-color: var(--hp-line2);
@@ -133,6 +139,10 @@
 
 .hp-page .hp-logo-pill:hover .hp-logo-mark {
   color: var(--hp-ink);
+}
+
+.hp-page .hp-logo-pill:hover .hp-logo-svg {
+  fill: var(--brand, var(--hp-ink));
 }
 
 @media (prefers-reduced-motion: reduce) {
