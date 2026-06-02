@@ -94,7 +94,7 @@ export default function ContactForm() {
   return (
     <section className="section sec-light animate-on-scroll !pt-16" id="contact" style={{ paddingBottom: "2rem" }}>
       <div className="max-w-6xl mx-auto w-full px-6 contact-section-inner">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="contact-grid grid grid-cols-1 lg:grid-cols-2 gap-12 lg:items-stretch">
           <div className="reveal-left">
             <span className="badge badge-blue badge-dot eyebrow block mb-5">
               Request Demo
