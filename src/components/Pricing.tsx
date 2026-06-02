@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { initializePaddle, type Paddle } from "@paddle/paddle-js";
-import { ShieldCheck } from "lucide-react";
+import { Check, ShieldCheck, Sparkles } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 
 const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
@@ -15,29 +15,6 @@ const PADDLE_PRO_PRICE_ID = process.env.NEXT_PUBLIC_PADDLE_PRO_PRICE_ID ?? "";
 
 const REGISTER_FALLBACK = "https://app.xsee.io/register";
 
-const FOUNDING_PILL_STYLE: CSSProperties = {
-  display: "inline-block",
-  marginTop: 10,
-  marginBottom: 4,
-  padding: "4px 10px",
-  borderRadius: 999,
-  fontSize: 11,
-  fontWeight: 600,
-  letterSpacing: "0.02em",
-  background: "rgba(233,30,140,0.15)",
-  color: "#e91e8c",
-  border: "1px solid rgba(233,30,140,0.3)",
-};
-
-const PRICE_BLOCK: CSSProperties = {
-  background: "#0b1220",
-  borderRadius: 12,
-  padding: "20px 18px",
-  marginTop: 14,
-  marginBottom: 12,
-  border: "1px solid rgba(255,255,255,0.08)",
-};
-
 type PlanCheckout = "trial" | "starter" | "pro";
 
 const PLANS: {
@@ -46,6 +23,7 @@ const PLANS: {
   desc: string;
   price: string;
   per: string;
+  priceLabel: string;
   feats: string[];
   dim: string[];
   cta: string;
@@ -58,7 +36,8 @@ const PLANS: {
     title: "Free Trial",
     desc: "14 days • Full product • No credit card",
     price: "$0",
-    per: "",
+    per: "· 14 days",
+    priceLabel: "Free trial",
     feats: [
       "1 AWS account",
       "Full L1 + L2 + L3 scanning",
@@ -67,7 +46,7 @@ const PLANS: {
       "Breach Prevention Certificate",
     ],
     dim: [],
-    cta: "Start Free Trial →",
+    cta: "Start Free Trial",
     featured: false,
     founding: false,
     checkout: "trial",
@@ -77,7 +56,8 @@ const PLANS: {
     title: "Starter",
     desc: "For the cost of one day of incident response, XSEE watches your crown jewels 24/7 and proves every risk is real.",
     price: "$1,800",
-    per: "/ month",
+    per: "/month",
+    priceLabel: "Starter",
     feats: [
       "1 AWS account",
       "L1 + L2 + L3 validation",
@@ -88,7 +68,7 @@ const PLANS: {
       "Email support",
     ],
     dim: [],
-    cta: "Subscribe →",
+    cta: "Subscribe",
     featured: true,
     founding: true,
     checkout: "starter",
@@ -98,7 +78,8 @@ const PLANS: {
     title: "Pro",
     desc: "We detect changes to your attack surface in 60 seconds. You know about new paths before attackers do.",
     price: "$3,500",
-    per: "/ month",
+    per: "/month",
+    priceLabel: "Pro",
     feats: [
       "Up to 3 AWS accounts",
       "Everything in Starter",
@@ -110,12 +91,18 @@ const PLANS: {
       "Priority support",
     ],
     dim: [],
-    cta: "Subscribe →",
+    cta: "Subscribe",
     featured: false,
     founding: true,
     checkout: "pro",
   },
 ];
+
+const TRUST_NOTE: CSSProperties = {
+  fontSize: 13,
+  color: "rgba(15,23,42,0.55)",
+  lineHeight: 1.5,
+};
 
 function priceIdForCheckout(kind: "starter" | "pro"): string {
   if (kind === "starter") return PADDLE_STARTER_PRICE_ID;
@@ -173,221 +160,327 @@ export default function Pricing() {
       className="section sec-light animate-on-scroll"
       style={{
         background:
-          "radial-gradient(120% 80% at 50% 0%, rgba(255,27,141,0.07), transparent 60%), linear-gradient(180deg, #ffffff 0%, #fdf6fa 100%)",
+          "radial-gradient(120% 80% at 50% 0%, rgba(255,27,141,0.08), transparent 58%), linear-gradient(180deg, #ffffff 0%, #fdf6fa 100%)",
       }}
       id="pricing"
     >
       <div className="max-w-6xl mx-auto w-full px-6 pricing-inner">
         <style>{`
-          .pricing-page-stats {
+          .pr-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #e91e8c;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(233,30,140,0.08);
+            border: 1px solid rgba(233,30,140,0.2);
+          }
+          .pr-head .pr-title {
+            color: #0b1220;
+            font-family: var(--font-sans);
+            font-size: clamp(1.9rem, 3.4vw, 2.85rem);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.14;
+            max-width: 24ch;
+            margin: 22px auto 0;
+            text-wrap: balance;
+            scroll-margin-top: 120px;
+          }
+          .pr-head .pr-title .pr-accent { color: #ff1f8f; }
+          .pr-head .pr-title .pr-sub { color: #475569; font-weight: 700; }
+
+          .pr-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            align-items: start;
+            margin-top: 56px;
+          }
+          @media (max-width: 980px) { .pr-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; } }
+
+          .pr-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border: 1px solid #ecd7e6;
+            border-radius: 18px;
+            padding: 30px 28px;
+            box-shadow: 0 1px 2px rgba(11,18,32,0.04);
+            transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), box-shadow 0.28s ease, border-color 0.28s ease;
+          }
+          .pr-card:hover {
+            transform: translateY(-4px);
+            border-color: #e0bcd3;
+            box-shadow: 0 18px 44px -22px rgba(11,18,32,0.28);
+          }
+          .pr-card.is-featured {
+            border: 1.5px solid var(--pink, #ff1f8f);
+            box-shadow: 0 0 0 1px rgba(255,31,143,0.12), 0 26px 60px -28px rgba(255,31,143,0.55);
+          }
+          @media (min-width: 981px) {
+            .pr-card.is-featured { transform: translateY(-10px); }
+            .pr-card.is-featured:hover { transform: translateY(-16px); }
+          }
+
+          .pr-badge {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ff1f8f, #ff6a3d);
+            box-shadow: 0 8px 20px -8px rgba(255,31,143,0.7);
+            white-space: nowrap;
+          }
+
+          .pr-tier {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #94a3b8;
+          }
+          .pr-card h3 {
+            color: #0b1220 !important;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 8px 0 0;
+          }
+
+          .pr-founding {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin: 12px 0 4px;
+            padding: 4px 11px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            color: #e91e8c;
+            background: rgba(233,30,140,0.1);
+            border: 1px solid rgba(233,30,140,0.28);
+          }
+
+          .pr-price-block {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+            padding: 22px 20px;
+            margin: 14px 0 18px;
+            background: linear-gradient(155deg, #0b1220 0%, #111a2e 100%);
+            border: 1px solid rgba(255,255,255,0.08);
+          }
+          .pr-price-block::before {
+            content: "";
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 220px;
+            height: 220px;
+            background: radial-gradient(circle, rgba(255,31,143,0.28), transparent 65%);
+            pointer-events: none;
+          }
+          .pr-price-label {
+            position: relative;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 10px;
+          }
+          .pr-price-row { position: relative; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+          .pr-price {
+            font-family: var(--font-mono);
+            font-size: 42px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.03em;
+            line-height: 1;
+          }
+          .pr-per { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.5); }
+          .pr-price-note { position: relative; font-size: 12.5px; color: rgba(255,255,255,0.55); margin: 14px 0 0; line-height: 1.5; }
+
+          .pr-desc { font-size: 13.5px; color: #475569; line-height: 1.6; margin: 0 0 20px; }
+
+          .pr-feats { list-style: none; display: flex; flex-direction: column; gap: 11px; margin: 0 0 26px; padding: 0; flex: 1; }
+          .pr-feats li { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: #334155; font-weight: 500; line-height: 1.45; }
+          .pr-feats li svg { flex-shrink: 0; margin-top: 1px; }
+
+          .pr-cta { width: 100%; justify-content: center; }
+          .pr-trust { margin-top: 12px; display: flex; align-items: flex-start; justify-content: center; gap: 6px; text-align: center; }
+
+          .pr-stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 12px;
             max-width: 900px;
-            margin: 40px auto 0;
-            padding: 20px 16px;
-            background: rgba(15, 23, 42, 0.04);
-            border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.06);
+            margin: 56px auto 0;
+            padding: 24px 16px;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 16px;
+            border: 1px solid #efdde9;
+            box-shadow: 0 10px 30px -20px rgba(11,18,32,0.25);
           }
-          @media (max-width: 640px) {
-            .pricing-page-stats {
-              grid-template-columns: 1fr 1fr;
-            }
+          .pr-stats .pr-stat { text-align: center; padding: 4px 8px; }
+          .pr-stats .pr-stat-val { font-family: var(--font-mono); font-size: 24px; font-weight: 800; line-height: 1.2; }
+          .pr-stats .pr-stat-sub { font-size: 11.5px; color: #64748b; margin-top: 6px; line-height: 1.35; }
+          @media (max-width: 640px) { .pr-stats { grid-template-columns: 1fr 1fr; } }
+
+          .pr-roi { text-align: center; font-size: 14px; color: #475569; max-width: 640px; margin: 30px auto 0; line-height: 1.65; }
+          .pr-roi strong { color: #0b1220; font-weight: 700; }
+          .pr-spots {
+            display: inline-flex; align-items: center; gap: 7px;
+            margin: 18px auto 0; padding: 7px 14px; border-radius: 999px;
+            font-size: 12px; font-weight: 600; color: #e91e8c;
+            background: rgba(233,30,140,0.08); border: 1px solid rgba(233,30,140,0.22);
+          }
+          .pr-spots-dot { width: 7px; height: 7px; border-radius: 999px; background: #ff1f8f; box-shadow: 0 0 0 0 rgba(255,31,143,0.6); animation: pr-pulse 2s infinite; }
+          @keyframes pr-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,31,143,0.55); } 70% { box-shadow: 0 0 0 8px rgba(255,31,143,0); } 100% { box-shadow: 0 0 0 0 rgba(255,31,143,0); } }
+          .pr-spots-wrap { text-align: center; }
+
+          .pr-note { text-align: center; margin-top: 24px; font-family: var(--font-mono); font-size: 11px; color: #94a3b8; letter-spacing: 0.04em; }
+
+          @media (prefers-reduced-motion: reduce) {
+            .pr-card, .pr-card.is-featured { transition: none; }
+            .pr-spots-dot { animation: none; }
           }
         `}</style>
-        <div className="section-head reveal">
-          <span className="section-eyebrow section-eyebrow-dark">Pricing</span>
-          <h2 className="display-lg" style={{ color: "var(--hp-ink)" }}>
-            See your real attack paths{" "}
-            <span style={{ color: "var(--pink)" }}>in 15 minutes</span>
-            <span style={{ color: "var(--hp-ink2)" }}>
-              {" "}
-              — no credit card, no sales call, no theory.
-            </span>
+
+        <div className="section-head reveal pr-head" style={{ marginBottom: 0 }}>
+          <span className="pr-eyebrow">Pricing</span>
+          <h2 className="pr-title">
+            See your real attack paths <span className="pr-accent">in 15 minutes</span>
+            <span className="pr-sub"> — no credit card, no sales call, no theory.</span>
           </h2>
-          <div className="section-rule" />
         </div>
-        <div className="pricing-grid pr-grid stagger-children">
+
+        <div className="pr-grid stagger-children">
           {PLANS.map((plan) => (
             <div
               key={plan.tier}
-              className={`pricing-card reveal ${plan.featured ? "featured featured-pulse" : ""}`}
-              style={
-                plan.featured
-                  ? {
-                      border: "2px solid var(--pink)",
-                      borderRadius: "16px",
-                      padding: "28px",
-                      background: "white",
-                      position: "relative",
-                    }
-                  : {
-                      transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
-                    }
-              }
-              onMouseEnter={
-                plan.featured
-                  ? undefined
-                  : (e) => {
-                      e.currentTarget.style.transform = "translateY(-2px)";
-                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.06)";
-                    }
-              }
-              onMouseLeave={
-                plan.featured
-                  ? undefined
-                  : (e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }
-              }
+              className={`pr-card reveal ${plan.featured ? "is-featured featured-pulse" : ""}`}
             >
               {plan.featured && (
-                <div className="pricing-badge pricing-badge-warm">Most Popular</div>
+                <div className="pr-badge">
+                  <Sparkles size={11} aria-hidden /> Most Popular
+                </div>
               )}
-              <div className="pricing-tier font-mono">{plan.tier}</div>
+              <div className="pr-tier font-mono">{plan.tier}</div>
               <h3>{plan.title}</h3>
-              {plan.founding && <span style={FOUNDING_PILL_STYLE}>Founding Price</span>}
+              {plan.founding && (
+                <span className="pr-founding">
+                  <Sparkles size={11} aria-hidden /> Founding Price
+                </span>
+              )}
 
-              <div style={PRICE_BLOCK}>
-                <div
-                  style={{
-                    fontSize: 11,
-                    fontWeight: 600,
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.45)",
-                    marginBottom: 8,
-                  }}
-                >
-                  {plan.checkout === "trial" ? "Free trial" : plan.title}
+              <div className="pr-price-block">
+                <div className="pr-price-label">{plan.priceLabel}</div>
+                <div className="pr-price-row">
+                  <span className="pr-price">{plan.price}</span>
+                  <span className="pr-per">{plan.per}</span>
                 </div>
-                <div style={{ display: "flex", alignItems: "baseline", gap: 10, flexWrap: "wrap" }}>
-                  <span
-                    style={{
-                      fontSize: 44,
-                      fontWeight: 800,
-                      color: "#fff",
-                      fontFamily: "var(--font-mono)",
-                      letterSpacing: "-0.03em",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {plan.price}
-                  </span>
-                  {plan.checkout !== "trial" ? (
-                    <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.45)" }}>/month</span>
-                  ) : (
-                    <span style={{ fontSize: 15, fontWeight: 500, color: "rgba(255,255,255,0.45)" }}>· 14 days</span>
-                  )}
-                </div>
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", marginTop: 16, marginBottom: 0, lineHeight: 1.5 }}>
-                  14-day free trial • No credit card required
-                </p>
+                <p className="pr-price-note">14-day free trial • No credit card required</p>
               </div>
 
-              <p className="pricing-desc">{plan.desc}</p>
-              <ul className="pricing-feats">
+              <p className="pr-desc">{plan.desc}</p>
+              <ul className="pr-feats">
                 {plan.feats.map((f) => (
-                  <li key={f}>{f}</li>
+                  <li key={f}>
+                    <Check size={15} color="#e91e8c" strokeWidth={2.5} aria-hidden />
+                    <span>{f}</span>
+                  </li>
                 ))}
                 {plan.dim.map((f) => (
-                  <li key={f} className="dim">
-                    {f}
+                  <li key={f} style={{ color: "#94a3b8" }}>
+                    <Check size={15} color="#cbd5e1" strokeWidth={2.5} aria-hidden />
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
+
               {plan.checkout === "trial" ? (
-                <>
-                  <Link
-                    href={REGISTER_FALLBACK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-shimmer"
-                    style={{ width: "100%", justifyContent: "center" }}
-                    onClick={() => Analytics.ctaClicked("pricing", "free_trial_card")}
-                  >
-                    <span>{plan.cta}</span>
-                  </Link>
-                  <div
-                    className="mt-3 flex items-start justify-center gap-2 text-center"
-                    style={{ fontSize: 13, color: "rgba(15,23,42,0.55)", lineHeight: 1.5 }}
-                  >
-                    <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
-                    <span>14-day free trial · No credit card required · Cancel anytime</span>
-                  </div>
-                </>
+                <Link
+                  href={REGISTER_FALLBACK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary btn-shimmer pr-cta"
+                  onClick={() => Analytics.ctaClicked("pricing", "free_trial_card")}
+                >
+                  <span>{plan.cta} →</span>
+                </Link>
               ) : (
-                <>
-                  <button
-                    type="button"
-                    className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"}`}
-                    style={{ width: "100%", justifyContent: "center" }}
-                    onClick={() => {
-                      if (plan.checkout === "starter" || plan.checkout === "pro") {
-                        handlePaidClick(plan.checkout);
-                      }
-                    }}
-                  >
-                    <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta}</span>
-                  </button>
-                  <div
-                    className="mt-3 flex items-start justify-center gap-2 text-center"
-                    style={{ fontSize: 13, color: "rgba(15,23,42,0.55)", lineHeight: 1.5 }}
-                  >
-                    <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
-                    <span>14-day free trial · No credit card required · Cancel anytime</span>
-                  </div>
-                </>
+                <button
+                  type="button"
+                  className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"} pr-cta`}
+                  onClick={() => {
+                    if (plan.checkout === "starter" || plan.checkout === "pro") {
+                      handlePaidClick(plan.checkout);
+                    }
+                  }}
+                >
+                  <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta} →</span>
+                </button>
               )}
+              <div className="pr-trust" style={TRUST_NOTE}>
+                <ShieldCheck size={13} color="#22c55e" className="mt-0.5 shrink-0" aria-hidden />
+                <span>14-day free trial · No credit card · Cancel anytime</span>
+              </div>
             </div>
           ))}
         </div>
-        <div className="pricing-page-stats reveal">
+
+        <div className="pr-stats reveal">
           {(
             [
               { val: "1,000+", sub: "attack patterns", color: "#e91e8c" },
               { val: "7", sub: "engines", color: "#f97316" },
-              { val: "92%", sub: "avg exploit confidence", color: "#4ade80" },
-              { val: "$3.2M", sub: "avg financial exposure proven on first scan", color: "#fbbf24" },
+              { val: "92%", sub: "avg exploit confidence", color: "#16a34a" },
+              { val: "$3.2M", sub: "avg financial exposure proven on first scan", color: "#d97706" },
             ] as const
           ).map((s) => (
-            <div key={s.sub} style={{ textAlign: "center", padding: "4px 8px" }}>
-              <div className="font-mono" style={{ fontSize: 22, fontWeight: 800, color: s.color, lineHeight: 1.2 }}>
+            <div key={s.sub} className="pr-stat">
+              <div className="pr-stat-val" style={{ color: s.color }}>
                 {s.val}
               </div>
-              <div style={{ fontSize: 11, color: "#64748b", marginTop: 6, lineHeight: 1.35 }}>
-                {s.sub}
-              </div>
+              <div className="pr-stat-sub">{s.sub}</div>
             </div>
           ))}
         </div>
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: 14,
-            color: "#64748b",
-            maxWidth: "640px",
-            margin: "32px auto 0",
-            lineHeight: 1.65,
-          }}
-        >
-          The average cloud breach costs $4.88M. XSEE needs to prevent ONE breach by ONE percent to pay for itself.
+
+        <p className="pr-roi">
+          The average cloud breach costs <strong>$4.88M</strong>. XSEE needs to prevent ONE breach by ONE
+          percent to pay for itself.
         </p>
-        <p
-          style={{
-            textAlign: "center",
-            fontSize: 12,
-            color: "#94a3b8",
-            maxWidth: "560px",
-            margin: "16px auto 0",
-            lineHeight: 1.55,
-          }}
-        >
-          7 spots remaining at founding price
-        </p>
-        <p className="pricing-note">
+
+        <div className="pr-spots-wrap">
+          <span className="pr-spots">
+            <span className="pr-spots-dot" aria-hidden />7 spots remaining at founding price
+          </span>
+        </div>
+
+        <p className="pr-note">
           14-day free trial · No credit card required · Starter $1,800/mo (founding) · Pro $3,500/mo (founding)
         </p>
       </div>

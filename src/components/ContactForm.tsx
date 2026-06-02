@@ -2,39 +2,29 @@
 
 import { useRef, useState } from "react";
 import { Analytics } from "@/lib/analytics";
+import { ScanSearch, ShieldCheck, FileCheck2 } from "lucide-react";
 
 const CARDS = [
   {
-    icon: (
-      <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <path d="M9 2L3 9h5l-1 5 6-7H8L9 2Z" stroke="#FF1B8D" strokeWidth={1.3} strokeLinecap="round" strokeLinejoin="round" fill="rgba(255, 27, 141,0.1)" />
-      </svg>
-    ),
-    title: "Live environment analysis",
-    desc: "We run live analysis on your actual AWS environment using our full attack pattern library — not a staged walkthrough.",
-  },
-  {
-    icon: (
-      <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <rect x={3} y={7.5} width={10} height={7} rx={1.5} stroke="#FF1B8D" strokeWidth={1.3} />
-        <path d="M5.5 7.5V5a2.5 2.5 0 015 0v2.5" stroke="#FF1B8D" strokeWidth={1.3} strokeLinecap="round" />
-        <circle cx={8} cy={11} r={1} fill="#FF1B8D" />
-      </svg>
-    ),
+    icon: <ShieldCheck size={18} strokeWidth={2} />,
+    step: "01",
     title: "Zero-touch access",
-    desc: "Read-only IAM role — no agents, no code deployment, nothing installed. Works in under 2 minutes.",
+    desc: "Connect a read-only IAM role — no agents, no code deployment, nothing installed. Live in under 2 minutes.",
+    meta: "~2 min setup",
   },
   {
-    icon: (
-      <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-        <rect x={2.5} y={2.5} width={11} height={11} rx={1.5} stroke="#FF1B8D" strokeWidth={1.3} />
-        <line x1={5} y1={5.5} x2={11} y2={5.5} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
-        <line x1={5} y1={8} x2={11} y2={8} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
-        <line x1={5} y1={10.5} x2={8.5} y2={10.5} stroke="#FF1B8D" strokeWidth={1.2} strokeLinecap="round" />
-      </svg>
-    ),
-    title: "Full report delivered",
-    desc: "Validated attack graph + ranked exposures + fix recommendations + evidence packages. Yours, no strings.",
+    icon: <ScanSearch size={18} strokeWidth={2} />,
+    step: "02",
+    title: "Live environment analysis",
+    desc: "We run a full attack-graph analysis on your real AWS environment with 1,000+ patterns — never a staged walkthrough.",
+    meta: "1,000+ patterns",
+  },
+  {
+    icon: <FileCheck2 size={18} strokeWidth={2} />,
+    step: "03",
+    title: "Validated report delivered",
+    desc: "Ranked exposures, exact attack paths, fix recommendations, and evidence packages. Yours to keep, no strings.",
+    meta: "Delivered in 30 min",
   },
 ];
 
@@ -110,7 +100,7 @@ export default function ContactForm() {
   return (
     <section className="section sec-light animate-on-scroll !pt-16" id="contact" style={{ paddingBottom: "2rem" }}>
       <div className="max-w-6xl mx-auto w-full px-6 contact-section-inner">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="contact-grid grid grid-cols-1 lg:grid-cols-2 gap-12 lg:items-stretch">
           <div className="reveal-left">
             <span className="badge badge-blue badge-dot eyebrow block mb-5">
               Request Demo
@@ -121,17 +111,26 @@ export default function ContactForm() {
             <p className="mb-8">
               We connect to your AWS account with read-only IAM access, run a full attack graph analysis using 1,000+ attack patterns, and show you the exact paths that reach your crown-jewel assets. You keep the validated HTML report — no commitment required.
             </p>
-            <div className="contact-points">
+            <ol className="rd-steps">
               {CARDS.map((c, i) => (
-                <div key={c.title} className={`c-point reveal-on-scroll ${i === 1 ? "reveal-delay-1" : i === 2 ? "reveal-delay-2" : ""}`}>
-                  <div className="c-ico">{c.icon}</div>
-                  <div>
-                    <div className="c-ttl">{c.title}</div>
-                    <div className="c-dsc">{c.desc}</div>
+                <li
+                  key={c.title}
+                  className={`rd-step reveal-on-scroll ${i === 1 ? "reveal-delay-1" : i === 2 ? "reveal-delay-2" : ""}`}
+                >
+                  <div className="rd-rail">
+                    <span className="rd-node">{c.icon}</span>
                   </div>
-                </div>
+                  <div className="rd-body">
+                    <div className="rd-head">
+                      <span className="rd-step-num">{c.step}</span>
+                      <h3 className="rd-title">{c.title}</h3>
+                    </div>
+                    <p className="rd-desc">{c.desc}</p>
+                    <span className="rd-meta">{c.meta}</span>
+                  </div>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
           <div className="reveal-right">
             <div className="form-box">
@@ -242,7 +241,7 @@ export default function ContactForm() {
                     </select>
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group form-grow">
                   <label className="form-label">Message (optional)</label>
                   <textarea
                     className="form-textarea"
