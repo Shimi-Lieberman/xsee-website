@@ -109,15 +109,65 @@
   border-color: var(--hp-line);
 }
 
-/* Logo wall — soft pill cards with hover lift + color reveal */
+/* Logo marquee — fully rounded pills gliding in opposite directions */
+.hp-page .hp-marquee {
+  position: relative;
+  overflow: hidden;
+  /* Fade the loop seams at both edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 9%,
+    #000 91%,
+    transparent
+  );
+}
+
+.hp-page .hp-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 16px;
+  padding: 2px 8px;
+  animation: hp-marquee-scroll 38s linear infinite;
+  will-change: transform;
+}
+
+.hp-page .hp-marquee-track--reverse {
+  animation-direction: reverse;
+}
+
+/* Pause whichever row the visitor is exploring */
+.hp-page .hp-marquee:hover .hp-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes hp-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Track is duplicated, so -50% lands on a seamless repeat */
+    transform: translateX(-50%);
+  }
+}
+
 .hp-page .hp-logo-pill {
-  border-radius: 12px;
+  flex: 0 0 auto;
+  border-radius: 999px;
   border: 1px solid var(--hp-line);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0));
   transition:
     transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.3s ease,
-    background 0.3s ease;
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .hp-page .hp-logo-mark {
@@ -125,17 +175,35 @@
   transition: color 0.3s ease;
 }
 
+/* Brand marks sit monochrome at rest, then reveal their true color on hover */
+.hp-page .hp-logo-svg {
+  fill: var(--hp-ink3);
+  transition: fill 0.3s ease;
+}
+
 .hp-page .hp-logo-pill:hover {
   transform: translateY(-3px);
-  border-color: var(--hp-line2);
+  border-color: var(--brand, var(--hp-line2));
   background: var(--hp-elevated);
+  box-shadow: 0 10px 30px -12px color-mix(in srgb, var(--brand, #000) 45%, transparent);
 }
 
 .hp-page .hp-logo-pill:hover .hp-logo-mark {
   color: var(--hp-ink);
 }
 
+.hp-page .hp-logo-pill:hover .hp-logo-svg {
+  fill: var(--brand, var(--hp-ink));
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .hp-page .hp-marquee-track {
+    animation: none;
+    /* Fall back to a centered, wrapping arrangement when motion is off */
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
   .hp-page .hp-logo-pill {
     transition: none;
   }
