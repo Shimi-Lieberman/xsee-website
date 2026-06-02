@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function QuoteSection() {
   return (
-    <section id="quote" className="hp-section relative border-t border-[var(--hp-line)]" aria-labelledby="quote-block">
+    <section id="quote" className="hp-section hp-light relative" aria-labelledby="quote-block">
       <div className="hp-container">
         <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="hidden lg:col-span-1 lg:block">

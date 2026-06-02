@@ -198,6 +198,30 @@
   background: linear-gradient(90deg, transparent, var(--hp-line), transparent);
 }
 
+/* Light interlude band — white + soft pink wash to break up the dark flow.
+   Re-maps the --hp-* tokens locally so token-driven children flip automatically. */
+.hp-page .hp-light {
+  --hp-base: #fdf6fa;
+  --hp-elevated: #ffffff;
+  --hp-overlay: #ffffff;
+  --hp-ink: #0b1220;
+  --hp-ink2: #424b5e;
+  --hp-ink3: #6a7388;
+  --hp-ink4: #c2bcc9;
+  --hp-line: #efdde9;
+  --hp-line2: #e4d2de;
+  --hp-brand-glow: rgba(255, 27, 141, 0.1);
+  color: var(--hp-ink);
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(255, 27, 141, 0.06), transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #fdf6fa 100%);
+}
+
+/* On a light band the gradient hairline reads stronger — soften it down. */
+.hp-page .hp-light.hp-section::before {
+  background: linear-gradient(90deg, transparent, rgba(11, 18, 32, 0.08), transparent);
+}
+
 @media (min-width: 1024px) {
   .hp-page .hp-section {
     padding: var(--sec-pad-y-lg) 40px;
