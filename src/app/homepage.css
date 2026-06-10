@@ -56,6 +56,34 @@
   display: none;
 }
 
+/* Framed section kicker — promotes a plain eyebrow into the hero's
+   pill treatment (glowing pink dot + hairline frame) so every section
+   opens with the same confident, premium cadence. */
+.hp-page .hp-eyebrow.hp-kicker {
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--hp-line);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--hp-elevated) 60%, transparent);
+  color: var(--hp-ink2);
+  letter-spacing: 0.16em;
+  font-size: 10.5px;
+}
+
+.hp-page .hp-eyebrow.hp-kicker::before {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  opacity: 1;
+  box-shadow: 0 0 0 4px rgba(255, 27, 141, 0.12);
+}
+
+/* Center the kicker when it sits in a centered section header */
+.hp-page .hp-kicker--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .hp-page .hp-mono {
   font-family: var(--font-mono);
   font-feature-settings: "tnum" 1;

@@ -101,7 +101,7 @@ export default function TrustedByStrip() {
     <section className="hp-section px-6 lg:px-10" aria-label="Integrations">
       <div className="hp-container">
         <div className="text-center mb-9 lg:mb-11">
-          <p className="hp-eyebrow text-[var(--hp-ink3)] mb-3">Works with your stack</p>
+          <p className="hp-eyebrow hp-kicker hp-kicker--center mb-4">Works with your stack</p>
           <h2 className="text-[22px] lg:text-[27px] font-semibold tracking-[-0.02em] text-[var(--hp-ink)] leading-[1.25] m-0 text-balance">
             XSEE plugs into the tools your security team already runs
           </h2>

@@ -269,7 +269,7 @@ export default function ProofSection() {
   return (
     <section id="proof" className="hp-section" aria-labelledby="proof-title">
       <div className="hp-container">
-        <p className="hp-eyebrow mb-5">Live on your account · 30 minutes</p>
+        <p className="hp-eyebrow hp-kicker mb-5">Live on your account · 30 minutes</p>
         <h2
           id="proof-title"
           className="hp-h-display hp-h-display--wide"

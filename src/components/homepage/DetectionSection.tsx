@@ -96,7 +96,7 @@ export default function DetectionSection() {
       <div className="hp-container">
         <div className="mb-14 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
-            <p className="hp-eyebrow mb-5">Detection Coverage Score</p>
+            <p className="hp-eyebrow hp-kicker mb-5">Detection Coverage Score</p>
             <h2 id="detection-title" className="hp-h-display" style={{ fontSize: "clamp(34px, 4.6vw, 60px)" }}>
               <span className="block">Your tools catch</span>
               <span className="block text-[var(--hp-ink3)]">1 in 3 attack steps.</span>

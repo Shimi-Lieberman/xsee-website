@@ -13,7 +13,7 @@ export default function CTABanner() {
       />
       <div className="hp-container relative z-[1]">
         <div className="text-center mb-14">
-          <p className="hp-eyebrow mb-5">Get started</p>
+          <p className="hp-eyebrow hp-kicker hp-kicker--center mb-5">Get started</p>
           <h2
             id="cta-title"
             className="hp-h-display mx-auto text-center"

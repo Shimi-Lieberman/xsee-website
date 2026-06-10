@@ -88,7 +88,7 @@ export default function AiAttackerSection() {
       <div className="hp-container relative">
         <div className="mb-14 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end">
           <div className="lg:col-span-7">
-            <p className="hp-eyebrow mb-5">The new threat</p>
+            <p className="hp-eyebrow hp-kicker mb-5">The new threat</p>
             <h2 id="ai-title" className="hp-h-display" style={{ fontSize: "clamp(36px, 5vw, 64px)" }}>
               <span className="block">Human hackers were bad enough.</span>
               <span className="block text-[var(--hp-ink3)]">AI attackers are a different category.</span>

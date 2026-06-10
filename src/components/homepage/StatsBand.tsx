@@ -99,7 +99,7 @@ export default function HomepageStatsBand() {
       <div className="hp-container">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-7 mb-14">
           <div>
-            <p className="hp-eyebrow mb-5">Production telemetry</p>
+            <p className="hp-eyebrow hp-kicker mb-5">Production telemetry</p>
             <h2
               id="stats-title"
               className="hp-h-display hp-h-display--wide"
