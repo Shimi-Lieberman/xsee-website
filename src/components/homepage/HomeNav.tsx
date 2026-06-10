@@ -47,7 +47,7 @@ export default function HomeNav() {
   return (
     <>
       <header
-        className="v2-polish fixed inset-x-0 z-50 overflow-x-clip transition-all duration-300"
+        className="v2-polish fixed inset-x-0 z-50 transition-all duration-300"
         style={{
           top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
           backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
