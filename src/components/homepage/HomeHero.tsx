@@ -12,7 +12,7 @@ export default function HomeHero() {
       {/* ── ACT ONE — claim ↔ living proof ── */}
       <section
         id="top"
-        className="v2-polish relative overflow-hidden px-6 pt-10 pb-24 lg:px-10 lg:pt-16 lg:pb-32"
+        className="v2-polish relative overflow-hidden px-6 pt-4 pb-24 lg:px-10 lg:pt-6 lg:pb-32"
       >
         {/* Atmospherics — restrained: one soft brand wash + structural hairline */}
         <div
@@ -37,7 +37,7 @@ export default function HomeHero() {
           <div className="grain" />
         </div>
 
-        <div className="relative mx-auto grid min-h-[calc(100svh-180px)] max-w-[1400px] grid-cols-1 items-center gap-y-14 lg:grid-cols-12 lg:gap-x-16">
+        <div className="relative mx-auto grid min-h-[calc(100svh-300px)] max-w-[1400px] grid-cols-1 items-center gap-y-14 lg:grid-cols-12 lg:gap-x-16">
           {/* ── Left column — the claim ── */}
           <div className="flex flex-col gap-7 lg:col-span-7 lg:gap-9">
             {/* Framed kicker */}
