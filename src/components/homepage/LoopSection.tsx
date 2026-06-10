@@ -126,7 +126,7 @@ export default function LoopSection() {
   return (
     <section id="loop" className="hp-section" aria-labelledby="loop-title">
       <div className="hp-container">
-        <p className="hp-eyebrow mb-6">The autonomous loop</p>
+        <p className="hp-eyebrow hp-kicker mb-6">The autonomous loop</p>
         <h2
           id="loop-title"
           className="font-semibold text-[var(--hp-ink)] max-w-[920px]"

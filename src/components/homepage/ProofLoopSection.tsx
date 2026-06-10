@@ -444,7 +444,7 @@ export default function ProofLoopSection() {
       <div className="hp-container">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12 lg:mb-14">
           <div className="lg:col-span-7">
-            <p className="hp-eyebrow mb-5">How XSEE works · autonomous proof loop</p>
+            <p className="hp-eyebrow hp-kicker mb-5">How XSEE works · autonomous proof loop</p>
             <h2 id="proof-loop-title"
               className="hp-h-display hp-h-display--wide"
               style={{ fontSize: 'clamp(34px, 4.6vw, 60px)' }}

@@ -3,7 +3,7 @@ export default function ProblemSection() {
     <section id="problem" className="hp-section" aria-labelledby="problem-title">
       <div className="hp-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
         <div className="lg:col-span-6">
-          <p className="hp-eyebrow mb-5">The core problem</p>
+          <p className="hp-eyebrow hp-kicker mb-5">The core problem</p>
           <h2
             id="problem-title"
             className="hp-h-display hp-h-display--wide"

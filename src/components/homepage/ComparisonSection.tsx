@@ -21,7 +21,7 @@ export default function ComparisonSection() {
   return (
     <section id="compare" className="hp-section" aria-labelledby="compare-title">
       <div className="hp-container">
-        <p className="hp-eyebrow mb-6">The competitive landscape</p>
+        <p className="hp-eyebrow hp-kicker mb-6">The competitive landscape</p>
         <h2
           id="compare-title"
           className="hp-h-display hp-h-display--wide"

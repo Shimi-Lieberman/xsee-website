@@ -36,7 +36,7 @@ export default function ProcessStepper() {
     <section className="hp-section" aria-labelledby="process-title">
       <div className="hp-container">
         <div className="max-w-[640px]">
-          <p className="hp-eyebrow mb-5">How it works</p>
+          <p className="hp-eyebrow hp-kicker mb-5">How it works</p>
           <h2
             id="process-title"
             className="hp-h-display"

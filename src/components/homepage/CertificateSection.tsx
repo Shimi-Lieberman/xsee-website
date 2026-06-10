@@ -6,7 +6,7 @@ export default function CertificateSection() {
     <section id="certificate" className="hp-section" aria-labelledby="cert-title">
       <div className="hp-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
         <div className="lg:col-span-5">
-          <p className="hp-eyebrow mb-6">The artifact</p>
+          <p className="hp-eyebrow hp-kicker mb-6">The artifact</p>
           <h2
             id="cert-title"
             className="font-semibold text-[var(--hp-ink)]"

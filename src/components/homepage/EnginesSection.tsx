@@ -147,7 +147,7 @@ export default function EnginesSection() {
       <div className="hp-container">
         <div className="mb-20 grid grid-cols-1 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <p className="hp-eyebrow mb-6">Platform · 7 engines</p>
+            <p className="hp-eyebrow hp-kicker mb-6">Platform · 7 engines</p>
             <h2
               id="engines-title"
               className="font-semibold text-[var(--hp-ink)]"
