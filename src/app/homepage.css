@@ -16,9 +16,10 @@
   --hp-brand-glow: rgba(255, 27, 141, 0.18);
   --hp-ok: #10b981;
 
-  /* Section rhythm — single scale (handoff sec-pad) */
-  --sec-pad-y: 148px;
-  --sec-pad-y-lg: 216px;
+  /* Section rhythm — single scale (handoff sec-pad).
+     Tightened to a denser, data-rich cadence (CrowdStrike / Datadog). */
+  --sec-pad-y: 96px;
+  --sec-pad-y-lg: 132px;
   --head-gap: 32px;
   --eyebrow-gap: 20px;
   --body-gap: 56px;
