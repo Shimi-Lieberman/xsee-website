@@ -17,7 +17,7 @@ export default function UnderAttackPage() {
       <ScrollProgressBar />
       <GlobalScripts />
       <Nav />
-      <div style={{ background: "#050d1a", minHeight: "100vh", paddingTop: "80px" }}>
+      <div style={{ background: "#f7f9fc", minHeight: "100vh", paddingTop: "80px" }}>
         <div className="page-container-md">
           <div className="flex items-center gap-3 mb-6">
             <div
@@ -32,13 +32,13 @@ export default function UnderAttackPage() {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl font-black text-[#0b1220] mb-4 leading-tight">
             Under active attack
             <br />
             in AWS?
           </h1>
 
-          <p className="text-lg text-white/50 mb-10 leading-relaxed">
+          <p className="text-lg text-[#475569] mb-10 leading-relaxed">
             XSEE can map your attack surface, validate active paths, and show you exactly where the attacker is moving — in under 30 minutes. Read-only IAM. No agents. No disruption to your incident response.
           </p>
 

@@ -24,7 +24,7 @@
   /* Dark backgrounds */
   --color-bg-darkest: #050d1a;
   --color-bg-dark: #0a1628;
-  --color-bg-card-dark: rgba(255, 255, 255, 0.05);
+  --color-bg-card-dark: #ffffff;
 
   /* Light backgrounds */
   --color-bg-light: #f8fafc;
@@ -38,7 +38,7 @@
 
   /* Borders */
   --color-border-light: #e2e8f0;
-  --color-border-dark: rgba(255, 255, 255, 0.1);
+  --color-border-dark: rgba(11, 18, 32, 0.1);
 
   /* Semantic */
   --color-blue: #2563eb;
@@ -47,11 +47,11 @@
   --color-warning: #f59e0b;
   --color-error: #ef4444;
 
-  /* Legacy aliases (site components) */
-  --bg-base: var(--color-bg-darkest);
-  --bg-surface: #07111f;
-  --bg-raised: var(--color-bg-dark);
-  --bg-high: #0d1f35;
+  /* Legacy aliases (site components) — LIGHT THEME */
+  --bg-base: #f7f9fc;
+  --bg-surface: #ffffff;
+  --bg-raised: #ffffff;
+  --bg-high: #eef2f8;
   --blue: var(--color-primary);
   --blue-light: var(--color-primary-mid);
   --blue-dim: rgba(255, 27, 141, 0.12);
@@ -88,10 +88,10 @@
   --warm-grad: linear-gradient(135deg, #F59E0B, #EA6C0A);
   --amber-border: rgba(245, 158, 11, 0.28);
   --orange-border: rgba(234, 108, 10, 0.28);
-  --text-primary: #F0F6FF;
-  --text-secondary: #94AABF;
-  --text-muted: #3D5470;
-  --text-inverse: #040B18;
+  --text-primary: #0b1220;
+  --text-secondary: #475569;
+  --text-muted: #7c8aa0;
+  --text-inverse: #ffffff;
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   /* Metronic typography (v9.4.7) */
@@ -154,6 +154,8 @@ body {
   letter-spacing: 0;
   font-weight: 400;
   overflow-x: hidden;
+  background: #f7f9fc;
+  color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

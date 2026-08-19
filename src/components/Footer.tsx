@@ -6,7 +6,7 @@ import { Analytics } from "@/lib/analytics";
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#030710", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+    <footer style={{ background: "#eef2f8", borderTop: "1px solid rgba(11,18,32,0.08)" }}>
       <div className="ft-grid max-w-6xl mx-auto w-full px-6 py-12 grid grid-cols-1 gap-10 footer-inner sm:grid-cols-2 xl:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]">
         <div>
           <Link
@@ -36,7 +36,7 @@ export default function Footer() {
             <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
               <span
                 style={{
-                  color: "white",
+                  color: "#0b1220",
                   fontWeight: 800,
                   fontSize: "18px",
                   letterSpacing: "0.16em",
@@ -47,7 +47,7 @@ export default function Footer() {
               </span>
               <span
                 style={{
-                  color: "rgba(255,255,255,0.38)",
+                  color: "#7c8aa0",
                   fontSize: "7px",
                   letterSpacing: "0.22em",
                   textTransform: "uppercase",
@@ -58,12 +58,12 @@ export default function Footer() {
               </span>
             </div>
           </Link>
-          <p className="text-base leading-relaxed max-w-md mb-5 text-white/55">
+          <p className="text-base leading-relaxed max-w-md mb-5 text-[#475569]">
             Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
           </p>
           <Link
             href="/security"
-            className="mb-4 inline-flex text-[13px] font-semibold text-white/55 transition-colors hover:text-[#FF1B8D]"
+            className="mb-4 inline-flex text-[13px] font-semibold text-[#475569] transition-colors hover:text-[#FF1B8D]"
           >
             Security →
           </Link>
@@ -77,7 +77,7 @@ export default function Footer() {
             ].map((label) => (
               <span
                 key={label}
-                className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[10px] font-medium leading-tight text-white/45"
+                className="inline-flex items-center rounded-full border border-[rgba(11,18,32,0.1)] bg-white px-2.5 py-1 text-[10px] font-medium leading-tight text-[#5b6577]"
               >
                 {label}
               </span>
@@ -97,7 +97,7 @@ export default function Footer() {
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.38)",
+              color: "#6a7388",
               marginBottom: "16px",
             }}
           >
@@ -115,7 +115,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block mb-2.5 text-[13px] text-white/45 transition-colors hover:text-white/75 max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
+              className="block mb-2.5 text-[13px] text-[#5b6577] transition-colors hover:text-[#0b1220] max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
               onClick={
                 link.label === "Free Scan"
                   ? () => Analytics.ctaClicked("footer", "free_scan")
@@ -135,7 +135,7 @@ export default function Footer() {
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.38)",
+              color: "#6a7388",
               marginBottom: "16px",
             }}
           >
@@ -152,7 +152,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block mb-2.5 text-[13px] text-white/45 transition-colors hover:text-white/75 max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
+              className="block mb-2.5 text-[13px] text-[#5b6577] transition-colors hover:text-[#0b1220] max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
             >
               {link.label}
             </Link>
@@ -167,7 +167,7 @@ export default function Footer() {
               fontWeight: 700,
               textTransform: "uppercase",
               letterSpacing: "0.2em",
-              color: "rgba(255,255,255,0.38)",
+              color: "#6a7388",
               marginBottom: "16px",
             }}
           >
@@ -185,7 +185,7 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              className="block mb-2.5 text-[13px] text-white/45 transition-colors hover:text-white/75 max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
+              className="block mb-2.5 text-[13px] text-[#5b6577] transition-colors hover:text-[#0b1220] max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
             >
               {link.label}
             </Link>
@@ -195,9 +195,9 @@ export default function Footer() {
 
       <div
         className="ft-bottom px-6 py-5 max-w-6xl mx-auto w-full flex items-center justify-between flex-wrap gap-4 footer-inner"
-        style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}
+        style={{ borderTop: "1px solid rgba(11,18,32,0.08)" }}
       >
-        <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)" }}>
+        <div style={{ fontSize: "12px", color: "#6a7388" }}>
           © 2026 XSEE. All rights reserved.
         </div>
         <div className="flex items-center gap-5 flex-wrap">
@@ -211,14 +211,14 @@ export default function Footer() {
             <Link
               key={link.label}
               href={link.href}
-              style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}
-              className="hover:text-white/75 transition-colors max-sm:min-h-[44px] max-sm:inline-flex max-sm:items-center"
+              style={{ fontSize: "12px", color: "#5b6577" }}
+              className="hover:text-[#0b1220] transition-colors max-sm:min-h-[44px] max-sm:inline-flex max-sm:items-center"
             >
               {link.label}
             </Link>
           ))}
         </div>
-        <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.32)", fontFamily: "var(--font-mono)" }} className="flex items-center gap-2">
+        <div style={{ fontSize: "10px", color: "#7c8aa0", fontFamily: "var(--font-mono)" }} className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           v1.5.0 · All systems operational
         </div>
