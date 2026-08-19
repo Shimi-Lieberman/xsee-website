@@ -12,7 +12,6 @@ const NAV_LINKS = [
   { href: "/#engines", label: "Engines" },
   { href: "/#compare", label: "Why Us" },
   { href: "/free-scan", label: "Free Scan" },
-  { href: "/demo", label: "Demo" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/#contact", label: "Contact" },
 ] as const;
@@ -37,7 +36,7 @@ export default function Nav() {
               </Link>
             ))}
           </nav>
-          <div className="nav-status hidden md:flex items-center gap-1.5 text-[11px] text-white/45 mr-2">
+          <div className="nav-status hidden md:flex items-center gap-1.5 text-[11px] text-[#5b6577] mr-2">
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             All systems operational
           </div>
@@ -48,7 +47,7 @@ export default function Nav() {
             </Link>
             <Link
               href={LOGIN_URL}
-              className="nav-signin text-sm text-white/65 hover:text-white transition-colors px-3 py-2.5 min-h-[44px] items-center hidden md:inline-flex"
+              className="nav-signin text-sm text-[#475569] hover:text-[#0b1220] transition-colors px-3 py-2.5 min-h-[44px] items-center hidden md:inline-flex"
             >
               Sign in
             </Link>
@@ -70,7 +69,7 @@ export default function Nav() {
           </div>
         </div>
         {/* Mobile: nav-links hidden below lg in globals; mirror links here */}
-        <div className="nav-mobile-links hidden max-[1024px]:flex flex-wrap items-center justify-center gap-x-2 gap-y-1 py-2 border-t border-white/[0.06] -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="nav-mobile-links hidden max-[1024px]:flex flex-wrap items-center justify-center gap-x-2 gap-y-1 py-2 border-t border-[rgba(11,18,32,0.08)] -mx-4 px-4 sm:mx-0 sm:px-0">
           {NAV_LINKS.map(({ href, label }) => (
             <Link
               key={`m-${href}`}

@@ -2,19 +2,22 @@
 @import "./homepage-proof-loop.css";
 
 .hp-page {
-  /* Design System (2) — README tokens (xsee Design System zip) */
-  --hp-base: #050810;
-  --hp-elevated: #0c1320;
-  --hp-overlay: #121a2a;
-  --hp-ink: #f5f7fa;
-  --hp-ink2: #a0a6b5;
+  /* Design System — LIGHT theme (airy SaaS cybersecurity) */
+  --hp-base: #f7f9fc;
+  --hp-elevated: #ffffff;
+  --hp-overlay: #ffffff;
+  --hp-ink: #0b1220;
+  --hp-ink2: #48526b;
   --hp-ink3: #6a7388;
-  --hp-ink4: #3c4358;
-  --hp-line: #1e263a;
-  --hp-line2: #2e3650;
+  --hp-ink4: #b9c1d0;
+  --hp-line: #e7ecf3;
+  --hp-line2: #d6deea;
   --hp-brand: var(--color-primary);
-  --hp-brand-glow: rgba(255, 27, 141, 0.18);
-  --hp-ok: #10b981;
+  --hp-brand-glow: rgba(255, 27, 141, 0.14);
+  --hp-ok: #059669;
+  /* dark ink for code/terminal panels that stay dark on light theme */
+  --hp-code-bg: #0c1320;
+  --hp-code-ink: #e6ebf5;
 
   /* Section rhythm — single scale (handoff sec-pad).
      Tightened to a denser, data-rich cadence (CrowdStrike / Datadog). */
@@ -375,11 +378,11 @@
   padding: 0 20px;
   border-radius: 10px;
   background: var(--hp-brand);
-  color: var(--hp-ink);
+  color: #ffffff;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-  box-shadow: 0 2px 12px var(--hp-brand-glow);
+  box-shadow: 0 6px 18px var(--hp-brand-glow);
   transition: filter 0.2s ease;
 }
 
@@ -471,7 +474,7 @@
   display: block;
 }
 
-/* Scroll reveal — only below-fold nodes receive .hp-scroll-reveal (see HomeScrollReveal) */
+/* Scroll reveal �� only below-fold nodes receive .hp-scroll-reveal (see HomeScrollReveal) */
 .hp-page .hp-scroll-reveal:not(.is-in) {
   opacity: 0;
   transform: translateY(14px);

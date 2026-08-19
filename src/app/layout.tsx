@@ -17,7 +17,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#050810",
+  themeColor: "#f7f9fc",
 };
 
 const fontVariables = `${GeistSans.variable} ${GeistMono.variable}`;

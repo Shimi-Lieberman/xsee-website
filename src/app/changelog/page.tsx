@@ -16,9 +16,9 @@ const BADGE_STYLE = {
   fontWeight: 600,
   fontFamily: "var(--font-mono)",
   letterSpacing: "0.02em",
-  background: "rgba(234, 179, 8, 0.10)",
-  color: "#fbbf24",
-  border: "1px solid rgba(234, 179, 8, 0.2)",
+  background: "rgba(234, 179, 8, 0.12)",
+  color: "#b45309",
+  border: "1px solid rgba(234, 179, 8, 0.3)",
 } as const;
 
 type Feature = { title: string; body: string };
@@ -97,7 +97,7 @@ export default function ChangelogPage() {
       <Nav />
       <main
         style={{
-          background: "#030810",
+          background: "#f7f9fc",
           minHeight: "100vh",
           paddingTop: 88,
           paddingBottom: 48,
@@ -114,7 +114,7 @@ export default function ChangelogPage() {
         >
           <h1
             style={{
-              color: "#fff",
+              color: "#0b1220",
               fontSize: "clamp(28px, 4vw, 36px)",
               fontWeight: 800,
               letterSpacing: "-0.02em",
@@ -126,7 +126,7 @@ export default function ChangelogPage() {
           </h1>
           <p
             style={{
-              color: "rgba(148, 163, 184, 0.9)",
+              color: "#48526b",
               fontSize: 14,
               lineHeight: 1.6,
               margin: "0 0 48px",
@@ -141,7 +141,7 @@ export default function ChangelogPage() {
               key={release.version}
               style={{
                 borderBottom:
-                  releaseIndex < releases.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                  releaseIndex < releases.length - 1 ? "1px solid rgba(11,18,32,0.08)" : "none",
                 paddingBottom: releaseIndex < releases.length - 1 ? 48 : 0,
                 marginBottom: releaseIndex < releases.length - 1 ? 48 : 0,
               }}
@@ -157,7 +157,7 @@ export default function ChangelogPage() {
               >
                 <span
                   style={{
-                    color: "rgba(255,255,255,0.88)",
+                    color: "#0b1220",
                     fontSize: 14,
                     fontWeight: 600,
                     lineHeight: 1.6,
@@ -173,7 +173,7 @@ export default function ChangelogPage() {
                 <div key={feature.title} style={{ marginBottom: 26 }}>
                   <h2
                     style={{
-                      color: "#fff",
+                      color: "#0b1220",
                       fontSize: 15,
                       fontWeight: 600,
                       lineHeight: 1.5,
@@ -185,7 +185,7 @@ export default function ChangelogPage() {
                   </h2>
                   <p
                     style={{
-                      color: "#94a3b8",
+                      color: "#48526b",
                       fontSize: 13,
                       lineHeight: 1.6,
                       margin: 0,

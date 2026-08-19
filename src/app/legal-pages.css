@@ -1,27 +1,27 @@
 /* Legal policy pages — /terms /privacy /refunds */
 
 .legal-page-root {
-  background: #050d1a;
-  color: #f8fafc;
+  background: #f7f9fc;
+  color: #0b1220;
   min-height: 100vh;
 }
 
 .legal-hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #080c14 0%, #050d1a 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
   padding: 80px 24px 48px;
   text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(11, 18, 32, 0.08);
 }
 
 .legal-hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, #1e293b 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(11, 18, 32, 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
-  opacity: 0.4;
+  opacity: 0.6;
   pointer-events: none;
 }
 
@@ -32,7 +32,7 @@
   transform: translateX(-50%);
   width: 600px;
   height: 300px;
-  background: radial-gradient(ellipse, rgba(255, 27, 141, 0.06), transparent 60%);
+  background: radial-gradient(ellipse, rgba(255, 27, 141, 0.08), transparent 60%);
   pointer-events: none;
 }
 
@@ -48,8 +48,8 @@
   align-items: center;
   gap: 6px;
   background: rgba(255, 27, 141, 0.08);
-  border: 1px solid rgba(255, 27, 141, 0.15);
-  color: #ff80c2;
+  border: 1px solid rgba(255, 27, 141, 0.2);
+  color: #d4006e;
   border-radius: 20px;
   padding: 4px 14px;
   font-size: 11px;
@@ -60,7 +60,7 @@
 }
 
 .legal-hero-title {
-  color: #f8fafc;
+  color: #0b1220;
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -69,7 +69,7 @@
 }
 
 .legal-hero-sub {
-  color: #94a3b8;
+  color: #48526b;
   font-size: 16px;
   line-height: 1.6;
   margin: 0 0 16px;
@@ -79,9 +79,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #475569;
+  background: #ffffff;
+  border: 1px solid rgba(11, 18, 32, 0.1);
+  color: #5b6577;
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 12px;
@@ -119,7 +119,7 @@
 }
 
 .legal-toc-head {
-  color: #475569;
+  color: #6a7388;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -133,7 +133,7 @@
   gap: 8px;
   padding: 7px 10px;
   border-radius: 8px;
-  color: #64748b;
+  color: #5b6577;
   font-size: 13px;
   text-decoration: none;
   transition: all 0.15s ease;
@@ -142,36 +142,36 @@
 }
 
 .legal-toc-link:hover {
-  background: rgba(255, 255, 255, 0.04);
-  color: #f8fafc;
+  background: rgba(11, 18, 32, 0.04);
+  color: #0b1220;
 }
 
 .legal-toc-link.active {
   background: rgba(255, 27, 141, 0.08);
   border-left-color: #ff1b8d;
-  color: #ff80c2;
+  color: #d4006e;
   padding-left: 8px;
 }
 
 .legal-toc-num {
-  color: #334155;
+  color: #b9c1d0;
   font-size: 11px;
   font-weight: 700;
   min-width: 18px;
 }
 
 .legal-toc-link.active .legal-toc-num {
-  color: #ff80c2;
+  color: #d4006e;
 }
 
 .legal-toc-sep {
   margin: 16px 0;
   height: 1px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(11, 18, 32, 0.08);
 }
 
 .legal-toc-other {
-  color: #475569;
+  color: #6a7388;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -181,7 +181,7 @@
 
 .legal-toc-other-link {
   display: block;
-  color: #475569;
+  color: #5b6577;
   font-size: 12px;
   text-decoration: none;
   padding: 4px 0;
@@ -198,17 +198,18 @@
 
 .legal-section {
   scroll-margin-top: 96px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #ffffff;
+  border: 1px solid rgba(11, 18, 32, 0.08);
   border-radius: 14px;
   padding: 28px 32px;
   margin-bottom: 12px;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 6px 20px -16px rgba(11, 18, 32, 0.16);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .legal-section:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(11, 18, 32, 0.14);
+  box-shadow: 0 10px 28px -18px rgba(11, 18, 32, 0.22);
 }
 
 .legal-section-head {
@@ -217,7 +218,7 @@
   gap: 12px;
   margin-bottom: 18px;
   padding-bottom: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(11, 18, 32, 0.08);
 }
 
 .legal-section-num {
@@ -225,8 +226,8 @@
   height: 28px;
   border-radius: 8px;
   background: rgba(255, 27, 141, 0.08);
-  border: 1px solid rgba(255, 27, 141, 0.12);
-  color: #ff1b8d;
+  border: 1px solid rgba(255, 27, 141, 0.18);
+  color: #d4006e;
   font-size: 12px;
   font-weight: 800;
   display: flex;
@@ -236,20 +237,21 @@
 }
 
 .legal-section-title {
-  color: #f8fafc;
+  color: #0b1220;
   font-size: 16px;
   font-weight: 700;
   margin: 0;
 }
 
 .legal-body {
-  color: #94a3b8;
+  color: #48526b;
   font-size: 14px;
   line-height: 1.8;
 }
 
 .legal-body p {
   margin: 0 0 14px;
+  color: #48526b;
 }
 
 .legal-body p:last-child {
@@ -257,12 +259,12 @@
 }
 
 .legal-body strong {
-  color: #cbd5e1;
+  color: #0b1220;
   font-weight: 600;
 }
 
 .legal-body a {
-  color: #ff1b8d;
+  color: #d4006e;
   text-decoration: none;
 }
 
@@ -281,8 +283,8 @@
   gap: 10px;
   align-items: flex-start;
   padding: 6px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  color: #94a3b8;
+  border-bottom: 1px solid rgba(11, 18, 32, 0.06);
+  color: #48526b;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -310,12 +312,12 @@
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  background: rgba(239, 68, 68, 0.04);
-  border: 1px solid rgba(239, 68, 68, 0.08);
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.18);
   border-radius: 8px;
   padding: 10px 14px;
   margin-bottom: 6px;
-  color: #fca5a5;
+  color: #b91c1c;
   font-size: 13px;
   line-height: 1.5;
 }
@@ -325,68 +327,68 @@
 }
 
 .legal-box-pink {
-  background: rgba(255, 27, 141, 0.04);
-  border: 1px solid rgba(255, 27, 141, 0.12);
+  background: rgba(255, 27, 141, 0.05);
+  border: 1px solid rgba(255, 27, 141, 0.18);
   border-left: 3px solid #ff1b8d;
   border-radius: 0 8px 8px 0;
   padding: 14px 18px;
   margin-bottom: 16px;
-  color: #cbd5e1;
+  color: #334155;
   font-size: 13px;
   line-height: 1.7;
 }
 
 .legal-box-blue {
-  background: rgba(37, 99, 235, 0.04);
-  border: 1px solid rgba(37, 99, 235, 0.1);
+  background: rgba(37, 99, 235, 0.05);
+  border: 1px solid rgba(37, 99, 235, 0.16);
   border-left: 3px solid #2563eb;
   border-radius: 0 8px 8px 0;
   padding: 14px 18px;
   margin-bottom: 16px;
-  color: #93c5fd;
+  color: #1e40af;
   font-size: 13px;
   line-height: 1.7;
 }
 
 .legal-box-green {
-  background: rgba(16, 185, 129, 0.04);
-  border: 1px solid rgba(16, 185, 129, 0.1);
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.16);
   border-left: 3px solid #10b981;
   border-radius: 0 8px 8px 0;
   padding: 14px 18px;
   margin-bottom: 16px;
-  color: #34d399;
+  color: #047857;
   font-size: 13px;
   line-height: 1.7;
 }
 
 .legal-box-red {
   background: rgba(239, 68, 68, 0.06);
-  border: 1px solid rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.18);
   border-left: 3px solid #ef4444;
   border-radius: 0 8px 8px 0;
   padding: 14px 18px;
   margin-bottom: 16px;
-  color: #fca5a5;
+  color: #b91c1c;
   font-size: 13px;
   line-height: 1.7;
 }
 
 .legal-box-amber {
-  background: rgba(245, 158, 11, 0.04);
-  border: 1px solid rgba(245, 158, 11, 0.12);
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.2);
   border-left: 3px solid #f59e0b;
   border-radius: 0 8px 8px 0;
   padding: 14px 18px;
   margin-bottom: 16px;
-  color: #fde68a;
+  color: #b45309;
   font-size: 13px;
   line-height: 1.7;
 }
 
 .legal-subcard {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f7f9fc;
+  border: 1px solid rgba(11, 18, 32, 0.08);
   border-radius: 10px;
   padding: 16px;
   margin-bottom: 10px;
@@ -404,7 +406,7 @@
 }
 
 .legal-subcard-title {
-  color: #f8fafc;
+  color: #0b1220;
   font-size: 14px;
   font-weight: 700;
   margin: 0;
@@ -419,8 +421,8 @@
 
 .legal-right-pill {
   background: rgba(255, 27, 141, 0.08);
-  border: 1px solid rgba(255, 27, 141, 0.15);
-  color: #ff80c2;
+  border: 1px solid rgba(255, 27, 141, 0.2);
+  color: #d4006e;
   border-radius: 20px;
   padding: 5px 14px;
   font-size: 12px;
@@ -443,29 +445,29 @@
 .legal-refund-card {
   border-radius: 12px;
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(11, 18, 32, 0.08);
 }
 
 .legal-refund-card-trial {
-  background: rgba(16, 185, 129, 0.06);
-  border-color: rgba(16, 185, 129, 0.15);
+  background: rgba(16, 185, 129, 0.07);
+  border-color: rgba(16, 185, 129, 0.2);
   border-top: 3px solid #10b981;
 }
 
 .legal-refund-card-monthly {
-  background: rgba(37, 99, 235, 0.06);
-  border-color: rgba(37, 99, 235, 0.12);
+  background: rgba(37, 99, 235, 0.07);
+  border-color: rgba(37, 99, 235, 0.16);
   border-top: 3px solid #3b82f6;
 }
 
 .legal-refund-card-annual {
-  background: rgba(255, 27, 141, 0.06);
-  border-color: rgba(255, 27, 141, 0.12);
+  background: rgba(255, 27, 141, 0.07);
+  border-color: rgba(255, 27, 141, 0.16);
   border-top: 3px solid #ff1b8d;
 }
 
 .legal-refund-card-title {
-  color: #f8fafc;
+  color: #0b1220;
   font-weight: 700;
   font-size: 15px;
   margin: 12px 0 8px;
@@ -481,15 +483,15 @@
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  color: #34d399;
+  color: #047857;
   font-size: 13px;
   line-height: 1.5;
   margin-bottom: 8px;
 }
 
 .legal-steps-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: #f7f9fc;
+  border: 1px solid rgba(11, 18, 32, 0.08);
   border-radius: 12px;
   padding: 20px;
   margin-top: 12px;
@@ -529,20 +531,20 @@
   text-align: center;
   max-width: 600px;
   margin: 0 auto 64px;
-  background: rgba(255, 27, 141, 0.04);
-  border: 1px solid rgba(255, 27, 141, 0.1);
+  background: rgba(255, 27, 141, 0.05);
+  border: 1px solid rgba(255, 27, 141, 0.16);
   border-radius: 16px;
 }
 
 .legal-contact-title {
-  color: #f8fafc;
+  color: #0b1220;
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 8px;
 }
 
 .legal-contact-sub {
-  color: #64748b;
+  color: #5b6577;
   font-size: 14px;
   margin: 0 0 20px;
 }
@@ -558,7 +560,7 @@
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 0 20px rgba(255, 27, 141, 0.25);
+  box-shadow: 0 8px 20px -6px rgba(255, 27, 141, 0.35);
   transition: opacity 0.15s ease;
 }
 
@@ -575,7 +577,7 @@
 }
 
 .legal-contact-links a {
-  color: #475569;
+  color: #5b6577;
   font-size: 12px;
   text-decoration: none;
   transition: color 0.15s ease;
