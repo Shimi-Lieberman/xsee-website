@@ -57,9 +57,9 @@ export default function UnderAttackPage() {
               href="mailto:security@xsee.io"
               className="flex items-center justify-center gap-2 font-semibold px-6 py-3.5 rounded-xl text-base border transition-all"
               style={{
-                color: "rgba(255,255,255,0.7)",
-                borderColor: "rgba(255,255,255,0.12)",
-                background: "rgba(255,255,255,0.04)",
+                color: "#334155",
+                borderColor: "rgba(11,18,32,0.14)",
+                background: "#ffffff",
               }}
             >
               security@xsee.io
@@ -69,7 +69,7 @@ export default function UnderAttackPage() {
           <div className="mb-12">
             <div
               className="text-xs font-bold uppercase tracking-widest font-mono mb-6"
-              style={{ color: "rgba(255,255,255,0.25)" }}
+              style={{ color: "#7c8aa0" }}
             >
               What happens in the first 30 minutes
             </div>
@@ -108,9 +108,10 @@ export default function UnderAttackPage() {
                   key={i}
                   className="flex gap-4 p-4 rounded-xl"
                   style={{
-                    background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: "#ffffff",
+                    border: "1px solid rgba(11,18,32,0.08)",
                     borderLeft: `3px solid ${step.color}`,
+                    boxShadow: "0 6px 18px -12px rgba(11,18,32,0.18)",
                   }}
                 >
                   <div
@@ -120,8 +121,8 @@ export default function UnderAttackPage() {
                     {step.time}
                   </div>
                   <div>
-                    <div className="text-sm font-bold text-white mb-1">{step.title}</div>
-                    <div className="text-sm text-white/40 leading-relaxed">{step.detail}</div>
+                    <div className="text-sm font-bold text-[#0b1220] mb-1">{step.title}</div>
+                    <div className="text-sm text-[#5b6577] leading-relaxed">{step.detail}</div>
                   </div>
                 </div>
               ))}
@@ -132,7 +133,7 @@ export default function UnderAttackPage() {
             className="rounded-xl p-5 mb-10"
             style={{
               background: "rgba(239,68,68,0.05)",
-              border: "1px solid rgba(239,68,68,0.15)",
+              border: "1px solid rgba(239,68,68,0.22)",
             }}
           >
             <div
@@ -157,7 +158,7 @@ export default function UnderAttackPage() {
                   />
                   <span
                     className="text-sm font-mono leading-relaxed"
-                    style={{ color: "rgba(255,255,255,0.55)" }}
+                    style={{ color: "#475569" }}
                   >
                     {item}
                   </span>
@@ -169,12 +170,13 @@ export default function UnderAttackPage() {
           <div
             className="rounded-xl p-6 text-center"
             style={{
-              background: "rgba(255,255,255,0.03)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: "#ffffff",
+              border: "1px solid rgba(11,18,32,0.08)",
+              boxShadow: "0 10px 30px -18px rgba(11,18,32,0.2)",
             }}
           >
-            <div className="text-white font-bold mb-2">Need immediate help?</div>
-            <div className="text-white/40 text-sm mb-4">
+            <div className="text-[#0b1220] font-bold mb-2">Need immediate help?</div>
+            <div className="text-[#5b6577] text-sm mb-4">
               Email us directly — we respond to emergency requests within the hour.
             </div>
             <a
