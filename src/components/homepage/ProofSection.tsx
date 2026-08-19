@@ -282,7 +282,7 @@ export default function ProofSection() {
           Connect a read-only IAM role. XSEE builds the attack graph, validates each hop against the live AWS API, and
           writes a signed Receipt for every path that reaches production data.
         </p>
-        <div className="mt-16 hp-card overflow-hidden">
+        <div className="mt-16 hp-stage overflow-hidden">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--hp-line)] bg-[var(--hp-base)]/40">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5" aria-hidden>

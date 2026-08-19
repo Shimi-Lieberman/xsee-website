@@ -52,8 +52,8 @@ export default function HomeNav() {
           top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
           backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
-          background: scrolled ? "rgba(6, 8, 15, 0.92)" : "transparent",
-          borderBottom: scrolled ? "1px solid #11151F" : "1px solid transparent",
+          background: scrolled ? "rgba(255, 255, 255, 0.85)" : "transparent",
+          borderBottom: scrolled ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
         }}
       >
         <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between px-6 lg:px-10">
@@ -90,7 +90,7 @@ export default function HomeNav() {
             </Link>
             <Link
               href="/free-scan"
-              className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)]"
+              className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-white"
               onClick={() => Analytics.ctaClicked("nav", "free_breach_report")}
             >
               Free breach report
@@ -117,7 +117,7 @@ export default function HomeNav() {
             maxHeight: menuOpen ? 320 : 0,
             opacity: menuOpen ? 1 : 0,
             borderTopWidth: menuOpen ? 1 : 0,
-            background: "rgba(6, 8, 15, 0.98)",
+            background: "rgba(255, 255, 255, 0.98)",
             backdropFilter: "saturate(160%) blur(14px)",
             WebkitBackdropFilter: "saturate(160%) blur(14px)",
           }}
