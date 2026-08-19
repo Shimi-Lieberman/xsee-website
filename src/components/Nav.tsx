@@ -12,7 +12,6 @@ const NAV_LINKS = [
   { href: "/#engines", label: "Engines" },
   { href: "/#compare", label: "Why Us" },
   { href: "/free-scan", label: "Free Scan" },
-  { href: "/demo", label: "Demo" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/#contact", label: "Contact" },
 ] as const;
