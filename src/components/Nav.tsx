@@ -28,9 +28,6 @@ export default function Nav() {
                 key={href}
                 href={href}
                 className="nav-link"
-                onClick={
-                  label === "Demo" ? () => Analytics.ctaClicked("nav", "demo_link") : undefined
-                }
               >
                 {label}
               </Link>
@@ -75,9 +72,6 @@ export default function Nav() {
               key={`m-${href}`}
               href={href}
               className="nav-link text-xs"
-              onClick={
-                label === "Demo" ? () => Analytics.ctaClicked("nav", "demo_link") : undefined
-              }
             >
               {label}
             </Link>
