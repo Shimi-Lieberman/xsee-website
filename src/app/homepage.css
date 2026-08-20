@@ -380,7 +380,7 @@
   height: 48px;
   padding: 0 20px;
   border-radius: 10px;
-  background: var(--hp-brand);
+  background: linear-gradient(135deg, var(--hp-brand2) 0%, var(--hp-brand) 52%, #e51480 100%);
   color: #ffffff;
   font-size: 15px;
   font-weight: 600;
