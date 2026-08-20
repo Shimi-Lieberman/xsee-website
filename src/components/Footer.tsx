@@ -26,11 +26,7 @@ export default function Footer() {
                 height={44}
                 alt=""
                 className="nav-logo-mark"
-                style={{
-                  background: "transparent",
-                  filter:
-                    "brightness(0) saturate(100%) invert(19%) sepia(99%) saturate(7478%) hue-rotate(316deg) brightness(103%) contrast(101%)",
-                }}
+                style={{ background: "transparent" }}
               />
             </span>
             <div style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
