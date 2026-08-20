@@ -126,9 +126,9 @@ export default function LiveMonitorWidget() {
       className="dotgrid-dark lmw-root relative overflow-hidden rounded-[14px] border p-5"
       style={{
         background:
-          "linear-gradient(145deg, rgba(255,247,239,0.98) 0%, rgba(255,226,202,0.94) 58%, rgba(255,205,166,0.9) 100%)",
-        borderColor: "rgba(239, 138, 72, 0.32)",
-        boxShadow: "0 24px 60px -34px rgba(217, 108, 45, 0.42), inset 0 1px 0 rgba(255,255,255,0.8)",
+          "linear-gradient(145deg, #fff0df 0%, #ffc58f 55%, #f49a52 100%)",
+        borderColor: "rgba(218, 100, 26, 0.55)",
+        boxShadow: "0 26px 64px -30px rgba(205, 82, 17, 0.5), inset 0 1px 0 rgba(255,255,255,0.72)",
       }}
     >
       <style>{lmwStyles}</style>
