@@ -52,8 +52,9 @@ export default function HomeNav() {
           top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
           backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
-          background: scrolled ? "rgba(6, 8, 15, 0.92)" : "transparent",
-          borderBottom: scrolled ? "1px solid #11151F" : "1px solid transparent",
+          background: scrolled ? "rgba(247, 249, 252, 0.85)" : "transparent",
+          borderBottom: scrolled ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 4px 24px rgba(11, 18, 32, 0.06)" : "none",
         }}
       >
         <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between px-6 lg:px-10">
@@ -117,7 +118,7 @@ export default function HomeNav() {
             maxHeight: menuOpen ? 320 : 0,
             opacity: menuOpen ? 1 : 0,
             borderTopWidth: menuOpen ? 1 : 0,
-            background: "rgba(6, 8, 15, 0.98)",
+            background: "rgba(255, 255, 255, 0.98)",
             backdropFilter: "saturate(160%) blur(14px)",
             WebkitBackdropFilter: "saturate(160%) blur(14px)",
           }}

@@ -205,7 +205,7 @@
 
 /* ── Buttons ── */
 .v2-polish .btn-pink {
-  background: linear-gradient(180deg, #ff1b8d 0%, #e51480 100%);
+  background: linear-gradient(135deg, #5b3ee6 0%, #ff1b8d 52%, #e51480 100%);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.15) inset,
     0 0 0 1px rgba(255, 27, 141, 0.5),

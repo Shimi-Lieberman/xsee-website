@@ -282,9 +282,9 @@ export default function AttackGraphCinematic() {
               <stop offset="100%" stopColor="#FF1B8D" stopOpacity="0" />
             </radialGradient>
             <linearGradient id="scanGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#FF1B8D" stopOpacity="0" />
-              <stop offset="65%" stopColor="#FF1B8D" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="#FF4FA3" stopOpacity="0.9" />
+              <stop offset="0%" stopColor="#4F46E5" stopOpacity="0" />
+              <stop offset="65%" stopColor="#4F46E5" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#6366F1" stopOpacity="0.9" />
             </linearGradient>
             <filter id="nodeShadow" x="-40%" y="-40%" width="180%" height="180%">
               <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#04060C" floodOpacity="0.55" />
@@ -302,7 +302,7 @@ export default function AttackGraphCinematic() {
               width={f.s}
               height={f.s}
               rx="0.5"
-              fill="#FF1B8D"
+              fill="#4F46E5"
               opacity="0"
               className="hg-finding"
               style={{ animationDelay: `${f.delay}ms` }}
@@ -311,7 +311,7 @@ export default function AttackGraphCinematic() {
 
           <g className="hg-scan">
             <rect x="-30" y="20" width="22" height="480" fill="url(#scanGrad)" opacity="0.5" />
-            <line x1="-8" y1="20" x2="-8" y2="500" stroke="#FF1B8D" strokeWidth="1" opacity="0.6" />
+            <line x1="-8" y1="20" x2="-8" y2="500" stroke="#6366F1" strokeWidth="1" opacity="0.6" />
           </g>
 
           {edges.map((e, i) => {
