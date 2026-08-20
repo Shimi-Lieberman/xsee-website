@@ -2,53 +2,6 @@
 @import "./homepage-proof-loop.css";
 
 .hp-page {
-<<<<<<< HEAD
-  /* Design System — LIGHT theme.
-     Airy, modern SaaS surface (Linear / Stripe / Vercel light). */
-  --hp-base: #ffffff;
-  --hp-elevated: #ffffff;
-  --hp-overlay: #f6f7f9;
-  --hp-ink: #0b1220;
-  --hp-ink2: #4b5566;
-  --hp-ink3: #737d8f;
-  --hp-ink4: #aab2c0;
-  --hp-line: #eceef2;
-  --hp-line2: #dde1e8;
-  --hp-brand: var(--color-primary);
-  --hp-brand-glow: rgba(255, 27, 141, 0.14);
-  --hp-ok: #059669;
-
-  /* Section rhythm — roomier cadence for a lighter, airier feel */
-  --sec-pad-y: 120px;
-  --sec-pad-y-lg: 168px;
-  --head-gap: 32px;
-  --eyebrow-gap: 20px;
-  --body-gap: 56px;
-
-  background:
-    radial-gradient(90% 60% at 78% -8%, rgba(255, 176, 124, 0.1), transparent 55%),
-    radial-gradient(120% 70% at 22% -10%, rgba(255, 27, 141, 0.05), transparent 55%),
-    var(--hp-base);
-  color: var(--hp-ink);
-}
-
-/* Dark "product stage" — contains an inherently dark diagram/console as an
-   intentional dark panel on the light page. Re-declares the dark palette
-   locally so token-driven children render light-on-dark correctly. */
-.hp-page .hp-stage {
-  --hp-base: #06080f;
-  --hp-elevated: #0f1320;
-  --hp-overlay: #161b2c;
-  --hp-ink: #f5f7fa;
-  --hp-ink2: #a0a6b5;
-  --hp-ink3: #6a7388;
-  --hp-ink4: #3c4358;
-  --hp-line: #1e263a;
-  --hp-line2: #2e3650;
-  background: linear-gradient(180deg, #0a0e18 0%, #070a12 100%);
-  border: 1px solid #1a2133;
-  border-radius: 18px;
-=======
   /* Design System — LIGHT theme (airy SaaS cybersecurity) */
   --hp-base: #f7f9fc;
   --hp-elevated: #ffffff;
@@ -76,10 +29,43 @@
   --eyebrow-gap: 20px;
   --body-gap: 56px;
 
-  background: var(--hp-base);
->>>>>>> origin/main
+  background:
+    radial-gradient(90% 60% at 78% -8%, rgba(255, 176, 124, 0.12), transparent 55%),
+    radial-gradient(120% 70% at 22% -10%, rgba(255, 27, 141, 0.06), transparent 55%),
+    var(--hp-base);
+  color: var(--hp-ink);
+}
+
+/* Dark "product stage" — contains an inherently dark diagram/console as an
+   intentional dark panel on the light page (the modern light-page /
+   dark-product-shot pattern). Re-declares the dark palette locally so
+   token-driven children render light-on-dark correctly. */
+.hp-page .hp-stage {
+  --hp-base: #06080f;
+  --hp-elevated: #0f1320;
+  --hp-overlay: #161b2c;
+  --hp-ink: #f5f7fa;
+  --hp-ink2: #a0a6b5;
+  --hp-ink3: #6a7388;
+  --hp-ink4: #3c4358;
+  --hp-line: #1e263a;
+  --hp-line2: #2e3650;
+  background: linear-gradient(180deg, #0a0e18 0%, #070a12 100%);
+  border: 1px solid #1a2133;
+  border-radius: 18px;
   color: var(--hp-ink);
   box-shadow: 0 30px 70px -40px rgba(12, 16, 32, 0.5);
+}
+
+.hp-page .hp-stage .hp-card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 22px 44px -24px rgba(0, 0, 0, 0.7);
+}
+
+.hp-page .hp-stage.hp-dotgrid,
+.hp-page .hp-stage .hp-dotgrid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
 }
 
 .hp-page .hp-eyebrow {
@@ -153,12 +139,8 @@
   border-radius: 14px;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.8) inset,
-<<<<<<< HEAD
-    0 12px 32px -16px rgba(16, 20, 40, 0.1);
-=======
     0 1px 2px rgba(16, 22, 42, 0.04),
     0 14px 34px -18px rgba(16, 22, 42, 0.16);
->>>>>>> origin/main
   transition:
     transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.32s ease,
@@ -171,19 +153,8 @@
   border-color: color-mix(in srgb, var(--hp-brand2) 22%, var(--hp-line2));
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
-<<<<<<< HEAD
-    0 22px 48px -20px rgba(16, 20, 40, 0.16);
-}
-
-/* Inside a dark stage, cards revert to the elevated dark treatment */
-.hp-page .hp-stage .hp-card {
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.04) inset,
-    0 22px 44px -24px rgba(0, 0, 0, 0.7);
-=======
     0 2px 6px rgba(16, 22, 42, 0.05),
     0 26px 54px -22px rgba(16, 22, 42, 0.22);
->>>>>>> origin/main
 }
 
 /* Light-band cards share the same airy, layered treatment */
@@ -394,14 +365,8 @@
 }
 
 .hp-page .hp-dotgrid {
-  background-image: radial-gradient(rgba(11, 18, 32, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 18px 18px;
-}
-
-/* Dark stages keep the light-on-dark dot texture */
-.hp-page .hp-stage.hp-dotgrid,
-.hp-page .hp-stage .hp-dotgrid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
 }
 
 /* Process stepper — Connect → Certificate */
@@ -475,19 +440,11 @@
   height: 48px;
   padding: 0 20px;
   border-radius: 10px;
-<<<<<<< HEAD
-  background: var(--hp-brand);
-=======
   background: linear-gradient(135deg, var(--hp-brand2) 0%, var(--hp-brand) 52%, #e51480 100%);
->>>>>>> origin/main
   color: #ffffff;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-<<<<<<< HEAD
-  box-shadow: 0 6px 20px -6px var(--hp-brand-glow);
-  transition: filter 0.2s ease;
-=======
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.28) inset,
     0 2px 6px -2px rgba(79, 70, 229, 0.35),
@@ -496,7 +453,6 @@
     transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.22s ease,
     filter 0.2s ease;
->>>>>>> origin/main
 }
 
 .hp-page .hp-btn-primary:hover {
