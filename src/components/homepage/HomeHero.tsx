@@ -27,14 +27,27 @@ export default function HomeHero() {
             className="glow-brand-soft absolute"
             style={{ right: "-220px", top: "-60px", width: "880px", height: "880px" }}
           />
+          {/* Peach counter-wash — warms the opposite side alongside the pink */}
+          <div
+            className="absolute"
+            style={{
+              left: "-260px",
+              top: "-20px",
+              width: "820px",
+              height: "820px",
+              background:
+                "radial-gradient(closest-side, rgba(255, 176, 124, 0.16), rgba(255, 176, 124, 0.05) 55%, transparent 72%)",
+              filter: "blur(8px)",
+            }}
+          />
           <div
             className="absolute bottom-0 top-0 w-px"
             style={{
               left: "50%",
-              background: "linear-gradient(to bottom, transparent, #12131c 22%, #12131c 78%, transparent)",
+              background:
+                "linear-gradient(to bottom, transparent, rgba(11,18,32,0.06) 22%, rgba(11,18,32,0.06) 78%, transparent)",
             }}
           />
-          <div className="grain" />
         </div>
 
         <div className="relative mx-auto grid min-h-[calc(100svh-300px)] max-w-[1400px] grid-cols-1 items-center gap-y-14 lg:grid-cols-12 lg:gap-x-16">
@@ -192,7 +205,9 @@ export default function HomeHero() {
             </div>
           </div>
 
-          <AttackGraphCinematic />
+          <div className="v2-stage dotgrid-dark p-4 sm:p-6 lg:p-8">
+            <AttackGraphCinematic />
+          </div>
 
           <div className="v2-mono flex flex-wrap items-center justify-between gap-4 text-[11.5px] text-[var(--v2-ink3)]">
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2">

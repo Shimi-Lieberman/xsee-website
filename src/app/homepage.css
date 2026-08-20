@@ -29,8 +29,43 @@
   --eyebrow-gap: 20px;
   --body-gap: 56px;
 
-  background: var(--hp-base);
+  background:
+    radial-gradient(90% 60% at 78% -8%, rgba(255, 176, 124, 0.12), transparent 55%),
+    radial-gradient(120% 70% at 22% -10%, rgba(255, 27, 141, 0.06), transparent 55%),
+    var(--hp-base);
   color: var(--hp-ink);
+}
+
+/* Dark "product stage" — contains an inherently dark diagram/console as an
+   intentional dark panel on the light page (the modern light-page /
+   dark-product-shot pattern). Re-declares the dark palette locally so
+   token-driven children render light-on-dark correctly. */
+.hp-page .hp-stage {
+  --hp-base: #06080f;
+  --hp-elevated: #0f1320;
+  --hp-overlay: #161b2c;
+  --hp-ink: #f5f7fa;
+  --hp-ink2: #a0a6b5;
+  --hp-ink3: #6a7388;
+  --hp-ink4: #3c4358;
+  --hp-line: #1e263a;
+  --hp-line2: #2e3650;
+  background: linear-gradient(180deg, #0a0e18 0%, #070a12 100%);
+  border: 1px solid #1a2133;
+  border-radius: 18px;
+  color: var(--hp-ink);
+  box-shadow: 0 30px 70px -40px rgba(12, 16, 32, 0.5);
+}
+
+.hp-page .hp-stage .hp-card {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 22px 44px -24px rgba(0, 0, 0, 0.7);
+}
+
+.hp-page .hp-stage.hp-dotgrid,
+.hp-page .hp-stage .hp-dotgrid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
 }
 
 .hp-page .hp-eyebrow {

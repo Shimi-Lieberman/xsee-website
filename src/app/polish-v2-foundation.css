@@ -203,6 +203,30 @@
     0 8px 24px -12px rgba(20, 22, 28, 0.08);
 }
 
+/* ── Dark "product stage" ──
+   Contains an inherently-dark product visual (the attack graph) as an
+   intentional dark panel on the light page. Re-declares the dark v2
+   palette locally so token-driven children render light-on-dark. */
+.v2-polish .v2-stage {
+  --v2-base: #06080f;
+  --v2-base2: #0a0d17;
+  --v2-elevated: #0f1320;
+  --v2-overlay: #161b2c;
+  --v2-ink: #f6f7fb;
+  --v2-ink2: #a6adc1;
+  --v2-ink3: #6b7388;
+  --v2-ink4: #3c4358;
+  --v2-line: #1b2030;
+  --v2-line2: #2a3046;
+  position: relative;
+  background: linear-gradient(180deg, #0a0e18 0%, #070a12 100%);
+  border: 1px solid #1a2133;
+  border-radius: 18px;
+  box-shadow: 0 30px 70px -40px rgba(12, 16, 32, 0.5);
+  color: var(--v2-ink);
+  overflow: hidden;
+}
+
 /* ── Buttons ── */
 .v2-polish .btn-pink {
   background: linear-gradient(135deg, #5b3ee6 0%, #ff1b8d 52%, #e51480 100%);
