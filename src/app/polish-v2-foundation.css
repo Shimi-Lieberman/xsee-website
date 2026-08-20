@@ -118,8 +118,8 @@
 }
 
 .v2-polish .glow-brand-soft {
-  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.06), rgba(255, 27, 141, 0) 72%);
-  filter: blur(14px);
+  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.16), rgba(255, 27, 141, 0.04) 56%, rgba(255, 27, 141, 0) 74%);
+  filter: blur(10px);
 }
 
 .v2-polish .dotgrid-dark {
