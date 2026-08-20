@@ -217,12 +217,12 @@ export default function AttackGraphCinematic() {
       seed = (seed * 9301 + 49297) % 233280;
       return seed / 233280;
     };
-    for (let i = 0; i < 70; i++) {
+    for (let i = 0; i < 34; i++) {
       f.push({
         x: 80 + rand() * W,
         y: 30 + rand() * H,
-        s: 3 + rand() * 3.5,
-        delay: rand() * 800,
+        s: 1.2 + rand() * 1.6,
+        delay: rand() * 1400,
       });
     }
     return f;
@@ -295,14 +295,12 @@ export default function AttackGraphCinematic() {
           </defs>
 
           {findings.map((f, i) => (
-            <rect
+            <circle
               key={i}
-              x={f.x}
-              y={f.y}
-              width={f.s}
-              height={f.s}
-              rx="0.5"
-              fill="#4F46E5"
+              cx={f.x}
+              cy={f.y}
+              r={f.s}
+              fill="#6366F1"
               opacity="0"
               className="hg-finding"
               style={{ animationDelay: `${f.delay}ms` }}

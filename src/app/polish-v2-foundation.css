@@ -347,15 +347,17 @@
 @keyframes v2HgFinding {
   0% {
     opacity: 0;
-    transform: translateY(2px) scale(0.85);
+    transform: scale(0.4);
   }
-  6%,
-  18% {
-    opacity: 0.7;
-    transform: translateY(0) scale(1);
+  8% {
+    opacity: 0.5;
+    transform: scale(1);
   }
-  24% {
-    opacity: 0.1;
+  20% {
+    opacity: 0.14;
+  }
+  55% {
+    opacity: 0.24;
   }
   100% {
     opacity: 0.1;
@@ -1032,7 +1034,7 @@
   }
 
   .v2-polish .hg-finding {
-    opacity: 0.3 !important;
+    opacity: 0.16 !important;
     transform: none !important;
   }
 
