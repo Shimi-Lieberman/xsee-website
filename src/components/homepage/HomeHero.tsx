@@ -27,6 +27,19 @@ export default function HomeHero() {
             className="glow-brand-soft absolute"
             style={{ right: "-220px", top: "-60px", width: "880px", height: "880px" }}
           />
+          {/* Peach counter-wash — warms the opposite side alongside the pink */}
+          <div
+            className="absolute"
+            style={{
+              left: "-260px",
+              top: "-20px",
+              width: "820px",
+              height: "820px",
+              background:
+                "radial-gradient(closest-side, rgba(255, 176, 124, 0.16), rgba(255, 176, 124, 0.05) 55%, transparent 72%)",
+              filter: "blur(8px)",
+            }}
+          />
           <div
             className="absolute bottom-0 top-0 w-px"
             style={{
