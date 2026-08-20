@@ -245,6 +245,17 @@
   fill: var(--brand, var(--hp-ink));
 }
 
+/* Touch devices can't hover, so reveal the brand colors by default there —
+   otherwise mobile visitors only ever see a flat, monochrome logo strip. */
+@media (hover: none) {
+  .hp-page .hp-logo-svg {
+    fill: var(--brand, var(--hp-ink3));
+  }
+  .hp-page .hp-logo-mark {
+    color: var(--hp-ink);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hp-page .hp-marquee-track {
     animation: none;
