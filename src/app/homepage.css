@@ -14,6 +14,8 @@
   --hp-line2: #d6deea;
   --hp-brand: var(--color-primary);
   --hp-brand-glow: rgba(255, 27, 141, 0.14);
+  --hp-brand2: var(--color-secondary);
+  --hp-brand2-glow: rgba(79, 70, 229, 0.12);
   --hp-ok: #059669;
   /* dark ink for code/terminal panels that stay dark on light theme */
   --hp-code-bg: #0c1320;
@@ -42,16 +44,17 @@
   color: var(--hp-ink3);
 }
 
-/* Leading accent marker — a short pink rule that gives every section a
-   consistent, confident opening cadence (Orca-style eyebrows). */
+/* Leading accent marker — a short indigo rule that gives every section a
+   consistent, confident opening cadence (Orca-style eyebrows). Indigo is the
+   trust-signal secondary; pink stays reserved for actions and key emphasis. */
 .hp-page .hp-eyebrow::before {
   content: "";
   width: 18px;
   height: 1.5px;
   border-radius: 2px;
-  background: var(--hp-brand);
+  background: var(--hp-brand2);
   flex-shrink: 0;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 /* Allow opting out where a marker would crowd the layout */
@@ -78,7 +81,7 @@
   height: 6px;
   border-radius: 999px;
   opacity: 1;
-  box-shadow: 0 0 0 4px rgba(255, 27, 141, 0.12);
+  box-shadow: 0 0 0 4px var(--hp-brand2-glow);
 }
 
 /* Center the kicker when it sits in a centered section header */
