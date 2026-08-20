@@ -122,7 +122,15 @@ export default function LiveMonitorWidget() {
   const feed = FEED[feedIndex];
 
   return (
-    <div className="card-dark dotgrid-dark lmw-root relative overflow-hidden rounded-[14px] p-5">
+    <div
+      className="dotgrid-dark lmw-root relative overflow-hidden rounded-[14px] border p-5"
+      style={{
+        background:
+          "linear-gradient(145deg, #fff0df 0%, #ffc58f 55%, #f49a52 100%)",
+        borderColor: "rgba(218, 100, 26, 0.55)",
+        boxShadow: "0 26px 64px -30px rgba(205, 82, 17, 0.5), inset 0 1px 0 rgba(255,255,255,0.72)",
+      }}
+    >
       <style>{lmwStyles}</style>
 
       {/* layered brand glow */}
@@ -170,8 +178,14 @@ export default function LiveMonitorWidget() {
               }`}
             >
               <div className="flex min-w-0 items-center gap-2.5">
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-[7px] border border-[var(--v2-line2)] bg-[var(--v2-overlay)]">
-                  <Icon className="h-3.5 w-3.5" style={{ color: "var(--v2-ink2)" }} aria-hidden />
+                <span
+                  className="grid h-7 w-7 shrink-0 place-items-center rounded-[7px] border"
+                  style={{
+                    background: "rgba(255, 27, 141, 0.07)",
+                    borderColor: "rgba(255, 27, 141, 0.22)",
+                  }}
+                >
+                  <Icon className="h-3.5 w-3.5" style={{ color: "var(--v2-brand)" }} aria-hidden />
                 </span>
                 <span className="truncate text-[13px] text-[var(--v2-ink2)]">{r.label}</span>
               </div>

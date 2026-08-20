@@ -36,8 +36,8 @@ export default function HomeHero() {
               width: "820px",
               height: "820px",
               background:
-                "radial-gradient(closest-side, rgba(255, 176, 124, 0.16), rgba(255, 176, 124, 0.05) 55%, transparent 72%)",
-              filter: "blur(8px)",
+                "radial-gradient(closest-side, rgba(255, 145, 78, 0.3), rgba(255, 176, 124, 0.12) 55%, transparent 74%)",
+              filter: "blur(6px)",
             }}
           />
           <div

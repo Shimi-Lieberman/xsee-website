@@ -118,8 +118,8 @@
 }
 
 .v2-polish .glow-brand-soft {
-  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.06), rgba(255, 27, 141, 0) 72%);
-  filter: blur(14px);
+  background: radial-gradient(closest-side, rgba(255, 27, 141, 0.16), rgba(255, 27, 141, 0.04) 56%, rgba(255, 27, 141, 0) 74%);
+  filter: blur(10px);
 }
 
 .v2-polish .dotgrid-dark {
@@ -229,7 +229,7 @@
 
 /* ── Buttons ── */
 .v2-polish .btn-pink {
-  background: linear-gradient(135deg, #5b3ee6 0%, #ff1b8d 52%, #e51480 100%);
+  background: #ff1b8d;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.15) inset,
     0 0 0 1px rgba(255, 27, 141, 0.5),

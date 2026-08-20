@@ -30,8 +30,8 @@
   --body-gap: 56px;
 
   background:
-    radial-gradient(90% 60% at 78% -8%, rgba(255, 176, 124, 0.12), transparent 55%),
-    radial-gradient(120% 70% at 22% -10%, rgba(255, 27, 141, 0.06), transparent 55%),
+    radial-gradient(92% 64% at 80% -6%, rgba(255, 154, 87, 0.24), transparent 58%),
+    radial-gradient(120% 72% at 18% -8%, rgba(255, 27, 141, 0.14), transparent 58%),
     var(--hp-base);
   color: var(--hp-ink);
 }
