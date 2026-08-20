@@ -122,7 +122,15 @@ export default function LiveMonitorWidget() {
   const feed = FEED[feedIndex];
 
   return (
-    <div className="card-dark dotgrid-dark lmw-root relative overflow-hidden rounded-[14px] p-5">
+    <div
+      className="dotgrid-dark lmw-root relative overflow-hidden rounded-[14px] border p-5"
+      style={{
+        background:
+          "linear-gradient(145deg, rgba(255,247,239,0.98) 0%, rgba(255,226,202,0.94) 58%, rgba(255,205,166,0.9) 100%)",
+        borderColor: "rgba(239, 138, 72, 0.32)",
+        boxShadow: "0 24px 60px -34px rgba(217, 108, 45, 0.42), inset 0 1px 0 rgba(255,255,255,0.8)",
+      }}
+    >
       <style>{lmwStyles}</style>
 
       {/* layered brand glow */}
@@ -170,8 +178,14 @@ export default function LiveMonitorWidget() {
               }`}
             >
               <div className="flex min-w-0 items-center gap-2.5">
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-[7px] border border-[var(--v2-line2)] bg-[var(--v2-overlay)]">
-                  <Icon className="h-3.5 w-3.5" style={{ color: "var(--v2-ink2)" }} aria-hidden />
+                <span
+                  className="grid h-7 w-7 shrink-0 place-items-center rounded-[7px] border"
+                  style={{
+                    background: "rgba(255, 27, 141, 0.07)",
+                    borderColor: "rgba(255, 27, 141, 0.22)",
+                  }}
+                >
+                  <Icon className="h-3.5 w-3.5" style={{ color: "var(--v2-brand)" }} aria-hidden />
                 </span>
                 <span className="truncate text-[13px] text-[var(--v2-ink2)]">{r.label}</span>
               </div>
