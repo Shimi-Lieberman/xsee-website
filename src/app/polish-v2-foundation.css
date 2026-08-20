@@ -5,6 +5,7 @@
  */
 
 :root {
+<<<<<<< HEAD
   /* ── v2 color tokens (LIGHT) ── */
   --v2-base: #ffffff;
   --v2-base2: #f6f7f9;
@@ -16,6 +17,19 @@
   --v2-ink4: #aab2c0;
   --v2-line: #eceef2;
   --v2-line2: #dde1e8;
+=======
+  /* ── v2 color tokens (LIGHT theme) ── */
+  --v2-base: #f7f9fc;
+  --v2-base2: #eef2f8;
+  --v2-elevated: #ffffff;
+  --v2-overlay: #ffffff;
+  --v2-ink: #0b1220;
+  --v2-ink2: #48526b;
+  --v2-ink3: #6a7388;
+  --v2-ink4: #b9c1d0;
+  --v2-line: #e7ecf3;
+  --v2-line2: #d6deea;
+>>>>>>> origin/main
 
   /* ── v2 color tokens (bone interlude) ── */
   --v2-bone: #f2efe8;
@@ -153,9 +167,9 @@
 }
 
 .v2-polish .dotgrid-dark {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(11, 18, 32, 0.05) 1px, transparent 1px);
   background-size: 22px 22px;
-}
+  }
 
 .v2-polish .dotgrid-light {
   background-image: radial-gradient(rgba(19, 21, 28, 0.07) 1px, transparent 1px);
@@ -216,12 +230,12 @@
 
 /* ── Cards ── */
 .v2-polish .card-dark {
-  background: linear-gradient(180deg, var(--v2-elevated) 0%, #0c0f1a 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #f5f8fc 100%);
   border: 1px solid var(--v2-line);
   border-radius: 14px;
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.025) inset,
-    0 20px 40px -20px rgba(0, 0, 0, 0.6);
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 18px 40px -24px rgba(11, 18, 32, 0.16);
 }
 
 .v2-polish .card-light {
@@ -235,7 +249,7 @@
 
 /* ── Buttons ── */
 .v2-polish .btn-pink {
-  background: linear-gradient(180deg, #ff1b8d 0%, #e51480 100%);
+  background: linear-gradient(135deg, #5b3ee6 0%, #ff1b8d 52%, #e51480 100%);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.15) inset,
     0 0 0 1px rgba(255, 27, 141, 0.5),
@@ -377,15 +391,17 @@
 @keyframes v2HgFinding {
   0% {
     opacity: 0;
-    transform: translateY(2px) scale(0.85);
+    transform: scale(0.4);
   }
-  6%,
-  18% {
-    opacity: 0.7;
-    transform: translateY(0) scale(1);
+  8% {
+    opacity: 0.5;
+    transform: scale(1);
   }
-  24% {
-    opacity: 0.1;
+  20% {
+    opacity: 0.14;
+  }
+  55% {
+    opacity: 0.24;
   }
   100% {
     opacity: 0.1;
@@ -1062,7 +1078,7 @@
   }
 
   .v2-polish .hg-finding {
-    opacity: 0.3 !important;
+    opacity: 0.16 !important;
     transform: none !important;
   }
 

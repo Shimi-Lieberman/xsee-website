@@ -205,7 +205,7 @@ export default function Hero() {
           }}
         >
           <Link
-            href="/demo"
+            href="/#contact"
             className="btn-shimmer hero-cta-primary"
             style={{
               display: "inline-flex",

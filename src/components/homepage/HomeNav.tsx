@@ -52,8 +52,14 @@ export default function HomeNav() {
           top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
           backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
+<<<<<<< HEAD
           background: scrolled ? "rgba(255, 255, 255, 0.85)" : "transparent",
           borderBottom: scrolled ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
+=======
+          background: scrolled ? "rgba(247, 249, 252, 0.85)" : "transparent",
+          borderBottom: scrolled ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
+          boxShadow: scrolled ? "0 4px 24px rgba(11, 18, 32, 0.06)" : "none",
+>>>>>>> origin/main
         }}
       >
         <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between px-6 lg:px-10">

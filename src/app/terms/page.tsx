@@ -13,27 +13,27 @@ const wrap = { maxWidth: 720, margin: "0 auto", padding: "0 24px" } as const;
 const h2 = {
   fontSize: 18,
   fontWeight: 700 as const,
-  color: "#fff",
+  color: "#0b1220",
   marginTop: 36,
   marginBottom: 12,
   letterSpacing: "-0.02em",
 };
-const p = { fontSize: 15, lineHeight: 1.65, color: "rgba(255,255,255,0.65)", margin: "0 0 12px" } as const;
+const p = { fontSize: 15, lineHeight: 1.65, color: "#48526b", margin: "0 0 12px" } as const;
 
 export default function TermsPage() {
   return (
     <>
       <ScrollProgressBar />
       <Nav />
-      <main style={{ background: "#030810", minHeight: "100vh", paddingTop: 88, paddingBottom: 64 }}>
+      <main style={{ background: "#f7f9fc", minHeight: "100vh", paddingTop: 88, paddingBottom: 64 }}>
         <article style={wrap}>
-          <p style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 12 }}>
+          <p style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#7c8aa0", marginBottom: 12 }}>
             Legal
           </p>
-          <h1 style={{ fontSize: 36, fontWeight: 800, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.03em" }}>
+          <h1 style={{ fontSize: 36, fontWeight: 800, color: "#0b1220", margin: "0 0 8px", letterSpacing: "-0.03em" }}>
             Terms of Service
           </h1>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 32 }}>Last updated: April 2026</p>
+          <p style={{ fontSize: 13, color: "#7c8aa0", marginBottom: 32 }}>Last updated: April 2026</p>
 
           <section>
             <h2 style={h2}>Acceptance</h2>
@@ -81,7 +81,7 @@ export default function TermsPage() {
           <section>
             <h2 style={h2}>Governing law</h2>
             <p style={p}>
-              These Terms are governed by the laws of <strong style={{ color: "rgba(255,255,255,0.85)" }}>Israel</strong>, without regard to conflict-of-law rules. Courts in Israel shall have exclusive jurisdiction, subject to mandatory consumer protections where applicable.
+              These Terms are governed by the laws of <strong style={{ color: "#0b1220" }}>Israel</strong>, without regard to conflict-of-law rules. Courts in Israel shall have exclusive jurisdiction, subject to mandatory consumer protections where applicable.
             </p>
           </section>
 
@@ -89,7 +89,7 @@ export default function TermsPage() {
             <h2 style={h2}>Contact</h2>
             <p style={{ ...p, marginBottom: 0 }}>
               Legal inquiries:{" "}
-              <Link href="mailto:legal@xsee.io" style={{ color: "#e91e8c" }}>
+              <Link href="mailto:legal@xsee.io" style={{ color: "#d4006e" }}>
                 legal@xsee.io
               </Link>
             </p>

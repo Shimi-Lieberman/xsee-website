@@ -91,15 +91,15 @@ export default function VsWizPage() {
             </div>
 
             <div className="mx-auto mt-16 grid max-w-5xl gap-6 md:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8">
+              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_6px_20px_-16px_rgba(11,18,32,0.18)]">
                 <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-slate-500">Wiz</h2>
-                <p className="text-slate-300">
+                <p className="text-slate-600">
                   Finds 4,000 issues. Ranks by CVSS. Draws a theoretical attack graph. Tells you it could happen.
                 </p>
               </div>
-              <div className="rounded-2xl border border-[#ff2d78]/30 bg-[#ff2d78]/[0.06] p-8">
-                <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#ff2d78]">XSEE</h2>
-                <p className="text-slate-200">
+              <div className="rounded-2xl border border-[#FF1B8D]/30 bg-[#FF1B8D]/[0.05] p-8">
+                <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#FF1B8D]">XSEE</h2>
+                <p className="text-slate-700">
                   Finds the 3 paths that actually reach your database. Calls live AWS APIs to prove each hop. Generates cryptographic evidence. Tells you it
                   will happen — with proof.
                 </p>
@@ -150,8 +150,8 @@ export default function VsWizPage() {
               </table>
             </div>
 
-            <div className="mx-auto mt-16 max-w-2xl rounded-2xl border border-white/10 bg-white/[0.03] p-10 text-center">
-              <p className="mb-6 text-xl font-semibold text-white">Don&apos;t cancel Wiz. Add the layer it can&apos;t provide.</p>
+            <div className="mx-auto mt-16 max-w-2xl rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-[0_10px_30px_-18px_rgba(11,18,32,0.2)]">
+              <p className="mb-6 text-xl font-semibold text-[#0b1220]">Don&apos;t cancel Wiz. Add the layer it can&apos;t provide.</p>
               <Link href="/free-scan" className="btn btn-primary btn-lg btn-shimmer inline-flex">
                 <span className="relative z-[2]">Run Free Scan →</span>
               </Link>

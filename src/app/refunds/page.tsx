@@ -22,7 +22,7 @@ export default function RefundsPage() {
       tocItems={TOC}
       current="refunds"
     >
-      <p className="legal-body" style={{ marginBottom: 24, fontSize: 15, color: "#94a3b8" }}>
+      <p className="legal-body" style={{ marginBottom: 24, fontSize: 15, color: "#48526b" }}>
         XSEE offers a 14-day refund policy on all plans.
       </p>
 

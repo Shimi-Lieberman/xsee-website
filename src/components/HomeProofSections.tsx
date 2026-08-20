@@ -112,7 +112,7 @@ export default function HomeProofSections() {
               After you approve a fix, XSEE re-runs L2 validation, confirms closure, and issues a Breach
               Prevention Certificate. Timestamped. Signed. Board-ready.
             </p>
-            <Link href="/demo" className="home-certificate-cta">
+            <Link href="/#how" className="home-certificate-cta">
               See how it works →
             </Link>
           </div>

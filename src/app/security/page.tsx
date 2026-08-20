@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "How XSEE protects your environment and your data. Compliance status, read-only IAM, infrastructure security, and responsible disclosure.",
 };
 
-const H2 = "text-xl font-bold text-white mb-6";
+const H2 = "text-xl font-bold text-[#0b1220] mb-6";
 
 function IconShield({ className }: { className?: string }) {
   return (
@@ -178,11 +178,11 @@ export default function SecurityPage() {
     <>
       <ScrollProgressBar />
       <Nav />
-      <div style={{ background: "#050d1a", minHeight: "100vh", paddingTop: "80px" }}>
+      <div style={{ background: "#f7f9fc", minHeight: "100vh", paddingTop: "80px" }}>
         <div className="w-full max-w-[720px] mx-auto px-6">
           <header className="mb-14">
-            <h1 className="text-4xl font-black tracking-tight text-white mb-4">Security &amp; Trust</h1>
-            <p className="text-lg leading-relaxed text-white/45">
+            <h1 className="text-4xl font-black tracking-tight text-[#0b1220] mb-4">Security &amp; Trust</h1>
+            <p className="text-lg leading-relaxed text-[#475569]">
               How XSEE protects your environment and your data.
             </p>
           </header>
@@ -228,18 +228,18 @@ export default function SecurityPage() {
                 <div
                   key={title}
                   className="flex gap-4 rounded-xl p-5"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  style={{ background: "#ffffff", border: "1px solid rgba(11,18,32,0.08)", boxShadow: "0 6px 20px -16px rgba(11,18,32,0.18)" }}
                 >
                   <div
                     className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-[#FF1B8D]"
-                    style={{ background: "rgba(255,27,141,0.12)", border: "1px solid rgba(255,27,141,0.2)" }}
+                    style={{ background: "rgba(255,27,141,0.1)", border: "1px solid rgba(255,27,141,0.2)" }}
                     aria-hidden
                   >
                     <Icon className="text-[#FF1B8D]" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="mb-1.5 text-sm font-semibold text-white">{title}</h3>
-                    <p className="text-sm leading-relaxed text-white/45">{description}</p>
+                    <h3 className="mb-1.5 text-sm font-semibold text-[#0b1220]">{title}</h3>
+                    <p className="text-sm leading-relaxed text-[#475569]">{description}</p>
                   </div>
                 </div>
               ))}
@@ -256,12 +256,12 @@ export default function SecurityPage() {
                 <div
                   key={row.label}
                   className="rounded-lg px-4 py-3"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  style={{ background: "#ffffff", border: "1px solid rgba(11,18,32,0.08)" }}
                 >
-                  <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-white/30 font-mono">
+                  <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#7c8aa0] font-mono">
                     {row.label}
                   </div>
-                  <div className="text-sm font-medium leading-snug text-white/75">{row.value}</div>
+                  <div className="text-sm font-medium leading-snug text-[#334155]">{row.value}</div>
                 </div>
               ))}
             </div>
@@ -272,21 +272,21 @@ export default function SecurityPage() {
             <h2 id="sec-disclosure" className={H2}>
               Responsible Disclosure
             </h2>
-            <p className="mb-4 text-sm leading-relaxed text-white/45">
+            <p className="mb-4 text-sm leading-relaxed text-[#475569]">
               Report vulnerabilities to{" "}
-              <a href="mailto:security@xsee.io" className="font-semibold text-[#FF1B8D] hover:underline">
+              <a href="mailto:security@xsee.io" className="font-semibold text-[#d4006e] hover:underline">
                 security@xsee.io
               </a>
-              . We provide <strong className="text-white/60">48-hour acknowledgement</strong> on all reports and target{" "}
-              <strong className="text-white/60">7 days</strong> to remediate or publish a mitigation plan for critical
+              . We provide <strong className="text-[#0b1220]">48-hour acknowledgement</strong> on all reports and target{" "}
+              <strong className="text-[#0b1220]">7 days</strong> to remediate or publish a mitigation plan for critical
               issues.
             </p>
-            <ul className="mb-6 list-disc space-y-2 pl-5 text-sm leading-relaxed text-white/45">
+            <ul className="mb-6 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#475569]">
               <li>We will not pursue legal action against good-faith researchers who follow these guidelines.</li>
               <li>Public disclosure should wait at least 90 days from our acknowledgement unless we agree otherwise.</li>
               <li>
                 PGP key: available on request at{" "}
-                <a href="mailto:security@xsee.io" className="text-[#FF1B8D] hover:underline">
+                <a href="mailto:security@xsee.io" className="text-[#d4006e] hover:underline">
                   security@xsee.io
                 </a>
                 .
@@ -294,11 +294,11 @@ export default function SecurityPage() {
             </ul>
             <div
               className="mb-5 flex flex-col gap-4 rounded-xl p-5 sm:flex-row sm:items-center sm:justify-between"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+              style={{ background: "#ffffff", border: "1px solid rgba(11,18,32,0.08)", boxShadow: "0 6px 20px -16px rgba(11,18,32,0.18)" }}
             >
               <div>
-                <div className="mb-1 text-[10px] font-mono font-bold uppercase tracking-wider text-white/30">Email</div>
-                <a href="mailto:security@xsee.io" className="text-base font-semibold text-[#FF1B8D] hover:underline">
+                <div className="mb-1 text-[10px] font-mono font-bold uppercase tracking-wider text-[#7c8aa0]">Email</div>
+                <a href="mailto:security@xsee.io" className="text-base font-semibold text-[#d4006e] hover:underline">
                   security@xsee.io
                 </a>
               </div>
@@ -314,18 +314,18 @@ export default function SecurityPage() {
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="mailto:security@xsee.io?subject=SOC2%20Report%20Request"
-                className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/10"
+                className="inline-flex items-center justify-center rounded-lg border border-[rgba(11,18,32,0.14)] bg-white px-5 py-3 text-sm font-semibold text-[#0b1220] transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/5"
               >
                 Request SOC 2 Report →
               </a>
               <a
                 href="mailto:security@xsee.io?subject=DPA%20Request"
-                className="inline-flex items-center justify-center rounded-lg border border-white/15 bg-white/[0.06] px-5 py-3 text-sm font-semibold text-white transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/10"
+                className="inline-flex items-center justify-center rounded-lg border border-[rgba(11,18,32,0.14)] bg-white px-5 py-3 text-sm font-semibold text-[#0b1220] transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/5"
               >
                 Request DPA →
               </a>
             </div>
-            <p className="mt-5 text-xs leading-relaxed text-white/35">
+            <p className="mt-5 text-xs leading-relaxed text-[#7c8aa0]">
               SOC 2 Type II report available under NDA. DPA available upon request for GDPR compliance.
             </p>
           </section>
