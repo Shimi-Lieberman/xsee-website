@@ -56,8 +56,8 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
           y={y}
           width={w}
           height={h}
-          rx="10"
-          fill={isTarget ? "#1A0E1A" : "#0F1320"}
+          rx="16"
+          fill={isTarget ? "url(#targetNodeGradient)" : "url(#nodeGradient)"}
           stroke={isTarget ? "rgba(255,27,141,0.55)" : "#262C3E"}
           strokeWidth="1"
           filter={isTarget ? "url(#targetShadow)" : "url(#nodeShadow)"}
@@ -254,7 +254,7 @@ export default function AttackGraphCinematic() {
 
       <div className="-mx-6 overflow-x-auto px-6 sm:mx-0 sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div
-        className="card-dark dotgrid-dark relative mx-auto min-w-[760px] overflow-hidden rounded-[14px] sm:min-w-0"
+        className="xsee-graph-canvas card-dark dotgrid-dark relative mx-auto min-w-[760px] overflow-hidden sm:min-w-0"
         style={{ aspectRatio: "1200 / 520" }}
       >
         <div
@@ -272,6 +272,14 @@ export default function AttackGraphCinematic() {
 
         <svg viewBox="0 0 1200 520" className="absolute inset-0 h-full w-full">
           <defs>
+            <linearGradient id="nodeGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#182233" />
+              <stop offset="100%" stopColor="#0A101A" />
+            </linearGradient>
+            <linearGradient id="targetNodeGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#321126" />
+              <stop offset="100%" stopColor="#160A14" />
+            </linearGradient>
             <linearGradient id="edgeGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#FF1B8D" stopOpacity="0.2" />
               <stop offset="50%" stopColor="#FF1B8D" stopOpacity="1" />
