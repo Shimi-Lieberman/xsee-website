@@ -1,123 +1,29 @@
-import {
-  siGooglecloud,
-  siGithub,
-  siGitlab,
-  siJira,
-  siDatadog,
-  siSplunk,
-  siOkta,
-  siTerraform,
-  siKubernetes,
-  siSnowflake,
-  siCloudflare,
-  siPagerduty,
-  siGrafana,
-  siElastic,
-  siDocker,
-  siJenkins,
-  siPrometheus,
-  siSentry,
-  type SimpleIcon,
-} from "simple-icons";
+import { siGooglecloud, siGithub, siOkta, siDatadog, siSplunk, siKubernetes, siTerraform, siSnowflake, type SimpleIcon } from "simple-icons";
 
-type Integration = {
-  icon: SimpleIcon;
-  label: string;
-};
-
-const ROW_ONE: Integration[] = [
-  { icon: siGooglecloud, label: "Google Cloud" },
-  { icon: siGithub, label: "GitHub" },
-  { icon: siOkta, label: "Okta" },
-  { icon: siDatadog, label: "Datadog" },
-  { icon: siSplunk, label: "Splunk" },
-  { icon: siCloudflare, label: "Cloudflare" },
-  { icon: siKubernetes, label: "Kubernetes" },
-  { icon: siTerraform, label: "Terraform" },
-  { icon: siSnowflake, label: "Snowflake" },
+type Integration = { icon: SimpleIcon; label: string };
+const INTEGRATIONS: Integration[] = [
+  { icon: siGooglecloud, label: "Google Cloud" }, { icon: siGithub, label: "GitHub" },
+  { icon: siOkta, label: "Okta" }, { icon: siDatadog, label: "Datadog" },
+  { icon: siSplunk, label: "Splunk" }, { icon: siKubernetes, label: "Kubernetes" },
+  { icon: siTerraform, label: "Terraform" }, { icon: siSnowflake, label: "Snowflake" },
 ];
-
-const ROW_TWO: Integration[] = [
-  { icon: siJira, label: "Jira" },
-  { icon: siGitlab, label: "GitLab" },
-  { icon: siPagerduty, label: "PagerDuty" },
-  { icon: siGrafana, label: "Grafana" },
-  { icon: siElastic, label: "Elastic" },
-  { icon: siDocker, label: "Docker" },
-  { icon: siJenkins, label: "Jenkins" },
-  { icon: siPrometheus, label: "Prometheus" },
-  { icon: siSentry, label: "Sentry" },
-];
-
-function LogoPill({ icon, label }: Integration) {
-  return (
-    <div
-      className="hp-logo-pill flex items-center justify-center gap-2.5 px-6 py-3.5"
-      style={{ ["--brand" as string]: `#${icon.hex}` }}
-    >
-      <svg
-        role="img"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        className="hp-logo-svg h-[18px] w-[18px] shrink-0"
-      >
-        <path d={icon.path} />
-      </svg>
-      <span className="hp-logo-mark text-[14px] font-medium tracking-[-0.01em] whitespace-nowrap">
-        {label}
-      </span>
-    </div>
-  );
-}
-
-function MarqueeRow({
-  items,
-  direction,
-}: {
-  items: Integration[];
-  direction: "left" | "right";
-}) {
-  // Duplicate the set so the track can loop seamlessly.
-  const track = [...items, ...items];
-  return (
-    <div className="hp-marquee" aria-hidden="true">
-      <div
-        className={`hp-marquee-track ${
-          direction === "right" ? "hp-marquee-track--reverse" : ""
-        }`}
-      >
-        {track.map((item, i) => (
-          <LogoPill key={`${item.label}-${i}`} {...item} />
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export default function TrustedByStrip() {
-  const allLabels = [...ROW_ONE, ...ROW_TWO].map((i) => i.label).join(", ");
-
   return (
-    <section className="hp-section px-6 lg:px-10" aria-label="Integrations">
-      <div className="hp-container">
-        <div className="text-center mb-9 lg:mb-11">
-          <p className="hp-eyebrow hp-kicker hp-kicker--center mb-4">Works with your stack</p>
-          <h2 className="text-[22px] lg:text-[27px] font-semibold tracking-[-0.02em] text-[var(--hp-ink)] leading-[1.25] m-0 text-balance">
-            XSEE plugs into the tools your security team already runs
-          </h2>
-          <p className="text-[14.5px] text-[var(--hp-ink2)] leading-[1.55] mt-3 mx-auto max-w-[560px]">
-            Cloud, identity, and observability platforms &mdash; generating signed
-            Receipts across your existing workflow.
-          </p>
+    <section className="xsee-trust-rail px-6 lg:px-10" aria-label="Integrations">
+      <div className="mx-auto flex max-w-[1400px] flex-col border-y border-[var(--hp-line)] lg:flex-row lg:items-center">
+        <div className="shrink-0 border-b border-[var(--hp-line)] py-5 lg:w-[220px] lg:border-b-0 lg:border-r lg:pr-8">
+          <p className="hp-mono text-[10px] tracking-[0.16em] text-[var(--hp-ink3)]">OPERATES ACROSS YOUR STACK</p>
         </div>
-
-        <div className="hp-marquee-wrap flex flex-col gap-4">
-          <MarqueeRow items={ROW_ONE} direction="left" />
-          <MarqueeRow items={ROW_TWO} direction="right" />
+        <div className="flex flex-wrap items-center gap-x-7 gap-y-4 py-5 lg:px-8">
+          {INTEGRATIONS.map(({ icon, label }) => (
+            <div key={label} className="flex items-center gap-2 text-[12px] font-medium text-[var(--hp-ink2)]">
+              <svg viewBox="0 0 24 24" aria-hidden className="h-4 w-4 fill-[var(--hp-ink3)]"><path d={icon.path} /></svg>
+              <span>{label}</span>
+            </div>
+          ))}
         </div>
-
-        {/* Accessible, non-visual list of the integrations for screen readers */}
-        <p className="sr-only">Integrations include {allLabels}.</p>
+        <div className="ml-auto hidden shrink-0 border-l border-[var(--hp-line)] py-5 pl-8 lg:block"><span className="hp-mono text-[10px] text-[var(--hp-ok)]">● SYSTEM READY</span></div>
       </div>
     </section>
   );
