@@ -1,35 +1,79 @@
-const SIGNALS = Array.from({ length: 24 }, (_, index) => index);
+import type { CSSProperties } from "react";
+
+const CHECKPOINTS = [
+  { value: "4,000", label: "raw findings", tone: "neutral" },
+  { value: "82", label: "reachable", tone: "orange" },
+  { value: "11", label: "exploitable", tone: "orange" },
+  { value: "3", label: "proven paths", tone: "pink" },
+] as const;
+
+const PATHS = [
+  { id: "P-01", path: "Internet → ALB → IAM → RDS", target: "customer-db", status: "CRITICAL" },
+  { id: "P-02", path: "CI token → role chain → S3", target: "prod-artifacts", status: "VERIFIED" },
+  { id: "P-03", path: "Public pod → metadata → secrets", target: "cluster-admin", status: "VERIFIED" },
+] as const;
 
 export default function ProblemSection() {
   return (
     <section id="problem" className="hp-section xsee-problem" aria-labelledby="problem-title">
       <div className="hp-container">
-        <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
-          <div className="lg:col-span-7">
+        <div className="xsee-problem-intro">
+          <div>
             <p className="hp-eyebrow mb-5">03 / SIGNAL REDUCTION</p>
-            <h2 id="problem-title" className="hp-h-display text-balance" style={{ fontSize: "clamp(38px, 5.6vw, 76px)" }}>
-              Four thousand findings.<br /><span className="text-[var(--hp-brand)]">Three paths that matter.</span>
+            <h2 id="problem-title" className="hp-h-display max-w-[820px] text-balance">
+              Security tools count findings. <span>XSEE finds the route in.</span>
             </h2>
           </div>
-          <div className="lg:col-span-4 lg:col-start-9">
-            <p className="text-[17px] leading-[1.65] text-[var(--hp-ink2)]">Severity scores describe possibility. XSEE validates reachability—using your real identities, controls, and AWS API responses.</p>
-          </div>
+          <p>
+            Severity predicts what might happen. XSEE safely validates what can—against your real identities,
+            controls, and cloud APIs.
+          </p>
         </div>
 
-        <div className="xsee-reduction mt-14 lg:mt-20">
-          <div className="xsee-reduction-stage">
-            <div className="xsee-stage-label"><span>INPUT</span><strong>4,000</strong><small>CSPM findings</small></div>
-            <div className="xsee-signal-field" aria-hidden>{SIGNALS.map((signal) => <span key={signal} style={{ animationDelay: `${signal * 70}ms` }} />)}</div>
+        <div className="xsee-refinery mt-14 lg:mt-20">
+          <header className="xsee-refinery-head">
+            <div className="flex items-center gap-3">
+              <span className="xsee-refinery-pulse" aria-hidden />
+              <span>LIVE CORRELATION / ACME-PROD</span>
+            </div>
+            <span>LAST RUN · 02:41</span>
+          </header>
+
+          <div className="xsee-checkpoints" aria-label="Finding reduction summary">
+            {CHECKPOINTS.map((checkpoint, index) => (
+              <div key={checkpoint.label} className={`xsee-checkpoint xsee-checkpoint--${checkpoint.tone}`}>
+                <span className="xsee-checkpoint-index">0{index + 1}</span>
+                <strong>{checkpoint.value}</strong>
+                <span>{checkpoint.label}</span>
+                {index < CHECKPOINTS.length - 1 && <i aria-hidden />}
+              </div>
+            ))}
           </div>
-          <div className="xsee-reduction-flow" aria-hidden><span>correlate</span><i /><span>simulate</span><i /><span>verify</span></div>
-          <div className="xsee-reduction-stage xsee-reduction-stage--result">
-            <div className="xsee-stage-label"><span>PROVEN</span><strong>3</strong><small>paths reach production</small></div>
-            <div className="flex flex-col gap-2">
-              {["Internet → ALB → IAM → RDS", "CI token → role chain → S3", "Public pod → metadata → secrets"].map((path, index) => (
-                <div key={path} className="xsee-path-row"><span className="hp-mono">0{index + 1}</span><b>{path}</b><em>{index === 0 ? "CRITICAL" : "VERIFIED"}</em></div>
+
+          <div className="xsee-evidence-board">
+            <div className="xsee-evidence-axis" aria-hidden>
+              <span>ENTRY</span><span>IDENTITY</span><span>CONTROL</span><span>IMPACT</span>
+            </div>
+            <div className="xsee-evidence-lanes">
+              {PATHS.map((item, index) => (
+                <article key={item.id} className="xsee-evidence-lane" style={{ "--lane-delay": `${index * 220}ms` } as CSSProperties}>
+                  <span className="xsee-evidence-id">{item.id}</span>
+                  <div className="xsee-evidence-track" aria-hidden><i /><b /><b /><b /><em /></div>
+                  <div className="xsee-evidence-copy">
+                    <strong>{item.path}</strong>
+                    <span>target / {item.target}</span>
+                  </div>
+                  <span className={`xsee-evidence-status ${index === 0 ? "is-critical" : ""}`}>{item.status}</span>
+                </article>
               ))}
             </div>
           </div>
+
+          <footer className="xsee-refinery-foot">
+            <span>99.92% noise removed</span>
+            <span><b>3</b> paths require action</span>
+            <span>evidence signed / immutable</span>
+          </footer>
         </div>
       </div>
     </section>
