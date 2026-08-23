@@ -1,30 +1,34 @@
+const SIGNALS = Array.from({ length: 24 }, (_, index) => index);
+
 export default function ProblemSection() {
   return (
-    <section id="problem" className="hp-section" aria-labelledby="problem-title">
-      <div className="hp-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
-        <div className="lg:col-span-6">
-          <p className="hp-eyebrow hp-kicker mb-5">The core problem</p>
-          <h2
-            id="problem-title"
-            className="hp-h-display hp-h-display--wide"
-            style={{ fontSize: "clamp(34px, 4.4vw, 56px)" }}
-          >
-            <span className="block">Every cloud security tool tells you what&apos;s wrong.</span>
-            <span className="block text-[var(--hp-ink3)]">None of them prove it can actually be exploited.</span>
-          </h2>
+    <section id="problem" className="hp-section xsee-problem" aria-labelledby="problem-title">
+      <div className="hp-container">
+        <div className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+          <div className="lg:col-span-7">
+            <p className="hp-eyebrow mb-5">03 / SIGNAL REDUCTION</p>
+            <h2 id="problem-title" className="hp-h-display text-balance" style={{ fontSize: "clamp(38px, 5.6vw, 76px)" }}>
+              Four thousand findings.<br /><span className="text-[var(--hp-brand)]">Three paths that matter.</span>
+            </h2>
+          </div>
+          <div className="lg:col-span-4 lg:col-start-9">
+            <p className="text-[17px] leading-[1.65] text-[var(--hp-ink2)]">Severity scores describe possibility. XSEE validates reachability—using your real identities, controls, and AWS API responses.</p>
+          </div>
         </div>
-        <div className="lg:col-span-5 lg:col-start-8">
-          <div className="max-w-[520px] space-y-6 text-[17px] leading-[1.6] text-[var(--hp-ink2)]">
-            <p>
-              Posture tools rank findings by CVSS scores that don&apos;t know your environment. Attack-path tools draw
-              theoretical graphs. CSPMs generate thousands of alerts that age and never get verified.
-            </p>
-            <p>
-              Your security team spends weeks triaging findings — and the attacker doesn&apos;t care about your CVSS
-              scores. They follow the graph. Proof requires more than detection. It requires a live AWS API call per
-              hop, simulated end-to-end, verified after the fix, and signed.
-            </p>
-            <p className="text-[var(--hp-ink)]">XSEE is built around one premise: proof, or it doesn&apos;t count.</p>
+
+        <div className="xsee-reduction mt-14 lg:mt-20">
+          <div className="xsee-reduction-stage">
+            <div className="xsee-stage-label"><span>INPUT</span><strong>4,000</strong><small>CSPM findings</small></div>
+            <div className="xsee-signal-field" aria-hidden>{SIGNALS.map((signal) => <span key={signal} style={{ animationDelay: `${signal * 70}ms` }} />)}</div>
+          </div>
+          <div className="xsee-reduction-flow" aria-hidden><span>correlate</span><i /><span>simulate</span><i /><span>verify</span></div>
+          <div className="xsee-reduction-stage xsee-reduction-stage--result">
+            <div className="xsee-stage-label"><span>PROVEN</span><strong>3</strong><small>paths reach production</small></div>
+            <div className="flex flex-col gap-2">
+              {["Internet → ALB → IAM → RDS", "CI token → role chain → S3", "Public pod → metadata → secrets"].map((path, index) => (
+                <div key={path} className="xsee-path-row"><span className="hp-mono">0{index + 1}</span><b>{path}</b><em>{index === 0 ? "CRITICAL" : "VERIFIED"}</em></div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -994,10 +994,52 @@
 
 @keyframes hpTerminalBlink {
   0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+  100% { opacity: 1; }
+  50% { opacity: 0; }
 }
+
+/* ── XSEE Cyber Intelligence Instrument ───────────────────────────── */
+.hp-page {
+  --hp-base: #f4f6f8;
+  --hp-elevated: #ffffff;
+  --hp-overlay: #eef1f4;
+  --hp-ink: #0a0d12;
+  --hp-ink2: #424a57;
+  --hp-ink3: #7b8491;
+  --hp-ink4: #b3bac3;
+  --hp-line: #dfe3e8;
+  --hp-line2: #cbd1d9;
+  --hp-brand: #ff1b8d;
+  --hp-threat: #e86f2d;
+  background: var(--hp-base);
+}
+.hp-page .hp-section { padding-block: clamp(88px, 10vw, 152px); }
+.hp-page .hp-container { max-width: 1400px; }
+.hp-page .hp-h-display { font-family: var(--font-sans); font-weight: 590; letter-spacing: -0.055em; line-height: .98; }
+.hp-page .hp-card { border-radius: 4px; box-shadow: none; }
+.hp-page .hp-kicker { border: 0; background: transparent; padding: 0; }
+.xsee-trust-rail { background: #fff; }
+.xsee-problem { background: #fff; }
+.xsee-reduction { display: grid; grid-template-columns: minmax(0, 1fr) 170px minmax(0, 1fr); border: 1px solid var(--hp-line2); background: var(--hp-base); }
+.xsee-reduction-stage { min-height: 310px; padding: 30px; display: flex; flex-direction: column; justify-content: space-between; }
+.xsee-reduction-stage--result { background: #0a0d12; color: #fff; }
+.xsee-stage-label { display: grid; gap: 3px; }
+.xsee-stage-label span { font: 600 10px/1 var(--font-mono); letter-spacing: .16em; color: var(--hp-ink3); }
+.xsee-stage-label strong { font: 500 clamp(54px,7vw,92px)/.9 var(--font-mono); letter-spacing: -.07em; }
+.xsee-stage-label small { color: var(--hp-ink3); font-size: 13px; }
+.xsee-reduction-stage--result .xsee-stage-label strong { color: var(--hp-brand); }
+.xsee-signal-field { display: grid; grid-template-columns: repeat(8, 1fr); gap: 12px; }
+.xsee-signal-field span { aspect-ratio: 1; border: 1px solid var(--hp-line2); background: #fff; animation: xseeSignal 3.4s ease-in-out infinite; }
+.xsee-reduction-flow { border-inline: 1px solid var(--hp-line2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 11px; color: var(--hp-ink3); font: 600 9px/1 var(--font-mono); letter-spacing: .14em; text-transform: uppercase; }
+.xsee-reduction-flow i { width: 1px; height: 38px; background: linear-gradient(var(--hp-line2), var(--hp-brand)); }
+.xsee-path-row { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 12px; border-top: 1px solid #262b33; padding: 11px 0; font-size: 11px; }
+.xsee-path-row span { color: #717b89; }
+.xsee-path-row b { font: 500 11px/1.3 var(--font-mono); color: #e8ebef; }
+.xsee-path-row em { color: var(--hp-brand); font: 600 9px/1 var(--font-mono); letter-spacing: .1em; font-style: normal; }
+@keyframes xseeSignal { 0%,100% { border-color: var(--hp-line2); background:#fff; } 45% { border-color: rgba(232,111,45,.55); background:rgba(232,111,45,.12); } }
+@media (max-width: 800px) {
+  .xsee-reduction { grid-template-columns: 1fr; }
+  .xsee-reduction-flow { min-height: 86px; border-inline: 0; border-block: 1px solid var(--hp-line2); flex-direction: row; }
+  .xsee-reduction-flow i { width: 34px; height: 1px; }
+}
+@media (prefers-reduced-motion: reduce) { .xsee-signal-field span { animation: none; } }

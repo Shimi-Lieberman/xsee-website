@@ -8,23 +8,14 @@ import HomeNav from "@/components/homepage/HomeNav";
 import HomeHero from "@/components/homepage/HomeHero";
 import TrustedByStrip from "@/components/homepage/TrustedByStrip";
 import ProblemSection from "@/components/homepage/ProblemSection";
-import ProcessStepper from "@/components/homepage/ProcessStepper";
 import ProofLoopSection from "@/components/homepage/ProofLoopSection";
 import ProofSection from "@/components/homepage/ProofSection";
 import HomeScrollReveal from "@/components/homepage/HomeScrollReveal";
-import AiAttackerSection from "@/components/homepage/AiAttackerSection";
-import DetectionSection from "@/components/homepage/DetectionSection";
-import HomepageStatsBand from "@/components/homepage/StatsBand";
-import EnginesSection from "@/components/homepage/EnginesSection";
-import ZeroWriteSection from "@/components/homepage/ZeroWriteSection";
-import LoopSection from "@/components/homepage/LoopSection";
 import QuoteSection from "@/components/homepage/QuoteSection";
 import CertificateSection from "@/components/homepage/CertificateSection";
 import ComparisonSection from "@/components/homepage/ComparisonSection";
 import Pricing from "@/components/Pricing";
 import CTABanner from "@/components/CTABanner";
-import ContactForm from "@/components/ContactForm";
-import BuiltByStrip from "@/components/homepage/BuiltByStrip";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -53,25 +44,23 @@ export default function Home() {
         <HomeNav />
         <main className="hp-page-main w-full max-w-[100vw] mx-auto">
           <HomeScrollReveal />
+          {/* 01 — Claim and live attack-state instrument */}
           <HomeHero />
+          {/* 02 — Enterprise trust rail */}
           <TrustedByStrip />
+          {/* 03 — Findings compressed into real paths */}
           <ProblemSection />
-          <ProcessStepper />
+          {/* 04 — Autonomous validation loop */}
           <ProofLoopSection />
+          {/* 05 — Evidence workspace and signed closure artifact */}
           <ProofSection />
-          <AiAttackerSection />
-          <DetectionSection />
-          <HomepageStatsBand />
-          <EnginesSection />
-          <ZeroWriteSection />
-          <LoopSection />
-          <QuoteSection />
           <CertificateSection />
+          {/* 06 — Customer outcomes and concise competitive proof */}
+          <QuoteSection />
           <ComparisonSection />
+          {/* 07 — Commercial path and conversion */}
           <Pricing />
-          <BuiltByStrip />
           <CTABanner />
-          <ContactForm />
           <Footer />
         </main>
       </div>
