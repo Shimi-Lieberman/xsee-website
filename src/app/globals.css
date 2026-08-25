@@ -387,7 +387,7 @@ section { position: relative; }
 .nav-link { padding: 5px 12px; font-size: 13px; font-weight: 500; letter-spacing: 0.01em; color: #475569; border-radius: 7px; transition: color 0.15s, background 0.15s; cursor: pointer; white-space: nowrap; }
 .nav-link:hover { color: #0b1220; background: rgba(11,18,32,0.05); }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .nav-mobile-links .nav-link {
     min-height: 44px;
     padding: 10px 14px;
@@ -585,10 +585,18 @@ section { position: relative; }
 .sp-sep { width: 1px; height: 32px; background: rgba(255,255,255,0.08); }
 
 /* Hero proof strip */
-.hero-proof-strip { display: flex; align-items: center; gap: 0; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); border-radius: var(--r-lg); overflow: hidden; margin: 0; opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards; }
-.hps-item { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-right: 1px solid rgba(255,255,255,0.2); font-size: 12px; font-weight: 600; color: #e2e8f0; background: rgba(255,255,255,0.1); white-space: nowrap; }
+/* Light-surface treatment: the original near-white text/borders were a dark-theme leftover
+   and were unreadable on this page. */
+.hero-proof-strip { display: flex; align-items: center; gap: 0; background: #ffffff; border: 1px solid rgba(11,18,32,0.1); border-radius: var(--r-lg); overflow: hidden; margin: 0; box-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 6px 16px -10px rgba(16,22,42,0.16); opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards; }
+.hps-item { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-right: 1px solid rgba(11,18,32,0.1); font-size: 12px; font-weight: 600; color: #3a4658; background: transparent; white-space: nowrap; }
 .hps-item:last-child { border-right: none; }
 .hps-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+/* Phones: the row cannot fit three nowrap items, so stack them instead of clipping */
+@media (max-width: 640px) {
+  .hero-proof-strip { flex-direction: column; align-items: stretch; }
+  .hps-item { border-right: none; border-bottom: 1px solid rgba(11,18,32,0.1); white-space: normal; }
+  .hps-item:last-child { border-bottom: none; }
+}
 
 .sp-stat.warm .sp-num { color: #F59E0B; }
 .sp-stat.warm .sp-num span { color: #EA6C0A; }
@@ -646,7 +654,7 @@ section { position: relative; }
 .af-validated { display: flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 9px; color: var(--green); background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); border-radius: 3px; padding: 2px 6px; }
 .af-validated::before { content: "✓ "; font-size: 8px; }
 
-/* ━━━ LOGOS STRIP ━━━ */
+/* ━━�� LOGOS STRIP ━━━ */
 .logos-strip { padding: 32px 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.03); overflow: hidden; }
 .logos-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 20px; }
 .logos-sublabel { text-align: center; margin-top: 16px; font-size: 13px; color: rgba(255,255,255,0.6); }
@@ -1064,7 +1072,37 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .cta-box { padding: 48px 32px; }
+}
+/* Below 1200px the six center links can't share the row with the CTAs without
+   spilling over them, so they move to the compact wrapped row instead. */
+@media (max-width: 1200px) {
   .nav-links { display: none; }
+}
+/* Tablet band (769–1200px): links live in the compact row, but the action cluster still
+   overflows. Hide the decorative pill and the duplicate "Launch App" login button. */
+@media (min-width: 769px) and (max-width: 1200px) {
+  /* Two-row nav (bar + compact link row) needs to grow past the fixed 54px bar height,
+     otherwise the link row renders outside the bar and overlaps the page content. */
+  #nav { height: auto !important; }
+  #nav .nav-inner { height: 54px; }
+  .nav-inner { gap: 12px; }
+  .nav-status, #nav .nav-status-pill { display: none !important; }
+  .nav-btn-launch { display: none !important; }
+  .nav-logo .nav-logo-tagline { display: none; }
+}
+/* Desktop: the nav row needed ~1507px inside a container that caps at 1136px, so
+   "Start Free Trial" and "Launch App" were clipped off-screen at every desktop width.
+   Drop the decorative status pill and the duplicate login button ("Launch App" and
+   "Sign in" both point at the same login URL) and tighten gaps. */
+@media (min-width: 1201px) {
+  .nav-inner { gap: 16px; }
+  .nav-links { gap: 10px; min-width: 0; }
+  .nav-links .nav-link { font-size: 13px; }
+  /* Decorative tagline; drop it so the six center links keep their full labels */
+  .nav-logo .nav-logo-tagline { display: none; }
+  .nav-cta-demo, .nav-btn-trial { padding-left: 14px !important; padding-right: 14px !important; }
+  .nav-status, #nav .nav-status-pill { display: none !important; }
+  .nav-btn-launch { display: none !important; }
 }
 @media (max-width: 640px) {
   .ann-form { flex-direction: column; gap: 12px; }
@@ -2387,6 +2425,12 @@ main .section h2.display-lg {
   }
   .nav-burger {
     display: inline-flex;
+  }
+  /* Very narrow phones can't fit the logo, the CTA and the burger together */
+  @media (max-width: 380px) {
+    .nav-logo .nav-logo-tagline { display: none; }
+    .nav-cta-demo { padding: 8px 10px !important; font-size: 12px !important; }
+    .nav-inner { gap: 6px; }
   }
   .nav-mobile-panel {
     display: block;
