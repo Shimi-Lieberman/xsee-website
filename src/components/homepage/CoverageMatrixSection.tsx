@@ -13,9 +13,9 @@ const certifying: Technique[] = [
   { tactic: 'Privilege escalation', name: 'Attach-admin-to-self', states: all('PROVEN') },
   { tactic: 'Privilege escalation', name: 'Self-escalation policy', states: { ...all('PROVEN'), Predict: 'CLOSURE-ONLY' } },
   { tactic: 'Privilege escalation', name: 'PassRole → Lambda', states: { ...all('PROVEN'), Predict: 'CLOSURE-ONLY' } },
-  { tactic: 'Privilege escalation', name: 'PassRole → EC2 (quarantine)', states: all('PROVEN'), cert: 'e5a249f5' },
-  { tactic: 'Privilege escalation', name: 'Access-key privilege escalation', states: { ...all('PROVEN'), Predict: 'CLOSURE-ONLY' }, cert: '4f3769b7' },
-  { tactic: 'Credential access', name: 'Secrets plunder (scope)', states: all('PROVEN'), cert: 'e5a249f5' },
+  { tactic: 'Privilege escalation', name: 'PassRole → EC2 (quarantine)', states: all('PROVEN'), cert: 'e5a249f5 · rem CERTIFIED' },
+  { tactic: 'Privilege escalation', name: 'Access-key privesc', states: { ...all('PROVEN'), Predict: 'CLOSURE-ONLY' }, cert: '4f3769b7' },
+  { tactic: 'Credential access', name: 'Secrets plunder (scope)', states: all('PROVEN'), cert: 'e5a249f5 · legit_n=1' },
   { tactic: 'Network', name: 'Public security group', states: all('PROVEN') },
   { tactic: 'Network', name: 'IMDSv2 enforcement', states: { ...all('PROVEN'), Predict: 'N/A' } },
   { tactic: 'Data exposure', name: 'Public S3 bucket', states: { ...all('PROVEN'), Predict: 'N/A' } },
@@ -72,7 +72,7 @@ export default function CoverageMatrixSection() {
               {(['PROVEN', 'CLOSURE-ONLY', 'N/A', 'ROADMAP'] as State[]).map((state) => <span key={state}><i className={`is-${state.toLowerCase()}`} />{state}</span>)}
             </div>
             <button type="button" onClick={() => setShowRoadmap((value) => !value)} aria-expanded={showRoadmap}>
-              {showRoadmap ? 'Show certifying only' : 'Show full catalogue'} <ChevronRight aria-hidden />
+              {showRoadmap ? 'Show certifying only' : 'Show supplied roadmap'} <ChevronRight aria-hidden />
             </button>
           </div>
           <div className="xsee-matrix-scroll">
@@ -85,7 +85,7 @@ export default function CoverageMatrixSection() {
                   {joints.map((joint) => {
                     const state = technique.states[joint]
                     const active = selected?.technique.name === technique.name && selected.joint === joint
-                    return <td key={joint}><button type="button" className={`xsee-matrix-cell is-${state.toLowerCase()} ${active ? 'is-active' : ''}`} onClick={() => setSelected({ technique, joint })} aria-label={`${technique.name}, ${joint}: ${state}`}>
+                    return <td key={joint}><button type="button" className={`xsee-matrix-cell is-${state.toLowerCase()} ${active ? 'is-active' : ''}`} onClick={() => setSelected({ technique, joint })} onMouseEnter={() => setSelected({ technique, joint })} onFocus={() => setSelected({ technique, joint })} aria-label={`${technique.name}, ${joint}: ${state}`}>
                       {state === 'PROVEN' && <Check aria-hidden />}{state === 'CLOSURE-ONLY' && <LockKeyhole aria-hidden />}{state === 'N/A' && <CircleMinus aria-hidden />}<span>{state}</span>
                     </button></td>
                   })}
@@ -97,16 +97,15 @@ export default function CoverageMatrixSection() {
             {selected ? <>
               <div><span>{selected.technique.tactic}</span><strong>{selected.technique.name}</strong></div>
               <div><span>{selected.joint} · {selected.technique.states[selected.joint]}</span><p>{stateCopy[selected.technique.states[selected.joint]]} {jointProof[selected.joint]}</p></div>
-              <div className="xsee-proof-ids">
+              <div className="xsee-proof-ids" aria-label="Available evidence identifiers">
                 {selected.technique.cert && <span>CERT <b>{selected.technique.cert}</b></span>}
                 {selected.technique.receipt && <span>WHAT-IF <b>{selected.technique.receipt}</b></span>}
-                {!selected.technique.cert && !selected.technique.receipt && <span>NO CERT ID PUBLISHED</span>}
               </div>
               <button type="button" onClick={() => setSelected(null)} aria-label="Close proof detail"><X aria-hidden /></button>
             </> : <p>Select any joint to inspect exactly what its state means.</p>}
           </div>
         </div>
-        <p className="xsee-matrix-note">Approximately 25 techniques are catalogued. A row enters the certifying set only after Validate → Predict → Certify → Drift-revoke is represented honestly end-to-end.</p>
+        <p className="xsee-matrix-note">The live catalog is approximately 25 techniques. The expandable roadmap reflects the supplied working list and remains subject to live-catalog confirmation before publication. A row enters the certifying set only after Validate → Predict → Certify → Drift-revoke is represented honestly end-to-end.</p>
       </div>
     </section>
   )
