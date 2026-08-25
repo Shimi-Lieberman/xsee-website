@@ -462,7 +462,7 @@ export default function ProofLoopSection() {
           </div>
         </div>
 
-        <div className="hp-card relative overflow-hidden">
+        <div className="hp-stage relative overflow-hidden">
           <ProofLoopStage />
         </div>
 

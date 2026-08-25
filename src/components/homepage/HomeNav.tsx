@@ -11,7 +11,7 @@ const LOGIN_URL = "https://app.xsee.io/login";
 /** v2 nav labels — hrefs preserved from prior mapping where sections exist */
 const NAV_LINKS = [
   { href: "/#proof", label: "Product" },
-  { href: "/#how", label: "How it works" },
+  { href: "/#proof-loop", label: "How it works" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/changelog", label: "Docs" },
 ] as const;

@@ -62,7 +62,7 @@ export default function ComparisonSection() {
                       const isUs = cIdx === 3;
                       return (
                         <td
-                          key={val}
+                          key={`${q}-${cIdx}`}
                           className={`px-5 py-5 align-top text-[13.5px] leading-[1.45] ${
                             isUs ? "border-l border-[color:rgba(255,27,141,0.4)] bg-[color:rgba(255,27,141,0.04)] text-[var(--hp-ink)]" : "text-[var(--hp-ink3)]"
                           }`}
