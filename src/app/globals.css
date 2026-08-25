@@ -478,6 +478,10 @@ section { position: relative; }
   display: flex;
   flex-direction: column;
   gap: 2px;
+  /* Match the nav container so panel items line up with the logo instead of the screen edge */
+  width: 100%;
+  max-width: 1136px;
+  margin: 0 auto;
   padding: 12px 16px 18px;
   max-height: min(78vh, 460px);
   overflow-y: auto;
@@ -1081,14 +1085,18 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
 /* Tablet band (769–1200px): links live in the compact row, but the action cluster still
    overflows. Hide the decorative pill and the duplicate "Launch App" login button. */
 @media (min-width: 769px) and (max-width: 1200px) {
-  /* Two-row nav (bar + compact link row) needs to grow past the fixed 54px bar height,
-     otherwise the link row renders outside the bar and overlaps the page content. */
-  #nav { height: auto !important; }
-  #nav .nav-inner { height: 54px; }
-  .nav-inner { gap: 12px; }
+  /* Use the same single-row bar + slide-down panel as phones. A two-row nav would grow
+     past the fixed 54px height that every page's top offset assumes, pushing the link
+     row over the page heading. */
+  .nav-inner { flex-wrap: nowrap; gap: 12px; min-width: 0; }
+  .nav-mobile-links { display: none !important; }
   .nav-status, #nav .nav-status-pill { display: none !important; }
-  .nav-btn-launch { display: none !important; }
-  .nav-logo .nav-logo-tagline { display: none; }
+  .nav-signin, .nav-emergency { display: none !important; }
+  .nav-cta-group > a:not(.nav-cta-demo) { display: none !important; }
+  .nav-burger { display: inline-flex; }
+  .nav-mobile-panel { display: block; }
+  /* Line panel items up with the logo, which sits at 32px in this band */
+  .nav-mobile-panel-inner { padding-left: 20px; padding-right: 20px; }
 }
 /* Desktop: the nav row needed ~1507px inside a container that caps at 1136px, so
    "Start Free Trial" and "Launch App" were clipped off-screen at every desktop width.

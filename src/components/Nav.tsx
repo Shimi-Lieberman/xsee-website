@@ -104,18 +104,6 @@ export default function Nav() {
             </button>
           </div>
         </div>
-        {/* Tablet: compact wrapped link row (hidden on phones, which use the panel below) */}
-        <div className="nav-mobile-links hidden max-[1200px]:flex flex-wrap items-center justify-center gap-x-2 gap-y-1 py-2 border-t border-[rgba(11,18,32,0.08)] -mx-4 px-4 sm:mx-0 sm:px-0">
-          {NAV_LINKS.map(({ href, label }) => (
-            <Link
-              key={`m-${href}`}
-              href={href}
-              className="nav-link text-xs"
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
       </div>
 
       {/* Phone slide-down menu: holds the links and secondary actions the bar cannot fit */}
