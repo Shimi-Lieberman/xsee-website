@@ -16,7 +16,9 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
+  // Pinch-zoom must stay available on mobile (WCAG 1.4.4) — do not cap maximumScale.
+  maximumScale: 5,
+  userScalable: true,
   themeColor: "#f7f9fc",
 };
 
