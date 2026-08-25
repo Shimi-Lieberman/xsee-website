@@ -1,109 +1,70 @@
-import Image from "next/image";
-import { Copy, ExternalLink } from "lucide-react";
+'use client'
+
+import { useEffect, useState } from 'react'
+import { Check, ShieldAlert } from 'lucide-react'
+
+const states = [
+  { name: 'ISSUED', note: 'closure certified', tone: 'ok' },
+  { name: 'SUSPENDED', note: 'drift detected', tone: 'warn' },
+  { name: 'REVOKED', note: 'FIX_REVERTED', tone: 'danger' },
+  { name: 'SUPERSEDED', note: 're-closed', tone: 'brand' },
+] as const
 
 export default function CertificateSection() {
+  const [active, setActive] = useState(0)
+  useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) return
+    const timer = window.setInterval(() => setActive((value) => (value + 1) % states.length), 2600)
+    return () => window.clearInterval(timer)
+  }, [])
+  const current = states[active]
+
   return (
-    <section id="certificate" className="hp-section" aria-labelledby="cert-title">
-      <div className="hp-container grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-        <div className="lg:col-span-5">
-          <p className="hp-eyebrow hp-kicker mb-6">The artifact</p>
-          <h2
-            id="cert-title"
-            className="font-semibold text-[var(--hp-ink)]"
-            style={{ fontSize: "clamp(40px, 5.4vw, 68px)", lineHeight: 1.04, letterSpacing: "-0.035em" }}
-          >
-            Audit-grade proof of closure.
-          </h2>
-          <div className="mt-7 space-y-5 text-[17px] text-[var(--hp-ink2)] leading-[1.6] max-w-[480px]">
-            <p>
-              When the path is closed and verified, XSEE issues a Breach Prevention Certificate. Re-validation runs the
-              original attack against the new configuration. If the attack now fails, the path is provably closed. Signed.
-              Timestamped.
-            </p>
-            <p className="text-[var(--hp-ink)]">
-              The first artifact in cloud security that proves a problem is actually fixed — not just patched.
-            </p>
+    <section id="certificate" className="hp-section xsee-cert-lifecycle" aria-labelledby="cert-title">
+      <div className="hp-container">
+        <div className="xsee-cert-intro">
+          <div>
+            <p className="hp-eyebrow hp-kicker mb-6">Revocable proof</p>
+            <h2 id="cert-title" className="hp-h-display">A certificate that can tell you when it stops being true.</h2>
           </div>
-          <ul className="mt-8 space-y-2 text-[13px] text-[var(--hp-ink2)] list-none p-0 m-0">
-            <li className="flex items-center gap-2.5">
-              <span className="hp-mono text-[var(--hp-ink3)]">+</span> Re-simulation result attached to every issuance
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="hp-mono text-[var(--hp-ink3)]">+</span> SHA-256 signature, verifiable from any CLI
-            </li>
-            <li className="flex items-center gap-2.5">
-              <span className="hp-mono text-[var(--hp-ink3)]">+</span> 30-day evidence retention by default · longer on request
-            </li>
-          </ul>
+          <p>Closure is not permanent. XSEE monitors the certified state, suspends trust when drift is detected, and preserves the evidence trail through revocation and re-closure.</p>
         </div>
-        <div className="lg:col-span-7">
-          <div className="hp-card overflow-hidden border-[color:rgba(255,27,141,0.4)]">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--hp-line)]">
-              <p className="hp-eyebrow text-[var(--hp-ink3)]">Breach Prevention Certificate</p>
-              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-[color:rgba(16,185,129,0.4)] bg-[color:rgba(16,185,129,0.1)]">
-                <span className="hp-green-dot" style={{ boxShadow: "none" }} />
-                <span className="text-[10.5px] hp-mono text-[var(--hp-ok)]" style={{ letterSpacing: "0.12em" }}>
-                  VERIFIED
-                </span>
-              </div>
-            </div>
-            <div className="px-6 lg:px-8 py-8 lg:py-10">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <Image src="/logo-symbol-only.svg" width={20} height={20} alt="" aria-hidden />
-                  <span className="text-[20px] font-semibold tracking-tight text-[var(--hp-ink)]">XSEE</span>
-                </div>
-                <div className="hp-mono text-[11px] text-[var(--hp-ink3)]">cert/0042-a3f2c8</div>
-              </div>
-              <div className="mt-9 grid grid-cols-1 sm:grid-cols-12 gap-y-7 gap-x-8">
-                <div className="sm:col-span-12">
-                  <p className="hp-eyebrow text-[var(--hp-ink3)] mb-2">Path closed</p>
-                  <div className="hp-mono text-[14px] text-[var(--hp-ink)] leading-[1.5] flex flex-wrap items-center gap-x-2">
-                    Internet
-                    <span className="text-[var(--hp-ink4)]">→</span>
-                    IAM Role
-                    <span className="text-[var(--hp-ink4)]">→</span>
-                    EC2
-                    <span className="text-[var(--hp-ink4)]">→</span>
-                    <span className="text-[var(--hp-brand)]">Production Database</span>
-                  </div>
-                </div>
-                <div className="sm:col-span-6">
-                  <p className="hp-eyebrow text-[var(--hp-ink3)] mb-2">Issued</p>
-                  <div className="hp-mono text-[13px] text-[var(--hp-ink2)]">2026-05-15T17:42:11.832Z UTC</div>
-                </div>
-                <div className="sm:col-span-6">
-                  <p className="hp-eyebrow text-[var(--hp-ink3)] mb-2">Verified closed</p>
-                  <div className="hp-mono text-[13px] text-[var(--hp-ink2)]">2026-05-15T17:51:08.214Z UTC</div>
-                </div>
-                <div className="sm:col-span-12">
-                  <p className="hp-eyebrow text-[var(--hp-ink3)] mb-2">Re-simulation</p>
-                  <p className="text-[14px] text-[var(--hp-ink2)] leading-[1.6] m-0">
-                    Attack failed at hop 3 — <span className="hp-mono text-[var(--hp-ok)]">sts:AssumeRole denied</span>. Path is closed.
-                  </p>
-                </div>
-                <div className="sm:col-span-12">
-                  <p className="hp-eyebrow text-[var(--hp-ink3)] mb-2">Cryptographic signature</p>
-                  <div className="flex items-center gap-2 hp-mono text-[12px] text-[var(--hp-ink2)] bg-[var(--hp-overlay)] border border-[var(--hp-line)] rounded-lg px-3 py-2.5">
-                    <span className="text-[var(--hp-ink3)]">sha256:</span>
-                    <span className="truncate">a3f2c8b7d09c11e5e8a02…</span>
-                    <button type="button" className="ml-auto text-[var(--hp-ink3)] hover:text-[var(--hp-ink)] transition-colors" title="Copy" aria-label="Copy signature">
-                      <Copy className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-8 pt-5 border-t border-[var(--hp-line)] flex items-center justify-between flex-wrap gap-3">
-                <span className="inline-flex items-center gap-1.5 text-[13px] text-[var(--hp-ink2)]">
-                  Verify signature
-                  <ExternalLink className="w-3.5 h-3.5" aria-hidden />
-                </span>
-                <div className="hp-mono text-[11px] text-[var(--hp-ink3)]">Issuer: XSEE · authority root</div>
-              </div>
-            </div>
+
+        <div className="xsee-lifecycle-console mt-12">
+          <div className="xsee-lifecycle-bar"><span><i /> CERTIFICATE STATE MACHINE</span><span>MONITOR · VERIFY · REVOKE</span></div>
+          <div className="xsee-lifecycle-states" role="tablist" aria-label="Certificate lifecycle states">
+            {states.map((state, index) => <button key={state.name} type="button" role="tab" aria-selected={active === index} onClick={() => setActive(index)} className={active === index ? `is-active is-${state.tone}` : ''}>
+              <span>0{index + 1}</span><strong>{state.name}</strong><small>{state.note}</small>
+            </button>)}
           </div>
+          <div className="xsee-lifecycle-body">
+            <div className="xsee-lifecycle-path" aria-hidden>
+              {states.map((state, index) => <div key={state.name} className={index <= active ? `is-reached is-${state.tone}` : ''}><i>{index < active ? <Check /> : index + 1}</i><span>{state.name}</span>{index < states.length - 1 && <b />}</div>)}
+            </div>
+            <div className={`xsee-cert-tombstone is-${current.tone}`}>
+              <div className="xsee-tombstone-head"><span>BREACH PREVENTION CERTIFICATE</span><strong>{current.name}</strong></div>
+              <div className="xsee-tombstone-main">
+                <ShieldAlert aria-hidden />
+                <div><small>CURRENT ASSERTION</small><h3>{current.note}</h3><p>{active === 0 ? 'The original path re-simulation failed at the remediated joint.' : active === 1 ? 'A monitored configuration no longer matches the certified closed state.' : active === 2 ? 'The prior closure claim is retained as evidence, but is no longer valid.' : 'A new closure proof replaces the revoked certificate without erasing its history.'}</p></div>
+              </div>
+              <dl>
+                <div><dt>Reason</dt><dd>{active === 2 ? 'FIX_REVERTED' : current.note.toUpperCase().replaceAll(' ', '_')}</dd></div>
+                <div><dt>Observed</dt><dd>2026-08-23T13:42:39Z</dd></div>
+                <div><dt>Verification</dt><dd>SHA-256 verified</dd></div>
+                <div><dt>Evidence</dt><dd>CLI-verifiable</dd></div>
+              </dl>
+            </div>
+            <aside>
+              <p className="hp-eyebrow hp-eyebrow--bare">Monitoring contract</p>
+              <div><strong>Baseline</strong><span>Checked once per scan interval</span></div>
+              <div><strong>Pro</strong><span>&lt;60s drift monitoring</span></div>
+              <div><strong>Auditor / insurer</strong><span>Independently verifiable evidence of what was proven closed and continuously monitored since.</span></div>
+            </aside>
+          </div>
+          <div className="xsee-lifecycle-foot"><span>STATE TRANSITIONS ARE APPEND-ONLY</span><span>NO CERTIFICATE ID SHOWN WITHOUT ISSUED SOURCE DATA</span></div>
         </div>
       </div>
     </section>
-  );
+  )
 }

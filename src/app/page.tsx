@@ -10,8 +10,8 @@ import TrustedByStrip from "@/components/homepage/TrustedByStrip";
 import ProblemSection from "@/components/homepage/ProblemSection";
 import ProofLoopSection from "@/components/homepage/ProofLoopSection";
 import ProofSection from "@/components/homepage/ProofSection";
+import CoverageMatrixSection from "@/components/homepage/CoverageMatrixSection";
 import HomeScrollReveal from "@/components/homepage/HomeScrollReveal";
-import QuoteSection from "@/components/homepage/QuoteSection";
 import CertificateSection from "@/components/homepage/CertificateSection";
 import ComparisonSection from "@/components/homepage/ComparisonSection";
 import Pricing from "@/components/Pricing";
@@ -54,9 +54,9 @@ export default function Home() {
           <ProofLoopSection />
           {/* 05 — Evidence workspace and signed closure artifact */}
           <ProofSection />
+          <CoverageMatrixSection />
           <CertificateSection />
-          {/* 06 — Customer outcomes and concise competitive proof */}
-          <QuoteSection />
+          {/* 06 — Evidence boundary and concise competitive proof */}
           <ComparisonSection />
           {/* 07 — Commercial path and conversion */}
           <Pricing />

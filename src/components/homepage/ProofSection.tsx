@@ -241,16 +241,16 @@ function ReceiptPanel() {
               <span className="text-[var(--hp-ok)]">failed at hop 3 (denied)</span>
             </div>
             <div className="pt-3 border-t border-[var(--hp-line)]">
-              <span className="text-[var(--hp-ok)]">certificate issued</span> · cert/0042-a3f2c8
+              <span className="text-[var(--hp-ok)]">certificate issued</span> · ID omitted from sample receipt
             </div>
           </div>
         )}
         {tab === "Overview" && (
           <div className="space-y-4">
             <div>
-              <p className="hp-eyebrow text-[var(--hp-ink3)] mb-1">Data at risk</p>
-              <p className="hp-mono text-[18px] text-[var(--hp-ink)]">
-                47.2 TB <span className="text-[var(--hp-ink3)] text-[12px]">· 12.4M records</span>
+              <p className="hp-eyebrow text-[var(--hp-ink3)] mb-1">Evidence boundary</p>
+              <p className="text-[13px] leading-[1.6] text-[var(--hp-ink2)]">
+                Impact is asserted only from the AWS resources and API responses attached to this specific path receipt.
               </p>
             </div>
           </div>
