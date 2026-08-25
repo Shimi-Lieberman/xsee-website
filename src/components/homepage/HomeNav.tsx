@@ -44,20 +44,36 @@ export default function HomeNav() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  // Dismiss the mobile menu with Escape, and lock background scroll while it is open
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [menuOpen]);
+
   return (
     <>
       <header
         className="v2-polish fixed inset-x-0 z-50 transition-all duration-300"
         style={{
           top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
-          backdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
-          WebkitBackdropFilter: scrolled ? "saturate(160%) blur(14px)" : "none",
-          background: scrolled ? "rgba(247, 249, 252, 0.85)" : "transparent",
-          borderBottom: scrolled ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
-          boxShadow: scrolled ? "0 4px 24px rgba(11, 18, 32, 0.06)" : "none",
+          backdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
+          WebkitBackdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
+          // When the mobile panel is open the bar must be opaque so it reads as one surface with it.
+          background: menuOpen ? "#f7f9fc" : scrolled ? "rgba(247, 249, 252, 0.85)" : "transparent",
+          borderBottom: scrolled && !menuOpen ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
+          boxShadow: scrolled || menuOpen ? "0 4px 24px rgba(11, 18, 32, 0.06)" : "none",
         }}
       >
-        <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between px-6 lg:px-10">
+        <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between gap-3 px-6 max-[420px]:px-4 lg:px-10">
           <Link href="/#top" className="group flex shrink-0 items-center gap-2.5" aria-label="XSEE home">
             <Image
               src="/logo-symbol-only.svg"
@@ -91,11 +107,13 @@ export default function HomeNav() {
             </Link>
             <Link
               href="/free-scan"
-              className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)]"
+              className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)] max-[420px]:px-3 max-[420px]:text-[12px]"
               onClick={() => Analytics.ctaClicked("nav", "free_breach_report")}
             >
-              Free breach report
-              <ArrowRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
+              {/* Compact label on ultra-narrow phones so the CTA never collides with the logo */}
+              <span className="max-[420px]:hidden">Free breach report</span>
+              <span className="hidden max-[420px]:inline">Free scan</span>
+              <ArrowRight className="h-3.5 w-3.5 shrink-0 max-[360px]:hidden" aria-hidden />
             </Link>
             <button
               type="button"
@@ -118,9 +136,9 @@ export default function HomeNav() {
             maxHeight: menuOpen ? 320 : 0,
             opacity: menuOpen ? 1 : 0,
             borderTopWidth: menuOpen ? 1 : 0,
-            background: "rgba(255, 255, 255, 0.98)",
-            backdropFilter: "saturate(160%) blur(14px)",
-            WebkitBackdropFilter: "saturate(160%) blur(14px)",
+            // Fully opaque: a translucent panel let hero content show through the links.
+            background: "#ffffff",
+            boxShadow: menuOpen ? "0 12px 28px rgba(11, 18, 32, 0.08)" : "none",
           }}
         >
           <nav className="mx-auto flex max-w-[1400px] flex-col gap-1 px-6 py-4" aria-label="Mobile">
