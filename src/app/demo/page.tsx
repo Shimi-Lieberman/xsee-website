@@ -29,7 +29,26 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DemoPage() {
+type DemoPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
+
+export default async function DemoPage({ searchParams }: DemoPageProps) {
+  const params = await searchParams;
+  const passthrough = new URLSearchParams();
+  const keys = ["scan_id", "network_data_url", "region"];
+  for (const key of keys) {
+    const value = params[key];
+    if (typeof value === "string" && value.trim()) {
+      passthrough.set(key, value);
+    } else if (Array.isArray(value) && value[0]) {
+      passthrough.set(key, value[0]);
+    }
+  }
+  const iframeSrc = passthrough.toString()
+    ? `/xsee-demo.html?${passthrough.toString()}`
+    : "/xsee-demo.html";
+
   return (
     <div
       style={{
@@ -70,7 +89,7 @@ export default function DemoPage() {
 
       {/* Full-screen demo */}
       <iframe
-        src="/xsee-demo.html"
+        src={iframeSrc}
         style={{
           width: "100%",
           height: "100%",
