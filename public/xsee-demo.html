@@ -617,7 +617,7 @@ body{background:var(--void);color:var(--white);font-family:var(--body);font-size
   </div>
 
   <div class="graph-layout fu fu2">
-    <div class="graph-wrap">
+    <div class="graph-wrap" id="graphWrap">
       <div class="graph-toolbar">
         <button class="gtab on" data-g="0" onclick="switchGraph(0)">Attack Paths</button>
         <button class="gtab" data-g="1" onclick="switchGraph(1)">IAM Graph</button>
@@ -633,7 +633,8 @@ body{background:var(--void);color:var(--white);font-family:var(--body);font-size
       <div class="graph-canvas" id="graphCanvas"></div>
     </div>
 
-    <div class="graph-right">
+    <div class="graph-right" id="graphRight">
+      <div id="graphSideDefault">
       <div class="path-filter">
         <button class="filter-btn on" onclick="filterPaths('all',this)">All</button>
         <button class="filter-btn" onclick="filterPaths('CRITICAL',this)">Critical</button>
@@ -675,6 +676,8 @@ body{background:var(--void);color:var(--white);font-family:var(--body);font-size
           <span class="badge b-red" style="justify-content:flex-start">T1530 · Cloud Storage Data</span>
         </div>
       </div>
+      </div>
+      <div id="graphSideNetwork" class="network-side-panel" style="display:none"></div>
     </div>
   </div>
 </div><!-- /s1 -->
@@ -1020,6 +1023,7 @@ resource <span class="cs">"aws_iam_policy"</span> <span class="cs">"ec2_processo
 
 </div><!-- /app -->
 
+<script src="/xsee-network.js"></script>
 <script>
 /* ─── DATA ─── */
 const SCREENS = [
@@ -1200,12 +1204,29 @@ function runCounters(){
 /* ─── GRAPHS ─── */
 function initGraph(){ switchGraph(activeGraph); }
 
-function switchGraph(idx){
+async function switchGraph(idx){
   activeGraph = idx;
   document.querySelectorAll('.gtab').forEach((b,i)=>{
     b.classList.toggle('on', i===idx);
   });
+
   const canvas = document.getElementById('graphCanvas');
+  const refs = {
+    wrapEl: document.getElementById('graphWrap'),
+    rightEl: document.getElementById('graphRight'),
+    canvasEl: canvas,
+    defaultSideEl: document.getElementById('graphSideDefault'),
+    networkSideEl: document.getElementById('graphSideNetwork'),
+  };
+
+  if (idx === 2 && window.XSEENetworkDemo && typeof window.XSEENetworkDemo.render === 'function') {
+    await window.XSEENetworkDemo.render(refs);
+    return;
+  }
+
+  if (window.XSEENetworkDemo && typeof window.XSEENetworkDemo.deactivate === 'function') {
+    window.XSEENetworkDemo.deactivate(refs);
+  }
   canvas.innerHTML = GRAPH_SVG[idx]();
 }
 
