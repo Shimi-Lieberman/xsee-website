@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { Check, ChevronRight, CircleMinus, LockKeyhole, X } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { Check, ChevronRight, CircleMinus, FileCheck2, LockKeyhole, Pause, Play, RotateCcw, ShieldCheck } from 'lucide-react'
 
 type State = 'PROVEN' | 'CLOSURE-ONLY' | 'N/A' | 'ROADMAP'
 type Joint = 'Validate' | 'Predict' | 'Certify' | 'Drift-revoke'
@@ -24,14 +24,11 @@ const certifying: Technique[] = [
 const roadmapNames = [
   ['Credential access', 'Console-login credentials'], ['Credential access', 'SSM send-command secrets'],
   ['Persistence', 'Lambda backdoor'], ['Persistence', 'Console login-profile creation'], ['Persistence', 'Role chaining'], ['Persistence', 'Organizations account creation'],
-  ['Lateral movement', 'EC2 Instance Connect session'],
-  ['Discovery', 'IAM enumeration'], ['Discovery', 'S3 enumeration'], ['Discovery', 'Cross-account trust enumeration'],
+  ['Lateral movement', 'EC2 Instance Connect session'], ['Discovery', 'IAM enumeration'], ['Discovery', 'S3 enumeration'], ['Discovery', 'Cross-account trust enumeration'],
   ['Data exposure / exfil', 'EBS snapshot share'], ['Data exposure / exfil', 'RDS snapshot share'], ['Data exposure / exfil', 'S3 download-at-scale'],
   ['Defense evasion / impact', 'IAM policy overwrite'], ['Defense evasion / impact', 'CloudTrail stop-logging'], ['Defense evasion / impact', 'GuardDuty suspend'], ['Defense evasion / impact', 'IAM user deletion'], ['Defense evasion / impact', 'EBS encryption overwrite'],
 ] as const
-const roadmap: Technique[] = roadmapNames.map(([tactic, name]) => ({
-  tactic, name, states: tactic === 'Discovery' ? { Validate: 'CLOSURE-ONLY', Predict: 'N/A', Certify: 'N/A', 'Drift-revoke': 'N/A' } : all('ROADMAP'),
-}))
+const roadmap: Technique[] = roadmapNames.map(([tactic, name]) => ({ tactic, name, states: tactic === 'Discovery' ? { Validate: 'CLOSURE-ONLY', Predict: 'N/A', Certify: 'N/A', 'Drift-revoke': 'N/A' } : all('ROADMAP') }))
 const stateCopy: Record<State, string> = {
   PROVEN: 'End-to-end proof exists for this joint.',
   'CLOSURE-ONLY': 'Path closure is proven; a collateral twin is not asserted.',
@@ -45,67 +42,104 @@ const jointProof: Record<Joint, string> = {
   'Drift-revoke': 'The closed state is monitored and suspends on detected drift.',
 }
 
+function StateIcon({ state }: { state: State }) {
+  if (state === 'PROVEN') return <Check aria-hidden />
+  if (state === 'CLOSURE-ONLY') return <LockKeyhole aria-hidden />
+  if (state === 'N/A') return <CircleMinus aria-hidden />
+  return <RotateCcw aria-hidden />
+}
+
 export default function CoverageMatrixSection() {
   const [showRoadmap, setShowRoadmap] = useState(false)
-  const [selected, setSelected] = useState<{ technique: Technique; joint: Joint } | null>({ technique: certifying[0], joint: 'Validate' })
+  const [techniqueIndex, setTechniqueIndex] = useState(0)
+  const [jointIndex, setJointIndex] = useState(0)
+  const [playing, setPlaying] = useState(true)
+  const rows = useMemo(() => showRoadmap ? [...certifying, ...roadmap] : certifying, [showRoadmap])
+  const technique = rows[techniqueIndex] ?? rows[0]
+  const joint = joints[jointIndex]
+  const state = technique.states[joint]
+
   useEffect(() => {
-    const close = (event: KeyboardEvent) => event.key === 'Escape' && setSelected(null)
-    window.addEventListener('keydown', close)
-    return () => window.removeEventListener('keydown', close)
-  }, [])
-  const rows = showRoadmap ? [...certifying, ...roadmap] : certifying
+    if (!playing) return
+    const timer = window.setInterval(() => {
+      setJointIndex((current) => {
+        if (current < joints.length - 1) return current + 1
+        setTechniqueIndex((index) => (index + 1) % rows.length)
+        return 0
+      })
+    }, 1800)
+    return () => window.clearInterval(timer)
+  }, [playing, rows.length])
+
+  useEffect(() => {
+    if (techniqueIndex >= rows.length) setTechniqueIndex(0)
+  }, [rows.length, techniqueIndex])
+
+  const selectTechnique = (index: number) => {
+    setTechniqueIndex(index)
+    setJointIndex(0)
+    setPlaying(false)
+  }
 
   return (
     <section id="coverage" className="hp-section xsee-coverage" aria-labelledby="coverage-title">
       <div className="hp-container">
         <div className="xsee-coverage-intro">
           <div>
-            <p className="hp-eyebrow hp-kicker mb-6">XSE-482 · evidence coverage</p>
-            <h2 id="coverage-title" className="hp-h-display">XSEE proves 10 attack techniques end-to-end.</h2>
+            <p className="hp-eyebrow hp-kicker mb-6">XSE-482 · evidence reactor</p>
+            <h2 id="coverage-title" className="hp-h-display">Watch every claim pass through proof.</h2>
           </div>
-          <p>Not a pattern count. Each pink joint has evidence behind it. Closure-only, configuration N/A, and roadmap states remain visibly different because uniformity would overstate the proof.</p>
+          <p>Ten attack techniques enter one by one. The reactor exposes exactly where each is validated, predicted, certified, and monitored for drift—without flattening closure-only or N/A into a false success.</p>
         </div>
 
-        <div className="xsee-matrix-shell mt-12">
-          <div className="xsee-matrix-toolbar">
+        <div className="xsee-reactor-shell mt-12">
+          <header className="xsee-reactor-toolbar">
+            <div><i aria-hidden /><span>PROOF CORE / LIVE SEQUENCE</span></div>
             <div className="xsee-matrix-legend" aria-label="Coverage state legend">
-              {(['PROVEN', 'CLOSURE-ONLY', 'N/A', 'ROADMAP'] as State[]).map((state) => <span key={state}><i className={`is-${state.toLowerCase()}`} />{state}</span>)}
+              {(['PROVEN', 'CLOSURE-ONLY', 'N/A', 'ROADMAP'] as State[]).map((item) => <span key={item}><i className={`is-${item.toLowerCase()}`} />{item}</span>)}
             </div>
-            <button type="button" onClick={() => setShowRoadmap((value) => !value)} aria-expanded={showRoadmap}>
-              {showRoadmap ? 'Show certifying only' : 'Show supplied roadmap'} <ChevronRight aria-hidden />
-            </button>
-          </div>
-          <div className="xsee-matrix-scroll">
-            <table className="xsee-matrix-table">
-              <thead><tr><th>Technique / tactic</th>{joints.map((joint) => <th key={joint}>{joint}</th>)}</tr></thead>
-              <tbody>{rows.map((technique, index) => {
-                const beginsGroup = index === 0 || rows[index - 1].tactic !== technique.tactic
-                return <tr key={`${technique.tactic}-${technique.name}`} className={beginsGroup ? 'is-group-start' : ''}>
-                  <th scope="row"><small>{technique.tactic}</small><strong>{technique.name}</strong></th>
-                  {joints.map((joint) => {
-                    const state = technique.states[joint]
-                    const active = selected?.technique.name === technique.name && selected.joint === joint
-                    return <td key={joint}><button type="button" className={`xsee-matrix-cell is-${state.toLowerCase()} ${active ? 'is-active' : ''}`} onClick={() => setSelected({ technique, joint })} onMouseEnter={() => setSelected({ technique, joint })} onFocus={() => setSelected({ technique, joint })} aria-label={`${technique.name}, ${joint}: ${state}`}>
-                      {state === 'PROVEN' && <Check aria-hidden />}{state === 'CLOSURE-ONLY' && <LockKeyhole aria-hidden />}{state === 'N/A' && <CircleMinus aria-hidden />}<span>{state}</span>
-                    </button></td>
-                  })}
-                </tr>
-              })}</tbody>
-            </table>
-          </div>
-          <div className="xsee-proof-drawer" aria-live="polite">
-            {selected ? <>
-              <div><span>{selected.technique.tactic}</span><strong>{selected.technique.name}</strong></div>
-              <div><span>{selected.joint} · {selected.technique.states[selected.joint]}</span><p>{stateCopy[selected.technique.states[selected.joint]]} {jointProof[selected.joint]}</p></div>
-              <div className="xsee-proof-ids" aria-label="Available evidence identifiers">
-                {selected.technique.cert && <span>CERT <b>{selected.technique.cert}</b></span>}
-                {selected.technique.receipt && <span>WHAT-IF <b>{selected.technique.receipt}</b></span>}
+            <button type="button" onClick={() => setPlaying((value) => !value)} aria-label={playing ? 'Pause evidence sequence' : 'Play evidence sequence'}>{playing ? <Pause aria-hidden /> : <Play aria-hidden />}{playing ? 'PAUSE' : 'PLAY'}</button>
+          </header>
+
+          <div className="xsee-reactor-stage">
+            <aside className="xsee-reactor-queue" aria-label="Technique queue">
+              <div className="xsee-queue-head"><span>INBOUND EVIDENCE</span><b>{String(techniqueIndex + 1).padStart(2, '0')} / {String(rows.length).padStart(2, '0')}</b></div>
+              <div className="xsee-queue-list">
+                {rows.map((item, index) => <button type="button" key={`${item.tactic}-${item.name}`} className={index === techniqueIndex ? 'is-active' : ''} onClick={() => selectTechnique(index)} aria-current={index === techniqueIndex ? 'true' : undefined}>
+                  <span>{String(index + 1).padStart(2, '0')}</span><div><small>{item.tactic}</small><strong>{item.name}</strong></div><ChevronRight aria-hidden />
+                </button>)}
               </div>
-              <button type="button" onClick={() => setSelected(null)} aria-label="Close proof detail"><X aria-hidden /></button>
-            </> : <p>Select any joint to inspect exactly what its state means.</p>}
+              <button className="xsee-roadmap-toggle" type="button" onClick={() => { setShowRoadmap((value) => !value); setTechniqueIndex(0); setJointIndex(0); setPlaying(false) }} aria-expanded={showRoadmap}>{showRoadmap ? 'SHOW CERTIFYING 10' : 'LOAD SUPPLIED ROADMAP'}<ChevronRight aria-hidden /></button>
+            </aside>
+
+            <div className="xsee-reactor-chamber">
+              <div className="xsee-reactor-rail xsee-reactor-rail-in"><span>INGEST</span><b /><ChevronRight aria-hidden /></div>
+              <div className={`xsee-reactor-core is-${state.toLowerCase()}`}>
+                <div className="xsee-reactor-orbit orbit-one" aria-hidden /><div className="xsee-reactor-orbit orbit-two" aria-hidden />
+                {joints.map((item, index) => <button type="button" key={item} className={`xsee-reactor-node node-${index + 1} ${index <= jointIndex ? 'is-reached' : ''} is-${technique.states[item].toLowerCase()}`} onClick={() => { setJointIndex(index); setPlaying(false) }} aria-label={`${item}: ${technique.states[item]}`}>
+                  <span>{index + 1}</span><strong>{item}</strong>
+                </button>)}
+                <div className="xsee-reactor-card" aria-live="polite">
+                  <small>{technique.tactic}</small><ShieldCheck aria-hidden /><strong>{technique.name}</strong><span>{joint.toUpperCase()} / {state}</span>
+                </div>
+              </div>
+              <div className="xsee-reactor-rail xsee-reactor-rail-out"><ChevronRight aria-hidden /><b /><span>SIGNED</span></div>
+            </div>
+
+            <aside className="xsee-reactor-output">
+              <div className={`xsee-output-status is-${state.toLowerCase()}`}><StateIcon state={state} /><span>{joint}</span><strong>{state}</strong></div>
+              <div className="xsee-output-copy"><span>JOINT PROOF</span><p>{stateCopy[state]} {jointProof[joint]}</p></div>
+              {(technique.cert || technique.receipt) && <div className="xsee-output-ids">
+                {technique.cert && <span>CERTIFICATE<strong>{technique.cert}</strong></span>}
+                {technique.receipt && <span>WHAT-IF RECEIPT<strong>{technique.receipt}</strong></span>}
+              </div>}
+              <div className="xsee-output-seal"><FileCheck2 aria-hidden /><div><small>OUTPUT ARTIFACT</small><strong>{state === 'PROVEN' ? 'SIGNED EVIDENCE' : state}</strong></div></div>
+            </aside>
           </div>
+
+          <footer className="xsee-reactor-footer"><span>SEQUENCE {playing ? 'RUNNING' : 'HELD'} · SELECT ANY CARD OR JOINT TO INSPECT</span><span>SHA-256 VERIFIED WHEN ISSUED · DRIFT MONITORED</span></footer>
         </div>
-        <p className="xsee-matrix-note">The live catalog is approximately 25 techniques. The expandable roadmap reflects the supplied working list and remains subject to live-catalog confirmation before publication. A row enters the certifying set only after Validate → Predict → Certify → Drift-revoke is represented honestly end-to-end.</p>
+        <p className="xsee-matrix-note">The live catalog is approximately 25 techniques. The expandable roadmap reflects the supplied working list and remains subject to live-catalog confirmation before publication.</p>
       </div>
     </section>
   )
