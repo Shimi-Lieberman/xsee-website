@@ -359,6 +359,34 @@ section { position: relative; }
 .nav-link { padding: 5px 12px; font-size: 13px; font-weight: 500; letter-spacing: 0.01em; color: rgba(255,255,255,0.58); border-radius: 7px; transition: color 0.15s, background 0.15s; cursor: pointer; white-space: nowrap; }
 .nav-link:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
+/* ━━━ MOBILE HAMBURGER NAV — activated in the ≤768px block below ━━━ */
+.nav-menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 9px;
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.8);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-menu-toggle:hover { background: rgba(255,255,255,0.1); color: #fff; }
+.nav-mobile-menu { display: none; }
+.nav-mobile-menu[hidden] { display: none !important; }
+
+/* Narrow phones: drop the logo tagline so the trial CTA and hamburger
+   both fit on one row without clipping. */
+@media (max-width: 480px) {
+  .nav-logo-tagline { display: none; }
+  .nav-btn-trial { padding: 8px 10px !important; font-size: 11px !important; }
+}
+
 @media (max-width: 1024px) {
   .nav-mobile-links .nav-link {
     min-height: 44px;
@@ -765,7 +793,7 @@ section { position: relative; }
 
 /* ━━━ PRICING ━━━ */
 .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.pricing-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px 32px; position: relative; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+.pricing-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 40px 32px; position: relative; display: flex; flex-direction: column; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
 .pricing-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
 .pricing-card.featured { border-color: rgba(255,27,141,0.35); background: linear-gradient(135deg, rgba(255,27,141,0.08), rgba(255,255,255,0.05)); box-shadow: 0 0 0 1px rgba(255,27,141,0.2), 0 24px 48px rgba(255,27,141,0.1); }
 .pricing-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--blue); color: #fff; font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 14px; border-radius: 100px; }
@@ -775,7 +803,9 @@ section { position: relative; }
 .pricing-amount { display: flex; align-items: baseline; gap: 4px; margin-bottom: 28px; }
 .pricing-num { font-size: 42px; font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); }
 .pricing-per { font-size: 13px; color: var(--text-muted); font-family: var(--font-mono); }
-.pricing-feats { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+/* flex:1 keeps the CTA pinned to the card bottom so buttons stay aligned
+   across plans with different feature counts. */
+.pricing-feats { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; flex: 1; }
 .pricing-feats li { display: flex; gap: 10px; align-items: center; font-size: 13px; color: var(--text-secondary); font-weight: 500; }
 .pricing-feats li::before { content: "→"; font-family: var(--font-mono); font-size: 10px; color: var(--blue-light); flex-shrink: 0; }
 .pricing-feats li.dim { color: var(--text-muted); }
@@ -886,6 +916,69 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
 
 /* Honeypot - hidden from humans, bots fill it */
 .honeypot { display: none !important; position: absolute; left: -9999px; }
+
+/* ━━━ EMERGENCY (UNDER ATTACK) FORM ━━━ */
+.ua-form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.ua-form-card--emergency {
+  background: rgba(239,68,68,0.05);
+  border-color: rgba(239,68,68,0.18);
+}
+.ua-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: rgba(5,8,16,0.6);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #f8fafc;
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.ua-input::placeholder { color: rgba(148,163,184,0.65); }
+.ua-input:focus {
+  outline: none;
+  border-color: rgba(239,68,68,0.5);
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+}
+.ua-input:disabled { opacity: 0.6; cursor: not-allowed; }
+.ua-textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+.ua-submit-btn {
+  min-height: 48px;
+  margin-top: 4px;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.ua-submit-btn:hover:not(:disabled) { transform: translateY(-1px); }
+.ua-submit-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+.ua-submit-btn--emergency {
+  background: #ef4444;
+  box-shadow: 0 0 24px rgba(239,68,68,0.35);
+}
+.ua-success-card {
+  padding: 28px 24px;
+  border-radius: 16px;
+  text-align: center;
+  background: rgba(16,185,129,0.06);
+  border: 1px solid rgba(16,185,129,0.22);
+}
+.ua-success-title { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 10px; }
+.ua-success-body { font-size: 14px; line-height: 1.65; color: rgba(226,232,240,0.75); margin-bottom: 20px; }
+.ua-success-home { display: inline-flex; }
 .btn-sm { padding: 8px 16px; font-size: 13px; }
 .footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 28px 0 32px; border-top: 1px solid rgba(255,255,255,0.08); }
 .footer-copy { font-family: var(--font-mono); font-size: 11px; color: #94a3b8; letter-spacing: 0.04em; }
@@ -969,6 +1062,10 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
 .engines-grid .engine-card:nth-child(4) .engine-label { color: var(--yellow); }
 .engines-grid .engine-card:nth-child(5) .engine-label { color: var(--orange-light); }
 .engines-grid .engine-card:nth-child(6) .engine-label { color: var(--green); }
+.engines-grid .engine-card:nth-child(7) .engine-label { color: var(--amber); }
+/* Engine 07 is the 7th of a 3-across grid — span the row so it never sits
+   alone as an orphan card. `1 / -1` adapts to the 2-col and 1-col breakpoints. */
+.engines-grid > *:nth-child(7) { grid-column: 1 / -1; }
 .engines-grid .engine-card:nth-child(1):hover .engine-icon { box-shadow: 0 0 20px rgba(14,165,233,0.4); }
 .engines-grid .engine-card:nth-child(2):hover .engine-icon { box-shadow: 0 0 20px rgba(255,27,141,0.4); }
 .engines-grid .engine-card:nth-child(3):hover .engine-icon { box-shadow: 0 0 20px rgba(239,68,68,0.35); }
@@ -1676,6 +1773,16 @@ footer .footer-inner {
 .stagger-children > *:nth-child(6) { transition-delay: 400ms; }
 .stagger-children > *:nth-child(7) { transition-delay: 480ms; }
 .stagger-children > *:nth-child(8) { transition-delay: 560ms; }
+/* Comparison table has 16 rows; cap the ramp so later rows still stagger
+   instead of all firing at 0ms. */
+.stagger-children > *:nth-child(9) { transition-delay: 640ms; }
+.stagger-children > *:nth-child(10) { transition-delay: 700ms; }
+.stagger-children > *:nth-child(11) { transition-delay: 750ms; }
+.stagger-children > *:nth-child(12) { transition-delay: 795ms; }
+.stagger-children > *:nth-child(13) { transition-delay: 835ms; }
+.stagger-children > *:nth-child(14) { transition-delay: 870ms; }
+.stagger-children > *:nth-child(15) { transition-delay: 900ms; }
+.stagger-children > *:nth-child(n+16) { transition-delay: 925ms; }
 .reveal-delay-1 { transition-delay: 0.15s; }
 .reveal-delay-2 { transition-delay: 0.3s; }
 .reveal-delay-3 { transition-delay: 0.45s; }
@@ -2165,18 +2272,67 @@ main .section h2.display-lg {
   .nav-signin {
     display: none !important;
   }
+  /* Hidden here because the hamburger menu (.nav-menu-toggle) takes over
+     navigation at this breakpoint. */
   .nav-mobile-links {
     display: none !important;
   }
   .nav-emergency {
     display: none !important;
   }
-  .nav-cta-group > a:not(.nav-btn-trial):not(.nav-cta-demo) {
+  /* Only the primary trial CTA stays in the header; "Get a demo" and
+     "Launch App" move into the hamburger menu so the row cannot overflow. */
+  .nav-cta-group > a:not(.nav-btn-trial) {
     display: none !important;
   }
   .nav-inner {
     flex-wrap: nowrap;
     gap: 8px;
+    min-width: 0;
+  }
+  .nav-btn-trial {
+    padding: 8px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .nav-menu-toggle {
+    display: inline-flex;
+  }
+  .nav-mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px;
+    background: rgba(5,8,16,0.98);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+    max-height: calc(100vh - 54px);
+    overflow-y: auto;
+  }
+  .nav-mobile-menu-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-mobile-menu-link:hover {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+  }
+  .nav-mobile-menu-link--emergency {
+    color: #f87171;
   }
 
   .numbers-grid {
