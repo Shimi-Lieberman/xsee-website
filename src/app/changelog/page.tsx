@@ -51,7 +51,7 @@ const releases: Release[] = [
   },
   {
     date: "February 2026",
-    version: "v1.3",
+    version: "v1.3.0",
     tag: "New Feature" as const,
     title: "NHI Full Inventory + L2 Validation",
     description:
@@ -59,7 +59,7 @@ const releases: Release[] = [
   },
   {
     date: "February 2026",
-    version: "v1.2",
+    version: "v1.2.0",
     tag: "Improvement" as const,
     title: "CI/CD Pipeline Security + OIDC Misconfiguration Detection",
     description:
@@ -67,7 +67,7 @@ const releases: Release[] = [
   },
   {
     date: "January 2026",
-    version: "v1.1",
+    version: "v1.1.0",
     tag: "New Feature" as const,
     title: "Financial Exposure Per Path",
     description:

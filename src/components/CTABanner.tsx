@@ -59,7 +59,7 @@ export default function CTABanner() {
             <div className="cta-option-badge">FREE</div>
             <h3 className="cta-option-title">Free Risk Assessment</h3>
             <p className="cta-option-body">
-              Connect your AWS account with read-only IAM. XSEE scans your environment, validates attack paths, and delivers a ranked HTML report in 30 minutes. No commitment. No credit card. No agents. 14-day free trial · No credit card required · Read-only IAM · Results in 30 minutes
+              Connect your AWS account with read-only IAM. XSEE scans your environment, validates attack paths, and delivers a ranked HTML report in 30 minutes. No commitment. No agents. Read-only IAM · No credit card required · Results in 30 minutes
             </p>
             <Link href="/free-scan" className="btn btn-primary btn-shimmer">
               <span className="relative z-[2]">Run Free Scan →</span>
@@ -69,7 +69,7 @@ export default function CTABanner() {
             <div className="cta-option-badge">FULL PLATFORM</div>
             <h3 className="cta-option-title">Start Free Trial</h3>
             <p className="cta-option-body">
-              14-day full access to All 7 engines + autonomous agents. See your Detection Coverage Score. Generate evidence packages. After trial: Starter $1,200/mo, Professional $2,500/mo —{" "}
+              14-day full access to all 7 engines + autonomous agents. Generate evidence packages and see your Detection Coverage Score on Professional. After trial: Starter $1,200/mo, Professional $2,500/mo —{" "}
               <Link href="#pricing" style={{ color: "var(--blue-light)", textDecoration: "underline", textUnderlineOffset: 3 }}>
                 view plans
               </Link>

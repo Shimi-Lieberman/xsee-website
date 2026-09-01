@@ -40,7 +40,7 @@ const PLANS = [
     title: "For Growing Teams",
     desc: "Full platform for teams managing multiple AWS environments.",
     price: "$2,500",
-    per: "/month",
+    per: "/mo",
     feats: [
       "Up to 5 AWS accounts",
       "Up to 1,000 assets",

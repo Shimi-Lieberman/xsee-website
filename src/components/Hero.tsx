@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Analytics } from "@/lib/analytics";
 
 const PATH_ROWS = [
@@ -111,7 +112,7 @@ export default function Hero() {
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            padding: "5px 14px",
+            padding: "5px 14px 5px 5px",
             borderRadius: "100px",
             border: "1px solid rgba(255,255,255,0.09)",
             background: "rgba(255,255,255,0.04)",
@@ -121,9 +122,23 @@ export default function Hero() {
             textDecoration: "none",
           }}
         >
-          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
-            NEW Autonomous agents now live — Investigation · Board Report · Threat Hunt ›
+          <span
+            style={{
+              fontSize: "9px",
+              fontWeight: 800,
+              padding: "2px 8px",
+              borderRadius: "100px",
+              background: "rgba(255,27,141,0.15)",
+              color: "#FF1B8D",
+              letterSpacing: "0.1em",
+            }}
+          >
+            NEW
           </span>
+          <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.45)" }}>
+            Autonomous agents now live — Investigation · Board Report · Threat Hunt
+          </span>
+          <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)" }}>›</span>
         </Link>
 
         <div className="hero-h1" style={{ marginBottom: "28px", width: "100%" }}>
@@ -244,7 +259,7 @@ export default function Hero() {
             }}
             onClick={() => Analytics.ctaClicked("hero", "free_breach_report")}
           >
-            Free Breach Report — connect in 15 min
+            Free Breach Report — connect in 2 min
           </Link>
         </div>
 
@@ -375,7 +390,6 @@ export default function Hero() {
                     fontWeight: 600,
                     padding: "4px 10px",
                     borderRadius: "6px",
-                    cursor: "pointer",
                     background: i === 0 ? "rgba(255,27,141,0.12)" : "transparent",
                     color: i === 0 ? "#FF1B8D" : "rgba(255,255,255,0.3)",
                   }}
@@ -435,11 +449,16 @@ export default function Hero() {
           </div>
 
           <div style={{ position: "relative" }}>
-            <img
+            <Image
               src="/platform_screenshot.png"
               alt="XSEE Attack Intelligence Platform"
+              width={3024}
+              height={1652}
+              priority
+              sizes="(max-width: 1100px) 100vw, 1100px"
               style={{
                 width: "100%",
+                height: "auto",
                 display: "block",
                 maxHeight: "320px",
                 objectFit: "cover",
@@ -471,7 +490,6 @@ export default function Hero() {
                   borderBottom: "1px solid rgba(255,255,255,0.04)",
                   borderLeft: path.active ? "2px solid #FF1B8D" : "2px solid transparent",
                   background: path.active ? "rgba(255,27,141,0.05)" : "transparent",
-                  cursor: "pointer",
                 }}
               >
                 <div>

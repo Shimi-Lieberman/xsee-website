@@ -61,7 +61,6 @@ export default function Testimonials() {
                 borderRadius: "16px",
                 padding: "24px",
                 transition: "all 0.25s cubic-bezier(0.4,0,0.2,1)",
-                cursor: "pointer",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-4px)";
