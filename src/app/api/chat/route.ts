@@ -19,19 +19,21 @@ const MAX_MESSAGES = 24;
 const MAX_MESSAGE_CHARS = 4000;
 
 export async function POST(request: Request) {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: "Chat not configured" },
-      { status: 503 }
-    );
-  }
-
+  // Metered before any other work so that even unconfigured or malformed
+  // traffic cannot be used to hammer this endpoint for free.
   const rl = rateLimit(request, { limit: LIMIT, windowMs: WINDOW_MS, identifier: "chat" });
   if (!rl.success) {
     return NextResponse.json(
       { error: "Too many requests. Please try again shortly." },
       { status: 429 }
+    );
+  }
+
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json(
+      { error: "Chat not configured" },
+      { status: 503 }
     );
   }
 
