@@ -31,32 +31,17 @@ const appCsp = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https://*.clarity.ms",
-  `connect-src 'self' https://app.xsee.io https://api.anthropic.com https://api.paddle.com https://cdn.paddle.com ${CLARITY_ORIGINS} ${POSTHOG_ORIGIN}`,
+  // app.xsee.io is deliberately absent: the browser only ever *navigates* to
+  // the platform (plain links), it never fetches from it. Navigation is not
+  // governed by connect-src, so allowing the origin here would only widen the
+  // set of hosts an injected script could exfiltrate to.
+  `connect-src 'self' https://api.anthropic.com https://api.paddle.com https://cdn.paddle.com ${CLARITY_ORIGINS} ${POSTHOG_ORIGIN}`,
   "frame-src 'self' https://buy.paddle.com https://customer-portal.paddle.com",
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
-].join("; ");
-
-/**
- * Standalone HTML in /public is served outside the React app. A path-specific
- * header entry REPLACES the global Content-Security-Policy rather than merging
- * with it, so these responses need a complete policy of their own — otherwise
- * they end up with no script/style restrictions at all.
- */
-const staticHtmlCsp = [
-  "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data:",
-  "connect-src 'self'",
-  "object-src 'none'",
-  "base-uri 'self'",
-  "form-action 'self'",
-  "frame-ancestors 'self'",
 ].join("; ");
 
 const securityHeadersBase = [
@@ -83,20 +68,6 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
           ...securityHeadersBase,
           { key: "Content-Security-Policy", value: appCsp },
-        ],
-      },
-      {
-        source: "/xsee-demo.html",
-        headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          { key: "Content-Security-Policy", value: staticHtmlCsp },
-        ],
-      },
-      {
-        source: "/landing.html",
-        headers: [
-          { key: "X-Frame-Options", value: "SAMEORIGIN" },
-          { key: "Content-Security-Policy", value: staticHtmlCsp },
         ],
       },
       {

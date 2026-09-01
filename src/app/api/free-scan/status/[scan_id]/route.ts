@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
+import { PLATFORM_API_BASE, platformAuthHeaders } from "@/lib/platformApi";
 import { rateLimit } from "@/lib/rateLimit";
-
-const PLATFORM_API_BASE =
-  process.env.XSEE_PLATFORM_API_URL?.replace(/\/$/, "") ?? "https://app.xsee.io";
 
 /**
  * This route proxies unauthenticated callers into the platform API, so it is
@@ -42,7 +40,10 @@ export async function GET(request: Request, context: RouteContext) {
       `${PLATFORM_API_BASE}/v1/free-scan/status/${encodeURIComponent(scan_id)}`,
       {
         method: "GET",
-        headers: { Accept: "application/json" },
+        headers: {
+          Accept: "application/json",
+          ...platformAuthHeaders(),
+        },
         cache: "no-store",
         signal: AbortSignal.timeout(10_000),
       }

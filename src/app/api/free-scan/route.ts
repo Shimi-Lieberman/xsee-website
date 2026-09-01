@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { getSql } from "@/lib/db";
 import { ensureMarketingSchema } from "@/lib/marketingSchema";
+import { PLATFORM_API_BASE, platformAuthHeaders } from "@/lib/platformApi";
 import { sendEmail, getAdminEmail } from "@/lib/ses";
 import { isValidEmail } from "@/lib/validation";
-import { rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
+import { getClientIp, rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
 import {
   asString,
   BodyTooLargeError,
@@ -13,9 +14,6 @@ import {
 } from "@/lib/requestGuard";
 
 const ARN_REGEX = /^arn:aws:iam::[0-9]{12}:role\/.+/;
-
-const PLATFORM_API_BASE =
-  process.env.XSEE_PLATFORM_API_URL?.replace(/\/$/, "") ?? "https://app.xsee.io";
 
 const WINDOW_MS = 60 * 60 * 1000;
 const LIMIT = 3;
@@ -37,8 +35,9 @@ async function forwardToPlatform(body: PlatformSubmitBody): Promise<{
   try {
     const res = await fetch(`${PLATFORM_API_BASE}/v1/free-scan/submit`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...platformAuthHeaders() },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {
       console.warn("Free scan platform submit non-OK:", res.status);
@@ -160,10 +159,8 @@ export async function POST(request: Request) {
     const roleArnForDb = awsRoleArn || null;
     const regionForDb = awsRoleArn ? awsRegion || "us-east-1" : null;
 
-    const ipAddress =
-      request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-      request.headers.get("x-real-ip") ??
-      null;
+    const resolvedIp = getClientIp(request);
+    const ipAddress = resolvedIp === "unknown" ? null : resolvedIp;
     const userAgent = request.headers.get("user-agent") ?? null;
 
     await ensureMarketingSchema();
