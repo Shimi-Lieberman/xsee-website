@@ -4,6 +4,13 @@ import { ensureMarketingSchema } from "@/lib/marketingSchema";
 import { sendEmail, getAdminEmail } from "@/lib/ses";
 import { isValidEmail } from "@/lib/validation";
 import { rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
+import {
+  asString,
+  BodyTooLargeError,
+  FIELD_LIMITS,
+  firstOverlongField,
+  readJsonBody,
+} from "@/lib/requestGuard";
 
 const ARN_REGEX = /^arn:aws:iam::[0-9]{12}:role\/.+/;
 
@@ -12,6 +19,8 @@ const PLATFORM_API_BASE =
 
 const WINDOW_MS = 60 * 60 * 1000;
 const LIMIT = 3;
+/** Per-recipient cap, independent of the caller's IP. */
+const EMAIL_LIMIT = 2;
 
 type PlatformSubmitBody = {
   name: string;
@@ -63,23 +72,43 @@ export async function POST(request: Request) {
     );
   }
 
+  let body: Record<string, unknown>;
   try {
-    const body = await request.json();
+    body = await readJsonBody(request);
+  } catch (err) {
+    if (err instanceof BodyTooLargeError) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    }
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
 
-    if (body.website?.trim()) {
+  try {
+    if (asString(body.website)) {
       return NextResponse.json({ success: true });
     }
 
-    const full_name = (body.full_name ?? body.fullName ?? body.name ?? "").trim();
-    const work_email = (body.work_email ?? body.email ?? "").trim();
-    const company = (body.company ?? "").trim();
-    const awsRoleArn = (body.awsRoleArn ?? body.role_arn ?? "").trim();
-    const awsRegion = (body.awsRegion ?? body.region ?? "us-east-1").trim();
-    const remediationRoleArn = (
-      body.remediation_role_arn ??
-      body.remediationRoleArn ??
-      ""
-    ).trim();
+    const full_name =
+      asString(body.full_name) || asString(body.fullName) || asString(body.name);
+    const work_email = asString(body.work_email) || asString(body.email);
+    const company = asString(body.company);
+    const awsRoleArn = asString(body.awsRoleArn) || asString(body.role_arn);
+    const awsRegion =
+      asString(body.awsRegion) || asString(body.region) || "us-east-1";
+    const remediationRoleArn =
+      asString(body.remediation_role_arn) || asString(body.remediationRoleArn);
+
+    const overlong = firstOverlongField({
+      full_name: { value: full_name, max: FIELD_LIMITS.name },
+      work_email: { value: work_email, max: FIELD_LIMITS.email },
+      company: { value: company, max: FIELD_LIMITS.company },
+      awsRoleArn: { value: awsRoleArn, max: FIELD_LIMITS.arn },
+      awsRegion: { value: awsRegion, max: FIELD_LIMITS.region },
+      remediationRoleArn: { value: remediationRoleArn, max: FIELD_LIMITS.arn },
+    });
+    if (overlong) {
+      console.warn(`[free-scan] rejected overlong field: ${overlong}`);
+      return NextResponse.json({ error: "Field too long" }, { status: 400 });
+    }
 
     if (!full_name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -94,6 +123,22 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Please use your work email address." },
         { status: 400 }
+      );
+    }
+
+    // The confirmation email is sent to a caller-supplied address, so meter per
+    // address as well as per IP — otherwise this route can be driven as an
+    // XSEE-branded mailer at an arbitrary third party.
+    const emailRl = rateLimit(request, {
+      limit: EMAIL_LIMIT,
+      windowMs: WINDOW_MS,
+      identifier: "free-scan-email",
+      subject: work_email.toLowerCase(),
+    });
+    if (!emailRl.success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
       );
     }
     if (!company) {

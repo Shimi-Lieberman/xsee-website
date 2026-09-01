@@ -4,6 +4,13 @@ import { ensureMarketingSchema } from "@/lib/marketingSchema";
 import { sendEmail, getAdminEmail } from "@/lib/ses";
 import { isValidEmail } from "@/lib/validation";
 import { rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
+import {
+  asString,
+  BodyTooLargeError,
+  FIELD_LIMITS,
+  firstOverlongField,
+  readJsonBody,
+} from "@/lib/requestGuard";
 
 const WINDOW_MS = 60 * 60 * 1000;
 const LIMIT = 3;
@@ -25,24 +32,42 @@ export async function POST(request: Request) {
     );
   }
 
+  let body: Record<string, unknown>;
   try {
-    const body = await request.json();
+    body = await readJsonBody(request);
+  } catch (err) {
+    if (err instanceof BodyTooLargeError) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    }
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
 
-    if (body.website?.trim()) {
+  try {
+    if (asString(body.website)) {
       return NextResponse.json({ success: true });
     }
 
-    const full_name = (
-      body.full_name ??
-      body.fullName ??
-      body.name ??
-      ""
-    ).trim();
-    const work_email = (body.work_email ?? body.email ?? "").trim();
-    const company = (body.company ?? "").trim();
-    const cloudProvider = (body.cloudProvider ?? body.cloud_provider ?? "").trim();
-    const cloudAssets = (body.assetCount ?? body.cloud_assets ?? "").trim();
-    const message = (body.message ?? "").trim();
+    const full_name =
+      asString(body.full_name) || asString(body.fullName) || asString(body.name);
+    const work_email = asString(body.work_email) || asString(body.email);
+    const company = asString(body.company);
+    const cloudProvider =
+      asString(body.cloudProvider) || asString(body.cloud_provider);
+    const cloudAssets = asString(body.assetCount) || asString(body.cloud_assets);
+    const message = asString(body.message);
+
+    const overlong = firstOverlongField({
+      full_name: { value: full_name, max: FIELD_LIMITS.name },
+      work_email: { value: work_email, max: FIELD_LIMITS.email },
+      company: { value: company, max: FIELD_LIMITS.company },
+      cloudProvider: { value: cloudProvider, max: FIELD_LIMITS.cloudProvider },
+      cloudAssets: { value: cloudAssets, max: FIELD_LIMITS.cloudAssets },
+      message: { value: message, max: FIELD_LIMITS.message },
+    });
+    if (overlong) {
+      console.warn(`[demo-request] rejected overlong field: ${overlong}`);
+      return NextResponse.json({ error: "Field too long" }, { status: 400 });
+    }
 
     if (!full_name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
