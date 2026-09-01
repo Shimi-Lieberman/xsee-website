@@ -263,10 +263,12 @@ export default function FreeScanPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Name</label>
+                    <label className="form-label" htmlFor="free-scan-name">Name</label>
                     <input
+                      id="free-scan-name"
                       type="text"
                       className="form-input"
+                      data-clarity-mask="true"
                       placeholder="Alex Johnson"
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
@@ -274,10 +276,12 @@ export default function FreeScanPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Work email</label>
+                    <label className="form-label" htmlFor="free-scan-email">Work email</label>
                     <input
+                      id="free-scan-email"
                       type="email"
                       className="form-input"
+                      data-clarity-mask="true"
                       placeholder="alex@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -285,10 +289,12 @@ export default function FreeScanPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Company</label>
+                    <label className="form-label" htmlFor="free-scan-company">Company</label>
                     <input
+                      id="free-scan-company"
                       type="text"
                       className="form-input"
+                      data-clarity-mask="true"
                       placeholder="Your company"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
