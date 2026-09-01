@@ -84,6 +84,7 @@ export default function UnderAttackForm() {
         type="text"
         name="name"
         className="ua-input"
+        aria-label="Name (optional)"
         placeholder="Name (optional)"
         value={form.name}
         onChange={(ev) => setForm({ ...form, name: ev.target.value })}
@@ -93,6 +94,7 @@ export default function UnderAttackForm() {
         type="email"
         name="email"
         className="ua-input"
+        aria-label="Work email (required)"
         placeholder="Work email (required)"
         required
         value={form.email}
@@ -103,6 +105,7 @@ export default function UnderAttackForm() {
         type="text"
         name="company"
         className="ua-input"
+        aria-label="Company (optional)"
         placeholder="Company (optional)"
         value={form.company}
         onChange={(ev) => setForm({ ...form, company: ev.target.value })}
@@ -112,6 +115,7 @@ export default function UnderAttackForm() {
         type="tel"
         name="phone"
         className="ua-input"
+        aria-label="Phone (optional)"
         placeholder="Phone (optional)"
         value={form.phone}
         onChange={(ev) => setForm({ ...form, phone: ev.target.value })}
@@ -120,6 +124,7 @@ export default function UnderAttackForm() {
       <textarea
         name="situation"
         className="ua-input ua-textarea"
+        aria-label="Brief description of the incident (optional)"
         placeholder="Brief description (optional)"
         rows={5}
         value={form.situation}

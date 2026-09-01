@@ -11,6 +11,7 @@ export default function Footer() {
         <div>
           <Link
             href="/"
+            aria-label="XSEE home"
             style={{
               display: "flex",
               alignItems: "center",
@@ -142,11 +143,9 @@ export default function Footer() {
             Company
           </div>
           {[
-            { label: "About", href: "#" },
             { label: "Security & Trust", href: "/security" },
-            { label: "Blog", href: "#" },
-            { label: "Careers", href: "#" },
             { label: "Contact", href: "/#contact" },
+            { label: "Under Attack?", href: "/under-attack" },
             { label: "sales@xsee.io", href: "mailto:sales@xsee.io" },
           ].map((link) => (
             <Link
@@ -174,9 +173,8 @@ export default function Footer() {
             Resources
           </div>
           {[
-            { label: "Documentation", href: "#" },
-            { label: "API Reference", href: "#" },
-            { label: "Status", href: "#" },
+            { label: "Changelog", href: "/changelog" },
+            { label: "vs. Wiz", href: "/vs-wiz" },
             { label: "Terms", href: "/terms" },
             { label: "Privacy", href: "/privacy" },
             { label: "Refunds", href: "/refunds" },

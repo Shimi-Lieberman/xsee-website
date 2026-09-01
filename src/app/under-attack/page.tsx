@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import GlobalScripts from "@/components/GlobalScripts";
+import UnderAttackForm from "@/components/UnderAttackForm";
 
 export const metadata: Metadata = {
   title: "Under Active Attack? — XSEE Emergency Response",
@@ -43,8 +43,8 @@ export default function UnderAttackPage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-14">
-            <Link
-              href="/?subject=emergency#contact"
+            <a
+              href="#emergency-form"
               className="flex items-center justify-center gap-2 font-bold text-white px-7 py-3.5 rounded-xl text-base transition-all"
               style={{
                 background: "#ef4444",
@@ -52,7 +52,7 @@ export default function UnderAttackPage() {
               }}
             >
               Request Emergency Scan →
-            </Link>
+            </a>
             <a
               href="mailto:security@xsee.io"
               className="flex items-center justify-center gap-2 font-semibold px-6 py-3.5 rounded-xl text-base border transition-all"
@@ -65,6 +65,16 @@ export default function UnderAttackPage() {
               security@xsee.io
             </a>
           </div>
+
+          <section id="emergency-form" className="mb-14 scroll-mt-24">
+            <h2
+              className="text-xs font-bold uppercase tracking-widest font-mono mb-6"
+              style={{ color: "#ef4444" }}
+            >
+              Request emergency scan
+            </h2>
+            <UnderAttackForm />
+          </section>
 
           <div className="mb-12">
             <div

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     description:
       "See how XSEE proves attack paths with live " +
       "AWS API evidence and generates a board-ready " +
-      "certificate in 28 minutes.",
+      "certificate — in 6 screens, under 6 minutes.",
   },
 };
 
@@ -41,6 +41,7 @@ export default function DemoPage() {
       }}
     >
       <DemoTracker />
+      <h1 className="sr-only">XSEE interactive platform demo</h1>
       {/* Minimal back link — top left, low opacity */}
       <div
         style={{
