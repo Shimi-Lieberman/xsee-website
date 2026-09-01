@@ -14,6 +14,9 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "metronic-v9.4.7/**",
     "scripts/**",
+    // Static design reference, not compiled into the app: these .jsx files are
+    // standalone excerpts with intentionally unresolved imports.
+    "design_handoff_xsee_v2/**",
   ]),
 ]);
 
