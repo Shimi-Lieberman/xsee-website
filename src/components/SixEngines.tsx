@@ -48,9 +48,9 @@ const engines = [
     color: "#0891B2",
   },
   {
-    title: "Operational Playbooks",
-    description: "Track fixes from detection to verified closed.",
-    tag: "Automation Engine",
+    title: "Autonomous Security Loop",
+    description: "Agents investigate, report, and threat-hunt automatically. Autonomous Runs logs every AI action and human decision.",
+    tag: "Autonomous Engine",
     icon: BookOpen,
     color: "#EF4444",
   },
@@ -67,7 +67,7 @@ export default function SixEngines() {
         </SectionFadeIn>
         <SectionFadeIn>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-500">
-            Six engines. One platform. Attack paths validated with exploit-level proof, remediation in Terraform/CLI/CloudFormation.
+            Seven engines. One autonomous loop. Attack paths validated with exploit-level proof, remediation in Terraform/CLI/CloudFormation.
           </p>
         </SectionFadeIn>
 

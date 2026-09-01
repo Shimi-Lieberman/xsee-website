@@ -22,7 +22,7 @@ const rows: {
     wiz: "partial",
     prisma: "partial",
   },
-  { feature: "Operational playbooks", xsee: true, wiz: false, prisma: false },
+  { feature: "Autonomous Runs audit log", xsee: true, wiz: false, prisma: false },
   { feature: "Time-to-compromise", xsee: true, wiz: false, prisma: false },
 ];
 

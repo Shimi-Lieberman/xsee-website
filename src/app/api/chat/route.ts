@@ -17,7 +17,7 @@ not theoretical. Built for the age of AI attackers —
 not just human hackers.
 Tagline: "Stop Guessing. Prove the Breach."
 
-HOW IT WORKS — 6 ENGINES:
+HOW IT WORKS — 7 ENGINES:
 L1: Attack Path Discovery — 1,000+ attack patterns,
 AI learns new TTPs continuously
 L2: AWS API Validation — live API calls,
@@ -26,7 +26,14 @@ L3: XseeCyber — simulates human AND AI attacker behavior,
 Detection Coverage Score
 Optimal Fix Engine — minimum change, maximum risk eliminated
 AI Security Analyst — Claude-powered, 5 capabilities
-Operational Playbooks — Kanban, auto re-scan, audit trail
+Autonomous Security Loop — Investigation Agent (auto-investigates
+every new critical path with Claude), Board Report Agent (weekly
+CISO PDF every Monday), Threat Hunt Agent (nightly NVD + CISA KEV
+matching), Remediation Agent (applies approved fixes only after
+explicit human approval). Autonomous Runs gives a full audit trail
+of every AI action and human decision.
+Breach Prevention Certificate — before/after AWS API proof per hop,
+timestamped, SHA-256 signed, downloadable board-ready PDF
 
 XSEECYBER:
 Built-in attack simulation engine. Runs the actual attack
@@ -40,15 +47,23 @@ results in 30 min, 1,000+ attack patterns + AI learning,
 evidence packages, crown jewel tagging, blast radius,
 threat intel (CISA KEV/EPSS/NVD), Detection Coverage Score,
 compliance mapping (SOC2/CIS/NIST/PCI/HIPAA),
-multi-user orgs with RBAC, free Risk Assessment
+multi-user orgs with RBAC, free Risk Assessment,
+autonomous agents (investigation, board report, threat hunt,
+remediation) with configurable per-org schedules,
+Autonomous Runs audit log, Accept Risk with 90-day auto-expiry,
+War Room real-time investigation view
 
 PRICING:
 Starter: $1,200/mo — 1 AWS account, 100 assets,
-all 6 engines, 14-day free trial
+all 7 engines + autonomous agents, Autonomous Runs audit log,
+14-day free trial
 Professional: $2,500/mo — 5 accounts, 1,000 assets,
-XseeCyber live mode, priority support, 14-day free trial
+all 7 engines + autonomous agents, XseeCyber live mode,
+Detection Coverage Score, weekly board report, nightly CVE
+threat hunting, priority support, 14-day free trial
 Enterprise: Contact us — unlimited, self-hosted,
-SSO/SAML, dedicated engineer, optional XSEE Agent
+SSO/SAML, dedicated engineer, optional XSEE Agent,
+autonomous remediation agent, configurable agent schedules
 Annual: 25% discount
 Free trial: 14 days, no credit card
 
@@ -61,9 +76,10 @@ vs XM Cyber: Theoretical paths only. No runtime simulation.
 vs Pentera: Generic BAS playbooks. Not cloud-native.
 No attack path mapping.
 vs Orca: Vulnerability scanning only. No proof of exploitability.
-XSEE unique: Only platform closing all 3 loops —
-discovery + validation + simulation. Only platform
-defending against AI-powered attackers.
+XSEE unique: Only platform closing the full 7-stage loop —
+discover, validate, simulate, prioritize, fix, verify, certify.
+Runs autonomously with one human approval per finding.
+Only platform defending against AI-powered attackers.
 
 VISION:
 AI-driven security for any environment — cloud, hybrid,

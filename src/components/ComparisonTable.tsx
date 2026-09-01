@@ -7,7 +7,7 @@ export const COMPARISON_ROWS = [
   { cap: "AI security analyst", xsee: "5 specialised capabilities", wiz: "Partial", prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Copy-paste IaC remediation", xsee: "Terraform · CLI · CFN", wiz: "Partial", prisma: "Partial", xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Remediation verification", xsee: "Re-simulate to confirm", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
-  { cap: "Operational playbooks", xsee: "Kanban + auto-verify", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
+  { cap: "Autonomous Runs audit log", xsee: "Every AI action + human decision", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "1,000+ attack patterns", xsee: "TTP library + AI learning", wiz: "Partial", prisma: "Partial", xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Transparent SMB pricing", xsee: "From $1,200/mo", wiz: "Enterprise only", prisma: "Enterprise only", xseeChk: true, wizChk: false, prismaChk: false },
   { cap: "Full 7-stage security loop", xsee: "End-to-end", wiz: null, prisma: null, xseeChk: true, wizChk: false, prismaChk: false },
