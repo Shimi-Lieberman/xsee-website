@@ -145,7 +145,7 @@ export default function CloudEnvironmentMap() {
 
             {/* Connection lines — muted gray, attack path red */}
             <g>
-              {edges.map(([a, b], i) => {
+              {edges.map(([a, b]) => {
                 const n1 = nodes[a];
                 const n2 = nodes[b];
                 if (!n1 || !n2) return null;

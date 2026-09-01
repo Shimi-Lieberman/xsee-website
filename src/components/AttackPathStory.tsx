@@ -8,7 +8,6 @@ import {
   Server,
   KeyRound,
   Shield,
-  HardDrive,
   Database,
   ShieldCheck,
 } from "lucide-react";
@@ -175,7 +174,7 @@ function AttackPathViz({ activeStep }: { activeStep: number }) {
             ["ec2", "sg"],
             ["iam", "rds"],
             ["ec2", "rds"],
-          ].map(([a, b], i) => {
+          ].map(([a, b]) => {
             const n1 = getNode(a);
             const n2 = getNode(b);
             const pathIndex = ATTACK_PATH.indexOf(a) >= 0 && ATTACK_PATH.indexOf(b) >= 0
@@ -323,8 +322,6 @@ function LinePulse({
   delay: number;
   green: boolean;
 }) {
-  const midX = (from.x + to.x) / 2;
-  const midY = (from.y + to.y) / 2;
   return (
     <motion.circle
       r="1.5"

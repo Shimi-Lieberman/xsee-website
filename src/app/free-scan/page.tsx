@@ -273,8 +273,9 @@ export default function FreeScanPage() {
                   </div>
                   <div className="form-row">
                     <div className="form-group">
-                      <label className="form-label">Full name (required)</label>
+                      <label className="form-label" htmlFor="free-scan-full-name">Full name (required)</label>
                       <input
+                        id="free-scan-full-name"
                         type="text"
                         className="form-input"
                         placeholder="Alex Johnson"
@@ -284,8 +285,9 @@ export default function FreeScanPage() {
                       />
                     </div>
                     <div className="form-group">
-                      <label className="form-label">Work email (required)</label>
+                      <label className="form-label" htmlFor="free-scan-work-email">Work email (required)</label>
                       <input
+                        id="free-scan-work-email"
                         type="email"
                         className="form-input"
                         placeholder="alex@company.com"
@@ -296,8 +298,9 @@ export default function FreeScanPage() {
                     </div>
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Company name (required)</label>
+                    <label className="form-label" htmlFor="free-scan-company">Company name (required)</label>
                     <input
+                      id="free-scan-company"
                       type="text"
                       className="form-input"
                       placeholder="Your company"
@@ -307,8 +310,9 @@ export default function FreeScanPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">AWS Role ARN (required)</label>
+                    <label className="form-label" htmlFor="free-scan-role-arn">AWS Role ARN (required)</label>
                     <input
+                      id="free-scan-role-arn"
                       type="text"
                       className="form-input"
                       placeholder="arn:aws:iam::123456789012:role/xsee-free-scan-role"
@@ -318,8 +322,9 @@ export default function FreeScanPage() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Remediation Role ARN (optional)</label>
+                    <label className="form-label" htmlFor="free-scan-remediation-arn">Remediation Role ARN (optional)</label>
                     <input
+                      id="free-scan-remediation-arn"
                       type="text"
                       name="remediation_role_arn"
                       className="form-input"

@@ -122,7 +122,12 @@ export default function ChatWidget() {
       </button>
 
       {open && (
-        <div className="chat-panel" role="dialog" aria-label="XSEE AI assistant">
+        <div
+          className="chat-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="XSEE AI assistant"
+        >
           <div className="chat-header">
             <div className="chat-header-brand">
               <Image
@@ -184,7 +189,11 @@ export default function ChatWidget() {
           </div>
 
           <form onSubmit={handleSend} className="chat-input-wrap">
+            <label htmlFor="chat-input" className="sr-only">
+              Your message
+            </label>
             <textarea
+              id="chat-input"
               ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}

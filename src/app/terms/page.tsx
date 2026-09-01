@@ -76,7 +76,7 @@ export default function TermsPage() {
           <strong>14-day free trial.</strong> No credit card required to start your trial where offered. After the trial, continued use requires a paid subscription processed by our merchant of record, Paddle.
         </div>
         <p>
-          Fees, billing cycle, and taxes (if applicable) are shown at checkout. Paddle acts as the seller for payment purposes; your payment relationship for card transactions is with Paddle. Invoices and receipts are issued in accordance with Paddle's terms.
+          Fees, billing cycle, and taxes (if applicable) are shown at checkout. Paddle acts as the seller for payment purposes; your payment relationship for card transactions is with Paddle. Invoices and receipts are issued in accordance with Paddle&apos;s terms.
         </p>
         <p>
           Failure to pay may result in suspension or termination of access after notice where required by law.
@@ -165,7 +165,7 @@ export default function TermsPage() {
           Questions about these Terms: <a href="mailto:sales@xsee.io">sales@xsee.io</a>
         </p>
         <p>
-          For payment and invoice questions handled by Paddle, refer to your Paddle receipt or Paddle's support channels as linked in your purchase confirmation.
+          For payment and invoice questions handled by Paddle, refer to your Paddle receipt or Paddle&apos;s support channels as linked in your purchase confirmation.
         </p>
       </LegalSection>
     </LegalPageLayout>

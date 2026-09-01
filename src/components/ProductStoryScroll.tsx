@@ -271,7 +271,7 @@ function StoryViz({ activeStep }: { activeStep: number }) {
               })}
           </svg>
 
-          {NODES.map((node, i) => {
+          {NODES.map((node) => {
             const nodeOrder = NODE_IDS.indexOf(node.id as (typeof NODE_IDS)[number]);
             const visible = showNodes && nodeOrder >= 0;
             const isOnPath = ATTACK_PATH.includes(node.id);

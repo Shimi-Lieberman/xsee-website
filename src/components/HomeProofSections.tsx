@@ -83,8 +83,11 @@ const COMPARISON_ROWS = [
 export default function HomeProofSections() {
   return (
     <>
-      <section className="home-loop-strip">
+      <section className="home-loop-strip" aria-labelledby="home-loop-strip-heading">
         <div className="container">
+          <h2 id="home-loop-strip-heading" className="sr-only">
+            The seven-stage XSEE security loop
+          </h2>
           <div className="home-loop-strip-grid">
             {LOOP_STEPS.map((step) => (
               <article key={step.title} className="home-loop-step">

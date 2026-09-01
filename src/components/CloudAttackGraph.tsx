@@ -80,7 +80,7 @@ export default function CloudAttackGraph() {
               preserveAspectRatio="xMidYMid meet"
             >
               {/* All edges - subtle */}
-              {PATH_EDGES.map(([a, b], i) => {
+              {PATH_EDGES.map(([a, b]) => {
                 const n1 = getNode(a);
                 const n2 = getNode(b);
                 const isAttackPath = ATTACK_PATH_IDS.includes(a) && ATTACK_PATH_IDS.includes(b) &&

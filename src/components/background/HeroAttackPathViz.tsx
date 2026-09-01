@@ -26,8 +26,6 @@ const EDGES: [number, number][] = [
   [1, 5],
 ];
 
-const ATTACK_PATH_INDICES = [0, 1, 2, 3]; /* Internet → IAM → EC2 → Database */
-
 /* Mobile: fewer nodes (only attack path) */
 const MOBILE_NODES = NODES.slice(0, 4);
 const MOBILE_EDGES: [number, number][] = [
@@ -126,7 +124,7 @@ export default function HeroAttackPathViz() {
 
         {/* Connection lines — muted gray, attack path red */}
         <g>
-          {edges.map(([a, b], i) => {
+          {edges.map(([a, b]) => {
             const n1 = nodes[a];
             const n2 = nodes[b];
             const attack = isAttackPathEdge(a, b, attackIndices);

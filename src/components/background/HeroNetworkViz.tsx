@@ -59,7 +59,7 @@ export default function HeroNetworkViz() {
         </defs>
         {/* Edges — occasional pulse via CSS */}
         <g className="hero-network-edges">
-          {EDGES.map(([a, b], i) => {
+          {EDGES.map(([a, b]) => {
             const isAttackPath =
               ATTACK_PATH.indexOf(a) >= 0 &&
               ATTACK_PATH.indexOf(b) >= 0 &&
