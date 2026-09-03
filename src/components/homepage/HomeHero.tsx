@@ -16,16 +16,16 @@ export default function HomeHero() {
           <div className="xsee-hero-copy">
             <div className="hero-rise flex items-center gap-3" style={{ animationDelay: "0.04s" }}>
               <span className="xsee-status-dot" aria-hidden />
-              <span className="v2-mono text-[10px] tracking-[0.18em] text-[var(--v2-ink2)]">AUTONOMOUS CLOUD ATTACK INTELLIGENCE</span>
+              <span className="v2-mono text-[10px] tracking-[0.18em] text-[var(--v2-ink2)]">INDEPENDENT PROOF LAYER FOR CLOUD ATTACK PATHS</span>
             </div>
 
             <h1 className="hero-rise display text-balance text-[var(--v2-ink)]" style={{ animationDelay: "0.1s" }}>
-              Know which attack paths are real.
-              <span>Prove them before attackers do.</span>
+              The independent proof layer for cloud attack paths.
+              <span>Prove what is real before attackers do.</span>
             </h1>
 
             <p className="hero-rise max-w-[48ch] text-[17px] leading-[1.65] text-[var(--v2-ink2)]" style={{ animationDelay: "0.16s" }}>
-              XSEE safely validates the routes attackers can actually use—then produces signed, audit-ready evidence for every hop and every fix.
+              XSEE safely validates reachable AWS attack paths, predicts whether remediation closes them, and produces signed, audit-ready evidence for every proven hop and fix.
             </p>
 
             <div className="hero-rise flex flex-wrap gap-3" style={{ animationDelay: "0.2s" }}>
@@ -44,6 +44,11 @@ export default function HomeHero() {
             <p className="hero-rise v2-mono flex items-center gap-2 text-[10px] tracking-[0.1em] text-[var(--v2-ink3)]" style={{ animationDelay: "0.27s" }}>
               <ShieldCheck className="h-4 w-4 text-[var(--v2-ok)]" aria-hidden /> READ-ONLY IAM · NO AGENTS · DEPLOY IN 2 MINUTES
             </p>
+            <div className="hero-rise xsee-buyer-paths" style={{ animationDelay: "0.3s" }} aria-label="Explore XSEE by role">
+              <a href="#compare"><span>CISO</span><strong>Prove exposure</strong></a>
+              <a href="#coverage"><span>CLOUD SECURITY</span><strong>Validate paths</strong></a>
+              <a href="#certificate"><span>AUDIT</span><strong>Inspect receipts</strong></a>
+            </div>
           </div>
 
           <div id="path" className="xsee-instrument hero-rise overflow-hidden" style={{ animationDelay: "0.2s" }}>
@@ -58,7 +63,7 @@ export default function HomeHero() {
             </div>
             <div className="p-3 sm:p-4"><AttackGraphCinematic /></div>
             <div className="xsee-instrument-foot">
-              <div className="v2-mono flex flex-wrap gap-x-5 gap-y-2 text-[9px] text-[var(--v2-ink3)]"><span>EVIDENCE <b>#4821</b></span><span>SOURCE <b>CLOUDTRAIL</b></span><span>CONFIDENCE <b>92%</b></span></div>
+              <div className="v2-mono flex flex-wrap gap-x-5 gap-y-2 text-[9px] text-[var(--v2-ink3)]"><span>EVIDENCE <b>#4821</b></span><span>SOURCE <b>CLOUDTRAIL</b></span><span>PROOF <b>ATTACHED</b></span></div>
               <Link href="/#proof" className="v2-mono inline-flex items-center gap-1.5 text-[9px] text-[var(--v2-ink2)] hover:text-white">OPEN PROOF <ArrowUpRight className="h-3.5 w-3.5" aria-hidden /></Link>
             </div>
           </div>

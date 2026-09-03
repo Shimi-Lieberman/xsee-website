@@ -7,6 +7,17 @@ import AnnouncementBar from "@/components/homepage/AnnouncementBar";
 import HomeNav from "@/components/homepage/HomeNav";
 import HomeHero from "@/components/homepage/HomeHero";
 import TrustedByStrip from "@/components/homepage/TrustedByStrip";
+
+function ExecutiveProofBar() {
+  const proof = [
+    ["10", "techniques proven end-to-end"],
+    ["4", "lifecycle stages"],
+    ["0", "write permissions required"],
+    ["SHA-256", "verifiable evidence receipts"],
+  ] as const;
+
+  return <section className="xsee-executive-proof" aria-label="XSEE proof facts"><div className="hp-container">{proof.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div></section>;
+}
 import ProblemSection from "@/components/homepage/ProblemSection";
 import ProofLoopSection from "@/components/homepage/ProofLoopSection";
 import ProofSection from "@/components/homepage/ProofSection";
@@ -46,6 +57,7 @@ export default function Home() {
           <HomeScrollReveal />
           {/* 01 — Claim and live attack-state instrument */}
           <HomeHero />
+          <ExecutiveProofBar />
           {/* 02 — Enterprise trust rail */}
           <TrustedByStrip />
           {/* 03 — Findings compressed into real paths */}
