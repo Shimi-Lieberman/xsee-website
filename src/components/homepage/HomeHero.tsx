@@ -20,8 +20,8 @@ export default function HomeHero() {
             </div>
 
             <h1 className="hero-rise display text-balance text-[var(--v2-ink)]" style={{ animationDelay: "0.1s" }}>
-              The independent proof layer for cloud attack paths.
-              <span>Prove what is real before attackers do.</span>
+              Cloud attack paths, made observable.
+              <span>XSEE proves what can actually happen.</span>
             </h1>
 
             <p className="hero-rise max-w-[48ch] text-[17px] leading-[1.65] text-[var(--v2-ink2)]" style={{ animationDelay: "0.16s" }}>
