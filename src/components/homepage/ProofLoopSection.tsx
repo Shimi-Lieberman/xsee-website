@@ -16,6 +16,19 @@ type ProofPath = { id: string; delay: number; hops: ProofHop[]; calls: string[] 
 //   │                               │  + cert lands below   │
 //   └───────────────────────────────┴───────────────────────┘
 
+/**
+ * Deterministic LCG so grid positions stay stable across renders. Lives at
+ * module scope so the generator's internal state is not a render-scoped
+ * variable being reassigned from a closure.
+ */
+function createSeededRandom(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    return state / 0x100000000;
+  };
+}
+
 function ProofLoopStage() {
   // Architectural findings grid — small squares, not dots. Staggered fade.
   // 18 cols × 11 rows = 198 cells; we keep ~150 visible to feel dense but
@@ -24,9 +37,7 @@ function ProofLoopStage() {
     const cols = 18, rows = 11;
     const x0 = 40, y0 = 50;
     const dx = 22, dy = 26;
-    // Deterministic LCG so positions are stable
-    let seed = 1337;
-    const r = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 0x100000000; };
+    const r = createSeededRandom(1337);
     const cells = [];
     for (let c = 0; c < cols; c++) {
       for (let row = 0; row < rows; row++) {
