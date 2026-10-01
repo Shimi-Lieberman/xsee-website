@@ -188,11 +188,11 @@ export async function POST(request: Request) {
     const confirmText = [
       `Hi ${full_name},`,
       ``,
-      `We received your free scan request for ${company}. We'll reach out within one business day to schedule your scan.`,
+      `We received your request for a risk assessment for ${company}. We'll contact you to schedule it.`,
       ``,
       ...(awsRoleArn
-        ? [`Your Role ARN: ${awsRoleArn}`, `Region: ${awsRegion}`, ``]
-        : [`We'll send you secure instructions to connect your read-only IAM role.`, ``]),
+        ? [`Role ARN you sent: ${awsRoleArn}`, `Region: ${awsRegion}`, ``]
+        : [`We'll send you instructions to connect a read-only IAM role when we schedule.`, ``]),
       ``,
       `— The XSEE Team`,
       `sales@xsee.io`,
@@ -201,7 +201,7 @@ export async function POST(request: Request) {
     try {
       await sendEmail({
         to: work_email,
-        subject: "Your XSEE scan is queued",
+        subject: "We received your assessment request",
         text: confirmText,
         html: `<pre style="font-family:system-ui,sans-serif">${escapeHtml(confirmText)}</pre>`,
       });
