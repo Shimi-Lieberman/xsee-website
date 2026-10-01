@@ -1,21 +1,21 @@
-/* Homepage redesign — dark tokens mapped to site --color-primary (#FF1B8D) */
+/* Homepage light theme — XSEE pink accent on a soft off-white canvas */
 @import "./homepage-proof-loop.css";
 
 .hp-page {
   /* Design System — LIGHT theme (airy SaaS cybersecurity) */
-  --hp-base: #f7f9fc;
-  --hp-elevated: #ffffff;
-  --hp-overlay: #ffffff;
-  --hp-ink: #0b1220;
-  --hp-ink2: #48526b;
-  --hp-ink3: #6a7388;
-  --hp-ink4: #b9c1d0;
-  --hp-line: #e7ecf3;
-  --hp-line2: #d6deea;
-  --hp-brand: var(--color-primary);
+  --hp-base: #FAFBFC;
+  --hp-elevated: #FFFFFF;
+  --hp-overlay: #FFFFFF;
+  --hp-ink: #0B1220;
+  --hp-ink2: #3A4658;
+  --hp-ink3: #6B7688;
+  --hp-ink4: #6B7688;
+  --hp-line: #E6EAF0;
+  --hp-line2: #D8DEE8;
+  --hp-brand: var(--color-primary-dark);
   --hp-brand-glow: rgba(255, 27, 141, 0.14);
-  --hp-brand2: var(--color-secondary);
-  --hp-brand2-glow: rgba(79, 70, 229, 0.12);
+  --hp-brand2: var(--color-primary-dark);
+  --hp-brand2-glow: rgba(212, 0, 110, 0.12);
   --hp-ok: #059669;
   /* dark ink for code/terminal panels that stay dark on light theme */
   --hp-code-bg: #0c1320;
@@ -30,8 +30,8 @@
   --body-gap: 56px;
 
   background:
-    radial-gradient(92% 64% at 80% -6%, rgba(255, 154, 87, 0.24), transparent 58%),
-    radial-gradient(120% 72% at 18% -8%, rgba(255, 27, 141, 0.14), transparent 58%),
+    radial-gradient(92% 64% at 80% -6%, rgba(255, 27, 141, 0.06), transparent 58%),
+    radial-gradient(120% 72% at 18% -8%, rgba(255, 27, 141, 0.1), transparent 58%),
     var(--hp-base);
   color: var(--hp-ink);
 }

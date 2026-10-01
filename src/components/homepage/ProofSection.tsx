@@ -20,7 +20,7 @@ const NODE_W = 150;
 const NODE_H = 66;
 
 function GraphCard({ n }: { n: GNode }) {
-  const cardFill = n.target ? "#1A0E1A" : "#0F1320";
+  const cardFill = n.target ? "#FFF0F7" : "#FFFFFF";
   const cardStroke = n.target ? "rgba(255,27,141,0.55)" : "var(--hp-line)";
   return (
     <g>
@@ -108,7 +108,7 @@ function AttackGraph() {
             <path d="M0 0 L10 5 L0 10 z" fill="#FF1B8D" />
           </marker>
           <filter id="proofNodeShadow" x="-40%" y="-40%" width="180%" height="180%">
-            <feDropShadow dx="0" dy="6" stdDeviation="10" floodColor="#04060C" floodOpacity="0.5" />
+            <feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#0B1220" floodOpacity="0.1" />
           </filter>
           <filter id="proofTargetShadow" x="-60%" y="-60%" width="220%" height="220%">
             <feDropShadow dx="0" dy="6" stdDeviation="14" floodColor="#FF1B8D" floodOpacity="0.3" />
