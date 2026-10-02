@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   // Pinch-zoom must stay available on mobile (WCAG 1.4.4) — do not cap maximumScale.
   maximumScale: 5,
   userScalable: true,
-  themeColor: "#f7f9fc",
+  themeColor: "#FAFBFC",
 };
 
 const fontVariables = `${GeistSans.variable} ${GeistMono.variable}`;
@@ -78,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fontVariables} ${instrumentSerif.variable} font-sans antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${fontVariables} ${instrumentSerif.variable} font-sans antialiased bg-[var(--bg-base)]`} suppressHydrationWarning>
       <body
         className={`${fontVariables} font-sans antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
         suppressHydrationWarning

@@ -1428,6 +1428,156 @@
   font-weight: 700;
 }
 
+/* Light SaaS surface treatment for legacy product sections. */
+.elite-attack-graph-section,
+.elite-detect-section,
+.elite-loop-section,
+.shock-stats-section,
+.testimonials-section,
+.home-loop-strip,
+.home-certificate-section {
+  background-color: #FAFBFC;
+  color: #0B1220;
+}
+
+.elite-attack-graph-section,
+.shock-stats-section,
+.testimonials-section,
+.home-certificate-section {
+  background-image: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(255, 27, 141, 0.06), transparent 72%);
+}
+
+.elite-loop-section::before,
+.testimonials-section::before,
+.shock-stats-section::before {
+  background-image: radial-gradient(circle, rgba(11, 18, 32, 0.045) 1px, transparent 1px);
+  opacity: 0.55;
+}
+
+.elite-attack-graph-title,
+.elite-loop-name,
+.elite-loop-human-line,
+.shock-cta-headline,
+.home-loop-step h3,
+.home-loop-bottom-line,
+.home-certificate-copy h2 {
+  color: #0B1220;
+}
+
+.elite-attack-graph-sub,
+.elite-detect-bar-label,
+.elite-detect-foot,
+.elite-loop-desc,
+.home-loop-step p,
+.home-certificate-copy p {
+  color: #3A4658;
+}
+
+.elite-attack-svg-wrap,
+.elite-detect-card,
+.elite-loop-card,
+.shock-stat-cell,
+.testimonial-card,
+.case-study-card,
+.home-loop-step,
+.home-certificate-card {
+  background: #FFFFFF;
+  border-color: #E6EAF0;
+  color: #0B1220;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+}
+
+.elite-attack-svg-wrap {
+  border: 1px solid #E6EAF0;
+}
+
+.elite-evidence-pill {
+  background: #F1F4F9;
+  border-color: #D8DEE8;
+  color: #3A4658;
+}
+
+.elite-detect-bar-track {
+  background: #E6EAF0;
+}
+
+.elite-detect-foot {
+  border-top-color: #E6EAF0;
+}
+
+.elite-loop-badge-auto {
+  color: #047857;
+}
+
+.elite-loop-badge-human {
+  color: #D4006E;
+}
+
+.home-loop-step-icon,
+.home-certificate-cta,
+.home-certificate-seal,
+.home-certificate-title {
+  color: #D4006E;
+}
+
+.shock-stat-cell:nth-child(1) .shock-stat-number,
+.shock-stat-cell:nth-child(2) .shock-stat-number,
+.shock-stat-cell:nth-child(3) .shock-stat-number,
+.shock-stat-cell:nth-child(4) .shock-stat-number {
+  color: #D4006E;
+}
+
+.home-certificate-card {
+  border-color: #E6EAF0;
+}
+
+.elite-loop-card:hover,
+.shock-stat-cell:hover,
+.testimonial-card:hover,
+.case-study-card:hover {
+  background: #FFFFFF;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.09);
+}
+
+.shock-stats-grid {
+  background: #E6EAF0;
+  border-color: #E6EAF0;
+}
+
+.shock-stat-label,
+.home-loop-step-number,
+.home-certificate-path,
+.home-certificate-meta {
+  color: #3A4658;
+}
+
+.home-certificate-card {
+  background: #FFFFFF;
+  border-color: #E6EAF0;
+}
+
+.home-certificate-logo {
+  color: #0B1220;
+}
+
+.home-certificate-meta {
+  border-top-color: #E6EAF0;
+}
+
+.elite-attack-graph-section .elite-attack-graph-eyebrow,
+.elite-loop-section .elite-attack-graph-eyebrow {
+  color: #6B7688;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .elite-loop-card,
+  .shock-stat-cell,
+  .testimonial-card,
+  .case-study-card {
+    transition: none;
+  }
+}
+
 @media (max-width: 1200px) {
   .home-loop-strip-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));

@@ -58,24 +58,24 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
           height={h}
           rx="16"
           fill={isTarget ? "url(#targetNodeGradient)" : "url(#nodeGradient)"}
-          stroke={isTarget ? "rgba(255,27,141,0.55)" : "#262C3E"}
+          stroke={isTarget ? "rgba(212,0,110,0.48)" : "#DCE3EC"}
           strokeWidth="1"
           filter={isTarget ? "url(#targetShadow)" : "url(#nodeShadow)"}
         />
-        <rect x={x} y={y} width={w} height="1" fill="rgba(255,255,255,0.06)" rx="10" />
+        <rect x={x} y={y} width={w} height="1" fill="rgba(11,18,32,0.035)" rx="10" />
         <rect
           x={x + 12}
           y={y + 12}
           width="28"
           height="28"
           rx="7"
-          fill={isTarget ? "rgba(255,27,141,0.16)" : "#161B2C"}
-          stroke={isTarget ? "rgba(255,27,141,0.3)" : "#2A3046"}
+          fill={isTarget ? "rgba(255,27,141,0.08)" : "#F1F4F8"}
+          stroke={isTarget ? "rgba(212,0,110,0.2)" : "#E1E7EF"}
           strokeWidth="1"
         />
         <g
           transform={`translate(${x + 19}, ${y + 19})`}
-          stroke={isTarget ? "#FF4FA3" : "#A6ADC1"}
+          stroke={isTarget ? "#D4006E" : "#667085"}
           strokeWidth="1.4"
           fill="none"
           strokeLinecap="round"
@@ -89,7 +89,7 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
         <text
           x={x + 50}
           y={y + 22}
-          fill={isTarget ? "#FF4FA3" : "#6B7388"}
+          fill={isTarget ? "#D4006E" : "#667085"}
           fontFamily="var(--font-geist-sans), Geist, sans-serif"
           fontSize="9.5"
           fontWeight="600"
@@ -100,7 +100,7 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
         <text
           x={x + 50}
           y={y + 38}
-          fill="#F6F7FB"
+          fill="#0B1220"
           fontFamily="var(--font-geist-sans), Geist, sans-serif"
           fontSize="13.5"
           fontWeight="500"
@@ -110,7 +110,7 @@ function GraphNode({ x, y, w, h, icon, kind, label, id, isTarget, delay }: Graph
         <text
           x={x + 12}
           y={y + h - 14}
-          fill="#6B7388"
+          fill="#667085"
           fontFamily="var(--font-geist-mono), Geist Mono, monospace"
           fontSize="10"
           letterSpacing="0.4"
@@ -273,12 +273,12 @@ export default function AttackGraphCinematic() {
         <svg viewBox="0 0 1200 520" className="absolute inset-0 h-full w-full">
           <defs>
             <linearGradient id="nodeGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#182233" />
-              <stop offset="100%" stopColor="#0A101A" />
+              <stop offset="0%" stopColor="#FFFFFF" />
+              <stop offset="100%" stopColor="#F4F7FB" />
             </linearGradient>
             <linearGradient id="targetNodeGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#321126" />
-              <stop offset="100%" stopColor="#160A14" />
+              <stop offset="0%" stopColor="#FFF8FC" />
+              <stop offset="100%" stopColor="#FFF0F7" />
             </linearGradient>
             <linearGradient id="edgeGrad" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="#FF1B8D" stopOpacity="0.2" />
@@ -290,15 +290,15 @@ export default function AttackGraphCinematic() {
               <stop offset="100%" stopColor="#FF1B8D" stopOpacity="0" />
             </radialGradient>
             <linearGradient id="scanGrad" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#E86F2D" stopOpacity="0" />
-              <stop offset="65%" stopColor="#E86F2D" stopOpacity="0.35" />
-              <stop offset="100%" stopColor="#F18A4D" stopOpacity="0.85" />
+              <stop offset="0%" stopColor="#4F46E5" stopOpacity="0" />
+              <stop offset="65%" stopColor="#4F46E5" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#4F46E5" stopOpacity="0.65" />
             </linearGradient>
             <filter id="nodeShadow" x="-40%" y="-40%" width="180%" height="180%">
-              <feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#04060C" floodOpacity="0.55" />
+              <feDropShadow dx="0" dy="5" stdDeviation="7" floodColor="#0B1220" floodOpacity="0.11" />
             </filter>
             <filter id="targetShadow" x="-60%" y="-60%" width="220%" height="220%">
-              <feDropShadow dx="0" dy="8" stdDeviation="16" floodColor="#FF1B8D" floodOpacity="0.28" />
+              <feDropShadow dx="0" dy="5" stdDeviation="9" floodColor="#FF1B8D" floodOpacity="0.12" />
             </filter>
           </defs>
 
@@ -317,7 +317,7 @@ export default function AttackGraphCinematic() {
 
           <g className="hg-scan">
             <rect x="-30" y="20" width="22" height="480" fill="url(#scanGrad)" opacity="0.5" />
-            <line x1="-8" y1="20" x2="-8" y2="500" stroke="#F18A4D" strokeWidth="1" opacity="0.6" />
+            <line x1="-8" y1="20" x2="-8" y2="500" stroke="#4F46E5" strokeWidth="1" opacity="0.4" />
           </g>
 
           {edges.map((e, i) => {
@@ -333,10 +333,10 @@ export default function AttackGraphCinematic() {
 
             return (
               <g key={i}>
-                <path d={d} stroke="#2A3046" strokeWidth="1" fill="none" opacity="0.6" />
+                <path d={d} stroke="#CAD4E0" strokeWidth="1.2" fill="none" opacity="0.8" />
                 <path
                   d={d}
-                  stroke={i === edges.length - 1 ? "#FF1B8D" : "#E86F2D"}
+                  stroke={i === edges.length - 1 ? "#D4006E" : "#4F46E5"}
                   strokeWidth="1.8"
                   fill="none"
                   strokeLinecap="round"
@@ -394,15 +394,15 @@ export default function AttackGraphCinematic() {
                   width={chipW}
                   height={chipH}
                   rx={chipH / 2}
-                  fill="#0B0F1A"
-                  stroke={toTarget ? "rgba(255,27,141,0.4)" : "rgba(255,255,255,0.1)"}
+                  fill="#FFFFFF"
+                  stroke={toTarget ? "rgba(212,0,110,0.28)" : "#E1E7EF"}
                   strokeWidth="1"
                 />
                 <text
                   x={lx}
                   y={ly + 3.5}
                   textAnchor="middle"
-                  fill={toTarget ? "#FF8FC2" : "#C2C8D6"}
+                  fill={toTarget ? "#D4006E" : "#475569"}
                   fontFamily="var(--font-geist-mono), Geist Mono, monospace"
                   fontSize="10.5"
                 >
@@ -414,7 +414,7 @@ export default function AttackGraphCinematic() {
 
           <g className="hg-signed">
             <g transform="translate(892, 402)">
-              <rect x="0" y="0" width="220" height="76" rx="10" fill="#0F1320" stroke="rgba(16,185,129,0.45)" strokeWidth="1" />
+              <rect x="0" y="0" width="220" height="76" rx="10" fill="#FFFFFF" stroke="rgba(22,135,95,0.28)" strokeWidth="1" />
               <circle cx="22" cy="38" r="13" fill="rgba(16,185,129,0.16)" stroke="rgba(16,185,129,0.55)" strokeWidth="1" />
               <path
                 d="M16 38 L21 43 L28 33"
@@ -427,7 +427,7 @@ export default function AttackGraphCinematic() {
               <text
                 x="44"
                 y="32"
-                fill="#6B7388"
+                fill="#667085"
                 fontFamily="var(--font-geist-sans), Geist, sans-serif"
                 fontSize="9.5"
                 fontWeight="600"
@@ -438,7 +438,7 @@ export default function AttackGraphCinematic() {
               <text
                 x="44"
                 y="49"
-                fill="#F6F7FB"
+                fill="#0B1220"
                 fontFamily="var(--font-geist-sans), Geist, sans-serif"
                 fontSize="13"
                 fontWeight="500"
@@ -448,7 +448,7 @@ export default function AttackGraphCinematic() {
               <text
                 x="44"
                 y="64"
-                fill="#6B7388"
+                fill="#667085"
                 fontFamily="var(--font-geist-mono), Geist Mono, monospace"
                 fontSize="9.5"
               >

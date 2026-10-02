@@ -1,7 +1,7 @@
 /* Legal policy pages — /terms /privacy /refunds */
 
 .legal-page-root {
-  background: #f7f9fc;
+  background: #FAFBFC;
   color: #0b1220;
   min-height: 100vh;
 }
@@ -9,7 +9,7 @@
 .legal-hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #FAFBFC 100%);
   padding: 80px 24px 48px;
   text-align: center;
   border-bottom: 1px solid rgba(11, 18, 32, 0.08);
@@ -69,7 +69,7 @@
 }
 
 .legal-hero-sub {
-  color: #48526b;
+  color: #3A4658;
   font-size: 16px;
   line-height: 1.6;
   margin: 0 0 16px;
@@ -81,7 +81,7 @@
   gap: 6px;
   background: #ffffff;
   border: 1px solid rgba(11, 18, 32, 0.1);
-  color: #5b6577;
+  color: #3A4658;
   border-radius: 20px;
   padding: 4px 12px;
   font-size: 12px;
@@ -119,7 +119,7 @@
 }
 
 .legal-toc-head {
-  color: #6a7388;
+  color: #6B7688;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -133,7 +133,7 @@
   gap: 8px;
   padding: 7px 10px;
   border-radius: 8px;
-  color: #5b6577;
+  color: #3A4658;
   font-size: 13px;
   text-decoration: none;
   transition: all 0.15s ease;
@@ -148,13 +148,13 @@
 
 .legal-toc-link.active {
   background: rgba(255, 27, 141, 0.08);
-  border-left-color: #ff1b8d;
+  border-left-color: #D4006E;
   color: #d4006e;
   padding-left: 8px;
 }
 
 .legal-toc-num {
-  color: #b9c1d0;
+  color: #6B7688;
   font-size: 11px;
   font-weight: 700;
   min-width: 18px;
@@ -171,7 +171,7 @@
 }
 
 .legal-toc-other {
-  color: #6a7388;
+  color: #6B7688;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -181,7 +181,7 @@
 
 .legal-toc-other-link {
   display: block;
-  color: #5b6577;
+  color: #3A4658;
   font-size: 12px;
   text-decoration: none;
   padding: 4px 0;
@@ -189,7 +189,7 @@
 }
 
 .legal-toc-other-link:hover {
-  color: #ff1b8d;
+  color: #D4006E;
 }
 
 .legal-main {
@@ -244,14 +244,14 @@
 }
 
 .legal-body {
-  color: #48526b;
+  color: #3A4658;
   font-size: 14px;
   line-height: 1.8;
 }
 
 .legal-body p {
   margin: 0 0 14px;
-  color: #48526b;
+  color: #3A4658;
 }
 
 .legal-body p:last-child {
@@ -284,7 +284,7 @@
   align-items: flex-start;
   padding: 6px 0;
   border-bottom: 1px solid rgba(11, 18, 32, 0.06);
-  color: #48526b;
+  color: #3A4658;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -297,7 +297,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #ff1b8d;
+  background: #D4006E;
   margin-top: 8px;
   flex-shrink: 0;
 }
@@ -329,7 +329,7 @@
 .legal-box-pink {
   background: rgba(255, 27, 141, 0.05);
   border: 1px solid rgba(255, 27, 141, 0.18);
-  border-left: 3px solid #ff1b8d;
+  border-left: 3px solid #D4006E;
   border-radius: 0 8px 8px 0;
   padding: 14px 18px;
   margin-bottom: 16px;
@@ -387,7 +387,7 @@
 }
 
 .legal-subcard {
-  background: #f7f9fc;
+  background: #FAFBFC;
   border: 1px solid rgba(11, 18, 32, 0.08);
   border-radius: 10px;
   padding: 16px;
@@ -463,7 +463,7 @@
 .legal-refund-card-annual {
   background: rgba(255, 27, 141, 0.07);
   border-color: rgba(255, 27, 141, 0.16);
-  border-top: 3px solid #ff1b8d;
+  border-top: 3px solid #D4006E;
 }
 
 .legal-refund-card-title {
@@ -490,7 +490,7 @@
 }
 
 .legal-steps-card {
-  background: #f7f9fc;
+  background: #FAFBFC;
   border: 1px solid rgba(11, 18, 32, 0.08);
   border-radius: 12px;
   padding: 20px;
@@ -544,7 +544,7 @@
 }
 
 .legal-contact-sub {
-  color: #5b6577;
+  color: #3A4658;
   font-size: 14px;
   margin: 0 0 20px;
 }
@@ -553,7 +553,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #ff1b8d, #d4006e);
+  background: linear-gradient(135deg, #D4006E, #d4006e);
   color: #fff;
   border-radius: 10px;
   padding: 12px 24px;
@@ -577,14 +577,14 @@
 }
 
 .legal-contact-links a {
-  color: #5b6577;
+  color: #3A4658;
   font-size: 12px;
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .legal-contact-links a:hover {
-  color: #ff1b8d;
+  color: #D4006E;
 }
 
 .legal-page-root .legal-section {

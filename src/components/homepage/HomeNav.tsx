@@ -68,7 +68,7 @@ export default function HomeNav() {
           backdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
           // When the mobile panel is open the bar must be opaque so it reads as one surface with it.
-          background: menuOpen ? "#f7f9fc" : scrolled ? "rgba(247, 249, 252, 0.85)" : "transparent",
+          background: menuOpen ? "#FAFBFC" : scrolled ? "rgba(250, 251, 252, 0.9)" : "transparent",
           borderBottom: scrolled && !menuOpen ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
           boxShadow: scrolled || menuOpen ? "0 4px 24px rgba(11, 18, 32, 0.06)" : "none",
         }}
@@ -137,7 +137,7 @@ export default function HomeNav() {
             opacity: menuOpen ? 1 : 0,
             borderTopWidth: menuOpen ? 1 : 0,
             // Fully opaque: a translucent panel let hero content show through the links.
-            background: "#ffffff",
+            background: "#FFFFFF",
             boxShadow: menuOpen ? "0 12px 28px rgba(11, 18, 32, 0.08)" : "none",
           }}
         >
