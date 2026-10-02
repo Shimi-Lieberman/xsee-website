@@ -38,8 +38,10 @@ function StatFigure({ stat, play }: { stat: StatItem; play: boolean }) {
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setValue(stat.target);
-      return;
+      // Jump straight to the final value on the next frame. Setting state from
+      // a callback rather than the effect body avoids a cascading render.
+      const raf = requestAnimationFrame(() => setValue(stat.target));
+      return () => cancelAnimationFrame(raf);
     }
 
     const duration = 1100;
@@ -76,8 +78,10 @@ export default function HomepageStatsBand() {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setPlay(true);
-      return;
+      // No observer support: start immediately, but from a callback so the
+      // effect body itself does not trigger a synchronous re-render.
+      const raf = requestAnimationFrame(() => setPlay(true));
+      return () => cancelAnimationFrame(raf);
     }
     const io = new IntersectionObserver(
       (entries) => {

@@ -4,6 +4,12 @@ import { ensureMarketingSchema } from "@/lib/marketingSchema";
 import { sendUrgentEmail, getAdminEmail } from "@/lib/ses";
 import { isValidEmail } from "@/lib/validation";
 import { rateLimit } from "@/lib/rateLimit";
+import {
+  asString,
+  FIELD_LIMITS,
+  firstOverlongField,
+  readJsonBody,
+} from "@/lib/requestGuard";
 
 const WINDOW_MS = 60 * 60 * 1000;
 const LIMIT = 3;
@@ -29,22 +35,41 @@ export async function POST(request: Request) {
     });
   }
 
-  try {
-    const body = await request.json();
+  const ACK = {
+    success: true,
+    message: "We have been alerted and will contact you immediately.",
+  };
 
-    if (body.website?.trim()) {
-      return NextResponse.json({
-        success: true,
-        message:
-          "We have been alerted and will contact you immediately.",
-      });
+  let body: Record<string, unknown>;
+  try {
+    body = await readJsonBody(request);
+  } catch {
+    // Never surface an error to someone reporting an active breach.
+    return NextResponse.json(ACK);
+  }
+
+  try {
+    if (asString(body.website)) {
+      return NextResponse.json(ACK);
     }
 
-    const workEmail = (body.work_email ?? body.email ?? "").trim();
-    const fullName = (body.full_name ?? body.name ?? "").trim();
-    const company = (body.company ?? "").trim();
-    const message = (body.message ?? body.situation ?? "").trim();
-    const phone = (body.phone ?? "").trim();
+    const workEmail = asString(body.work_email) || asString(body.email);
+    const fullName = asString(body.full_name) || asString(body.name);
+    const company = asString(body.company);
+    const message = asString(body.message) || asString(body.situation);
+    const phone = asString(body.phone);
+
+    const overlong = firstOverlongField({
+      workEmail: { value: workEmail, max: FIELD_LIMITS.email },
+      fullName: { value: fullName, max: FIELD_LIMITS.name },
+      company: { value: company, max: FIELD_LIMITS.company },
+      message: { value: message, max: FIELD_LIMITS.message },
+      phone: { value: phone, max: FIELD_LIMITS.phone },
+    });
+    if (overlong) {
+      console.warn(`[emergency] rejected overlong field: ${overlong}`);
+      return NextResponse.json(ACK);
+    }
 
     if (!workEmail || !isValidEmail(workEmail)) {
       return NextResponse.json({

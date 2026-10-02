@@ -3,7 +3,7 @@
  * Reads stdin (full landing HTML), applies:
  * 1. Add favicon link after the Google Fonts stylesheet link
  * 2. Replace nav logo placeholder with img tag
- * Writes to public/landing.html
+ * Writes to archive/legacy-html/landing.html (no longer served from public/).
  */
 const fs = require('fs');
 const path = require('path');
@@ -28,7 +28,7 @@ process.stdin.on('end', () => {
     /<div class="nav-logo" id="xsee-logo-placeholder">\s*<span class="nav-logo-txt">XSEE<\/span>\s*<\/div>/,
     '<div class="nav-logo" id="xsee-logo-placeholder">\n    <img src="/logo-primary-transparent.svg" height="36" style="height:36px;width:auto" alt="XSEE"/>\n  </div>'
   );
-  const outPath = path.join(__dirname, '..', 'public', 'landing.html');
+  const outPath = path.join(__dirname, '..', 'archive', 'legacy-html', 'landing.html');
   fs.writeFileSync(outPath, html, 'utf8');
   console.log('Wrote', outPath);
 });

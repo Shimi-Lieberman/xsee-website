@@ -10,7 +10,7 @@ const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const SVG_PATH = path.join(ROOT, 'public', 'logo-primary-transparent.svg');
-const HTML_PATH = path.join(ROOT, 'public', 'landing.html');
+const HTML_PATH = path.join(ROOT, 'archive', 'legacy-html', 'landing.html');
 
 function loadSvg() {
   let svg = fs.readFileSync(SVG_PATH, 'utf8').trim();

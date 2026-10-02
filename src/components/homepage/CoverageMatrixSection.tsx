@@ -55,7 +55,10 @@ export default function CoverageMatrixSection() {
   const [jointIndex, setJointIndex] = useState(0)
   const [playing, setPlaying] = useState(true)
   const rows = useMemo(() => showRoadmap ? [...certifying, ...roadmap] : certifying, [showRoadmap])
-  const technique = rows[techniqueIndex] ?? rows[0]
+  // Rows shrink when the roadmap collapses, so clamp during render rather
+  // than writing corrected state back from an effect.
+  const activeIndex = techniqueIndex < rows.length ? techniqueIndex : 0
+  const technique = rows[activeIndex] ?? rows[0]
   const joint = joints[jointIndex]
   const state = technique.states[joint]
 
@@ -70,10 +73,6 @@ export default function CoverageMatrixSection() {
     }, 1800)
     return () => window.clearInterval(timer)
   }, [playing, rows.length])
-
-  useEffect(() => {
-    if (techniqueIndex >= rows.length) setTechniqueIndex(0)
-  }, [rows.length, techniqueIndex])
 
   const selectTechnique = (index: number) => {
     setTechniqueIndex(index)
@@ -103,9 +102,9 @@ export default function CoverageMatrixSection() {
 
           <div className="xsee-reactor-stage">
             <aside className="xsee-reactor-queue" aria-label="Technique queue">
-              <div className="xsee-queue-head"><span>INBOUND EVIDENCE</span><b>{String(techniqueIndex + 1).padStart(2, '0')} / {String(rows.length).padStart(2, '0')}</b></div>
+              <div className="xsee-queue-head"><span>INBOUND EVIDENCE</span><b>{String(activeIndex + 1).padStart(2, '0')} / {String(rows.length).padStart(2, '0')}</b></div>
               <div className="xsee-queue-list">
-                {rows.map((item, index) => <button type="button" key={`${item.tactic}-${item.name}`} className={index === techniqueIndex ? 'is-active' : ''} onClick={() => selectTechnique(index)} aria-current={index === techniqueIndex ? 'true' : undefined}>
+                {rows.map((item, index) => <button type="button" key={`${item.tactic}-${item.name}`} className={index === activeIndex ? 'is-active' : ''} onClick={() => selectTechnique(index)} aria-current={index === activeIndex ? 'true' : undefined}>
                   <span>{String(index + 1).padStart(2, '0')}</span><div><small>{item.tactic}</small><strong>{item.name}</strong></div><ChevronRight aria-hidden />
                 </button>)}
               </div>

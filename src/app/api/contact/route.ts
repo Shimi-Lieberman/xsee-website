@@ -4,6 +4,13 @@ import { ensureMarketingSchema } from "@/lib/marketingSchema";
 import { sendEmail, getAdminEmail } from "@/lib/ses";
 import { isValidEmail } from "@/lib/validation";
 import { rateLimit, isDisposableEmail } from "@/lib/rateLimit";
+import {
+  asString,
+  BodyTooLargeError,
+  FIELD_LIMITS,
+  firstOverlongField,
+  readJsonBody,
+} from "@/lib/requestGuard";
 
 const WINDOW_MS = 60 * 60 * 1000;
 const LIMIT = 3;
@@ -25,17 +32,36 @@ export async function POST(request: Request) {
     );
   }
 
+  let body: Record<string, unknown>;
   try {
-    const body = await request.json();
+    body = await readJsonBody(request);
+  } catch (err) {
+    if (err instanceof BodyTooLargeError) {
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    }
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
 
-    if (body.website?.trim()) {
+  try {
+    if (asString(body.website)) {
       return NextResponse.json({ success: true });
     }
 
-    const name = (body.full_name ?? body.name ?? "").trim();
-    const email = (body.email ?? body.work_email ?? "").trim();
-    const message = (body.message ?? "").trim();
-    const source = (body.source ?? "footer").trim() || "footer";
+    const name = asString(body.full_name) || asString(body.name);
+    const email = asString(body.email) || asString(body.work_email);
+    const message = asString(body.message);
+    const source = asString(body.source) || "footer";
+
+    const overlong = firstOverlongField({
+      name: { value: name, max: FIELD_LIMITS.name },
+      email: { value: email, max: FIELD_LIMITS.email },
+      message: { value: message, max: FIELD_LIMITS.message },
+      source: { value: source, max: FIELD_LIMITS.source },
+    });
+    if (overlong) {
+      console.warn(`[contact] rejected overlong field: ${overlong}`);
+      return NextResponse.json({ error: "Field too long" }, { status: 400 });
+    }
 
     if (!name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });

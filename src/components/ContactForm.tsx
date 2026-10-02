@@ -160,8 +160,10 @@ export default function ContactForm() {
                 </div>
                 <div className="form-row">
                   <div className="form-group">
-                    <label className="form-label">Full Name</label>
+                    <label className="form-label" htmlFor="contact-full-name">Full Name</label>
                     <input
+                      id="contact-full-name"
+                      data-clarity-mask="true"
                       type="text"
                       className="form-input"
                       placeholder="Alex Johnson"
@@ -173,8 +175,10 @@ export default function ContactForm() {
                     />
                   </div>
                   <div className="form-group">
-                    <label className="form-label">Work Email</label>
+                    <label className="form-label" htmlFor="contact-work-email">Work Email</label>
                     <input
+                      id="contact-work-email"
+                      data-clarity-mask="true"
                       type="email"
                       className="form-input"
                       placeholder="alex@company.com"
@@ -187,8 +191,10 @@ export default function ContactForm() {
                   </div>
                 </div>
                 <div className="form-group">
-                  <label className="form-label">Company</label>
+                  <label className="form-label" htmlFor="contact-company">Company</label>
                   <input
+                    id="contact-company"
+                    data-clarity-mask="true"
                     type="text"
                     className="form-input"
                     placeholder="Your company name"
@@ -242,8 +248,10 @@ export default function ContactForm() {
                   </div>
                 </div>
                 <div className="form-group form-grow">
-                  <label className="form-label">Message (optional)</label>
+                  <label className="form-label" htmlFor="contact-message">Message (optional)</label>
                   <textarea
+                    id="contact-message"
+                    data-clarity-mask="true"
                     className="form-textarea"
                     placeholder="Tell us about your current stack or what you're looking to solve..."
                     value={formData.message}

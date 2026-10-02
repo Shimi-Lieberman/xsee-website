@@ -3,11 +3,25 @@ import { getSql } from "@/lib/db";
 let schemaEnsured = false;
 
 /**
+ * Auto-migration is on by default so existing deployments keep working, but it
+ * means unauthenticated public endpoints trigger DDL and the runtime database
+ * role therefore needs schema-modification rights.
+ *
+ * Preferred hardening: apply db/migrations/002_marketing_lead_tables.sql once,
+ * set MARKETING_AUTO_MIGRATE=false, and reduce the runtime role to DML only.
+ */
+const AUTO_MIGRATE = process.env.MARKETING_AUTO_MIGRATE !== "false";
+
+/**
  * Creates marketing lead tables and extends demo_requests when missing.
  * Safe to call once per serverless invocation; uses module flag to avoid repeat work.
  */
 export async function ensureMarketingSchema(): Promise<void> {
   if (schemaEnsured) return;
+  if (!AUTO_MIGRATE) {
+    schemaEnsured = true;
+    return;
+  }
   const sql = getSql();
 
   await sql`
