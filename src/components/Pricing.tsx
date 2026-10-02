@@ -454,10 +454,10 @@ export default function Pricing() {
         <div className="pr-stats reveal">
           {(
             [
-              { val: "1,000+", sub: "attack patterns", color: "#e91e8c" },
-              { val: "7", sub: "engines", color: "#f97316" },
-              { val: "92%", sub: "avg exploit confidence", color: "#16a34a" },
-              { val: "$3.2M", sub: "avg financial exposure proven on first scan", color: "#d97706" },
+              { val: "10", sub: "techniques proven end-to-end", color: "#e91e8c" },
+              { val: "AWS", sub: "purpose-built cloud depth", color: "#f97316" },
+              { val: "0", sub: "write permissions required", color: "#16a34a" },
+              { val: "SHA-256", sub: "verifiable signed evidence", color: "#d97706" },
             ] as const
           ).map((s) => (
             <div key={s.sub} className="pr-stat">
@@ -470,8 +470,8 @@ export default function Pricing() {
         </div>
 
         <p className="pr-roi">
-          The average cloud breach costs <strong>$4.88M</strong>. XSEE needs to prevent ONE breach by ONE
-          percent to pay for itself.
+          IBM&apos;s 2024 industry study reports an average breach cost of <strong>$4.88M</strong>. Pricing is shown
+          against that external benchmark, not as a prediction of customer exposure.
         </p>
 
         <div className="pr-spots-wrap">

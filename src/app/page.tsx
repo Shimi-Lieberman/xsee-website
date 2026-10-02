@@ -7,11 +7,22 @@ import AnnouncementBar from "@/components/homepage/AnnouncementBar";
 import HomeNav from "@/components/homepage/HomeNav";
 import HomeHero from "@/components/homepage/HomeHero";
 import TrustedByStrip from "@/components/homepage/TrustedByStrip";
+
+function ExecutiveProofBar() {
+  const proof = [
+    ["10", "techniques proven end-to-end"],
+    ["4", "lifecycle stages"],
+    ["0", "write permissions required"],
+    ["SHA-256", "verifiable evidence receipts"],
+  ] as const;
+
+  return <section className="xsee-executive-proof" aria-label="XSEE proof facts"><div className="hp-container">{proof.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div></section>;
+}
 import ProblemSection from "@/components/homepage/ProblemSection";
 import ProofLoopSection from "@/components/homepage/ProofLoopSection";
 import ProofSection from "@/components/homepage/ProofSection";
+import CoverageMatrixSection from "@/components/homepage/CoverageMatrixSection";
 import HomeScrollReveal from "@/components/homepage/HomeScrollReveal";
-import QuoteSection from "@/components/homepage/QuoteSection";
 import CertificateSection from "@/components/homepage/CertificateSection";
 import ComparisonSection from "@/components/homepage/ComparisonSection";
 import Pricing from "@/components/Pricing";
@@ -46,6 +57,7 @@ export default function Home() {
           <HomeScrollReveal />
           {/* 01 — Claim and live attack-state instrument */}
           <HomeHero />
+          <ExecutiveProofBar />
           {/* 02 — Enterprise trust rail */}
           <TrustedByStrip />
           {/* 03 — Findings compressed into real paths */}
@@ -54,9 +66,9 @@ export default function Home() {
           <ProofLoopSection />
           {/* 05 — Evidence workspace and signed closure artifact */}
           <ProofSection />
+          <CoverageMatrixSection />
           <CertificateSection />
-          {/* 06 — Customer outcomes and concise competitive proof */}
-          <QuoteSection />
+          {/* 06 — Evidence boundary and concise competitive proof */}
           <ComparisonSection />
           {/* 07 — Commercial path and conversion */}
           <Pricing />
