@@ -9,22 +9,22 @@ const CARDS = [
     icon: <ShieldCheck size={18} strokeWidth={2} />,
     step: "01",
     title: "Zero-touch access",
-    desc: "Connect a read-only IAM role — no agents, no code deployment, nothing installed. Live in under 2 minutes.",
-    meta: "~2 min setup",
+    desc: "Connect a read-only IAM role. No agents or code deployment.",
+    meta: "Read-only IAM",
   },
   {
     icon: <ScanSearch size={18} strokeWidth={2} />,
     step: "02",
-    title: "Live environment analysis",
-    desc: "We run a full attack-graph analysis on your real AWS environment with 1,000+ patterns — never a staged walkthrough.",
-    meta: "1,000+ patterns",
+    title: "Team-led assessment",
+    desc: "Our team assesses your AWS account after scheduling with you.",
+    meta: "Scheduled with our team",
   },
   {
     icon: <FileCheck2 size={18} strokeWidth={2} />,
     step: "03",
-    title: "Validated report delivered",
-    desc: "Ranked exposures, exact attack paths, fix recommendations, and evidence packages. Yours to keep, no strings.",
-    meta: "Delivered in 30 min",
+    title: "Ranked report",
+    desc: "Our team sends a ranked report with findings and recommended fixes.",
+    meta: "Sent after assessment",
   },
 ];
 
@@ -109,7 +109,7 @@ export default function ContactForm() {
               Get your free Risk Assessment.
             </h2>
             <p className="mb-8">
-              We connect to your AWS account with read-only IAM access, run a full attack graph analysis using 1,000+ attack patterns, and show you the exact paths that reach your crown-jewel assets. You keep the validated HTML report — no commitment required.
+              Connect a read-only IAM role. Our team runs the assessment on your account and sends you the ranked report.
             </p>
             <ol className="rd-steps">
               {CARDS.map((c, i) => (
@@ -272,7 +272,7 @@ export default function ContactForm() {
                     className="text-center font-[var(--font-mono)] text-[10px] text-slate-600 tracking-wider"
                     style={{ fontFamily: "var(--font-mono)" }}
                   >
-                    No commitment · Read-only IAM · Report delivered in 30 min
+                    No commitment · Read-only IAM · No agents
                   </p>
                 </div>
               </form>

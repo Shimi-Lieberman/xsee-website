@@ -65,10 +65,10 @@ export default function Footer() {
           </Link>
           <div className="mb-5 flex flex-wrap gap-2">
             {[
-              "SOC 2 Type II (in progress)",
-              "CSA STAR (in progress)",
-              "GDPR Compliant",
-              "AWS Hosted",
+              "Read-only IAM boundary",
+              "No agents",
+              "AWS hosted",
+              "Signed, verifiable evidence",
               "Built on Anthropic Claude",
             ].map((label) => (
               <span
@@ -78,10 +78,6 @@ export default function Footer() {
                 {label}
               </span>
             ))}
-          </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-emerald-400">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            All Systems Operational
           </div>
         </div>
 
@@ -104,7 +100,7 @@ export default function Footer() {
             { label: "Engines", href: "/#engines" },
             { label: "Pricing", href: "/#pricing" },
             { label: "Changelog", href: "/changelog" },
-            { label: "Free Scan", href: "/free-scan" },
+            { label: "Request assessment", href: "/free-scan" },
             { label: "Under Attack?", href: "/under-attack" },
             { label: "vs. Wiz", href: "/vs-wiz" },
           ].map((link) => (
@@ -113,7 +109,7 @@ export default function Footer() {
               href={link.href}
               className="block mb-2.5 text-[13px] text-[#3A4658] transition-colors hover:text-[#0b1220] max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
               onClick={
-                link.label === "Free Scan"
+                link.label === "Request assessment"
                   ? () => Analytics.ctaClicked("footer", "free_scan")
                   : undefined
               }
@@ -172,7 +168,6 @@ export default function Footer() {
           {[
             { label: "Documentation", href: "#" },
             { label: "API Reference", href: "#" },
-            { label: "Status", href: "#" },
             { label: "Security", href: "/security" },
             { label: "Terms of Service", href: "/terms" },
             { label: "Privacy Policy", href: "/privacy" },
@@ -213,10 +208,6 @@ export default function Footer() {
               {link.label}
             </Link>
           ))}
-        </div>
-        <div style={{ fontSize: "10px", color: "#6B7688", fontFamily: "var(--font-mono)" }} className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          v1.5.0 · All systems operational
         </div>
       </div>
     </footer>

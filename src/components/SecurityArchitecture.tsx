@@ -7,8 +7,8 @@ import SectionFadeIn from "./SectionFadeIn";
 const ITEMS = [
   {
     icon: Shield,
-    title: "SOC 2 Type II",
-    description: "Enterprise-grade security controls verified by independent auditors.",
+    title: "Evidence integrity",
+    description: "Timestamped, signed records for validated attack paths and fixes.",
   },
   {
     icon: Lock,
@@ -23,7 +23,7 @@ const ITEMS = [
   {
     icon: FileCheck,
     title: "Compliance Ready",
-    description: "Built for teams that need GDPR, HIPAA, and cloud security frameworks.",
+    description: "Designed for teams that need clear cloud security controls.",
   },
 ];
 
@@ -38,7 +38,7 @@ export default function SecurityArchitecture() {
         </SectionFadeIn>
         <SectionFadeIn>
           <p className="mx-auto mt-4 max-w-2xl text-center text-lg text-slate-500">
-            SOC 2 Type II, encryption, zero standing access. Built for security-sensitive environments.
+            Read-only access, encryption, and zero standing access. Built for security-sensitive environments.
           </p>
         </SectionFadeIn>
 

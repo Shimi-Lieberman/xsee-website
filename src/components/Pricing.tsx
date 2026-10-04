@@ -2,20 +2,9 @@
 
 import type { CSSProperties } from "react";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { initializePaddle, type Paddle } from "@paddle/paddle-js";
-import { Check, ShieldCheck, Sparkles } from "lucide-react";
+import { useEffect } from "react";
+import { Check, Sparkles } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
-
-const PADDLE_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN ?? "";
-const PADDLE_ENV =
-  process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT === "sandbox" ? "sandbox" : "production";
-const PADDLE_STARTER_PRICE_ID = process.env.NEXT_PUBLIC_PADDLE_STARTER_PRICE_ID ?? "";
-const PADDLE_PRO_PRICE_ID = process.env.NEXT_PUBLIC_PADDLE_PRO_PRICE_ID ?? "";
-
-const REGISTER_FALLBACK = "https://app.xsee.io/register";
-
-type PlanCheckout = "trial" | "starter" | "pro";
 
 const PLANS: {
   tier: string;
@@ -29,12 +18,11 @@ const PLANS: {
   cta: string;
   featured: boolean;
   founding: boolean;
-  checkout: PlanCheckout;
 }[] = [
   {
     tier: "// Free Trial",
     title: "Free Trial",
-    desc: "14 days • Full product • No credit card",
+    desc: "14 days of full product access, arranged personally.",
     price: "$0",
     per: "· 14 days",
     priceLabel: "Free trial",
@@ -46,10 +34,9 @@ const PLANS: {
       "Breach Prevention Certificate",
     ],
     dim: [],
-    cta: "Start Free Trial",
+    cta: "Request access",
     featured: false,
     founding: false,
-    checkout: "trial",
   },
   {
     tier: "// Starter",
@@ -68,10 +55,9 @@ const PLANS: {
       "Email support",
     ],
     dim: [],
-    cta: "Subscribe",
+    cta: "Request access",
     featured: true,
     founding: true,
-    checkout: "starter",
   },
   {
     tier: "// Pro",
@@ -91,10 +77,9 @@ const PLANS: {
       "Priority support",
     ],
     dim: [],
-    cta: "Subscribe",
+    cta: "Request access",
     featured: false,
     founding: true,
-    checkout: "pro",
   },
 ];
 
@@ -104,56 +89,10 @@ const TRUST_NOTE: CSSProperties = {
   lineHeight: 1.5,
 };
 
-function priceIdForCheckout(kind: "starter" | "pro"): string {
-  if (kind === "starter") return PADDLE_STARTER_PRICE_ID;
-  return PADDLE_PRO_PRICE_ID;
-}
-
 export default function Pricing() {
-  const paddleRef = useRef<Paddle | null>(null);
-  const [paddleReady, setPaddleReady] = useState(false);
-
   useEffect(() => {
     Analytics.pricingViewed();
   }, []);
-
-  useEffect(() => {
-    if (!PADDLE_TOKEN) return;
-    let cancelled = false;
-    initializePaddle({
-      environment: PADDLE_ENV,
-      token: PADDLE_TOKEN,
-    }).then((instance) => {
-      if (cancelled || !instance) return;
-      paddleRef.current = instance;
-      setPaddleReady(true);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const openCheckout = useCallback((kind: "starter" | "pro") => {
-    const priceId = priceIdForCheckout(kind);
-    const paddle = paddleRef.current;
-    if (paddleReady && paddle && priceId) {
-      paddle.Checkout.open({ items: [{ priceId, quantity: 1 }] });
-      return;
-    }
-    window.location.href = REGISTER_FALLBACK;
-  }, [paddleReady]);
-
-  const handlePaidClick = useCallback(
-    (kind: "starter" | "pro") => {
-      if (kind === "starter") {
-        Analytics.ctaClicked("pricing", "starter_trial");
-      } else {
-        Analytics.ctaClicked("pricing", "pro_demo");
-      }
-      openCheckout(kind);
-    },
-    [openCheckout]
-  );
 
   return (
     <section
@@ -350,29 +289,18 @@ export default function Pricing() {
 
           .pr-roi { text-align: center; font-size: 14px; color: #475569; max-width: 640px; margin: 30px auto 0; line-height: 1.65; }
           .pr-roi strong { color: #0b1220; font-weight: 700; }
-          .pr-spots {
-            display: inline-flex; align-items: center; gap: 7px;
-            margin: 18px auto 0; padding: 7px 14px; border-radius: 999px;
-            font-size: 12px; font-weight: 600; color: #e91e8c;
-            background: rgba(233,30,140,0.08); border: 1px solid rgba(233,30,140,0.22);
-          }
-          .pr-spots-dot { width: 7px; height: 7px; border-radius: 999px; background: #ff1f8f; box-shadow: 0 0 0 0 rgba(255,31,143,0.6); animation: pr-pulse 2s infinite; }
-          @keyframes pr-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,31,143,0.55); } 70% { box-shadow: 0 0 0 8px rgba(255,31,143,0); } 100% { box-shadow: 0 0 0 0 rgba(255,31,143,0); } }
-          .pr-spots-wrap { text-align: center; }
-
           .pr-note { text-align: center; margin-top: 24px; font-family: var(--font-mono); font-size: 11px; color: #94a3b8; letter-spacing: 0.04em; }
 
           @media (prefers-reduced-motion: reduce) {
             .pr-card, .pr-card.is-featured { transition: none; }
-            .pr-spots-dot { animation: none; }
           }
         `}</style>
 
         <div className="section-head reveal pr-head" style={{ marginBottom: 0 }}>
           <span className="pr-eyebrow">Pricing</span>
           <h2 className="pr-title">
-            See your real attack paths <span className="pr-accent">in 15 minutes</span>
-            <span className="pr-sub"> — no credit card, no sales call, no theory.</span>
+            See your real attack paths <span className="pr-accent">with read-only proof</span>
+            <span className="pr-sub"> — built for teams that need evidence, not theory.</span>
           </h2>
         </div>
 
@@ -391,7 +319,7 @@ export default function Pricing() {
               <h3>{plan.title}</h3>
               {plan.founding && (
                 <span className="pr-founding">
-                  <Sparkles size={11} aria-hidden /> Founding Price
+                  <Sparkles size={11} aria-hidden /> Founding price
                 </span>
               )}
 
@@ -401,7 +329,7 @@ export default function Pricing() {
                   <span className="pr-price">{plan.price}</span>
                   <span className="pr-per">{plan.per}</span>
                 </div>
-                <p className="pr-price-note">14-day free trial • No credit card required</p>
+                <p className="pr-price-note">Access is arranged personally.</p>
               </div>
 
               <p className="pr-desc">{plan.desc}</p>
@@ -420,33 +348,16 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              {plan.checkout === "trial" ? (
-                <Link
-                  href={REGISTER_FALLBACK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary btn-shimmer pr-cta"
-                  onClick={() => Analytics.ctaClicked("pricing", "free_trial_card")}
-                >
-                  <span>{plan.cta} →</span>
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"} pr-cta`}
-                  onClick={() => {
-                    if (plan.checkout === "starter" || plan.checkout === "pro") {
-                      handlePaidClick(plan.checkout);
-                    }
-                  }}
-                >
-                  <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta} →</span>
-                </button>
-              )}
-              <div className="pr-trust" style={TRUST_NOTE}>
-                <ShieldCheck size={13} color="#22c55e" className="mt-0.5 shrink-0" aria-hidden />
-                <span>14-day free trial · No credit card · Cancel anytime</span>
-              </div>
+              <Link
+                href="mailto:sales@xsee.io?subject=Request%20access"
+                className={`btn ${plan.featured ? "btn-primary btn-shimmer" : "btn-secondary"} pr-cta`}
+                onClick={() => Analytics.ctaClicked("pricing", "request_access")}
+              >
+                <span className={plan.featured ? "relative z-[2]" : ""}>{plan.cta} →</span>
+              </Link>
+              <p className="pr-trust" style={TRUST_NOTE}>
+                We onboard founding customers personally.
+              </p>
             </div>
           ))}
         </div>
@@ -474,14 +385,8 @@ export default function Pricing() {
           against that external benchmark, not as a prediction of customer exposure.
         </p>
 
-        <div className="pr-spots-wrap">
-          <span className="pr-spots">
-            <span className="pr-spots-dot" aria-hidden />7 spots remaining at founding price
-          </span>
-        </div>
-
         <p className="pr-note">
-          14-day free trial · No credit card required · Starter $1,800/mo (founding) · Pro $3,500/mo (founding)
+          Starter $1,800/mo (Founding price) · Pro $3,500/mo (Founding price)
         </p>
       </div>
     </section>

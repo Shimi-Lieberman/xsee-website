@@ -6,8 +6,8 @@ export default function ComplianceBar() {
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         </svg>
       ),
-      label: "SOC 2 Type II",
-      sub: "In progress · Q3 2026",
+      label: "Read-only IAM boundary",
+      sub: "Never writes to your environment",
     },
     {
       icon: (
@@ -37,8 +37,8 @@ export default function ComplianceBar() {
           <polyline points="9 15 12 18 15 15" />
         </svg>
       ),
-      label: "GDPR compliant",
-      sub: "DPA available on request",
+      label: "Signed, verifiable evidence",
+      sub: "Evidence records are signed and verifiable",
     },
     {
       icon: (

@@ -1097,7 +1097,7 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
   .nav-mobile-panel-inner { padding-left: 20px; padding-right: 20px; }
 }
 /* Desktop: the nav row needed ~1507px inside a container that caps at 1136px, so
-   "Start Free Trial" and "Launch App" were clipped off-screen at every desktop width.
+     "Request access" and "Launch App" were clipped off-screen at every desktop width.
    Drop the decorative status pill and the duplicate login button ("Launch App" and
    "Sign in" both point at the same login URL) and tighten gaps. */
 @media (min-width: 1201px) {
@@ -1788,7 +1788,7 @@ footer .footer-inner {
   justify-content: center;
   width: 100%;
 }
-/* Homepage — Security & Compliance band (SOC 2 badges); tight, centered */
+/* Homepage — Security & trust band; tight, centered */
 .security-compliance-trust {
   width: 100%;
   padding: 96px 24px !important;

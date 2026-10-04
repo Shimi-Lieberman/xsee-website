@@ -7,44 +7,8 @@ import { rateLimit, isValidWorkEmail } from "@/lib/rateLimit";
 
 const ARN_REGEX = /^arn:aws:iam::[0-9]{12}:role\/.+/;
 
-const PLATFORM_API_BASE =
-  process.env.XSEE_PLATFORM_API_URL?.replace(/\/$/, "") ?? "https://app.xsee.io";
-
 const WINDOW_MS = 60 * 60 * 1000;
 const LIMIT = 3;
-
-type PlatformSubmitBody = {
-  name: string;
-  email: string;
-  company: string;
-  role_arn: string;
-  region: string;
-};
-
-async function forwardToPlatform(body: PlatformSubmitBody): Promise<{
-  ok: boolean;
-  scan_id?: string;
-}> {
-  try {
-    const res = await fetch(`${PLATFORM_API_BASE}/v1/free-scan/submit`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      console.warn("Free scan platform submit non-OK:", res.status);
-      return { ok: false };
-    }
-    const data = (await res.json().catch(() => ({}))) as {
-      scan_id?: string;
-      status?: string;
-    };
-    return { ok: true, scan_id: data.scan_id };
-  } catch (err) {
-    console.warn("Free scan platform submit failed:", err);
-    return { ok: false };
-  }
-}
 
 function escapeHtml(s: string): string {
   return s
@@ -143,17 +107,6 @@ export async function POST(request: Request) {
       )
     `;
 
-    const platform =
-      awsRoleArn && ARN_REGEX.test(awsRoleArn)
-        ? await forwardToPlatform({
-            name: full_name,
-            email: work_email,
-            company,
-            role_arn: awsRoleArn,
-            region: awsRegion || "us-east-1",
-          })
-        : { ok: false as const };
-
     const ts = new Date().toISOString();
     const adminText = [
       `🔍 New Free Scan Request`,
@@ -165,7 +118,6 @@ export async function POST(request: Request) {
       awsRoleArn ? `Region: ${awsRegion}` : "",
       `Remediation ARN: ${remediationRoleArn || "Not provided"}`,
       `Time: ${ts}`,
-      platform.scan_id ? `Scan ID: ${platform.scan_id}` : "",
     ]
       .filter(Boolean)
       .join("\n");
@@ -188,7 +140,7 @@ export async function POST(request: Request) {
     const confirmText = [
       `Hi ${full_name},`,
       ``,
-      `We received your request for a risk assessment for ${company}. We'll contact you to schedule it.`,
+      `We received your request for a free attack-path assessment for ${company}. We'll contact you to schedule it.`,
       ``,
       ...(awsRoleArn
         ? [`Role ARN you sent: ${awsRoleArn}`, `Region: ${awsRegion}`, ``]
@@ -213,14 +165,7 @@ export async function POST(request: Request) {
       // Do not rethrow — DB insert succeeded
     }
 
-    if (!platform.ok) {
-      console.warn("[free-scan] Platform forward did not succeed; lead still stored in Postgres.");
-    }
-
-    return NextResponse.json({
-      success: true,
-      ...(platform.scan_id ? { scan_id: platform.scan_id } : {}),
-    });
+    return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Free scan error:", err);
     return NextResponse.json({ error: "Submission failed" }, { status: 500 });

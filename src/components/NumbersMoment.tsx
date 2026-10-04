@@ -190,7 +190,7 @@ export function NumbersMoment() {
               e.currentTarget.style.boxShadow = "0 0 40px rgba(255,31,143,0.35)";
             }}
           >
-            Run Free Scan →
+            Request free assessment →
           </Link>
           <p
             style={{

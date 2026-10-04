@@ -103,4 +103,46 @@ fi
 run_hard_grep_src "src"
 run_context_audit
 
+python3 <<'PY'
+import re
+import sys
+from pathlib import Path
+
+source_files = [
+    path
+    for path in Path("src").rglob("*")
+    if path.suffix in {".tsx", ".ts", ".jsx", ".js", ".css"}
+]
+report_eta = re.compile(
+    r"\breports?\b[^.!?\n]{0,120}\b(?:in|within|under|less than)\s+\d+\s*(?:min(?:ute)?s?)\b|"
+    r"\b(?:in|within|under|less than)\s+\d+\s*(?:min(?:ute)?s?)[^.!?\n]{0,120}\breports?\b",
+    re.I,
+)
+compliance_standard = re.compile(
+    r"\b(?:SOC\s*2(?:\s+TYPE\s*II)?|CSA\s+STAR(?:\s+LEVEL\s*\d)?|GDPR|HIPAA|PCI\s*DSS)\b",
+    re.I,
+)
+attestation_link = re.compile(
+    r"<a\b[^>]*\bhref\s*=\s*['\"][^'\"]*(?:attest|certificate|certification|soc[-_]?2|csa[-_]?star|gdpr|hipaa|pci)[^'\"]*['\"][^>]*>.*?</a\s*>",
+    re.I | re.S,
+)
+
+failed = False
+for path in source_files:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    for line_number, line in enumerate(text.splitlines(), start=1):
+        if report_eta.search(line):
+            print(f"{path}:{line_number}: report timing claim must be removed")
+            failed = True
+    unlinked_copy = attestation_link.sub("", text)
+    match = compliance_standard.search(unlinked_copy)
+    if match:
+        line_number = text[: match.start()].count("\n") + 1
+        print(f"{path}:{line_number}: compliance standard needs a linked attestation")
+        failed = True
+
+if failed:
+    sys.exit(1)
+PY
+
 echo "Forbidden-pattern check passed."

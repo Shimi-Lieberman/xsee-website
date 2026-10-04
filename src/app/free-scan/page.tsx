@@ -78,30 +78,34 @@ export default function FreeScanPage() {
         <section className="section sec-navy free-scan-hero">
           <div className="container">
             <div className="free-scan-hero-inner">
-              <span className="section-eyebrow mb-3 block text-center">Request Demo</span>
-              <h1 className="display-lg">Get your free Risk Assessment.</h1>
+              <span className="section-eyebrow mb-3 block text-center">Free attack-path assessment</span>
+              <h1 className="display-lg">Request your free attack-path assessment.</h1>
               <p className="free-scan-sub">
-                Tell us who you are. We&apos;ll contact you to schedule a read-only assessment of your AWS account. No commitment required.
+                Connect a read-only IAM role. Our team runs the assessment on your account and sends you the ranked report.
               </p>
               <div className="hero-proof-strip" style={{ marginTop: 24 }}>
                 <div className="hps-item">
                   <div className="hps-dot" style={{ background: "var(--green)" }} />
-                  Read-only IAM only
+                  Read-only IAM boundary
                 </div>
                 <div className="hps-item">
                   <div className="hps-dot" style={{ background: "var(--sky)" }} />
-                  No agents installed
+                  No agents
                 </div>
               </div>
-              <div className="my-8 grid grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-6 sm:grid-cols-2">
+              <div className="my-8 grid grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-6 sm:grid-cols-3">
                 {[
                   {
-                    title: "Zero-touch access",
-                    body: "Read-only IAM role. No agents, no code deployment, nothing installed.",
+                    title: "Read-only IAM",
+                    body: "Connect an IAM role with read-only permissions, under your control.",
                   },
                   {
-                    title: "We'll contact you",
-                    body: "Submit the form. We'll contact you to schedule the assessment.",
+                    title: "No agents",
+                    body: "Nothing to install or deploy in your AWS account.",
+                  },
+                  {
+                    title: "Ranked report",
+                    body: "Our team sends your ranked assessment findings.",
                   },
                 ].map(({ title, body }) => (
                   <div key={title} className="text-center">
