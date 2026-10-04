@@ -1,16 +1,9 @@
-const BADGE_ROWS: { label: string; inProgress?: boolean }[][] = [
-  [
-    { label: "SOC 2 Type II", inProgress: true },
-    { label: "Read-only IAM — zero write access" },
-    { label: "No agents installed" },
-    { label: "Data never leaves your AWS environment" },
-  ],
-  [
-    { label: "AWS Partner Network" },
-    { label: "Built on Anthropic Claude" },
-    { label: "GDPR compliant" },
-    { label: "Zero data retention available" },
-  ],
+const TRUST_BADGES = [
+  "Read-only IAM boundary",
+  "No agents",
+  "AWS hosted",
+  "Signed, verifiable evidence",
+  "Built on Anthropic Claude",
 ];
 
 function CheckIcon() {
@@ -41,27 +34,17 @@ export default function SecurityComplianceTrustSection() {
     >
       <div className="security-compliance-trust-inner">
         <h2 id="security-compliance-heading" className="security-compliance-trust-heading">
-          Security &amp; Compliance
+          Security &amp; Trust
         </h2>
         <div className="security-compliance-trust-rows">
-          {BADGE_ROWS.map((row, rowIndex) => (
-            <div key={rowIndex} className="security-compliance-trust-row">
-              {row.map((b) => (
-                <div key={b.label} className="security-compliance-trust-badge">
-                  <CheckIcon />
-                  <span>
-                    {b.label}
-                    {b.inProgress ? (
-                      <>
-                        {" "}
-                        <span className="security-compliance-trust-in-progress">(in progress)</span>
-                      </>
-                    ) : null}
-                  </span>
-                </div>
-              ))}
-            </div>
-          ))}
+          <div className="security-compliance-trust-row">
+            {TRUST_BADGES.map((label) => (
+              <div key={label} className="security-compliance-trust-badge">
+                <CheckIcon />
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

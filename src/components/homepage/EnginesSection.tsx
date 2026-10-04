@@ -15,7 +15,7 @@ const ENGINES = [
   {
     tag: "03",
     name: "Breach Prevention Certificate",
-    body: "Before/after cryptographic proof. Issued when L2 confirms a path is closed. Board-ready, SOC 2-ready.",
+    body: "Before/after cryptographic proof. Issued when L2 confirms a path is closed. Board-ready, audit-ready.",
     mini: "cert",
   },
   {

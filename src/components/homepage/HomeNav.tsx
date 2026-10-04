@@ -111,8 +111,8 @@ export default function HomeNav() {
               onClick={() => Analytics.ctaClicked("nav", "free_breach_report")}
             >
               {/* Compact label on ultra-narrow phones so the CTA never collides with the logo */}
-              <span className="max-[420px]:hidden">Free breach report</span>
-              <span className="hidden max-[420px]:inline">Free scan</span>
+              <span className="max-[420px]:hidden">Request assessment</span>
+              <span className="hidden max-[420px]:inline">Request</span>
               <ArrowRight className="h-3.5 w-3.5 shrink-0 max-[360px]:hidden" aria-hidden />
             </Link>
             <button

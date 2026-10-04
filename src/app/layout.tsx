@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import { Instrument_Serif } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import "./xsee-elite.css";
 import "./legal-pages.css";
@@ -83,10 +82,6 @@ export default function RootLayout({
         className={`${fontVariables} font-sans antialiased bg-[var(--bg-base)] text-[var(--text-primary)]`}
         suppressHydrationWarning
       >
-        <Script
-          src="https://cdn.paddle.com/paddle/v2/paddle.js"
-          strategy="afterInteractive"
-        />
         <ScrollReveal />
         <PostHogProvider>{children}</PostHogProvider>
         <ScrollAnimator />

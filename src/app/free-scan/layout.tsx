@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Free Risk Assessment | XSEE",
   description:
-    "Connect your AWS account. Get a validated attack graph in 30 minutes. Free, no credit card required.",
+    "Request a read-only AWS risk assessment. We'll contact you to schedule it.",
 };
 
 export default function FreeScanLayout({

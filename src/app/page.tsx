@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./homepage.css";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { ScrollTracker } from "@/components/ScrollTracker";
@@ -16,7 +17,20 @@ function ExecutiveProofBar() {
     ["SHA-256", "verifiable evidence receipts"],
   ] as const;
 
-  return <section className="xsee-executive-proof" aria-label="XSEE proof facts"><div className="hp-container">{proof.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div></section>;
+  return (
+    <section className="xsee-executive-proof" aria-label="XSEE proof facts">
+      <div className="hp-container">
+        {proof.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
+        <p className="mt-5 text-center text-[12px] leading-relaxed text-[var(--hp-ink3)]">
+          Capabilities shown reflect the XSEE platform roadmap; validated techniques are listed in the{" "}
+          <Link href="/changelog" className="underline underline-offset-2 hover:text-[var(--hp-ink)]">
+            changelog
+          </Link>
+          .
+        </p>
+      </div>
+    </section>
+  );
 }
 import ProblemSection from "@/components/homepage/ProblemSection";
 import ProofLoopSection from "@/components/homepage/ProofLoopSection";

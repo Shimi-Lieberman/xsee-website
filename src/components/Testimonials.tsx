@@ -18,7 +18,7 @@ export default function Testimonials() {
       outcome: "$3.2M exposure proven in 18 minutes.",
       company: "Fintech · Series A · AWS us-east-1",
       quote:
-        "Our CTO asks the same question in every security review: 'Can you prove it?' After XSEE: yes. AWS API response per hop. Timestamped. That evidence package is now in our SOC2 audit file.",
+        "Our CTO asks the same question in every security review: 'Can you prove it?' After XSEE: yes. AWS API response per hop. Timestamped. That evidence package is now in our audit file.",
       role: "Cloud Security Engineer",
       metrics: [
         { label: "Exposure proven", value: "$3.2M" },

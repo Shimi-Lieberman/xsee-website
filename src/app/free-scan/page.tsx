@@ -78,38 +78,34 @@ export default function FreeScanPage() {
         <section className="section sec-navy free-scan-hero">
           <div className="container">
             <div className="free-scan-hero-inner">
-              <span className="section-eyebrow mb-3 block text-center">Request Demo</span>
-              <h1 className="display-lg">Get your free Risk Assessment.</h1>
+              <span className="section-eyebrow mb-3 block text-center">Free attack-path assessment</span>
+              <h1 className="display-lg">Request your free attack-path assessment.</h1>
               <p className="free-scan-sub">
-                We connect to your AWS account with read-only IAM access, run a full attack graph analysis using 1,000+ attack patterns, and show you the exact paths that reach your crown-jewel assets. You keep the validated report — no commitment required.
+                Connect a read-only IAM role. Our team runs the assessment on your account and sends you the ranked report.
               </p>
               <div className="hero-proof-strip" style={{ marginTop: 24 }}>
                 <div className="hps-item">
                   <div className="hps-dot" style={{ background: "var(--green)" }} />
-                  Read-only IAM only
+                  Read-only IAM boundary
                 </div>
                 <div className="hps-item">
                   <div className="hps-dot" style={{ background: "var(--sky)" }} />
-                  No agents installed
-                </div>
-                <div className="hps-item">
-                  <div className="hps-dot" style={{ background: "var(--yellow)" }} />
-                  Report delivered in 30 min
+                  No agents
                 </div>
               </div>
               <div className="my-8 grid grid-cols-1 gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-6 sm:grid-cols-3">
                 {[
                   {
-                    title: "Live environment analysis",
-                    body: "We run live analysis on your actual AWS environment using our full attack pattern library — not a staged walkthrough.",
+                    title: "Read-only IAM",
+                    body: "Connect an IAM role with read-only permissions, under your control.",
                   },
                   {
-                    title: "Zero-touch access",
-                    body: "Read-only IAM role — no agents, no code deployment, nothing installed. Works in under 2 minutes.",
+                    title: "No agents",
+                    body: "Nothing to install or deploy in your AWS account.",
                   },
                   {
-                    title: "Full report delivered",
-                    body: "Validated attack graph + ranked exposures + fix recommendations + evidence packages. Yours, no strings.",
+                    title: "Ranked report",
+                    body: "Our team sends your ranked assessment findings.",
                   },
                 ].map(({ title, body }) => (
                   <div key={title} className="text-center">
@@ -126,7 +122,7 @@ export default function FreeScanPage() {
 
         <section className="section sec-navy free-scan-steps">
           <div className="container">
-            <h2 className="free-scan-section-title">How to connect your AWS account (2 minutes)</h2>
+            <h2 className="free-scan-section-title">How to connect your AWS account</h2>
 
             <div className="free-scan-step">
               <div className="free-scan-step-num">1</div>
@@ -235,8 +231,7 @@ export default function FreeScanPage() {
               <h3 className="form-title">Request Your Free Risk Assessment</h3>
               {status === "success" ? (
                 <p className="free-scan-success">
-                  ✓ Scan request received. Check your email for confirmation. We&apos;ll reach out within one
-                  business day to schedule your scan.
+                  Request received. We&apos;ll contact you to schedule the assessment.
                 </p>
               ) : (
                 <form
@@ -249,7 +244,7 @@ export default function FreeScanPage() {
                     }
                   }}
                 >
-                  <p className="text-sm text-white/50 text-center mb-6">We&apos;ll reach out within one business day to schedule the scan.</p>
+                  <p className="text-sm text-white/50 text-center mb-6">We&apos;ll contact you to schedule the assessment.</p>
                   <div className="honeypot" aria-hidden="true">
                     <label htmlFor="freescan-website">Website</label>
                     <input
@@ -300,7 +295,7 @@ export default function FreeScanPage() {
                   )}
                   <button type="submit" disabled={status === "loading"} className="btn btn-primary btn-lg btn-shimmer free-scan-submit">
                     <span className="relative z-[2]">
-                      {status === "loading" ? "Submitting..." : "Run Free Scan →"}
+                      {status === "loading" ? "Submitting..." : "Request an assessment"}
                     </span>
                   </button>
                   <div
@@ -308,10 +303,10 @@ export default function FreeScanPage() {
                     style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", lineHeight: 1.5 }}
                   >
                     <ShieldCheck size={12} color="#4ade80" className="mt-0.5 shrink-0" aria-hidden />
-                    <span>Only 2 permissions required. You can revoke access in 10 seconds.</span>
+                    <span>You create the role. You can revoke access by deleting it.</span>
                   </div>
                   <p className="free-scan-note mt-4">
-                    No commitment · Read-only IAM · Report delivered in 30 min
+                    No commitment · Read-only IAM
                   </p>
                 </form>
               )}

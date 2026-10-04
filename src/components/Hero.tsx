@@ -245,7 +245,7 @@ export default function Hero() {
             }}
             onClick={() => Analytics.ctaClicked("hero", "free_breach_report")}
           >
-            Free Breach Report — connect in 15 min
+            Request your free attack-path assessment
           </Link>
         </div>
 
@@ -269,7 +269,7 @@ export default function Hero() {
         >
           <ShieldCheck size={12} color="#4ade80" aria-hidden style={{ flexShrink: 0 }} />
           <span>
-            2 min to connect · 30 min to first proof · Read-only IAM · No agents · Your data never leaves AWS
+            Read-only IAM · No agents · Your data never leaves AWS
           </span>
         </div>
       </div>

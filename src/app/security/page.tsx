@@ -7,7 +7,7 @@ import CopyEmailButton from "@/components/CopyEmailButton";
 export const metadata: Metadata = {
   title: "Security & Trust — XSEE",
   description:
-    "How XSEE protects your environment and your data. Compliance status, read-only IAM, infrastructure security, and responsible disclosure.",
+    "How XSEE protects your environment and your data through read-only IAM, infrastructure security, and responsible disclosure.",
 };
 
 const H2 = "text-xl font-bold text-[#0b1220] mb-6";
@@ -81,31 +81,30 @@ function IconUserCheck({ className }: { className?: string }) {
   );
 }
 
-const COMPLIANCE_CARDS = [
+const SECURITY_CONTROLS = [
   {
-    title: "SOC 2 Type II",
-    status: "In Progress",
-    statusVariant: "amber" as const,
-    description:
-      "Audit underway. Expected completion Q3 2026. Report available under NDA upon request.",
+    title: "Read-only IAM boundary",
+    status: "Active",
+    statusVariant: "green" as const,
+    description: "Assessment access is limited to the read-only role you create.",
     Icon: IconShield,
   },
   {
-    title: "CSA STAR Level 1",
-    status: "In Progress",
-    statusVariant: "amber" as const,
-    description: "Cloud Security Alliance self-assessment. Submission in progress.",
+    title: "No agents installed",
+    status: "Active",
+    statusVariant: "green" as const,
+    description: "Assessment requires no agent installation in your account.",
+    Icon: IconCloud,
+  },
+  {
+    title: "Signed, verifiable evidence",
+    status: "Active",
+    statusVariant: "green" as const,
+    description: "Evidence records carry signatures that can be verified.",
     Icon: IconStar,
   },
   {
-    title: "GDPR",
-    status: "Compliant",
-    statusVariant: "green" as const,
-    description: "Data Processing Agreement available on request. EU data handling compliant.",
-    Icon: IconLock,
-  },
-  {
-    title: "AWS Hosted",
+    title: "AWS hosted",
     status: "Active",
     statusVariant: "green" as const,
     description: "Hosted on AWS us-east-1. AES-256 encryption at rest and in transit.",
@@ -187,13 +186,13 @@ export default function SecurityPage() {
             </p>
           </header>
 
-          {/* Section 1 — Compliance */}
-          <section className="mb-16" aria-labelledby="sec-compliance">
-            <h2 id="sec-compliance" className={H2}>
-              Compliance
+          {/* Section 1 — Security controls */}
+          <section className="mb-16" aria-labelledby="sec-controls">
+            <h2 id="sec-controls" className={H2}>
+              Security controls
             </h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {COMPLIANCE_CARDS.map(({ title, status, statusVariant, description, Icon }) => (
+              {SECURITY_CONTROLS.map(({ title, status, statusVariant, description, Icon }) => (
                 <div
                   key={title}
                   className="relative overflow-hidden rounded-xl border border-slate-200/80 bg-white p-5 pt-6 shadow-sm"
@@ -313,20 +312,20 @@ export default function SecurityPage() {
             </h2>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
-                href="mailto:security@xsee.io?subject=SOC2%20Report%20Request"
+                href="mailto:security@xsee.io?subject=Security%20documentation%20request"
                 className="inline-flex items-center justify-center rounded-lg border border-[rgba(11,18,32,0.14)] bg-white px-5 py-3 text-sm font-semibold text-[#0b1220] transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/5"
               >
-                Request SOC 2 Report →
+                Request security documentation →
               </a>
               <a
-                href="mailto:security@xsee.io?subject=DPA%20Request"
+                href="mailto:security@xsee.io?subject=Data%20processing%20agreement%20request"
                 className="inline-flex items-center justify-center rounded-lg border border-[rgba(11,18,32,0.14)] bg-white px-5 py-3 text-sm font-semibold text-[#0b1220] transition-colors hover:border-[#FF1B8D]/50 hover:bg-[#FF1B8D]/5"
               >
-                Request DPA →
+                Request data processing agreement →
               </a>
             </div>
             <p className="mt-5 text-xs leading-relaxed text-[#7c8aa0]">
-              SOC 2 Type II report available under NDA. DPA available upon request for GDPR compliance.
+              For security documentation or data processing agreement requests, contact security@xsee.io.
             </p>
           </section>
         </div>

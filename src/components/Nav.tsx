@@ -6,14 +6,13 @@ import { Menu, X } from "lucide-react";
 import SiteLogo from "@/components/SiteLogo";
 import { Analytics } from "@/lib/analytics";
 
-const REGISTER_URL = "https://app.xsee.io/register";
 const LOGIN_URL = "https://app.xsee.io/login";
 
 const NAV_LINKS = [
   { href: "/#how", label: "Platform" },
   { href: "/#engines", label: "Engines" },
   { href: "/#compare", label: "Why Us" },
-  { href: "/free-scan", label: "Free Scan" },
+  { href: "/free-scan", label: "Request assessment" },
   { href: "/#pricing", label: "Pricing" },
   { href: "/#contact", label: "Contact" },
 ] as const;
@@ -62,10 +61,6 @@ export default function Nav() {
               </Link>
             ))}
           </nav>
-          <div className="nav-status hidden md:flex items-center gap-1.5 text-[11px] text-[#5b6577] mr-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            All systems operational
-          </div>
           <div className="nav-actions">
             <Link href="/under-attack" className="nav-emergency">
               <span className="nav-emergency-dot" />
@@ -85,8 +80,8 @@ export default function Nav() {
               >
                 Get a demo
               </Link>
-              <Link href={REGISTER_URL} className="nav-btn-trial btn-shimmer">
-                Start Free Trial →
+              <Link href="mailto:sales@xsee.io?subject=Request%20access" className="nav-btn-trial btn-shimmer">
+                Request access →
               </Link>
               <Link href={LOGIN_URL} className="nav-btn-launch">
                 Launch App
@@ -119,8 +114,8 @@ export default function Nav() {
             Under Attack?
           </Link>
           <div className="nav-mobile-panel-actions">
-            <Link href={REGISTER_URL} onClick={closeMenu} className="nav-mobile-panel-cta">
-              Start Free Trial →
+            <Link href="mailto:sales@xsee.io?subject=Request%20access" onClick={closeMenu} className="nav-mobile-panel-cta">
+              Request access →
             </Link>
             <Link href={LOGIN_URL} onClick={closeMenu} className="nav-mobile-panel-link">
               Sign in

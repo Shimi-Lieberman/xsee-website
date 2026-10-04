@@ -181,7 +181,7 @@ export function BeforeAfter() {
                 ["Live AWS API call per hop", " — cryptographic evidence, timestamped"],
                 ["Detection Coverage Score", " — the % your tools actually catch"],
                 ["One fix → 6 paths eliminated", " → L2 re-validates → path closed"],
-                ["Before/after certificate", " — board-ready, SOC2-ready, signed"],
+                ["Before/after certificate", " — board-ready, audit-ready, signed"],
               ].map(([bold, rest]) => (
                 <div
                   key={bold}
@@ -239,7 +239,7 @@ export function BeforeAfter() {
               overflow: "hidden",
             }}
           >
-            <span className="inline-flex items-center gap-2">Run Free Scan — Prove it yourself →</span>
+            <span className="inline-flex items-center gap-2">Request your free attack-path assessment →</span>
           </Link>
         </div>
       </div>

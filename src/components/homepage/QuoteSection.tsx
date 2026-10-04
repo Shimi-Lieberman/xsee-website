@@ -72,7 +72,7 @@ export default function QuoteSection() {
           <div>
             <p className="text-[16.5px] font-medium leading-[1.55] text-[var(--hp-ink)]">
               &ldquo;Our CTO asks the same question every security review: &apos;Can you prove it?&apos; After XSEE: yes.{" "}
-              <span className="text-[var(--hp-ink3)]">AWS API response per hop. Timestamped. In our SOC 2 file.</span>&rdquo;
+              <span className="text-[var(--hp-ink3)]">AWS API response per hop. Timestamped. In our audit file.</span>&rdquo;
             </p>
             <div className="mt-5 flex items-center gap-3">
               <p className="text-[12.5px] text-[var(--hp-ink2)]">Cloud Security Engineer</p>
