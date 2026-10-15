@@ -5,18 +5,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import SiteLogo from "@/components/SiteLogo";
 import { Analytics } from "@/lib/analytics";
-
-const LOGIN_URL = "https://app.xsee.io/login";
-
-const NAV_LINKS = [
-  { href: "/product", label: "Product" },
-  { href: "/#workflow", label: "Workflow" },
-  { href: "/#outcomes", label: "Outcomes" },
-  { href: "/security", label: "Security" },
-  { href: "/changelog", label: "Changelog" },
-] as const;
-
-const DEMO_URL = "mailto:sales@xsee.io?subject=Book%20an%20XSEE%20demo";
+import { DEMO_HREF as DEMO_URL, LOGIN_URL, NAV_LINKS } from "@/lib/navigation";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);

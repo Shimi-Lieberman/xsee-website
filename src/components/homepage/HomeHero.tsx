@@ -19,7 +19,7 @@ export default function HomeHero() {
           </p>
           <div className="xsee-buyer-hero-actions">
             <Link
-              href="mailto:sales@xsee.io?subject=Book%20an%20XSEE%20demo"
+              href="/demo"
               className="xsee-primary-cta"
               onClick={() => Analytics.ctaClicked("hero", "book_demo")}
             >

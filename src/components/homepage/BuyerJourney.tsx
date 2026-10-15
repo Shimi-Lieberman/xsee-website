@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Check, CircleHelp, FileCheck2, ShieldCheck, Waypoints } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
+import PilotSection from "@/components/homepage/PilotSection";
 
 const WORKFLOW = [
   { title: "Discover", copy: "Map AWS resources and the relationships between them." },
@@ -132,34 +133,6 @@ function SecuritySection() {
   );
 }
 
-function PilotInvitation() {
-  return (
-    <section id="contact" className="xsee-pilot-section" aria-labelledby="pilot-title">
-      <div className="hp-container">
-        <div className="xsee-pilot-panel">
-          <div>
-            <p className="xsee-pilot-eyebrow">Enterprise pilot</p>
-            <h2 id="pilot-title">Bring one real AWS security question.</h2>
-            <p>Talk with the XSEE team about your environment, approval process, and what a focused pilot should verify.</p>
-          </div>
-          <div className="xsee-pilot-actions">
-            <Link
-              href="mailto:sales@xsee.io?subject=Enterprise%20pilot%20conversation"
-              className="xsee-pilot-cta"
-              onClick={() => Analytics.ctaClicked("pilot", "enterprise_pilot")}
-            >
-              Start a pilot conversation <ArrowRight size={16} aria-hidden />
-            </Link>
-            <Link href="/free-scan" className="xsee-pilot-secondary" onClick={() => Analytics.ctaClicked("pilot", "free_assessment")}>
-              Or request a free assessment
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function BuyerJourney() {
   return (
     <>
@@ -167,7 +140,7 @@ export default function BuyerJourney() {
       <OutcomesSection />
       <ClosureSection />
       <SecuritySection />
-      <PilotInvitation />
+      <PilotSection />
     </>
   );
 }

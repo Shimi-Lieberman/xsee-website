@@ -84,6 +84,7 @@ export default function Footer() {
             { label: "Workflow", href: "/#workflow" },
             { label: "Outcomes", href: "/#outcomes" },
             { label: "Closure verification", href: "/#closure" },
+            { label: "Enterprise pilot", href: "/#pilot" },
             { label: "Changelog", href: "/changelog" },
             { label: "Request assessment", href: "/free-scan" },
             { label: "Under attack?", href: "/under-attack" },
@@ -118,8 +119,9 @@ export default function Footer() {
             Company
           </div>
           {[
+            { label: "About", href: "/about" },
             { label: "Security", href: "/security" },
-            { label: "Contact", href: "/#contact" },
+            { label: "Book a demo", href: "/demo" },
             { label: "sales@xsee.io", href: "mailto:sales@xsee.io" },
           ].map((link) => (
             <Link

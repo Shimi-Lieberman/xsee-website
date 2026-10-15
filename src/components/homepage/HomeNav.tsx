@@ -5,16 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
-
-const LOGIN_URL = "https://app.xsee.io/login";
-
-const NAV_LINKS = [
-  { href: "/product", label: "Product" },
-  { href: "/#workflow", label: "Workflow" },
-  { href: "/#outcomes", label: "Outcomes" },
-  { href: "/security", label: "Security" },
-  { href: "/changelog", label: "Changelog" },
-] as const;
+import { DEMO_HREF, LOGIN_URL, NAV_LINKS } from "@/lib/navigation";
 
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -100,7 +91,7 @@ export default function HomeNav() {
               Sign in
             </Link>
             <Link
-              href="mailto:sales@xsee.io?subject=Book%20an%20XSEE%20demo"
+              href={DEMO_HREF}
               className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)] max-[420px]:px-3 max-[420px]:text-[12px]"
               onClick={() => Analytics.ctaClicked("nav", "book_demo")}
             >
