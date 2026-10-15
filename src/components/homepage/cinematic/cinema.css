@@ -1,0 +1,154 @@
+/* Cinematic perspective stage. Tokens come from .cs in cinematic.css. */
+.cs-graph-frame {
+  background: var(--cs-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 30px 60px -30px rgb(0 0 0 / 0.8);
+}
+
+.cs-graph-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(140% 110% at 50% 45%, transparent 58%, rgb(2 3 6 / 0.85) 100%);
+}
+
+.cs-graph-frame .cs-instrument {
+  z-index: 2;
+}
+
+.cn text {
+  font-family: var(--font-geist-mono, ui-monospace), monospace;
+  paint-order: stroke;
+  stroke: var(--cs-bg);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* Sky, ground, horizon */
+.cn-sky-top { stop-color: #020308; }
+.cn-sky-bottom { stop-color: #0a1020; }
+.cn-ground-far { stop-color: #0b1222; }
+.cn-ground-near { stop-color: #03050a; }
+
+.cn-star { fill: #dfe7ff; }
+.cn-streak { stroke: #dfe7ff; stroke-linecap: round; }
+
+.cn-haze { fill: var(--cs-cyan); fill-opacity: 0.07; }
+.cn-horizon-line { stroke: var(--cs-cyan); stroke-opacity: 0.35; stroke-width: 0.6; }
+
+.cn-grid line { stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+.cn-grid-far { stop-color: var(--cs-cyan); stop-opacity: 0; }
+.cn-grid-mid { stop-color: var(--cs-cyan); stop-opacity: 0.14; }
+.cn-grid-near { stop-color: var(--cs-cyan); stop-opacity: 0.24; }
+
+/* Environment */
+.cn-infra-links line { stroke: var(--cs-ink3); stroke-opacity: 0.35; stroke-width: 0.6; stroke-dasharray: 2 4; }
+.cn-infra-stem { stroke: var(--cs-ink3); stroke-width: 0.8; }
+.cn-infra-dot { fill: var(--cs-ink2); }
+.cn-infra-label { fill: var(--cs-ink3); letter-spacing: 0.02em; }
+
+/* Attack route */
+.cn-hint path { fill: none; stroke: var(--cs-red); stroke-dasharray: 3 5; stroke-linecap: round; }
+.cn[data-animate] .cn-hint { animation: cn-pulse 1.4s ease-in-out infinite; }
+
+.cn-ahead { fill: none; stroke: var(--cs-red); stroke-opacity: 0.28; stroke-dasharray: 2 6; stroke-linecap: round; }
+.cn-severed { fill: none; stroke: var(--cs-ink3); stroke-opacity: 0.6; stroke-dasharray: 3 5; stroke-linecap: round; }
+
+.cn-beam path { fill: none; stroke-linecap: round; }
+.cn-beam-bloom path { stroke: var(--cs-red); stroke-opacity: 0.55; }
+.cn-beam-core { stroke: var(--cs-red); }
+.cn-beam-hot { stroke: #ffe3e6; }
+
+.cn-head-bloom { fill: var(--cs-red); fill-opacity: 0.8; }
+.cn-head-flare { stroke: #ffd5da; stroke-width: 0.8; stroke-linecap: round; stroke-opacity: 0.85; }
+.cn-head-core { fill: #ffffff; }
+.cn[data-animate] .cn-head { animation: cn-flare 0.5s ease-in-out infinite alternate; }
+
+.cn-scan path { fill: none; stroke: var(--cs-cyan); stroke-linecap: round; }
+.cn-scan-head circle { fill: var(--cs-cyan); fill-opacity: 0.7; }
+.cn-scan-head .cn-scan-core { fill: #ffffff; fill-opacity: 1; }
+
+/* Path nodes */
+.cn-node-ring { fill: none; stroke: var(--cs-ink3); stroke-width: 0.7; }
+.cn-node-stem { stroke: var(--cs-ink3); stroke-width: 1; }
+.cn-node-mark { fill: var(--cs-bg); stroke: var(--cs-ink2); stroke-width: 1.2; stroke-linejoin: miter; }
+.cn-node-kind { fill: var(--cs-ink3); letter-spacing: 0.14em; }
+.cn-node-label { fill: var(--cs-ink2); font-weight: 500; }
+.cn-node-finding { fill: var(--cs-red); letter-spacing: 0.12em; }
+.cn-node-bloom { fill-opacity: 0.45; }
+
+.cn-node.is-dormant .cn-node-mark { stroke: var(--cs-ink3); }
+.cn-node.is-dormant .cn-node-label { fill: var(--cs-ink3); }
+
+.cn-node.is-lit .cn-node-mark,
+.cn-node.is-breached .cn-node-mark { fill: var(--cs-red); stroke: #ffe3e6; }
+.cn-node.is-lit .cn-node-stem,
+.cn-node.is-breached .cn-node-stem,
+.cn-node.is-lit .cn-node-ring,
+.cn-node.is-breached .cn-node-ring { stroke: var(--cs-red); }
+.cn-node.is-lit .cn-node-bloom,
+.cn-node.is-breached .cn-node-bloom { fill: var(--cs-red); }
+.cn-node.is-lit .cn-node-label,
+.cn-node.is-breached .cn-node-label,
+.cn-node.is-sealed .cn-node-label,
+.cn-node.is-drift .cn-node-label { fill: var(--cs-ink); }
+
+.cn-node.is-sealed .cn-node-mark { fill: var(--cs-green); stroke: #e3fff2; }
+.cn-node.is-sealed .cn-node-stem,
+.cn-node.is-sealed .cn-node-ring { stroke: var(--cs-green); }
+.cn-node.is-sealed .cn-node-bloom { fill: var(--cs-green); }
+.cn-node.is-sealed .cn-node-finding { fill: var(--cs-green); }
+
+.cn-node.is-drift .cn-node-mark { fill: var(--cs-magenta); stroke: #ffe3f1; }
+.cn-node.is-drift .cn-node-stem { stroke: var(--cs-magenta); }
+.cn-node.is-drift .cn-node-bloom { fill: var(--cs-magenta); }
+
+/* Hop evidence */
+.cn-hop text { letter-spacing: 0.1em; }
+.cn-hop.is-name text { fill: var(--cs-ink2); letter-spacing: 0.02em; }
+.cn-hop.is-observed text { fill: var(--cs-cyan); }
+.cn-hop.is-simulated text { fill: var(--cs-magenta); }
+.cn-hop.is-denied text { fill: var(--cs-green); }
+
+/* Crown-jewel perimeter */
+.cn-ring { fill: none; stroke-width: 0.8; }
+.cn-ring-0 { stroke-opacity: 0.9; }
+.cn-ring-1 { stroke-opacity: 0.5; stroke-dasharray: 1 2; }
+.cn-ring-2 { stroke-opacity: 0.25; stroke-dasharray: 6 3; }
+.cn-perimeter.is-intact .cn-ring { stroke: var(--cs-ink2); }
+.cn-perimeter.is-breached .cn-ring { stroke: var(--cs-red); }
+.cn-perimeter.is-sealed .cn-ring { stroke: var(--cs-green); }
+.cn-perimeter.is-reassessing .cn-ring { stroke: var(--cs-magenta); }
+.cn[data-animate] .cn-ring-1 { animation: cn-orbit 6s linear infinite; }
+.cn[data-animate] .cn-ring-2 { animation: cn-orbit 14s linear infinite reverse; }
+
+.cn-perimeter-tag { letter-spacing: 0.18em; fill: var(--cs-ink2); }
+.cn-perimeter-tag.is-breached { fill: var(--cs-red); }
+.cn-perimeter-tag.is-sealed { fill: var(--cs-green); }
+.cn-perimeter-tag.is-reassessing { fill: var(--cs-magenta); }
+
+/* Trust boundary */
+.cn-wall-base { stop-color: var(--cs-green); stop-opacity: 0.32; }
+.cn-wall-top { stop-color: var(--cs-green); stop-opacity: 0; }
+.cn-wall-scan { stroke: var(--cs-green); stroke-opacity: 0.25; stroke-width: 0.6; }
+.cn-wall-base-line { stroke: var(--cs-green); stroke-width: 1.6; }
+.cn-wall-edge { stroke: var(--cs-green); stroke-opacity: 0.4; stroke-width: 0.6; }
+.cn-wall-label { fill: var(--cs-green); letter-spacing: 0.18em; }
+.cn-wall.is-flicker .cn-wall-label { fill: var(--cs-magenta); }
+.cn-shards path { fill: var(--cs-green); fill-opacity: 0.6; stroke: #e3fff2; stroke-width: 0.4; }
+
+@keyframes cn-pulse {
+  50% { opacity: 0.2; }
+}
+@keyframes cn-flare {
+  to { opacity: 0.75; }
+}
+@keyframes cn-orbit {
+  to { stroke-dashoffset: -100; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cn * { animation: none !important; }
+}

@@ -6,7 +6,7 @@ import { useInView, useMotionValueEvent, useReducedMotion, useScroll, useSpring 
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 import { ACTS, sceneAt } from "./scene";
-import StoryGraph from "./StoryGraph";
+import CinemaStage from "./CinemaStage";
 import { FindingsCounter, FixStepper, ProofCertificate, ValidationTerminal } from "./Instruments";
 import "./cinematic.css";
 
@@ -41,7 +41,6 @@ export default function CinematicStory() {
   });
 
   const wide = useMemo(() => sceneAt(position, "wide"), [position]);
-  const tall = useMemo(() => sceneAt(position, "tall"), [position]);
   const act = wide.act;
   const animate = !reducedMotion && inView;
 
@@ -64,8 +63,8 @@ export default function CinematicStory() {
               </span>
             </div>
             <div className="cs-graph-frame" data-act={act} data-cert={wide.certificate}>
-              <StoryGraph scene={wide} layout="wide" reducedMotion={!animate} className="cs-graph--wide" />
-              <StoryGraph scene={tall} layout="tall" reducedMotion={!animate} className="cs-graph--tall" />
+              <CinemaStage position={position} layout="wide" animate={animate} className="cs-graph--wide" />
+              <CinemaStage position={position} layout="tall" animate={animate} className="cs-graph--tall" />
               <div className="cs-instrument" key={act}>
                 <StageInstrument scene={wide} />
               </div>
