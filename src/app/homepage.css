@@ -193,8 +193,12 @@
     var(--hp-base);
 }
 
- .xsee-buyer-hero-layout {
-  max-width: 920px;
+.xsee-buyer-hero-layout {
+  display: grid;
+  max-width: 1240px;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: 56px;
   margin-inline: auto;
 }
 
