@@ -8,27 +8,20 @@ import { Analytics } from "@/lib/analytics";
 
 const LOGIN_URL = "https://app.xsee.io/login";
 
-/** v2 nav labels — hrefs preserved from prior mapping where sections exist */
 const NAV_LINKS = [
-  { href: "/#proof", label: "Product" },
-  { href: "/#proof-loop", label: "How it works" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/changelog", label: "Docs" },
+  { href: "/#workflow", label: "Workflow" },
+  { href: "/#outcomes", label: "Outcomes" },
+  { href: "/#security", label: "Security" },
+  { href: "/changelog", label: "Changelog" },
 ] as const;
-
-/** Matches AnnouncementBar height (h-9) */
-const ANNOUNCEMENT_OFFSET_PX = 36;
 
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
-  const [pastAnnouncement, setPastAnnouncement] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      const y = window.scrollY;
-      setScrolled(y > 20);
-      setPastAnnouncement(y > ANNOUNCEMENT_OFFSET_PX);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -64,7 +57,7 @@ export default function HomeNav() {
       <header
         className="v2-polish fixed inset-x-0 z-50 transition-all duration-300"
         style={{
-          top: pastAnnouncement ? 0 : ANNOUNCEMENT_OFFSET_PX,
+          top: 0,
           backdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
           // When the mobile panel is open the bar must be opaque so it reads as one surface with it.
@@ -106,13 +99,12 @@ export default function HomeNav() {
               Sign in
             </Link>
             <Link
-              href="/free-scan"
+              href="mailto:sales@xsee.io?subject=Book%20an%20XSEE%20demo"
               className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)] max-[420px]:px-3 max-[420px]:text-[12px]"
-              onClick={() => Analytics.ctaClicked("nav", "free_breach_report")}
+              onClick={() => Analytics.ctaClicked("nav", "book_demo")}
             >
-              {/* Compact label on ultra-narrow phones so the CTA never collides with the logo */}
-              <span className="max-[420px]:hidden">Request assessment</span>
-              <span className="hidden max-[420px]:inline">Request</span>
+              <span className="max-[420px]:hidden">Book a demo</span>
+              <span className="hidden max-[420px]:inline">Demo</span>
               <ArrowRight className="h-3.5 w-3.5 shrink-0 max-[360px]:hidden" aria-hidden />
             </Link>
             <button
