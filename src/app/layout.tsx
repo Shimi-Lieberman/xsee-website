@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   verification: {
     google: "pXNBoP04Acdko2NmE4Ks-ssGEPFuPCubz79TPxjMW8Q",
   },
-  title: "XSEE — Prove Every Attack Path is Real",
+  title: "XSEE — AWS attack path analysis with evidence",
   description:
-    "Cloud Attack Intelligence. XSEE discovers, validates, and simulates attack paths against your live AWS environment — with cryptographic evidence per hop. Not theory. Proof.",
+    "XSEE helps AWS security teams analyze attack paths across identities, permissions and network exposure, with each step labeled by what was checked. Read-only IAM, no agents.",
   icons: {
     icon: [
       { url: "/logo-symbol-only.svg", type: "image/svg+xml" },
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
     apple: "/logo-symbol-only.svg",
   },
   openGraph: {
-    title: "XSEE — Prove Every Attack Path is Real",
+    title: "XSEE — AWS attack path analysis with evidence",
     description:
-      "Stop guessing. Prove the breach. Live AWS API validation, AI attack simulation, and cryptographic evidence packages in under 30 minutes.",
+      "Analyze AWS attack paths with evidence labeled by what was checked. Read-only IAM role, no agents, revocable at any time.",
     url: "https://www.xsee.io",
     siteName: "XSEE",
     images: [
@@ -65,8 +65,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "XSEE — Prove Every Attack Path is Real",
-    description: "Live AWS attack path validation with cryptographic evidence. Not theory. Proof.",
+    title: "XSEE — AWS attack path analysis with evidence",
+    description: "AWS attack path analysis with evidence labeled by what was checked. Read-only IAM, no agents.",
     images: ["/og"],
   },
 };

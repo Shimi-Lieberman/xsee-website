@@ -80,14 +80,13 @@ export default function Footer() {
             Product
           </div>
           {[
+            { label: "Product", href: "/product" },
             { label: "Workflow", href: "/#workflow" },
-            { label: "Customer outcomes", href: "/#outcomes" },
+            { label: "Outcomes", href: "/#outcomes" },
             { label: "Closure verification", href: "/#closure" },
-            { label: "Security", href: "/#security" },
             { label: "Changelog", href: "/changelog" },
             { label: "Request assessment", href: "/free-scan" },
-            { label: "Under Attack?", href: "/under-attack" },
-            { label: "vs. Wiz", href: "/vs-wiz" },
+            { label: "Under attack?", href: "/under-attack" },
           ].map((link) => (
             <Link
               key={link.label}
@@ -119,10 +118,7 @@ export default function Footer() {
             Company
           </div>
           {[
-            { label: "About", href: "#" },
             { label: "Security", href: "/security" },
-            { label: "Blog", href: "#" },
-            { label: "Careers", href: "#" },
             { label: "Contact", href: "/#contact" },
             { label: "sales@xsee.io", href: "mailto:sales@xsee.io" },
           ].map((link) => (
@@ -148,12 +144,9 @@ export default function Footer() {
               marginBottom: "16px",
             }}
           >
-            Resources
+            Legal
           </div>
           {[
-            { label: "Documentation", href: "#" },
-            { label: "API Reference", href: "#" },
-            { label: "Security", href: "/security" },
             { label: "Terms of Service", href: "/terms" },
             { label: "Privacy Policy", href: "/privacy" },
             { label: "Refunds", href: "/refunds" },

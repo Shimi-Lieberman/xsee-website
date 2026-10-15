@@ -7,7 +7,7 @@ import CopyEmailButton from "@/components/CopyEmailButton";
 export const metadata: Metadata = {
   title: "Security & Trust — XSEE",
   description:
-    "How XSEE protects your environment and your data through read-only IAM, infrastructure security, and responsible disclosure.",
+    "How XSEE connects to your AWS account with a read-only IAM role, what it can read, and how to report a vulnerability.",
 };
 
 const H2 = "text-xl font-bold text-[#0b1220] mb-6";
@@ -97,18 +97,19 @@ const SECURITY_CONTROLS = [
     Icon: IconCloud,
   },
   {
-    title: "Signed, verifiable evidence",
+    title: "Evidence integrity",
     status: "Active",
     statusVariant: "green" as const,
-    description: "Evidence records carry signatures that can be verified.",
+    description:
+      "Evidence records include hashes so later changes can be detected. A hash shows a record is unaltered, not that an attack succeeds.",
     Icon: IconStar,
   },
   {
-    title: "AWS hosted",
+    title: "Revocable access",
     status: "Active",
     statusVariant: "green" as const,
-    description: "Hosted on AWS us-east-1. AES-256 encryption at rest and in transit.",
-    Icon: IconCloud,
+    description: "Delete the IAM role at any time to end XSEE access to your account.",
+    Icon: IconKey,
   },
 ];
 
@@ -116,44 +117,26 @@ const TRUST_POINTS = [
   {
     title: "Read-only IAM role",
     description:
-      "You create the role. XSEE never writes to your environment. No resource creation, modification, or deletion — ever.",
+      "You create the role and choose its policy. The assessment flow uses the AWS-managed ReadOnlyAccess policy, which grants no write actions.",
     Icon: IconShield,
   },
   {
     title: "No agents installed",
-    description:
-      "Zero footprint inside your infrastructure. Nothing running in your workloads. Nothing installed on your instances.",
+    description: "Nothing is installed on your instances or deployed into your workloads.",
     Icon: IconCloud,
   },
   {
-    title: "Credentials ephemeral",
+    title: "What the role can read",
     description:
-      "XSEE assumes your role only during active scans. Sessions expire automatically. No persistent access to your account.",
-    Icon: IconKey,
-  },
-  {
-    title: "Your data never leaves your environment",
-    description:
-      "XSEE reads AWS API metadata only — resource IDs, policies, relationships. No file contents, no PII, no workload data.",
+      "XSEE analysis uses AWS configuration and policy metadata. Note that ReadOnlyAccess also permits some data reads, such as S3 objects. If you need a narrower scope, ask us about a custom policy.",
     Icon: IconLock,
   },
   {
-    title: "Every action requires human approval",
+    title: "Your team applies fixes",
     description:
-      "No automated write actions without explicit CISO approval. Every change cryptographically logged to approving identity.",
+      "XSEE does not make changes in your AWS account. Your team decides on and applies any remediation, then XSEE can re-check the path.",
     Icon: IconUserCheck,
   },
-];
-
-const INFRA_FACTS: { label: string; value: string }[] = [
-  { label: "Hosting", value: "AWS us-east-1" },
-  { label: "Encryption", value: "AES-256 at rest and in transit" },
-  { label: "Database", value: "AWS RDS PostgreSQL — encrypted" },
-  { label: "TLS", value: "1.2+ enforced everywhere" },
-  { label: "Secrets", value: "AWS Secrets Manager" },
-  { label: "Auth", value: "JWT with httpOnly cookies" },
-  { label: "Access", value: "MFA required for all admin access" },
-  { label: "Monitoring", value: "AWS CloudTrail + GuardDuty" },
 ];
 
 function StatusBadge({ status, variant }: { status: string; variant: "amber" | "green" }) {
@@ -248,22 +231,16 @@ export default function SecurityPage() {
           {/* Section 3 — Infrastructure */}
           <section className="mb-16" aria-labelledby="sec-infra">
             <h2 id="sec-infra" className={H2}>
-              Infrastructure
+              Infrastructure and data handling
             </h2>
-            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {INFRA_FACTS.map((row) => (
-                <div
-                  key={row.label}
-                  className="rounded-lg px-4 py-3"
-                  style={{ background: "#ffffff", border: "1px solid rgba(11,18,32,0.08)" }}
-                >
-                  <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#7c8aa0] font-mono">
-                    {row.label}
-                  </div>
-                  <div className="text-sm font-medium leading-snug text-[#334155]">{row.value}</div>
-                </div>
-              ))}
-            </div>
+            <p className="text-sm leading-relaxed text-[#475569]">
+              Details on hosting, encryption, data retention and access controls are available on request as part of
+              our security documentation. Contact{" "}
+              <a href="mailto:security@xsee.io" className="font-semibold text-[#d4006e] hover:underline">
+                security@xsee.io
+              </a>
+              .
+            </p>
           </section>
 
           {/* Section 4 — Disclosure */}
@@ -276,13 +253,10 @@ export default function SecurityPage() {
               <a href="mailto:security@xsee.io" className="font-semibold text-[#d4006e] hover:underline">
                 security@xsee.io
               </a>
-              . We provide <strong className="text-[#0b1220]">48-hour acknowledgement</strong> on all reports and target{" "}
-              <strong className="text-[#0b1220]">7 days</strong> to remediate or publish a mitigation plan for critical
-              issues.
+              . We review every report and will reply to coordinate next steps.
             </p>
             <ul className="mb-6 list-disc space-y-2 pl-5 text-sm leading-relaxed text-[#475569]">
-              <li>We will not pursue legal action against good-faith researchers who follow these guidelines.</li>
-              <li>Public disclosure should wait at least 90 days from our acknowledgement unless we agree otherwise.</li>
+              <li>Please give us reasonable time to investigate before any public disclosure.</li>
               <li>
                 PGP key: available on request at{" "}
                 <a href="mailto:security@xsee.io" className="text-[#d4006e] hover:underline">
