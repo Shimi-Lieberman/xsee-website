@@ -235,7 +235,7 @@ export default function AttackGraphCinematic() {
           { n: 1, label: "See", sub: "findings populate" },
           { n: 2, label: "Chain", sub: "paths draw" },
           { n: 3, label: "Prove", sub: "evidence per hop" },
-          { n: 4, label: "Close", sub: "signed" },
+          { n: 4, label: "Review", sub: "sample closure" },
         ].map((p) => (
           <div
             key={p.n}
@@ -248,7 +248,7 @@ export default function AttackGraphCinematic() {
         ))}
         <div className="v2-eyebrow ml-auto hidden items-center gap-2 text-[10px] md:flex">
           <span className="green-dot dot-pulse" />
-          <span>live · acme-prod</span>
+          <span>illustrative AWS example</span>
         </div>
       </div>
 
@@ -433,7 +433,7 @@ export default function AttackGraphCinematic() {
                 fontWeight="600"
                 letterSpacing="1.4"
               >
-                SIGNED
+                SAMPLE
               </text>
               <text
                 x="44"
@@ -443,7 +443,7 @@ export default function AttackGraphCinematic() {
                 fontSize="13"
                 fontWeight="500"
               >
-                Path closed · receipt #4f2a
+                Illustrative closure state
               </text>
               <text
                 x="44"
@@ -452,19 +452,26 @@ export default function AttackGraphCinematic() {
                 fontFamily="var(--font-geist-mono), Geist Mono, monospace"
                 fontSize="9.5"
               >
-                1.2s · 4 hops · 92% conf.
+                Sample result · 4 modeled hops
               </text>
             </g>
           </g>
         </svg>
 
         <div className="v2-mono absolute bottom-4 left-5 flex items-center gap-3 text-[10.5px] tracking-wider text-[var(--v2-ink3)]">
-          <span>BREACH PATH · 4 HOPS</span>
+          <span>ILLUSTRATIVE PATH · 4 HOPS</span>
           <span className="text-[var(--v2-ink4)]">·</span>
-          <span>EVIDENCE: AWS CLOUDTRAIL</span>
+          <span>SAMPLE AWS EVENTS</span>
         </div>
       </div>
       </div>
+      <ol className="hg-mobile-path" aria-label="Illustrative attack path, shown as stacked steps on small screens">
+        <li><span>01 · Internet ingress</span><strong>0.0.0.0/0 · HTTPS 443</strong><small>Observed in sample</small></li>
+        <li><span>02 · Load balancer</span><strong>alb-prod-edge</strong><small>Sample resource</small></li>
+        <li><span>03 · Application workload</span><strong>i-0a3f2c8d</strong><small>Simulated relationship</small></li>
+        <li><span>04 · Workload identity</span><strong>svc-app</strong><small>Simulated relationship</small></li>
+        <li><span>05 · Sensitive service</span><strong>prod-postgres</strong><small>Untested in this illustration</small></li>
+      </ol>
     </div>
   );
 }

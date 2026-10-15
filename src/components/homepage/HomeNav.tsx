@@ -9,6 +9,7 @@ import { Analytics } from "@/lib/analytics";
 const LOGIN_URL = "https://app.xsee.io/login";
 
 const NAV_LINKS = [
+  { href: "/product", label: "Product" },
   { href: "/#workflow", label: "Workflow" },
   { href: "/#outcomes", label: "Outcomes" },
   { href: "/#security", label: "Security" },
@@ -79,7 +80,7 @@ export default function HomeNav() {
             <span className="text-[15px] font-semibold tracking-tight text-[var(--v2-ink)]">xsee</span>
           </Link>
 
-          <nav className="hidden items-center gap-9 md:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-4 md:flex lg:gap-9" aria-label="Primary">
             {NAV_LINKS.map(({ href, label }) => (
               <Link
                 key={href}
@@ -94,7 +95,7 @@ export default function HomeNav() {
           <div className="flex items-center gap-2.5">
             <Link
               href={LOGIN_URL}
-              className="hidden px-3 py-2 text-[13px] text-[var(--v2-ink2)] transition-colors duration-200 hover:text-[var(--v2-ink)] sm:inline-flex"
+              className="hidden whitespace-nowrap px-3 py-2 text-[13px] text-[var(--v2-ink2)] transition-colors duration-200 hover:text-[var(--v2-ink)] lg:inline-flex"
             >
               Sign in
             </Link>
@@ -125,7 +126,7 @@ export default function HomeNav() {
           id="mobile-nav-panel"
           className="overflow-hidden border-[var(--v2-line)] transition-[max-height,opacity] duration-300 ease-out md:hidden"
           style={{
-            maxHeight: menuOpen ? 320 : 0,
+            maxHeight: menuOpen ? 400 : 0,
             opacity: menuOpen ? 1 : 0,
             borderTopWidth: menuOpen ? 1 : 0,
             // Fully opaque: a translucent panel let hero content show through the links.

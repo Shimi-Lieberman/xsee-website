@@ -52,12 +52,15 @@ export default function AttackPathWalkthrough() {
   }, []);
 
   useEffect(() => {
-    if (!playing || reducedMotion || activeStep >= STEPS.length - 1) {
-      if (activeStep >= STEPS.length - 1) setPlaying(false);
-      return;
-    }
+    if (!playing || reducedMotion || activeStep >= STEPS.length - 1) return;
 
-    const timer = window.setTimeout(() => setActiveStep((step) => step + 1), 4800);
+    const timer = window.setTimeout(() => {
+      setActiveStep((step) => {
+        const nextStep = Math.min(STEPS.length - 1, step + 1);
+        if (nextStep === STEPS.length - 1) setPlaying(false);
+        return nextStep;
+      });
+    }, 4800);
     return () => window.clearTimeout(timer);
   }, [activeStep, playing, reducedMotion]);
 
@@ -219,7 +222,7 @@ function ApprovalBoundary() {
   return (
     <div className="xsee-approval-boundary">
       <span className="xsee-boundary-icon"><ShieldCheck aria-hidden /></span>
-      <div><strong>Approval required · execution stays external</strong><p>Review the recommendation, approve it through your team's process, then apply it in your AWS workflow. XSEE makes no change.</p></div>
+      <div><strong>Approval required · execution stays external</strong><p>Review the recommendation, approve it through your team&apos;s process, then apply it in your AWS workflow. XSEE makes no change.</p></div>
       <span className="xsee-boundary-state">NOT EXECUTED</span>
     </div>
   );

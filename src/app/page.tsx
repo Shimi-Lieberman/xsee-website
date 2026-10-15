@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import "./homepage.css";
-import ScrollProgressBar from "@/components/ScrollProgressBar";
-import { ScrollTracker } from "@/components/ScrollTracker";
-import GlobalScripts from "@/components/GlobalScripts";
 import HomeNav from "@/components/homepage/HomeNav";
 import HomeHero from "@/components/homepage/HomeHero";
+import AttackPathWalkthrough from "@/components/homepage/AttackPathWalkthrough";
 import BuyerJourney from "@/components/homepage/BuyerJourney";
 import Footer from "@/components/Footer";
 
@@ -28,13 +26,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <ScrollTracker />
-      <ScrollProgressBar />
-      <GlobalScripts />
       <div className="hp-page min-h-screen">
         <HomeNav />
         <main className="hp-page-main mx-auto w-full max-w-[100vw]">
           <HomeHero />
+          <AttackPathWalkthrough />
           <BuyerJourney />
           <Footer />
         </main>

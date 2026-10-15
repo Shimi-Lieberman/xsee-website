@@ -53,7 +53,7 @@ export default function CoverageMatrixSection() {
   const [showRoadmap, setShowRoadmap] = useState(false)
   const [techniqueIndex, setTechniqueIndex] = useState(0)
   const [jointIndex, setJointIndex] = useState(0)
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(false)
   const rows = useMemo(() => showRoadmap ? [...certifying, ...roadmap] : certifying, [showRoadmap])
   const technique = rows[techniqueIndex] ?? rows[0]
   const joint = joints[jointIndex]
@@ -70,10 +70,6 @@ export default function CoverageMatrixSection() {
     }, 1800)
     return () => window.clearInterval(timer)
   }, [playing, rows.length])
-
-  useEffect(() => {
-    if (techniqueIndex >= rows.length) setTechniqueIndex(0)
-  }, [rows.length, techniqueIndex])
 
   const selectTechnique = (index: number) => {
     setTechniqueIndex(index)
@@ -94,7 +90,7 @@ export default function CoverageMatrixSection() {
 
         <div className="xsee-reactor-shell mt-12">
           <header className="xsee-reactor-toolbar">
-            <div><i aria-hidden /><span>PROOF CORE / LIVE SEQUENCE</span></div>
+            <div><i aria-hidden /><span>ILLUSTRATIVE PROOF MATRIX</span></div>
             <div className="xsee-matrix-legend" aria-label="Coverage state legend">
               {(['PROVEN', 'CLOSURE-ONLY', 'N/A', 'ROADMAP'] as State[]).map((item) => <span key={item}><i className={`is-${item.toLowerCase()}`} />{item}</span>)}
             </div>
