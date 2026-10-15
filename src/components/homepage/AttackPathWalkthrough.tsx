@@ -1,250 +1,164 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  CirclePause,
-  CirclePlay,
-  RotateCcw,
-  ShieldAlert,
-  ShieldCheck,
-} from "lucide-react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { SCENARIO, STEPS, STEP_BEATS } from "@/lib/attackPathScenario";
+import { demoReducer, INITIAL_STATE, LAST_STEP, pathResult, type Selection } from "./attack-path/demoState";
+import PathGraph from "./attack-path/PathGraph";
+import MobilePath from "./attack-path/MobilePath";
+import Inspector from "./attack-path/Inspector";
+import StepNavigator from "./attack-path/StepNavigator";
+import ClosureRecord from "./attack-path/ClosureRecord";
+import { ResultChip } from "./attack-path/parts";
+import "./attack-path/attack-path-demo.css";
 
-const STEPS = [
-  { title: "Discover", short: "Potential path" },
-  { title: "Inspect", short: "Evidence" },
-  { title: "Remediate", short: "Proposed change" },
-  { title: "Approve", short: "Human handoff" },
-  { title: "Verify", short: "Closure check" },
-  { title: "Re-check", short: "Configuration drift" },
-] as const;
+const APPROVAL_APPLY_MS = 1600;
+const DECISION_DWELL_MS = 2000;
+const DRIFT_STAGE_MS: Record<string, number> = { changed: 2400, reassess: 2600, rechecking: 2800 };
 
-const HOPS = [
-  { name: "Public ingress", resource: "0.0.0.0/0 · TCP 443", status: "Observed evidence", tone: "observed" },
-  { name: "Web security group", resource: "sg-web-01", status: "Observed evidence", tone: "observed" },
-  { name: "App workload role", resource: "role-web-prod", status: "Simulated result", tone: "simulated" },
-  { name: "Secrets Manager", resource: "secrets-prod", status: "Untested", tone: "untested" },
-] as const;
-
-const STAGE_STATUS = [
-  { label: "Potential path found", tone: "risk" },
-  { label: "Evidence states reviewed", tone: "observed" },
-  { label: "Proposed · not applied", tone: "pending" },
-  { label: "Human approval required", tone: "pending" },
-  { label: "Verified in illustration", tone: "verified" },
-  { label: "Reopened after config change", tone: "risk" },
-] as const;
-
-export default function AttackPathWalkthrough() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  const [reducedMotion, setReducedMotion] = useState(false);
-
+function useReducedMotion() {
+  const [reduced, setReduced] = useState(false);
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReducedMotion(media.matches);
+    const update = () => setReduced(media.matches);
     update();
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
   }, []);
+  return reduced;
+}
+
+function useActive(ref: React.RefObject<HTMLElement | null>) {
+  const [inView, setInView] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.25 });
+    observer.observe(element);
+    const onVisibility = () => setPageVisible(document.visibilityState === "visible");
+    onVisibility();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [ref]);
+  return inView && pageVisible;
+}
+
+export default function AttackPathWalkthrough() {
+  const [state, dispatch] = useReducer(demoReducer, INITIAL_STATE);
+  const sectionRef = useRef<HTMLElement>(null);
+  const inspectorRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+  const active = useActive(sectionRef);
+  const beats = STEP_BEATS[state.step];
+  const settled = state.beat >= beats.length;
 
   useEffect(() => {
-    if (!playing || reducedMotion || activeStep >= STEPS.length - 1) return;
+    if (!active || state.selection) return;
+    if (!settled) {
+      if (reducedMotion) {
+        dispatch({ type: "settle" });
+        return;
+      }
+      const timer = window.setTimeout(() => dispatch({ type: "tick" }), beats[state.beat]);
+      return () => window.clearTimeout(timer);
+    }
+    if (!state.playing) return;
+    if (state.step === 3) {
+      if (state.approval === "pending") dispatch({ type: "decisionReached" });
+      if (state.approval !== "applied") return;
+      const timer = window.setTimeout(() => dispatch({ type: "next" }), DECISION_DWELL_MS);
+      return () => window.clearTimeout(timer);
+    }
+    dispatch(state.step < LAST_STEP ? { type: "next" } : { type: "pause" });
+  }, [active, beats, reducedMotion, settled, state.approval, state.beat, state.playing, state.selection, state.step]);
 
-    const timer = window.setTimeout(() => {
-      setActiveStep((step) => {
-        const nextStep = Math.min(STEPS.length - 1, step + 1);
-        if (nextStep === STEPS.length - 1) setPlaying(false);
-        return nextStep;
-      });
-    }, 4800);
+  useEffect(() => {
+    if (!active || state.approval !== "approved") return;
+    const timer = window.setTimeout(() => dispatch({ type: "approvalApplied" }), APPROVAL_APPLY_MS);
     return () => window.clearTimeout(timer);
-  }, [activeStep, playing, reducedMotion]);
+  }, [active, state.approval]);
 
-  const pathState = activeStep === 4 ? "closed" : activeStep === 5 ? "reopened" : "reachable";
+  useEffect(() => {
+    const delay = DRIFT_STAGE_MS[state.drift];
+    if (!active || !delay) return;
+    const timer = window.setTimeout(() => dispatch({ type: "advanceDrift" }), delay);
+    return () => window.clearTimeout(timer);
+  }, [active, state.drift]);
+
+  const handleSelect = useCallback(
+    (selection: Selection) => {
+      dispatch({ type: "select", selection });
+      if (selection && window.matchMedia("(max-width: 759px)").matches) {
+        requestAnimationFrame(() =>
+          inspectorRef.current?.scrollIntoView({ block: "nearest", behavior: reducedMotion ? "auto" : "smooth" }),
+        );
+      }
+    },
+    [reducedMotion],
+  );
+
+  const result = pathResult(state);
 
   return (
-    <section id="walkthrough" className="xsee-walkthrough" aria-labelledby="walkthrough-title">
-      <div className="xsee-walkthrough-topline">
-        <div>
-          <p className="xsee-walkthrough-kicker">Illustrative AWS environment</p>
-          <h2 id="walkthrough-title">One path. Six reviewable steps.</h2>
-        </div>
-        <span className="xsee-walkthrough-scenario">Fictional scenario · no customer data</span>
-      </div>
+    <section ref={sectionRef} id="walkthrough" className="apd" aria-labelledby="walkthrough-title">
+      <div className="apd-shell">
+        <header className="apd-intro">
+          <p className="apd-kicker">Product walkthrough</p>
+          <h2 id="walkthrough-title" className="text-balance">
+            See what changed, why the path closed, and what drift does to the result.
+          </h2>
+        </header>
 
-      <div className="xsee-walkthrough-panel">
-        <div className="xsee-walkthrough-panel-head">
-          <div>
-            <p className="xsee-panel-overline">Scenario / us-east-1</p>
-            <h3>Public web workload → sensitive secret</h3>
+        <div className="apd-panel">
+          <div className="apd-panel-head">
+            <div className="apd-panel-title">
+              <span className="apd-env-badge">Illustrative environment</span>
+              <h3>
+                <span className="apd-path-id">{SCENARIO.pathId}</span> {SCENARIO.pathTitle}
+              </h3>
+            </div>
+            <div role="status" aria-live="polite" className="apd-panel-status">
+              <span className="sr-only">
+                Step {state.step + 1} of {STEPS.length}, {STEPS[state.step].title}. Path status:
+              </span>
+              <ResultChip result={result} />
+            </div>
           </div>
-          <span className={`xsee-walkthrough-status xsee-tone-${STAGE_STATUS[activeStep].tone}`} role="status">
-            {activeStep === 4 ? <ShieldCheck aria-hidden /> : activeStep === 5 || activeStep === 0 ? <ShieldAlert aria-hidden /> : null}
-            {STAGE_STATUS[activeStep].label}
-          </span>
-        </div>
 
-        <ol className={`xsee-path-hops xsee-path-${pathState}`} aria-label="Illustrative attack path from public ingress to Secrets Manager">
-          {HOPS.map((hop, index) => (
-            <li className="xsee-path-hop" key={hop.name}>
-              <div className="xsee-hop-card">
-                <span className="xsee-hop-index">0{index + 1}</span>
-                <div className="xsee-hop-copy">
-                  <strong>{hop.name}</strong>
-                  <span>{hop.resource}</span>
-                </div>
-                <span className={`xsee-evidence-tag xsee-evidence-${hop.tone}`}>{hop.status}</span>
+          <div className="apd-body">
+            <div className="apd-stage">
+              <div className="apd-canvas">
+                <PathGraph state={state} onSelect={handleSelect} />
+                <MobilePath state={state} onSelect={handleSelect} />
+                <ul className="apd-legend" aria-label="Line legend">
+                  <li className="apd-status-assumed">Assumed</li>
+                  <li className="apd-status-observed">Observed</li>
+                  <li className="apd-status-simulated">Simulated</li>
+                  <li className="apd-status-untested">Untested</li>
+                  <li className="apd-status-blocked">Blocked</li>
+                  <li className="apd-status-reassess">Drift</li>
+                </ul>
               </div>
-              {index < HOPS.length - 1 ? <span className="xsee-hop-connector" aria-hidden /> : null}
-            </li>
-          ))}
-        </ol>
-
-        <div className="xsee-walkthrough-lower">
-          <div className="xsee-walkthrough-stepper" role="group" aria-label="Walkthrough steps">
-            <div className="xsee-stepper-label">Walk through the review</div>
-            <div className="xsee-stepper-buttons">
-              {STEPS.map((step, index) => (
-                <button
-                  type="button"
-                  className={`xsee-step-button${activeStep === index ? " is-active" : ""}`}
-                  key={step.title}
-                  aria-current={activeStep === index ? "step" : undefined}
-                  aria-label={`Step ${index + 1}: ${step.title} — ${step.short}`}
-                  onClick={() => {
-                    setActiveStep(index);
-                    setPlaying(false);
-                  }}
-                >
-                  <span>{index + 1}</span>
-                  <span>{step.title}</span>
-                </button>
-              ))}
+              <StepNavigator state={state} dispatch={dispatch} reducedMotion={reducedMotion} />
             </div>
-            <div className="xsee-walkthrough-controls">
-              <button type="button" className="xsee-control-button" onClick={() => { setActiveStep(0); setPlaying(false); }}>
-                <RotateCcw aria-hidden /> Replay
-              </button>
-              <button
-                type="button"
-                className="xsee-control-button"
-                onClick={() => setPlaying((value) => !value)}
-                aria-pressed={playing}
-                disabled={reducedMotion || activeStep === STEPS.length - 1}
-                aria-label={reducedMotion ? "Automatic playback disabled by reduced motion preference" : playing ? "Pause walkthrough" : "Play walkthrough"}
-              >
-                {playing ? <CirclePause aria-hidden /> : <CirclePlay aria-hidden />}
-                {playing ? "Pause" : "Play"}
-              </button>
-              <span className="xsee-control-divider" aria-hidden />
-              <button type="button" className="xsee-control-button" onClick={() => { setActiveStep((step) => Math.max(0, step - 1)); setPlaying(false); }} disabled={activeStep === 0} aria-label="Previous step">
-                <ArrowLeft aria-hidden /> Previous
-              </button>
-              <button type="button" className="xsee-control-button" onClick={() => { setActiveStep((step) => Math.min(STEPS.length - 1, step + 1)); setPlaying(false); }} disabled={activeStep === STEPS.length - 1} aria-label="Next step">
-                Next <ArrowRight aria-hidden />
-              </button>
-            </div>
-            {reducedMotion ? <p className="xsee-reduced-motion-note">Automatic playback is off for your reduced-motion preference. Use the step controls to explore.</p> : null}
+            <aside ref={inspectorRef} className="apd-inspector" aria-label="Inspector">
+              <div key={`${state.step}-${state.selection?.id ?? "step"}`} className="apd-inspector-content">
+                <Inspector state={state} dispatch={dispatch} />
+              </div>
+            </aside>
           </div>
 
-          <div className="xsee-walkthrough-detail" aria-live="polite" aria-atomic="true">
-            <p className="xsee-detail-step">Step {activeStep + 1} of {STEPS.length} <ArrowDown aria-hidden /></p>
-            <h4>{STEPS[activeStep].title}: {stepHeading(activeStep)}</h4>
-            <p className="xsee-detail-copy">{stepDescription(activeStep)}</p>
-            {activeStep === 1 ? <EvidenceReview /> : null}
-            {activeStep === 2 ? <RemediationProposal /> : null}
-            {activeStep === 3 ? <ApprovalBoundary /> : null}
-            {activeStep === 4 ? <ClosureResult /> : null}
-            {activeStep === 5 ? <ConfigurationChange /> : null}
-          </div>
+          <ClosureRecord state={state} />
+
+          <p className="apd-disclosure">
+            Fictional account, resources, and timestamps. Results come from read-only collection and policy simulation in this illustration. XSEE
+            does not change your AWS environment.
+          </p>
         </div>
-
-        <p className="xsee-walkthrough-footnote">
-          <span className="xsee-footnote-mark" aria-hidden>i</span>
-          All resource names, evidence, simulation, and closure states shown here are illustrative—not a live customer environment. XSEE does not apply AWS changes.
-        </p>
       </div>
     </section>
   );
 }
-
-function stepHeading(index: number) {
-  return [
-    "a potential route into sensitive data",
-    "what is observed, simulated, and untested",
-    "a proposed change and expected effect",
-    "the approval and execution boundary",
-    "the post-change closure result",
-    "how configuration drift changes closure",
-  ][index];
-}
-
-function stepDescription(index: number) {
-  return [
-    "A public HTTPS rule leads to a workload identity with a modeled route to a sensitive secret. This is a candidate path for review, not a claim of compromise.",
-    "Review the evidence state on each hop before treating the path as actionable. Untested means exactly that: no validation result is being implied.",
-    "The suggested change narrows the public ingress rule to an approved edge source. The path is still open until your team approves and applies the change.",
-    "XSEE prepares evidence and a remediation handoff. A person approves it, and your own AWS workflow executes it; nothing is changed by this walkthrough.",
-    "In this fictional post-change record, a follow-up check finds the original route closed. The result is labeled illustrative and is not a customer verification.",
-    "A later configuration change adds another public source. The prior closure no longer applies, so the path is reopened for a new review.",
-  ][index];
-}
-
-function EvidenceReview() {
-  return (
-    <ul className="xsee-evidence-review" aria-label="Evidence and validation state for each illustrative path step">
-      {HOPS.map((hop) => (
-        <li key={hop.name}>
-          <span className={`xsee-evidence-dot xsee-evidence-dot-${hop.tone}`} aria-hidden />
-          <span className="xsee-review-resource"><strong>{hop.name}</strong><small>{hop.resource}</small></span>
-          <span className={`xsee-review-state xsee-evidence-${hop.tone}`}>{hop.status}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function RemediationProposal() {
-  return (
-    <div className="xsee-remediation-grid">
-      <div><span>Proposed change</span><strong>Restrict inbound TCP/443 to the approved edge source</strong></div>
-      <div><span>Expected effect</span><strong>Remove direct public ingress to the web workload</strong></div>
-      <p>Expected effect only · not applied · requires human approval</p>
-    </div>
-  );
-}
-
-function ApprovalBoundary() {
-  return (
-    <div className="xsee-approval-boundary">
-      <span className="xsee-boundary-icon"><ShieldCheck aria-hidden /></span>
-      <div><strong>Approval required · execution stays external</strong><p>Review the recommendation, approve it through your team&apos;s process, then apply it in your AWS workflow. XSEE makes no change.</p></div>
-      <span className="xsee-boundary-state">NOT EXECUTED</span>
-    </div>
-  );
-}
-
-function ClosureResult() {
-  return (
-    <div className="xsee-closure-result">
-      <span><Check aria-hidden /> Illustrative closure verified</span>
-      <p>Follow-up evidence shows the original public ingress route removed. The closure record is limited to this fictional scenario.</p>
-    </div>
-  );
-}
-
-function ConfigurationChange() {
-  return (
-    <div className="xsee-drift-result">
-      <span>Configuration change detected</span>
-      <strong>203.0.113.0/24 added to inbound TCP/443</strong>
-      <p>Closure status: <b>Reopened · review needed</b>. A new check is untested until evidence is collected.</p>
-    </div>
-  );
-}
-
-export { STEPS as ATTACK_PATH_WALKTHROUGH_STEPS };

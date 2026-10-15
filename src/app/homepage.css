@@ -447,8 +447,11 @@
 }
 
 .xsee-journey-section {
-  padding: clamp(64px, 8vw, 104px) 0;
+  padding: clamp(56px, 7vw, 88px) 0;
+  scroll-margin-top: 72px;
 }
+
+.xsee-pilot-section { scroll-margin-top: 72px; }
 
 .xsee-section-heading {
   max-width: 690px;
