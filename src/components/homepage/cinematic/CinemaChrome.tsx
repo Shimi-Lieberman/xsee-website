@@ -56,6 +56,7 @@ export default function CinemaChrome({ position, onNext }: { position: number; o
         <span>
           Scene {ROMAN[act]} <i>/</i> V
         </span>
+        <span className="cc-hud-tag">AP-12 · illustrative</span>
         <span className="cc-timecode">{timecode(position)}</span>
       </div>
 

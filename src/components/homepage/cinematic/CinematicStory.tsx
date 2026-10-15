@@ -7,8 +7,10 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 import { ACTS, sceneAt } from "./scene";
 import CinemaStage from "./CinemaStage";
+import CinemaChrome from "./CinemaChrome";
 import { FindingsCounter, FixStepper, ProofCertificate, ValidationTerminal } from "./Instruments";
 import "./cinematic.css";
+import "./chrome.css";
 
 const QUANTUM = 1 / 600;
 const LIFECYCLE = ["Discovery", "Attack-path analysis", "Validation", "Remediation", "Revalidation", "Revocable proof"];
@@ -53,18 +55,11 @@ export default function CinematicStory() {
       <div ref={trackRef} className="cs-track">
         <div className="cs-stage-col">
           <div className="cs-stage">
-            <div className="cs-stage-top">
-              <span className="cs-stage-tag">
-                <span className="cs-live-dot" aria-hidden />
-                AP-12 · illustrative environment
-              </span>
-              <span className="cs-stage-act" aria-hidden>
-                {String(act + 1).padStart(2, "0")} / 05 · {ACTS[act].label}
-              </span>
-            </div>
             <div className="cs-graph-frame" data-act={act} data-cert={wide.certificate}>
               <CinemaStage position={position} layout="wide" animate={animate} className="cs-graph--wide" />
               <CinemaStage position={position} layout="tall" animate={animate} className="cs-graph--tall" />
+              <div className="cs-scrim" aria-hidden />
+              <CinemaChrome position={position} onNext={jumpTo} />
               <div className="cs-instrument" key={act}>
                 <StageInstrument scene={wide} />
               </div>
@@ -95,6 +90,7 @@ export default function CinematicStory() {
         </div>
 
         <div className="cs-copy">
+          <div className="cs-lead" aria-hidden />
           <article id="act-invisible" className="cs-act cs-act--hero">
             <div className="cs-act-inner">
               <p className="cs-eyebrow">

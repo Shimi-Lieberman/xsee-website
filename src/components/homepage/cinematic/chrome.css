@@ -1,0 +1,348 @@
+/* Full-bleed cinema: the 3D scene is the sticky background, everything else plays over it. */
+.cs {
+  --cc-nav: 64px;
+  --cc-mono: var(--font-geist-mono, ui-monospace), monospace;
+}
+
+/* A global mobile rule pads every <section> with !important; the cinema must stay edge to edge. */
+section.cs {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.cs .cs-stage-col {
+  z-index: 0;
+  height: 100svh;
+  margin-bottom: -100svh;
+}
+
+.cs .cs-stage {
+  gap: 0;
+  padding: 0;
+  background: var(--cs-bg);
+  box-shadow: none;
+}
+
+.cs .cs-graph-frame {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.cs .cs-graph-frame::after {
+  border-radius: 0;
+  background: radial-gradient(120% 85% at 50% 45%, transparent 50%, rgb(2 3 6 / 0.9) 100%);
+}
+
+.cs-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(2 3 6 / 0.55) 0%, transparent 22%, transparent 62%, rgb(2 3 6 / 0.7) 100%);
+}
+
+/* ---------- Copy plays over the scene ---------- */
+.cs .cs-copy {
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cs .cs-lead {
+  height: 60svh;
+}
+
+.cs .cs-act,
+.cs .cs-act--hero {
+  min-height: 100svh;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.cs .cs-tail {
+  height: 40svh;
+}
+
+.cs .cs-act-inner {
+  position: relative;
+  pointer-events: auto;
+  text-shadow: 0 2px 18px rgb(2 3 6 / 0.9);
+}
+
+.cs .cs-act-inner::before {
+  content: "";
+  position: absolute;
+  inset: -48px -40px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgb(2 3 6 / 0.78), rgb(2 3 6 / 0.5) 55%, transparent);
+}
+
+/* ---------- Letterbox, grain, HUD ---------- */
+.cc {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  --cc-bar-h: calc(var(--cc-bars, 0.45) * 13svh);
+}
+
+.cc-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: var(--cc-bar-h);
+  background: #000;
+  transition: height 120ms linear;
+}
+
+.cc-bar--top {
+  top: 0;
+}
+
+.cc-bar--bottom {
+  bottom: 0;
+}
+
+.cc-grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: cc-grain 0.9s steps(6) infinite;
+}
+
+@keyframes cc-grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-2%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+.cc-hud {
+  position: absolute;
+  top: max(calc(var(--cc-nav) + 8px), calc(var(--cc-bar-h) + 8px));
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--cs-ink2);
+  font: 500 10px/1 var(--cc-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cc-hud i {
+  font-style: normal;
+  color: var(--cs-ink3);
+}
+
+.cc-hud-tag {
+  display: none;
+  color: var(--cs-ink3);
+}
+
+.cc-timecode {
+  color: var(--cs-magenta);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Title cards ---------- */
+.cc-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  width: min(92vw, 640px);
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: 24px 0;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.cc-card-kicker {
+  margin: 0;
+  color: var(--cs-ink2);
+  font: 500 11px/1 var(--cc-mono);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+
+.cc-card-title {
+  margin: 0;
+  color: var(--cs-ink);
+  font-size: clamp(30px, 9vw, 64px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-shadow: 0 0 40px rgb(2 3 6 / 0.9);
+}
+
+.cc-card[data-opening] .cc-card-title {
+  font-size: clamp(64px, 24vw, 168px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: linear-gradient(180deg, var(--cs-ink) 30%, color-mix(in srgb, var(--cs-ink) 40%, transparent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cc-card-line {
+  margin: 0;
+  max-width: 28ch;
+  color: var(--cs-ink2);
+  font-size: 15px;
+  line-height: 1.5;
+  text-wrap: balance;
+}
+
+.cc-card-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: var(--cs-ink2);
+  font: 500 10px/1 var(--cc-mono);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.cc-card-cue svg {
+  animation: cc-bob 1.6s ease-in-out infinite;
+}
+
+@keyframes cc-bob {
+  50% { transform: translateY(4px); }
+}
+
+.cc-card-sweep {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cs-magenta), transparent);
+}
+
+/* ---------- Next-act teaser ---------- */
+.cc-teaser {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--cc-bar-h) + 52px);
+  display: flex;
+  min-height: 44px;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 0;
+  background: none;
+  color: var(--cs-ink);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.cc-teaser-next {
+  color: var(--cs-magenta);
+  font: 500 10px/1 var(--cc-mono);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.cc-teaser-line {
+  font-size: 15px;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+.cc-teaser-arrow {
+  animation: cc-bob 1.6s ease-in-out infinite;
+}
+
+/* ---------- Instrument + rail over the scene ---------- */
+.cs .cs-graph-frame .cs-instrument {
+  z-index: 3;
+  inset: calc(var(--cc-nav) + 34px) 12px auto;
+}
+
+.cs .cs-rail {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: max(14px, calc(var(--cc-bar-h) - 34px));
+  z-index: 4;
+}
+
+.cs .cs-rail-bar {
+  background: rgb(255 255 255 / 0.14);
+}
+
+@media (min-width: 960px) {
+  .cs .cs-track {
+    display: block;
+    max-width: none;
+  }
+
+  .cs .cs-stage {
+    padding: 0;
+    background: var(--cs-bg);
+  }
+
+  .cs-scrim {
+    background:
+      linear-gradient(90deg, rgb(2 3 6 / 0.75) 0%, rgb(2 3 6 / 0.35) 32%, transparent 52%),
+      linear-gradient(to bottom, rgb(2 3 6 / 0.5) 0%, transparent 20%, transparent 75%, rgb(2 3 6 / 0.6) 100%);
+  }
+
+  .cs .cs-act,
+  .cs .cs-act--hero {
+    padding: 0 max(48px, calc((100vw - 1360px) / 2));
+  }
+
+  .cs .cs-act-inner::before {
+    display: none;
+  }
+
+  .cc-hud {
+    left: 40px;
+    right: 40px;
+    font-size: 11px;
+  }
+
+  .cc-hud-tag {
+    display: inline;
+  }
+
+  .cs .cs-graph-frame .cs-instrument {
+    inset: auto 40px calc(var(--cc-bar-h) + 64px) auto;
+    width: min(420px, 34vw);
+  }
+
+  .cs .cs-rail {
+    left: 40px;
+    right: 40px;
+    bottom: max(20px, calc(var(--cc-bar-h) - 40px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-grain,
+  .cc-card-cue svg,
+  .cc-teaser-arrow {
+    animation: none;
+  }
+
+  .cc-bar {
+    transition: none;
+  }
+}
