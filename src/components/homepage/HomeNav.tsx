@@ -10,10 +10,18 @@ import { DEMO_HREF, LOGIN_URL, NAV_LINKS } from "@/lib/navigation";
 export default function HomeNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [darkTone, setDarkTone] = useState(true);
+  const dark = darkTone && !menuOpen;
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
+      const probe = 32;
+      const dark = Array.from(document.querySelectorAll("[data-nav-tone='dark']")).some((el) => {
+        const rect = el.getBoundingClientRect();
+        return rect.top <= probe && rect.bottom >= probe;
+      });
+      setDarkTone(dark);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
@@ -53,10 +61,21 @@ export default function HomeNav() {
           backdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
           WebkitBackdropFilter: scrolled || menuOpen ? "saturate(160%) blur(14px)" : "none",
           // When the mobile panel is open the bar must be opaque so it reads as one surface with it.
-          background: menuOpen ? "#FAFBFC" : scrolled ? "rgba(250, 251, 252, 0.9)" : "transparent",
-          borderBottom: scrolled && !menuOpen ? "1px solid rgba(11, 18, 32, 0.08)" : "1px solid transparent",
-          boxShadow: scrolled || menuOpen ? "0 4px 24px rgba(11, 18, 32, 0.06)" : "none",
+          background: menuOpen
+            ? "#FAFBFC"
+            : scrolled
+              ? dark
+                ? "rgba(5, 7, 12, 0.78)"
+                : "rgba(250, 251, 252, 0.9)"
+              : "transparent",
+          borderBottom: scrolled && !menuOpen
+            ? dark
+              ? "1px solid rgba(255, 255, 255, 0.06)"
+              : "1px solid rgba(11, 18, 32, 0.08)"
+            : "1px solid transparent",
+          boxShadow: !dark && (scrolled || menuOpen) ? "0 4px 24px rgba(11, 18, 32, 0.06)" : "none",
         }}
+        data-tone={dark ? "dark" : "light"}
       >
         <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between gap-3 px-6 max-[420px]:px-4 lg:px-10">
           <Link href="/#top" className="group flex shrink-0 items-center gap-2.5" aria-label="XSEE home">

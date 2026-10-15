@@ -171,7 +171,7 @@ body {
   line-height: 1.7;
   letter-spacing: 0;
   font-weight: 400;
-  overflow-x: hidden;
+  overflow-x: clip;
   background: var(--bg-base);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -1544,8 +1544,8 @@ footer { background: #050d1a; border-top: 1px solid rgba(255,255,255,0.08); padd
 /* Base page constraint */
 html, body {
   max-width: 100vw;
-  overflow-x: hidden;
-}
+  overflow-x: clip;
+  }
 
 /* Universal section pattern */
 .xsee-section {
@@ -2134,7 +2134,7 @@ body {
   font-family: var(--font-sans);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @keyframes orbDrift1 {
