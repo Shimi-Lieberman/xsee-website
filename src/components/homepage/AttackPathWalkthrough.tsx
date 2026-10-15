@@ -2,17 +2,18 @@
 
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { SCENARIO, STEPS, STEP_BEATS } from "@/lib/attackPathScenario";
-import { demoReducer, INITIAL_STATE, LAST_STEP, pathResult, type Selection } from "./attack-path/demoState";
+import { demoReducer, focusEdgeId, INITIAL_STATE, pathResult, type Selection } from "./attack-path/demoState";
 import PathGraph from "./attack-path/PathGraph";
 import MobilePath from "./attack-path/MobilePath";
 import Inspector from "./attack-path/Inspector";
-import StepNavigator from "./attack-path/StepNavigator";
+import { ExploreControls, StoryControls } from "./attack-path/StepNavigator";
+import StoryCaption from "./attack-path/StoryCaption";
 import ClosureRecord from "./attack-path/ClosureRecord";
 import { ResultChip } from "./attack-path/parts";
 import "./attack-path/attack-path-demo.css";
 
+const STORY_TICK_MS = 100;
 const APPROVAL_APPLY_MS = 1600;
-const DECISION_DWELL_MS = 2000;
 const DRIFT_STAGE_MS: Record<string, number> = { changed: 2400, reassess: 2600, rechecking: 2800 };
 
 function useReducedMotion() {
@@ -27,66 +28,92 @@ function useReducedMotion() {
   return reduced;
 }
 
-function useActive(ref: React.RefObject<HTMLElement | null>) {
-  const [inView, setInView] = useState(false);
+/** `started`: the graph area is at least half visible. `running`: any part is on screen and the tab is visible. */
+function useVisibility(sectionRef: React.RefObject<HTMLElement | null>, stageRef: React.RefObject<HTMLElement | null>) {
+  const [halfVisible, setHalfVisible] = useState(false);
+  const [onScreen, setOnScreen] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.25 });
-    observer.observe(element);
+    const section = sectionRef.current;
+    const stage = stageRef.current;
+    if (!section || !stage) return;
+    const sectionObserver = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), { threshold: 0 });
+    const stageObserver = new IntersectionObserver(([entry]) => setHalfVisible(entry.intersectionRatio >= 0.5), {
+      threshold: [0, 0.5, 1],
+    });
+    sectionObserver.observe(section);
+    stageObserver.observe(stage);
     const onVisibility = () => setPageVisible(document.visibilityState === "visible");
     onVisibility();
     document.addEventListener("visibilitychange", onVisibility);
     return () => {
-      observer.disconnect();
+      sectionObserver.disconnect();
+      stageObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
     };
-  }, [ref]);
-  return inView && pageVisible;
+  }, [sectionRef, stageRef]);
+  return { canStart: halfVisible && pageVisible, running: onScreen && pageVisible };
 }
 
 export default function AttackPathWalkthrough() {
   const [state, dispatch] = useReducer(demoReducer, INITIAL_STATE);
   const sectionRef = useRef<HTMLElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const inspectorRef = useRef<HTMLDivElement>(null);
+  const autoStarted = useRef(false);
   const reducedMotion = useReducedMotion();
-  const active = useActive(sectionRef);
-  const beats = STEP_BEATS[state.step];
-  const settled = state.beat >= beats.length;
+  const { canStart, running } = useVisibility(sectionRef, stageRef);
+  const story = state.mode === "story";
+  const settled = state.beat >= STEP_BEATS[state.step].length;
 
   useEffect(() => {
-    if (!active || state.selection) return;
-    if (!settled) {
-      if (reducedMotion) {
-        dispatch({ type: "settle" });
-        return;
-      }
-      const timer = window.setTimeout(() => dispatch({ type: "tick" }), beats[state.beat]);
-      return () => window.clearTimeout(timer);
-    }
-    if (!state.playing) return;
-    if (state.step === 3) {
-      if (state.approval === "pending") dispatch({ type: "decisionReached" });
-      if (state.approval !== "applied") return;
-      const timer = window.setTimeout(() => dispatch({ type: "next" }), DECISION_DWELL_MS);
-      return () => window.clearTimeout(timer);
-    }
-    dispatch(state.step < LAST_STEP ? { type: "next" } : { type: "pause" });
-  }, [active, beats, reducedMotion, settled, state.approval, state.beat, state.playing, state.selection, state.step]);
+    if (!reducedMotion || state.mode !== "story" || state.story !== "idle") return;
+    autoStarted.current = true;
+    dispatch({ type: "explore" });
+  }, [reducedMotion, state.mode, state.story]);
 
   useEffect(() => {
-    if (!active || state.approval !== "approved") return;
-    const timer = window.setTimeout(() => dispatch({ type: "approvalApplied" }), APPROVAL_APPLY_MS);
+    if (autoStarted.current || reducedMotion || !canStart || state.story !== "idle") return;
+    autoStarted.current = true;
+    dispatch({ type: "storyStart" });
+  }, [canStart, reducedMotion, state.story]);
+
+  useEffect(() => {
+    if (!story || state.story !== "playing" || !running) return;
+    let last = performance.now();
+    const timer = window.setInterval(() => {
+      const now = performance.now();
+      dispatch({ type: "storyTick", ms: Math.min(now - last, 250) });
+      last = now;
+    }, STORY_TICK_MS);
+    return () => window.clearInterval(timer);
+  }, [story, state.story, running]);
+
+  useEffect(() => {
+    if (story || state.selection || settled) return;
+    if (reducedMotion) {
+      dispatch({ type: "settle" });
+      return;
+    }
+    if (!running) return;
+    const timer = window.setTimeout(() => dispatch({ type: "tick" }), STEP_BEATS[state.step][state.beat]);
     return () => window.clearTimeout(timer);
-  }, [active, state.approval]);
+  }, [story, reducedMotion, running, settled, state.beat, state.selection, state.step]);
+
+  useEffect(() => {
+    if (story || state.approval !== "approved") return;
+    if (!reducedMotion && !running) return;
+    const timer = window.setTimeout(() => dispatch({ type: "approvalApplied" }), reducedMotion ? 0 : APPROVAL_APPLY_MS);
+    return () => window.clearTimeout(timer);
+  }, [story, reducedMotion, running, state.approval]);
 
   useEffect(() => {
     const delay = DRIFT_STAGE_MS[state.drift];
-    if (!active || !delay) return;
-    const timer = window.setTimeout(() => dispatch({ type: "advanceDrift" }), delay);
+    if (story || !delay) return;
+    if (!reducedMotion && !running) return;
+    const timer = window.setTimeout(() => dispatch({ type: "advanceDrift" }), reducedMotion ? 0 : delay);
     return () => window.clearTimeout(timer);
-  }, [active, state.drift]);
+  }, [story, reducedMotion, running, state.drift]);
 
   const handleSelect = useCallback(
     (selection: Selection) => {
@@ -101,6 +128,7 @@ export default function AttackPathWalkthrough() {
   );
 
   const result = pathResult(state);
+  const inspectorKey = [state.mode, state.step, state.selection?.id ?? "", !story && state.step === 1 ? focusEdgeId(state) : ""].join("-");
 
   return (
     <section ref={sectionRef} id="walkthrough" className="apd" aria-labelledby="walkthrough-title">
@@ -112,7 +140,7 @@ export default function AttackPathWalkthrough() {
           </h2>
         </header>
 
-        <div className="apd-panel">
+        <div className="apd-panel" data-mode={state.mode}>
           <div className="apd-panel-head">
             <div className="apd-panel-title">
               <span className="apd-env-badge">Illustrative environment</span>
@@ -120,7 +148,7 @@ export default function AttackPathWalkthrough() {
                 <span className="apd-path-id">{SCENARIO.pathId}</span> {SCENARIO.pathTitle}
               </h3>
             </div>
-            <div role="status" aria-live="polite" className="apd-panel-status">
+            <div role="status" aria-live={story ? "off" : "polite"} className="apd-panel-status">
               <span className="sr-only">
                 Step {state.step + 1} of {STEPS.length}, {STEPS[state.step].title}. Path status:
               </span>
@@ -128,8 +156,15 @@ export default function AttackPathWalkthrough() {
             </div>
           </div>
 
+          <p className="sr-only">
+            Animated walkthrough summary: {SCENARIO.pathId} runs from an assumed foothold in web-frontend through role-web-task and
+            sts:AssumeRole on role-batch-ops to the prod/orders-db secret. A trust-policy fix is reviewed, approved by a person, and applied
+            by the customer&apos;s pipeline. A re-test stops at sts:AssumeRole, verifying closure. A later configuration change triggers
+            reassessment, and a new check shows the path reopened. Use Explore this path to step through the evidence.
+          </p>
+
           <div className="apd-body">
-            <div className="apd-stage">
+            <div ref={stageRef} className="apd-stage">
               <div className="apd-canvas">
                 <PathGraph state={state} onSelect={handleSelect} />
                 <MobilePath state={state} onSelect={handleSelect} />
@@ -142,10 +177,11 @@ export default function AttackPathWalkthrough() {
                   <li className="apd-status-reassess">Drift</li>
                 </ul>
               </div>
-              <StepNavigator state={state} dispatch={dispatch} reducedMotion={reducedMotion} />
+              {story ? <StoryControls state={state} dispatch={dispatch} /> : <ExploreControls state={state} dispatch={dispatch} />}
             </div>
-            <aside ref={inspectorRef} className="apd-inspector" aria-label="Inspector">
-              <div key={`${state.step}-${state.selection?.id ?? "step"}`} className="apd-inspector-content">
+            <aside ref={inspectorRef} className="apd-inspector" aria-label={story ? "Story caption and evidence" : "Inspector"}>
+              {story ? <StoryCaption state={state} /> : null}
+              <div key={inspectorKey} className="apd-inspector-content">
                 <Inspector state={state} dispatch={dispatch} />
               </div>
             </aside>

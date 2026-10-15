@@ -8,6 +8,7 @@ type Props = { state: DemoState; dispatch: Dispatch<DemoAction> };
 
 export default function Inspector({ state, dispatch }: Props) {
   const { selection } = state;
+  const story = state.mode === "story";
   if (selection?.kind === "edge") {
     return <EdgeDetail state={state} edgeId={selection.id} onClose={() => dispatch({ type: "select", selection: null })} />;
   }
@@ -18,7 +19,7 @@ export default function Inspector({ state, dispatch }: Props) {
     case 0:
       return <DiscoverPanel />;
     case 1:
-      return <InspectPanel state={state} />;
+      return story ? <EvidenceList state={state} /> : <InspectPanel state={state} />;
     case 2:
       return <ReviewPanel state={state} dispatch={dispatch} />;
     case 3:
@@ -149,6 +150,31 @@ function InspectPanel({ state }: { state: DemoState }) {
   );
 }
 
+function EvidenceList({ state }: { state: DemoState }) {
+  const focused = focusEdgeId(state);
+  return (
+    <div className="apd-insp-body">
+      <PanelHead overline="Step 2 · Validate" title="Evidence behind each relationship" />
+      <ul className="apd-evidence">
+        {INSPECT_ORDER.map((id) => {
+          const edge = edgeById(id)!;
+          const status = edgeStatus(edge, state);
+          const revealed = status !== "candidate";
+          return (
+            <li key={id} className={`${id === focused ? "is-current" : ""}${revealed ? " is-revealed" : ""}`}>
+              <div>
+                <strong>{edge.label}</strong>
+                <small>{revealed ? edge.result : "Pending review"}</small>
+              </div>
+              <StatusChip status={status} />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 function PolicyBlock({ lines, label }: { lines: readonly { text: string; mark?: string }[]; label: string }) {
   return (
     <figure className="apd-policy">
@@ -237,7 +263,9 @@ function ApprovePanel({ state, dispatch }: Props) {
           </div>
         </li>
       </ol>
-      {approved ? null : (
+      {approved ? null : state.mode === "story" ? (
+        <p className="apd-hint">Simulated operator approval in progress…</p>
+      ) : (
         <button type="button" className="apd-primary" onClick={() => dispatch({ type: "approve" })}>
           <UserCheck aria-hidden /> Approve change (demo)
         </button>
@@ -277,7 +305,21 @@ function VerifyPanel({ state }: { state: DemoState }) {
       </ol>
       {verified ? (
         <div className="apd-verdict apd-tone-verified">
-          <strong>{SCENARIO.pathId} verified closed</strong>
+          <strong>Closure record · {SCENARIO.pathId} verified closed</strong>
+          <dl className="apd-mini-record">
+            <div>
+              <dt>Scope</dt>
+              <dd>Assumed foothold in web-frontend → prod/orders-db</dd>
+            </div>
+            <div>
+              <dt>Result</dt>
+              <dd>Re-check stopped at sts:AssumeRole</dd>
+            </div>
+            <div>
+              <dt>Verified</dt>
+              <dd>{TIMESTAMPS.verified}</dd>
+            </div>
+          </dl>
           <p>Unchanged: public exposure via alb-web-public is still observed, and s3:GetObject on nw-exports is still untested.</p>
         </div>
       ) : null}

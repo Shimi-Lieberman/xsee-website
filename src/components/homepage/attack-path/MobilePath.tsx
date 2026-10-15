@@ -66,7 +66,7 @@ export default function MobilePath({ state, onSelect }: Props) {
   };
 
   return (
-    <div className="apd-mobile" data-shown={state.step > 0 || state.beat >= 1}>
+    <div className="apd-mobile">
       <p className="apd-m-heading">Path AP-12</p>
       <ol className="apd-m-path">
         {pathNodes.map((id, index) => (

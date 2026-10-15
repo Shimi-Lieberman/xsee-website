@@ -1,44 +1,81 @@
 import type { Dispatch } from "react";
-import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw, Search } from "lucide-react";
 import { STEPS } from "@/lib/attackPathScenario";
-import { LAST_STEP, type DemoAction, type DemoState } from "./demoState";
+import { LAST_STEP, STORY_MS, STORY_PHASES, storyPhaseIndex, type DemoAction, type DemoState } from "./demoState";
 
-type Props = { state: DemoState; dispatch: Dispatch<DemoAction>; reducedMotion: boolean };
+type Props = { state: DemoState; dispatch: Dispatch<DemoAction> };
 
-export default function StepNavigator({ state, dispatch, reducedMotion }: Props) {
-  const waitingForApproval = state.step === 3 && state.approval === "pending";
-  const playDisabled = reducedMotion || state.step === LAST_STEP || waitingForApproval;
-  const playHint = reducedMotion
-    ? "Autoplay is off for your reduced-motion setting."
-    : waitingForApproval
-      ? "Paused at the decision point. Approve to continue."
-      : state.step === LAST_STEP
-        ? "End of the walkthrough. Introduce drift or replay."
-        : null;
+export function StoryControls({ state, dispatch }: Props) {
+  const ended = state.story === "ended";
+  const playing = state.story === "playing";
+  const current = storyPhaseIndex(state.storyMs);
+  const percent = Math.round((state.storyMs / STORY_MS) * 100);
 
   return (
+    <div className="apd-nav apd-story-nav">
+      <div className="apd-story-bar">
+        {ended ? (
+          <button type="button" className="apd-control is-primary" onClick={() => dispatch({ type: "storyReplay" })}>
+            <RotateCcw aria-hidden /> <span>Replay story</span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            className="apd-control is-primary apd-control-play"
+            onClick={() => dispatch({ type: playing ? "storyPause" : state.story === "idle" ? "storyStart" : "storyResume" })}
+            aria-label={playing ? "Pause story" : state.story === "idle" ? "Play story" : "Resume story"}
+          >
+            {playing ? <Pause aria-hidden /> : <Play aria-hidden />}
+            <span>{playing ? "Pause" : state.story === "idle" ? "Play story" : "Resume"}</span>
+          </button>
+        )}
+        <div
+          className="apd-track"
+          role="progressbar"
+          aria-label="Story progress"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={percent}
+          aria-valuetext={`${STORY_PHASES[current].label}, ${percent}%`}
+        >
+          {STORY_PHASES.map((phase, index) => {
+            const fill = Math.min(1, Math.max(0, (state.storyMs - phase.start) / (phase.end - phase.start)));
+            return (
+              <span key={phase.label} className={`apd-seg${index === current && !ended ? " is-current" : ""}`}>
+                <span className="apd-seg-fill" style={{ transform: `scaleX(${fill})` }} />
+              </span>
+            );
+          })}
+        </div>
+        <button type="button" className="apd-control" onClick={() => dispatch({ type: "explore" })}>
+          <Search aria-hidden /> <span>Explore this path</span>
+        </button>
+      </div>
+      <ol className="apd-seg-labels" aria-hidden>
+        {STORY_PHASES.map((phase, index) => (
+          <li key={phase.label} className={index === current ? "is-current" : index < current ? "is-past" : ""}>
+            {phase.label}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+export function ExploreControls({ state, dispatch }: Props) {
+  return (
     <div className="apd-nav">
-      <div className="apd-controls" role="group" aria-label="Playback">
+      <div className="apd-controls" role="group" aria-label="Step navigation">
         <button type="button" className="apd-control" onClick={() => dispatch({ type: "prev" })} disabled={state.step === 0}>
           <ChevronLeft aria-hidden /> <span>Previous</span>
-        </button>
-        <button
-          type="button"
-          className="apd-control is-primary"
-          onClick={() => dispatch({ type: state.playing ? "pause" : "play" })}
-          disabled={!state.playing && playDisabled}
-        >
-          {state.playing ? <Pause aria-hidden /> : <Play aria-hidden />}
-          <span>{state.playing ? "Pause" : "Play"}</span>
         </button>
         <button type="button" className="apd-control" onClick={() => dispatch({ type: "next" })} disabled={state.step === LAST_STEP}>
           <span>Next</span> <ChevronRight aria-hidden />
         </button>
-        <button type="button" className="apd-control is-quiet" onClick={() => dispatch({ type: "replay" })} disabled={reducedMotion}>
-          <RotateCcw aria-hidden /> <span>Replay</span>
+        <button type="button" className="apd-control is-primary apd-control-replay" onClick={() => dispatch({ type: "storyReplay" })}>
+          <RotateCcw aria-hidden /> <span>Replay story</span>
         </button>
       </div>
-      {playHint ? <p className="apd-play-hint">{playHint}</p> : null}
       <ol className="apd-steps" aria-label="Walkthrough steps">
         {STEPS.map((step, index) => (
           <li key={step.key}>

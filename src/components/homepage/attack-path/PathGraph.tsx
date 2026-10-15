@@ -34,6 +34,18 @@ function markerFor(status: EdgeStatus, focused: boolean) {
 
 const pct = (value: number, total: number) => `${(value / total) * 100}%`;
 
+const PULSE_EXCLUDED = new Set<EdgeStatus>(["blocked", "changed", "reassess", "rechecking", "reopened"]);
+
+/** Compact evidence marker shown inside a relationship label. */
+function labelState(status: EdgeStatus, focused: boolean) {
+  if (status === "blocked") return "Blocked";
+  if (status === "reopened") return "Reopened";
+  if (status === "rechecking") return "Re-checking";
+  if (status === "reassess" || status === "changed") return "Reassess";
+  if (focused && status !== "candidate") return EDGE_STATUS_LABEL[status];
+  return null;
+}
+
 type Props = {
   state: DemoState;
   onSelect: (selection: Selection) => void;
@@ -42,11 +54,9 @@ type Props = {
 export default function PathGraph({ state, onSelect }: Props) {
   const focus = focusSet(state);
   const lit = litEdges(state);
-  const nodesShown = state.step > 0 || state.beat >= 1;
-  const edgesShown = state.step > 0 || state.beat >= 2;
 
   return (
-    <div className="apd-graph" data-nodes={nodesShown} data-edges={edgesShown}>
+    <div className="apd-graph">
       <svg viewBox={`0 0 ${VW} ${VH}`} className="apd-graph-svg" aria-hidden focusable="false">
         <defs>
           {[
@@ -60,20 +70,18 @@ export default function PathGraph({ state, onSelect }: Props) {
             </marker>
           ))}
         </defs>
-        {EDGES.map((edge, index) => {
+        {EDGES.map((edge) => {
           const status = edgeStatus(edge, state);
           const line = trimmedLine(edge.from, edge.to);
           const focused = focus.edges.has(edge.id);
           const dimmed = focus.active && !focused;
           const traced = lit.has(edge.id);
           const stopsHere = traced && status === "blocked";
+          const pulses = focused && !traced && !PULSE_EXCLUDED.has(status);
           return (
-            <g
-              key={edge.id}
-              className={`apd-edge apd-status-${status}${focused ? " is-focus" : ""}${dimmed ? " is-dim" : ""}`}
-              style={{ "--edge-delay": `${index * 90}ms` } as CSSProperties}
-            >
+            <g key={edge.id} className={`apd-edge apd-status-${status}${focused ? " is-focus" : ""}${dimmed ? " is-dim" : ""}`}>
               <line {...line} className="apd-edge-line" markerEnd={`url(#${markerFor(status, focused)})`} />
+              {pulses ? <line {...line} pathLength={1} className="apd-edge-pulse" /> : null}
               {traced ? (
                 <line
                   key={`${edge.id}-${state.step}-${state.drift}`}
@@ -108,9 +116,11 @@ export default function PathGraph({ state, onSelect }: Props) {
           >
             <Icon aria-hidden />
             <span>{edge.label}</span>
-            {status === "blocked" ? <span className="apd-edge-label-state">Blocked</span> : null}
-            {status === "reopened" ? <span className="apd-edge-label-state">Reopened</span> : null}
-            {status === "reassess" || status === "changed" ? <span className="apd-edge-label-state">Reassess</span> : null}
+            {labelState(status, focused && state.step >= 1) ? (
+              <span key={status} className="apd-edge-label-state">
+                {labelState(status, focused && state.step >= 1)}
+              </span>
+            ) : null}
           </button>
         );
       })}
