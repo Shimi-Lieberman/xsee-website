@@ -55,7 +55,7 @@ export default function Footer() {
             </div>
           </Link>
           <p className="text-base leading-relaxed max-w-md mb-5 text-[#3A4658]">
-            Discover. Validate. Simulate. Fix. Certify. Built for the age of AI attackers.
+            Discover and validate AWS attack paths. Verify closure with evidence your team can revisit as the environment changes.
           </p>
           <Link
             href="/security"
@@ -63,22 +63,6 @@ export default function Footer() {
           >
             Security →
           </Link>
-          <div className="mb-5 flex flex-wrap gap-2">
-            {[
-              "Read-only IAM boundary",
-              "No agents",
-              "AWS hosted",
-              "Signed, verifiable evidence",
-              "Built on Anthropic Claude",
-            ].map((label) => (
-              <span
-                key={label}
-                className="inline-flex items-center rounded-full border border-[rgba(11,18,32,0.1)] bg-white px-2.5 py-1 text-[10px] font-medium leading-tight text-[#3A4658]"
-              >
-                {label}
-              </span>
-            ))}
-          </div>
         </div>
 
         <div>
@@ -96,9 +80,10 @@ export default function Footer() {
             Product
           </div>
           {[
-            { label: "How It Works", href: "/#how" },
-            { label: "Engines", href: "/#engines" },
-            { label: "Pricing", href: "/#pricing" },
+            { label: "Workflow", href: "/#workflow" },
+            { label: "Customer outcomes", href: "/#outcomes" },
+            { label: "Closure verification", href: "/#closure" },
+            { label: "Security", href: "/#security" },
             { label: "Changelog", href: "/changelog" },
             { label: "Request assessment", href: "/free-scan" },
             { label: "Under Attack?", href: "/under-attack" },
