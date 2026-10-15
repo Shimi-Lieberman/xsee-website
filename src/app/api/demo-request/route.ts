@@ -42,7 +42,12 @@ export async function POST(request: Request) {
     const company = (body.company ?? "").trim();
     const cloudProvider = (body.cloudProvider ?? body.cloud_provider ?? "").trim();
     const cloudAssets = (body.assetCount ?? body.cloud_assets ?? "").trim();
-    const message = (body.message ?? "").trim();
+    const message = String(body.evaluation_goal ?? body.message ?? "").trim().slice(0, 2000);
+    const requestType = body.request_type === "pilot" ? "pilot" : "demo";
+
+    if (full_name.length > 200 || work_email.length > 320 || company.length > 200) {
+      return NextResponse.json({ error: "One of the fields is too long." }, { status: 400 });
+    }
 
     if (!full_name) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -95,7 +100,7 @@ export async function POST(request: Request) {
         ${messageBlock || null},
         ${cloudProvider || null},
         ${cloudAssets || null},
-        'homepage',
+        ${`website-${requestType}`},
         ${ipAddress},
         ${userAgent}
       )
@@ -103,16 +108,16 @@ export async function POST(request: Request) {
 
     const ts = new Date().toISOString();
     const textBody = [
-      `New demo request (xsee.io homepage)`,
+      `New ${requestType} request (xsee.io)`,
       ``,
       `Name: ${full_name}`,
       `Email: ${work_email}`,
       `Company: ${company}`,
       `Cloud: ${cloudProvider || "—"}`,
       `Assets: ${cloudAssets || "—"}`,
-      `Message: ${message || "—"}`,
+      `Evaluation goal: ${message || "—"}`,
       `Time: ${ts}`,
-      `Source: xsee.io homepage`,
+      `Request type: ${requestType}`,
     ].join("\n");
 
     const htmlBody = `<pre style="font-family:system-ui,sans-serif">${escapeHtml(textBody)}</pre>`;
@@ -120,7 +125,7 @@ export async function POST(request: Request) {
     try {
       await sendEmail({
         to: getAdminEmail(),
-        subject: `New Demo Request — ${company}`,
+        subject: `New ${requestType === "pilot" ? "Pilot" : "Demo"} Request — ${company}`,
         text: textBody,
         html: htmlBody,
       });
@@ -135,6 +140,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Demo request error:", err);
-    return NextResponse.json({ error: "Submission failed" }, { status: 500 });
+    return NextResponse.json({ error: "We couldn't save your request." }, { status: 500 });
   }
 }

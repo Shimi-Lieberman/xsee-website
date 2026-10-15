@@ -158,6 +158,7 @@
 ul, ol, menu, dialog, fieldset, legend, button, input, textarea, select { padding: 0; }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 88px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

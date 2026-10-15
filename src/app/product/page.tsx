@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import "../homepage.css";
 import HomeNav from "@/components/homepage/HomeNav";
 import AttackGraphCinematic from "@/components/homepage/AttackGraphCinematic";
-import ProofLoopSection from "@/components/homepage/ProofLoopSection";
-import CoverageMatrixSection from "@/components/homepage/CoverageMatrixSection";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -36,8 +34,19 @@ export default function ProductPage() {
             <AttackGraphCinematic />
           </div>
         </section>
-        <ProofLoopSection />
-        <CoverageMatrixSection />
+        <section className="hp-section" aria-labelledby="evidence-states-title">
+          <div className="hp-container">
+            <div className="xsee-product-section-heading">
+              <p className="hp-eyebrow">Evidence states</p>
+              <h2 id="evidence-states-title">Each step on a path is labeled by what was checked.</h2>
+              <p>
+                <strong>Configuration observation</strong> — a setting read from AWS metadata, such as a security group rule.{" "}
+                <strong>Permission simulation</strong> — an IAM policy evaluation result for a principal and action; it shows what policy allows, not that an action was performed.{" "}
+                <strong>Untested</strong> — no validation result is implied. A recorded request ID or hash shows that evidence was collected and has not been altered; on its own it does not show an attack succeeds.
+              </p>
+            </div>
+          </div>
+        </section>
         <Footer />
       </main>
     </div>

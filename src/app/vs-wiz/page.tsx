@@ -5,10 +5,10 @@ import Footer from "@/components/Footer";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { COMPARISON_ROWS } from "@/components/ComparisonTable";
 
+// Unlisted pending sourced, dated competitor claims (see docs/internal/public-copy-review.md).
 export const metadata: Metadata = {
-  title: "XSEE vs Wiz — What Wiz Can't Do",
-  description:
-    "Wiz shows you what could be exploited. XSEE proves what will be — with live AWS API validation and cryptographic evidence per hop. See the full comparison.",
+  title: "XSEE comparison",
+  robots: { index: false, follow: false },
 };
 
 const VS_WIZ_EXTRA = [

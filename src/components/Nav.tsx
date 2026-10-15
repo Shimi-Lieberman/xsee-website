@@ -5,17 +5,7 @@ import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import SiteLogo from "@/components/SiteLogo";
 import { Analytics } from "@/lib/analytics";
-
-const LOGIN_URL = "https://app.xsee.io/login";
-
-const NAV_LINKS = [
-  { href: "/#how", label: "Platform" },
-  { href: "/#engines", label: "Engines" },
-  { href: "/#compare", label: "Why Us" },
-  { href: "/free-scan", label: "Request assessment" },
-  { href: "/#pricing", label: "Pricing" },
-  { href: "/#contact", label: "Contact" },
-] as const;
+import { DEMO_HREF as DEMO_URL, LOGIN_URL, NAV_LINKS } from "@/lib/navigation";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,10 +52,6 @@ export default function Nav() {
             ))}
           </nav>
           <div className="nav-actions">
-            <Link href="/under-attack" className="nav-emergency">
-              <span className="nav-emergency-dot" />
-              Under Attack?
-            </Link>
             <Link
               href={LOGIN_URL}
               className="nav-signin text-sm text-[#475569] hover:text-[#0b1220] transition-colors px-3 py-2.5 min-h-[44px] items-center hidden md:inline-flex"
@@ -74,17 +60,11 @@ export default function Nav() {
             </Link>
             <div className="nav-cta-group">
               <Link
-                href="/#contact"
+                href={DEMO_URL}
                 className="nav-cta-demo inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white no-underline transition-opacity hover:opacity-90"
                 onClick={() => Analytics.ctaClicked("nav", "book_demo")}
               >
-                Get a demo
-              </Link>
-              <Link href="mailto:sales@xsee.io?subject=Request%20access" className="nav-btn-trial btn-shimmer">
-                Request access →
-              </Link>
-              <Link href={LOGIN_URL} className="nav-btn-launch">
-                Launch App
+                Book a demo
               </Link>
             </div>
             <button
@@ -109,13 +89,9 @@ export default function Nav() {
               {label}
             </Link>
           ))}
-          <Link href="/under-attack" onClick={closeMenu} className="nav-mobile-panel-link nav-mobile-panel-urgent">
-            <span className="nav-emergency-dot" />
-            Under Attack?
-          </Link>
           <div className="nav-mobile-panel-actions">
-            <Link href="mailto:sales@xsee.io?subject=Request%20access" onClick={closeMenu} className="nav-mobile-panel-cta">
-              Request access →
+            <Link href={DEMO_URL} onClick={closeMenu} className="nav-mobile-panel-cta">
+              Book a demo →
             </Link>
             <Link href={LOGIN_URL} onClick={closeMenu} className="nav-mobile-panel-link">
               Sign in

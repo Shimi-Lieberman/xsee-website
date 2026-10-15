@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
+import EvidenceConsole from "./EvidenceConsole";
 
 export default function HomeHero() {
   return (
@@ -19,7 +20,7 @@ export default function HomeHero() {
           </p>
           <div className="xsee-buyer-hero-actions">
             <Link
-              href="mailto:sales@xsee.io?subject=Book%20an%20XSEE%20demo"
+              href="/demo"
               className="xsee-primary-cta"
               onClick={() => Analytics.ctaClicked("hero", "book_demo")}
             >
@@ -30,6 +31,7 @@ export default function HomeHero() {
             </a>
           </div>
         </div>
+        <EvidenceConsole />
       </div>
     </section>
   );

@@ -31,24 +31,20 @@ const releases: Release[] = [
     version: "v0.9",
     features: [
       {
-        title: "Explorer Graph — 5 tabs with real data",
-        body: "All 5 Explorer tabs (Attack Paths, Network, CI/CD, NHI, IAM) now show real AWS data from your environment. Every node is a real resource with its actual name, ARN, and risk level.",
+        title: "Explorer views",
+        body: "Explorer views for attack paths, network, CI/CD, non-human identities and IAM, built from the connected account's configuration.",
       },
       {
-        title: "L2 Evidence Layer",
-        body: "Every edge on the attack graph shows whether XSEE called the AWS API and what it returned. Click any edge to see the AWS requestId — cryptographic proof the hop is real. No other tool shows this.",
+        title: "Evidence labels on path steps",
+        body: "Each step on a path now shows what was checked — a configuration observation, a permission simulation result, or untested — along with the recorded AWS request ID where one exists.",
       },
       {
-        title: "Choke Points + Blast Radius",
-        body: "Right-click any node to see its blast radius — every resource an attacker could reach from that point. Nodes appearing in 3+ attack paths are highlighted as choke points: fixing one closes multiple paths simultaneously.",
+        title: "Shared steps and reachability",
+        body: "Select a resource to see what is reachable from it. Steps shared by several paths are highlighted, so teams can review fixes that may affect more than one path.",
       },
       {
-        title: "Cinematic Breach Simulation",
-        body: "Watch an attacker move through your real infrastructure. Pink cursor traverses each hop. Detection gaps show as silent invisible steps. Crown jewel reached: financial counter climbs to your actual exposure. BREACH SUCCESSFUL.",
-      },
-      {
-        title: "Breach Prevention Certificate",
-        body: "When a path is validated, fixed, and re-validated — XSEE issues a signed certificate. Board-ready. Timestamped. Verifiable by third parties via SHA-256 hash.",
+        title: "Closure records",
+        body: "After your team applies a fix, XSEE can re-check the same path and record the conditions tested and the time of the check. A record covers that path only.",
       },
     ],
   },
@@ -57,16 +53,12 @@ const releases: Release[] = [
     version: "v0.8",
     features: [
       {
-        title: "Ransomware Readiness Score",
-        body: "Every environment gets a 0–100 Ransomware Readiness Score. CRITICAL means an attacker can delete your backups with no recovery path. The score is connected to your real attack paths — not a questionnaire.",
+        title: "Backup exposure view",
+        body: "Highlights paths that reach backup and recovery resources, based on the connected account's configuration.",
       },
       {
-        title: "Optimal Cut-Point",
-        body: "XSEE identifies the single fix that closes the most validated attack paths simultaneously. Shown as ⚡ Priority Fix badge on the path and in Stage 5.",
-      },
-      {
-        title: "Autonomous Loop",
-        body: "One scan trigger runs all 7 stages automatically: Discover → Validate → Simulate → Prioritize → Fix → Verify → Certify. One human decision. Everything else: XSEE.",
+        title: "Fix review",
+        body: "Suggested fixes are shown alongside the paths they affect, for your team to review and apply.",
       },
     ],
   },
@@ -75,16 +67,12 @@ const releases: Release[] = [
     version: "v0.7",
     features: [
       {
-        title: "L2 Validation — Live AWS API per hop",
-        body: "XSEE calls iam:SimulatePrincipalPolicy for every hop in every attack path. Result: ALLOW or DENY with AWS requestId. Theoretical paths are separated from proven exploitable paths.",
+        title: "IAM permission simulation",
+        body: "Path steps that depend on IAM permissions can be checked with the AWS IAM policy simulator. A result shows what policy allows for that principal and action; it does not show that the action was performed.",
       },
       {
-        title: "XseeCyber — Breach Simulation Engine",
-        body: "Active attacker simulation on your real AWS graph. MITRE ATT&CK cloud matrix with 45 techniques across 10 tactics. Detection gap scoring per technique. AI-generated attack variants.",
-      },
-      {
-        title: "Claude AI Engine",
-        body: "5 capabilities: explain path, explain remediation, investigate story, executive risk summary, ask anything. Streaming responses. Every investigation generates a board-ready narrative.",
+        title: "AI-assisted explanations",
+        body: "Plain-language explanations of paths and suggested fixes, based on the account's scan data. Outputs should be reviewed by your team.",
       },
     ],
   },
