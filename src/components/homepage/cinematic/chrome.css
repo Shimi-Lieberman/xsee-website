@@ -39,7 +39,14 @@ section.cs {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgb(2 3 6 / 0.55) 0%, transparent 22%, transparent 62%, rgb(2 3 6 / 0.7) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgb(2 3 6 / 0.6) 0%,
+    transparent 16%,
+    transparent 40%,
+    rgb(2 3 6 / 0.82) 64%,
+    rgb(2 3 6 / 0.96) 100%
+  );
 }
 
 /* ---------- Copy plays over the scene ---------- */
@@ -52,10 +59,11 @@ section.cs {
   height: 60svh;
 }
 
+/* Each act's copy holds on the darkened floor while its scene plays above, then cross-fades. */
 .cs .cs-act,
 .cs .cs-act--hero {
   min-height: 100svh;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 0 20px;
 }
 
@@ -64,18 +72,34 @@ section.cs {
 }
 
 .cs .cs-act-inner {
-  position: relative;
-  pointer-events: auto;
-  text-shadow: 0 2px 18px rgb(2 3 6 / 0.9);
+  position: sticky;
+  bottom: calc(64px + env(safe-area-inset-bottom));
+  gap: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(4px);
+  transition:
+    opacity 520ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 720ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 520ms ease;
 }
 
-.cs .cs-act-inner::before {
-  content: "";
-  position: absolute;
-  inset: -48px -40px;
-  z-index: -1;
-  pointer-events: none;
-  background: radial-gradient(closest-side, rgb(2 3 6 / 0.78), rgb(2 3 6 / 0.5) 55%, transparent);
+.cs .cs-act.is-active .cs-act-inner {
+  pointer-events: auto;
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.cs .cs-note,
+.cs .cs-scroll-cue {
+  display: none;
+}
+
+.cs .cs-lifecycle li {
+  padding: 5px 9px;
+  font-size: 12px;
 }
 
 /* ---------- Letterbox, grain, HUD ---------- */
@@ -84,7 +108,7 @@ section.cs {
   inset: 0;
   z-index: 2;
   pointer-events: none;
-  --cc-bar-h: calc(var(--cc-bars, 0.45) * 13svh);
+  --cc-bar-h: 0px;
 }
 
 .cc-bar {
@@ -155,7 +179,7 @@ section.cs {
 /* ---------- Title cards ---------- */
 .cc-card {
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   display: flex;
   width: min(92vw, 640px);
@@ -188,10 +212,10 @@ section.cs {
 }
 
 .cc-card[data-opening] .cc-card-title {
-  font-size: clamp(64px, 24vw, 168px);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  background: linear-gradient(180deg, var(--cs-ink) 30%, color-mix(in srgb, var(--cs-ink) 40%, transparent));
+  font-size: clamp(64px, 22vw, 168px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  background: linear-gradient(180deg, #fff 20%, color-mix(in srgb, var(--cs-ink) 35%, transparent) 95%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -236,6 +260,7 @@ section.cs {
 
 /* ---------- Next-act teaser ---------- */
 .cc-teaser {
+  display: none !important;
   position: absolute;
   left: 50%;
   bottom: calc(var(--cc-bar-h) + 52px);
@@ -309,8 +334,36 @@ section.cs {
     padding: 0 max(48px, calc((100vw - 1360px) / 2));
   }
 
-  .cs .cs-act-inner::before {
-    display: none;
+  .cc {
+    --cc-bar-h: calc(var(--cc-bars, 0.45) * 11svh);
+  }
+
+  .cc-card {
+    top: 50%;
+  }
+
+  .cc-teaser {
+    display: flex !important;
+  }
+
+  .cs .cs-act,
+  .cs .cs-act--hero {
+    justify-content: center;
+  }
+
+  .cs .cs-act-inner {
+    position: relative;
+    bottom: auto;
+    max-width: 36rem;
+  }
+
+  .cs .cs-note,
+  .cs .cs-scroll-cue {
+    display: revert;
+  }
+
+  .cs .cs-note {
+    display: block;
   }
 
   .cc-hud {

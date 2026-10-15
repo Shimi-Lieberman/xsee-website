@@ -8,7 +8,7 @@ type P2 = { x: number; y: number; s: number; dz: number };
 
 const VIEW: Record<Layout, { W: number; H: number; f: number; hz: number; xs: number; type: number }> = {
   wide: { W: 1000, H: 620, f: 540, hz: 200, xs: 1, type: 1 },
-  tall: { W: 600, H: 780, f: 520, hz: 250, xs: 0.6, type: 1.25 },
+  tall: { W: 600, H: 780, f: 470, hz: 175, xs: 0.6, type: 1.1 },
 };
 
 const NEAR = 30;
@@ -32,7 +32,6 @@ type Props = { position: number; layout: Layout; animate: boolean; className?: s
 function CinemaStage({ position, layout, animate, className }: Props) {
   const v = VIEW[layout];
   const c: Cinema = useMemo(() => cinemaAt(position), [position]);
-  const speed = useMemo(() => Math.max(0, cinemaAt(position + 0.015).cam.z - c.cam.z), [position, c.cam.z]);
   const { cam } = c;
   const id = (name: string) => `cn-${name}-${layout}`;
 
@@ -57,7 +56,7 @@ function CinemaStage({ position, layout, animate, className }: Props) {
 
   const fog = (z: number) => 1 - seg(z - cam.z, 720, 1300);
   const vis = (z: number) => fog(z) * clamp((c.reveal - z) / 140);
-  const font = (s: number, base = 4.4) => clamp(s * base * v.type, 8 * v.type, 14 * v.type);
+  const font = (s: number, base = 4.4) => clamp(s * base * v.type, 9, 12.5 * v.type);
 
   const ring = (cx: number, cz: number, r: number) => {
     const pts: string[] = [];
@@ -85,9 +84,7 @@ function CinemaStage({ position, layout, animate, className }: Props) {
     return out;
   };
 
-  const vanishing = { x: v.W / 2 - cam.x * v.xs * 0.02, y: v.hz };
   const starShift = (cam.h - 62) * 0.08;
-  const streak = Math.min(46, speed * 0.55);
 
   const gridX = Array.from({ length: 13 }, (_, i) => -480 + i * 80);
   const gridZ = Array.from({ length: 26 }, (_, i) => -560 + i * 80);
@@ -103,6 +100,11 @@ function CinemaStage({ position, layout, animate, className }: Props) {
   const perimeterRings = c.perimeter !== "hidden" ? [46, 64, 84].map((r) => ring(0, secretZ, r)) : [];
   const perimeterLabel = { hidden: "", intact: "Perimeter intact", breached: "Perimeter breached", sealed: "Perimeter sealed", reassessing: "Reassessing" }[c.perimeter];
   const perimeterTag = project([0, PYLON + 34, secretZ]);
+  const coreBase = project([0, 0, secretZ]);
+  const coreTop = project([0, PYLON, secretZ]);
+  const coreSky = project([0, PYLON + 260, secretZ]);
+  const coreTone = c.perimeter === "hidden" ? "intact" : c.perimeter;
+  const coreOn = c.pathDistinct ? 1 : seg(c.hint, 0.2, 1) * 0.5;
 
   const wallCx = pathX(WALL_HOP);
   const wallH = 92 * c.wall;
@@ -157,6 +159,15 @@ function CinemaStage({ position, layout, animate, className }: Props) {
         <filter id={id("bloom")} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation={layout === "wide" ? 5 : 6} />
         </filter>
+        <radialGradient id={id("core")}>
+          <stop offset="0" className="cn-core-0" />
+          <stop offset="0.35" className="cn-core-1" />
+          <stop offset="1" className="cn-core-2" />
+        </radialGradient>
+        <linearGradient id={id("shaft")} x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0" className="cn-shaft-0" />
+          <stop offset="1" className="cn-shaft-1" />
+        </linearGradient>
         <filter id={id("soft")} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.6" />
         </filter>
@@ -170,22 +181,28 @@ function CinemaStage({ position, layout, animate, className }: Props) {
           const x = (((s.x * v.W - cam.x * v.xs * 0.12) % v.W) + v.W) % v.W;
           const y = s.y * (v.hz - 14) + starShift;
           if (y > v.hz - 6) return null;
-          const dx = x - vanishing.x;
-          const dy = y - vanishing.y;
-          const dist = Math.hypot(dx, dy) || 1;
-          const len = streak * (dist / v.W) * 2.2;
-          return len > 1.5 ? (
-            <line key={i} x1={x} y1={y} x2={x + (dx / dist) * len} y2={y + (dy / dist) * len} className="cn-streak" style={{ strokeOpacity: s.a, strokeWidth: s.r }} />
-          ) : (
-            <circle key={i} cx={x} cy={y} r={s.r} className="cn-star" style={{ fillOpacity: s.a }} />
-          );
+          const fade = clamp((v.hz - y) / 60);
+          return <circle key={i} cx={x} cy={y} r={s.r * 0.8} className="cn-star" style={{ fillOpacity: s.a * fade, animationDelay: `${(i % 9) * -0.7}s` }} />;
         })}
       </g>
 
       <g className="cn-horizon">
-        <rect y={v.hz - 26} width={v.W} height={52} className="cn-haze" filter={`url(#${id("bloom")})`} />
-        <line x1={0} x2={v.W} y1={v.hz} y2={v.hz} className="cn-horizon-line" />
+        <rect y={v.hz - 40} width={v.W} height={80} className="cn-haze" filter={`url(#${id("bloom")})`} />
       </g>
+
+      {coreBase && coreTop && coreOn > 0.01 ? (
+        <g className={`cn-core is-${coreTone}`} style={{ opacity: coreOn * vis(secretZ) }}>
+          <ellipse cx={coreBase.x} cy={coreBase.y} rx={clamp(coreBase.s * 190, 60, 520)} ry={clamp(coreBase.s * 46, 14, 130)} fill={`url(#${id("core")})`} />
+          {coreSky ? (
+            <polygon
+              points={`${coreBase.x - coreBase.s * 7},${coreBase.y} ${coreBase.x + coreBase.s * 7},${coreBase.y} ${coreSky.x + 1},${coreSky.y} ${coreSky.x - 1},${coreSky.y}`}
+              fill={`url(#${id("shaft")})`}
+              className="cn-core-shaft"
+            />
+          ) : null}
+          <circle cx={coreTop.x} cy={coreTop.y} r={clamp(coreTop.s * 70, 26, 200)} fill={`url(#${id("core")})`} className="cn-core-halo" />
+        </g>
+      ) : null}
 
       <g className="cn-grid" style={{ opacity: c.gridAlpha }} stroke={`url(#${id("grid")})`}>
         {gridX.map((gx) => {
@@ -317,7 +334,7 @@ function CinemaStage({ position, layout, animate, className }: Props) {
           const showEvidence = c.scanned > i;
           if (!showName && !showEvidence) return null;
           const mid = project([(PATH_NODES[i].x + PATH_NODES[i + 1].x) / 2, 0, (i + 0.5) * HOP_Z]);
-          if (!mid || mid.dz > 820) return null;
+          if (!mid || mid.dz > 820 || mid.dz < 150 || mid.y > v.H * 0.58) return null;
           const fs = font(mid.s, 3.3);
           const blocked = i === 3 && c.severedFrom !== null && c.severedFrom <= WALL_HOP;
           const text = showEvidence ? (blocked ? "denied" : hop.evidence) : hop.label;
@@ -359,14 +376,23 @@ function CinemaStage({ position, layout, animate, className }: Props) {
                   : "idle";
           const fs = font(base.s);
           const d = clamp(base.s * 2.2, 3, 9);
-          const groundRing = ring(n.x, z, 12);
+          const groundRing = base.dz > 220 ? ring(n.x, z, 12) : null;
           const showFinding = lit && n.finding && (n.id !== "web" || c.foothold || c.act === 1);
           const labelX = top.x + d + 8;
+          const glowing = tone !== "idle" && tone !== "dormant";
+          const sky = glowing ? project([n.x, PYLON + 120, z]) : null;
+          const w = clamp(base.s * 2.4, 1, 6);
           return (
             <g key={n.id} className={`cn-node is-${tone}`} style={{ opacity: o }}>
               {groundRing ? <polyline points={groundRing} className="cn-node-ring" /> : null}
+              {sky ? (
+                <polygon
+                  points={`${top.x - w},${top.y} ${top.x + w},${top.y} ${sky.x},${sky.y} ${sky.x},${sky.y}`}
+                  className="cn-node-shaft"
+                />
+              ) : null}
               <line x1={base.x} y1={base.y} x2={top.x} y2={top.y} className="cn-node-stem" />
-              {tone !== "idle" && tone !== "dormant" ? (
+              {glowing ? (
                 <circle cx={top.x} cy={top.y} r={d * 2.2} className="cn-node-bloom" filter={`url(#${id("bloom")})`} />
               ) : null}
               <path d={`M ${top.x} ${top.y - d} L ${top.x + d} ${top.y} L ${top.x} ${top.y + d} L ${top.x - d} ${top.y} Z`} className="cn-node-mark" />

@@ -7,7 +7,7 @@ import { ArrowDown, ArrowRight } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 import { ACTS, sceneAt } from "./scene";
 import CinemaStage from "./CinemaStage";
-import CinemaChrome from "./CinemaChrome";
+import CinemaChrome, { titleCardOpacity } from "./CinemaChrome";
 import { FindingsCounter, FixStepper, ProofCertificate, ValidationTerminal } from "./Instruments";
 import "./cinematic.css";
 import "./chrome.css";
@@ -45,6 +45,8 @@ export default function CinematicStory() {
   const wide = useMemo(() => sceneAt(position, "wide"), [position]);
   const act = wide.act;
   const animate = !reducedMotion && inView;
+  const copyLive = titleCardOpacity(position) < 0.4;
+  const actClass = (i: number, extra = "") => `cs-act${extra}${i === act && copyLive ? " is-active" : ""}`;
 
   const jumpTo = (index: number) => {
     document.getElementById(`act-${ACTS[index].key}`)?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" });
@@ -91,7 +93,7 @@ export default function CinematicStory() {
 
         <div className="cs-copy">
           <div className="cs-lead" aria-hidden />
-          <article id="act-invisible" className="cs-act cs-act--hero">
+          <article id="act-invisible" className={actClass(0, " cs-act--hero")}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
                 <span>01</span> The invisible threat
@@ -120,7 +122,7 @@ export default function CinematicStory() {
             </div>
           </article>
 
-          <article id="act-connect" className="cs-act">
+          <article id="act-connect" className={actClass(1)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
                 <span>02</span> Connect the dots
@@ -135,7 +137,7 @@ export default function CinematicStory() {
             </div>
           </article>
 
-          <article id="act-prove" className="cs-act">
+          <article id="act-prove" className={actClass(2)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
                 <span>03</span> From possibility to proof
@@ -149,7 +151,7 @@ export default function CinematicStory() {
             </div>
           </article>
 
-          <article id="act-close" className="cs-act">
+          <article id="act-close" className={actClass(3)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
                 <span>04</span> Close the loop
@@ -160,7 +162,7 @@ export default function CinematicStory() {
             </div>
           </article>
 
-          <article id="act-drift" className="cs-act">
+          <article id="act-drift" className={actClass(4)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
                 <span>05</span> Trust is never permanent

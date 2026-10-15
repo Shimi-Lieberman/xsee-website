@@ -21,9 +21,14 @@
 .cn text {
   font-family: var(--font-geist-mono, ui-monospace), monospace;
   paint-order: stroke;
-  stroke: var(--cs-bg);
-  stroke-width: 3px;
+  stroke: rgb(5 7 12 / 0.65);
+  stroke-width: 2px;
   stroke-linejoin: round;
+}
+
+.cn .cn-node-label {
+  font-family: var(--font-geist-sans, ui-sans-serif), system-ui, sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* Sky, ground, horizon */
@@ -33,15 +38,32 @@
 .cn-ground-near { stop-color: #03050a; }
 
 .cn-star { fill: #dfe7ff; }
-.cn-streak { stroke: #dfe7ff; stroke-linecap: round; }
+.cn[data-animate] .cn-star { animation: cn-twinkle 6.3s ease-in-out infinite; }
 
-.cn-haze { fill: var(--cs-cyan); fill-opacity: 0.07; }
-.cn-horizon-line { stroke: var(--cs-cyan); stroke-opacity: 0.35; stroke-width: 0.6; }
+.cn-haze { fill: var(--cs-cyan); fill-opacity: 0.045; }
 
-.cn-grid line { stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+.cn-grid line { stroke-width: 0.5; vector-effect: non-scaling-stroke; }
 .cn-grid-far { stop-color: var(--cs-cyan); stop-opacity: 0; }
-.cn-grid-mid { stop-color: var(--cs-cyan); stop-opacity: 0.14; }
-.cn-grid-near { stop-color: var(--cs-cyan); stop-opacity: 0.24; }
+.cn-grid-mid { stop-color: var(--cs-cyan); stop-opacity: 0.09; }
+.cn-grid-near { stop-color: var(--cs-cyan); stop-opacity: 0.16; }
+
+/* Crown-jewel light core: the signature element, coloured by the story state */
+.cn-core { color: #b9c6ff; transition: color 600ms ease; }
+.cn-core.is-breached { color: var(--cs-red); }
+.cn-core.is-sealed { color: var(--cs-green); }
+.cn-core.is-reassessing { color: var(--cs-magenta); }
+.cn-core-0 { stop-color: currentColor; stop-opacity: 0.55; }
+.cn-core-1 { stop-color: currentColor; stop-opacity: 0.16; }
+.cn-core-2 { stop-color: currentColor; stop-opacity: 0; }
+.cn-shaft-0 { stop-color: currentColor; stop-opacity: 0.45; }
+.cn-shaft-1 { stop-color: currentColor; stop-opacity: 0; }
+.cn-core-halo { mix-blend-mode: screen; }
+.cn[data-animate] .cn-core-halo { animation: cn-breathe 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+
+.cn-node-shaft { fill: currentColor; fill-opacity: 0.14; }
+.cn-node.is-lit, .cn-node.is-breached { color: var(--cs-red); }
+.cn-node.is-sealed { color: var(--cs-green); }
+.cn-node.is-drift { color: var(--cs-magenta); }
 
 /* Environment */
 .cn-infra-links line { stroke: var(--cs-ink3); stroke-opacity: 0.35; stroke-width: 0.6; stroke-dasharray: 2 4; }
@@ -74,7 +96,7 @@
 .cn-node-ring { fill: none; stroke: var(--cs-ink3); stroke-width: 0.7; }
 .cn-node-stem { stroke: var(--cs-ink3); stroke-width: 1; }
 .cn-node-mark { fill: var(--cs-bg); stroke: var(--cs-ink2); stroke-width: 1.2; stroke-linejoin: miter; }
-.cn-node-kind { fill: var(--cs-ink3); letter-spacing: 0.14em; }
+.cn-node-kind { fill: var(--cs-ink3); letter-spacing: 0.18em; stroke: none; }
 .cn-node-label { fill: var(--cs-ink2); font-weight: 500; }
 .cn-node-finding { fill: var(--cs-red); letter-spacing: 0.12em; }
 .cn-node-bloom { fill-opacity: 0.45; }
@@ -139,6 +161,12 @@
 .cn-wall.is-flicker .cn-wall-label { fill: var(--cs-magenta); }
 .cn-shards path { fill: var(--cs-green); fill-opacity: 0.6; stroke: #e3fff2; stroke-width: 0.4; }
 
+@keyframes cn-twinkle {
+  50% { opacity: 0.35; }
+}
+@keyframes cn-breathe {
+  50% { transform: scale(1.12); opacity: 0.8; }
+}
 @keyframes cn-pulse {
   50% { opacity: 0.2; }
 }
