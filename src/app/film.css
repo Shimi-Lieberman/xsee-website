@@ -431,3 +431,16 @@
   .xsee-spine-body { animation: none !important; }
   .xsee-spine::after { transform: none; }
 }
+
+@media (max-width: 767px) {
+  .chat-fab {
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    right: 14px;
+    width: 46px;
+    height: 46px;
+    background: rgba(5, 13, 26, 0.72);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  .chat-fab svg { width: 20px; height: 20px; }
+}
