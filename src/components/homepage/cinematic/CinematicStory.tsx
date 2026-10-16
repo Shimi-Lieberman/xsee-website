@@ -152,7 +152,7 @@ export default function CinematicStory() {
               <p className="cs-lede text-pretty">Every hop is observed, simulated, or stated as an assumption. Every gap stays visible.</p>
               <p className="cs-note">Read-only collection and IAM policy simulation. Nothing changes in your account.</p>
               <a className="cs-link" href="#reactor">
-                Open the evidence reactor <ArrowRight size={15} aria-hidden />
+                Enter the proof engine <ArrowRight size={15} aria-hidden />
               </a>
             </div>
           </article>
