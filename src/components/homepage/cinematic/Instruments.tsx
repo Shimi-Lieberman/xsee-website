@@ -1,25 +1,55 @@
-import { Check, ShieldAlert, ShieldCheck, UserCheck } from "lucide-react";
-import { FIX_STEPS, VALIDATION_LOG, type Scene } from "./scene";
+import { Check, ShieldAlert, ShieldCheck, ShieldQuestion, UserCheck } from "lucide-react";
+import { FIX_STEPS, VALIDATION_LOG, type EvidenceState } from "./scene";
+import type { Certificate } from "./cinema";
 
-export function ValidationTerminal({ lines }: { lines: number }) {
+const LEDGER: { state: EvidenceState; label: string }[] = [
+  { state: "observed", label: "Observed" },
+  { state: "simulated", label: "Simulated" },
+  { state: "assumed", label: "Assumed" },
+  { state: "untested", label: "Untested" },
+  { state: "blocked", label: "Blocked" },
+];
+
+/** Evidence Chamber: a glass terminal synchronized with an evidence timeline. */
+export function EvidenceChamber({ lines }: { lines: number }) {
   const shown = VALIDATION_LOG.slice(0, Math.max(1, lines));
+  const done = VALIDATION_LOG.slice(0, lines);
+  const count = (s: EvidenceState) => done.filter((l) => l.state === s).length;
+  const complete = lines >= VALIDATION_LOG.length;
   return (
-    <div className="cs-terminal" aria-hidden>
-      <div className="cs-terminal-head">
-        <span>xsee · validate AP-12 · read-only</span>
-        <span className="cs-demo-tag">Demo data</span>
+    <div className="ec" aria-hidden>
+      <div className="ec-head">
+        <span className="ec-dot" />
+        <span className="ec-title">xsee validate AP-12</span>
+        <span className="ec-mode">read-only</span>
+        <span className="cs-demo-tag">Simulation</span>
       </div>
-      <ol className="cs-terminal-body">
+      <ol className="ec-log">
         {shown.map((line, i) => (
-          <li key={line.target} className={i === lines - 1 ? "is-new" : undefined}>
-            <span className="cs-term-prompt">{">"}</span>
-            <span className="cs-term-verb">{line.verb}</span>
-            <span className="cs-term-target">{line.target}</span>
-            <span className={`cs-term-result is-${line.result}`}>{lines > i ? line.result : ""}</span>
+          <li key={line.target} className={`${i === lines - 1 ? "is-new " : ""}is-${line.state}`}>
+            <span className="ec-verb">{line.verb}</span>
+            <span className="ec-target">{line.target}</span>
+            <span className="ec-result">{lines > i ? line.result : ""}</span>
           </li>
         ))}
-        {lines < VALIDATION_LOG.length ? <li className="cs-term-cursor" /> : null}
+        {!complete ? <li className="ec-cursor" /> : null}
       </ol>
+      <div className="ec-timeline" role="presentation">
+        {VALIDATION_LOG.map((line, i) => (
+          <span key={line.target} className={`is-${line.state}${i < lines ? " is-on" : ""}`} />
+        ))}
+      </div>
+      <ul className="ec-ledger">
+        {LEDGER.map((l) => (
+          <li key={l.state} className={`is-${l.state}${count(l.state) ? " is-on" : ""}`}>
+            <b>{count(l.state)}</b>
+            {l.label}
+          </li>
+        ))}
+      </ul>
+      <p className={`ec-verdict${complete ? " is-on" : ""}`}>
+        {complete ? "Reachable under 1 stated assumption · 2 checks not proven" : "Collecting evidence…"}
+      </p>
     </div>
   );
 }
@@ -31,7 +61,7 @@ export function FixStepper({ step }: { step: number }) {
         const state = i < step ? "done" : i === step ? "active" : "todo";
         const approval = i === 2;
         return (
-          <li key={s.title} className={`is-${state}${approval ? " is-approval" : ""}${i === 3 ? " is-apply" : ""}`}>
+          <li key={s.title} className={`is-${state}${approval ? " is-approval" : ""}${i === 3 ? " is-apply" : ""}${i === 4 ? " is-recheck" : ""}`}>
             <span className="cs-fix-dot">{i < step ? <Check size={11} /> : approval ? <UserCheck size={11} /> : null}</span>
             <span className="cs-fix-text">
               <strong>{s.title}</strong>
@@ -44,19 +74,25 @@ export function FixStepper({ step }: { step: number }) {
   );
 }
 
-export function ProofCertificate({ state }: { state: Scene["certificate"] }) {
+const CERT: Record<Exclude<Certificate, "hidden">, { label: string; meta: string }> = {
+  verified: { label: "Verified closed", meta: "Re-check denied sts:AssumeRole" },
+  drift: { label: "Drift detected", meta: "Trust policy changed · reassessment queued" },
+  reassessing: { label: "Reassessing", meta: "Re-running the path against today's config" },
+  revoked: { label: "Revoked", meta: "Re-validation reached prod/orders-db again" },
+};
+
+export function ProofCertificate({ state }: { state: Certificate }) {
   if (state === "hidden") return null;
-  const revoked = state === "revoked";
-  const label = revoked ? "Revoked" : state === "reassessing" ? "Reassessing" : "Verified closed";
+  const Icon = state === "revoked" ? ShieldAlert : state === "verified" ? ShieldCheck : ShieldQuestion;
   return (
     <div className={`cs-cert is-${state}`} aria-hidden>
-      <div className="cs-cert-seal">{revoked ? <ShieldAlert size={18} /> : <ShieldCheck size={18} />}</div>
+      <div className="cs-cert-seal">
+        <Icon size={18} />
+      </div>
       <div className="cs-cert-body">
         <span className="cs-cert-kicker">Closure record · AP-12</span>
-        <strong className="cs-cert-state">{label}</strong>
-        <span className="cs-cert-meta">
-          {revoked ? "Trust policy drift · path reopened" : state === "reassessing" ? "Environment changed · re-checking" : "Re-test stopped at sts:AssumeRole"}
-        </span>
+        <strong className="cs-cert-state">{CERT[state].label}</strong>
+        <span className="cs-cert-meta">{CERT[state].meta}</span>
       </div>
       <span className="cs-demo-tag">Illustrative</span>
     </div>
@@ -64,7 +100,7 @@ export function ProofCertificate({ state }: { state: Scene["certificate"] }) {
 }
 
 export function FindingsCounter({ local }: { local: number }) {
-  const connected = local > 0.85;
+  const connected = local > 0.82;
   return (
     <div className="cs-findings" aria-hidden>
       <span className={connected ? "is-muted" : undefined}>
@@ -72,7 +108,7 @@ export function FindingsCounter({ local }: { local: number }) {
       </span>
       <span className="cs-findings-arrow">{"→"}</span>
       <span className={connected ? "is-on" : undefined}>
-        <b>1</b> attack path
+        <b>1</b> candidate path
       </span>
     </div>
   );

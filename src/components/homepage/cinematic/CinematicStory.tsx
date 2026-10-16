@@ -1,25 +1,27 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useInView, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
-import { ACTS, sceneAt } from "./scene";
+import { ACTS } from "./scene";
+import { cinemaAt, type Cinema } from "./cinema";
 import CinemaStage from "./CinemaStage";
 import CinemaChrome, { titleCardOpacity } from "./CinemaChrome";
-import { FindingsCounter, FixStepper, ProofCertificate, ValidationTerminal } from "./Instruments";
+import { EvidenceChamber, FindingsCounter, FixStepper, ProofCertificate } from "./Instruments";
 import "./cinematic.css";
 import "./chrome.css";
+import "./chamber.css";
 
 const QUANTUM = 1 / 600;
 const LIFECYCLE = ["Discovery", "Attack-path analysis", "Validation", "Remediation", "Revalidation", "Revocable proof"];
 
-function StageInstrument({ scene }: { scene: ReturnType<typeof sceneAt> }) {
-  if (scene.act === 1) return <FindingsCounter local={scene.local} />;
-  if (scene.act === 2) return <ValidationTerminal lines={scene.logLines} />;
-  if (scene.act === 3) return scene.fixStep >= 5 ? <ProofCertificate state={scene.certificate} /> : <FixStepper step={scene.fixStep} />;
-  if (scene.act === 4) return <ProofCertificate state={scene.certificate} />;
+function StageInstrument({ c }: { c: Cinema }) {
+  if (c.act === 1) return <FindingsCounter local={c.t} />;
+  if (c.act === 2) return <EvidenceChamber lines={c.logLines} />;
+  if (c.act === 3) return c.certificate === "verified" ? <ProofCertificate state={c.certificate} /> : <FixStepper step={c.fixStep} />;
+  if (c.act === 4) return <ProofCertificate state={c.certificate} />;
   return null;
 }
 
@@ -29,7 +31,7 @@ export default function CinematicStory() {
   const inView = useInView(trackRef, { margin: "0px 0px 0px 0px" });
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
   const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 32, mass: 0.4 });
-  const [position, setPosition] = useState(0);
+  const [position, setPosition] = useState(() => 0);
 
   const update = (value: number) => {
     const next = Math.round((value * 5) / QUANTUM) * QUANTUM;
@@ -42,11 +44,16 @@ export default function CinematicStory() {
     if (reducedMotion) update(v);
   });
 
-  const wide = useMemo(() => sceneAt(position, "wide"), [position]);
-  const act = wide.act;
+  const c = useMemo(() => cinemaAt(position), [position]);
+  const act = c.act;
   const animate = !reducedMotion && inView;
-  const copyLive = titleCardOpacity(position) < 0.4;
-  const actClass = (i: number, extra = "") => `cs-act${extra}${i === act && copyLive ? " is-active" : ""}`;
+  const copyLive = act === 0 || titleCardOpacity(position) < 0.4;
+  const actClass = (i: number, extra = "") =>
+    `cs-act${extra}${i === act && copyLive ? " is-active" : ""}${i === act && c.beat ? " is-beat" : ""}`;
+  const depth = {
+    "--cn-focus": reducedMotion ? 0 : c.focus.toFixed(3),
+    "--cn-chamber": reducedMotion ? 0 : c.chamber.toFixed(3),
+  } as CSSProperties;
 
   const jumpTo = (index: number) => {
     document.getElementById(`act-${ACTS[index].key}`)?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "center" });
@@ -57,13 +64,15 @@ export default function CinematicStory() {
       <div ref={trackRef} className="cs-track">
         <div className="cs-stage-col">
           <div className="cs-stage">
-            <div className="cs-graph-frame" data-act={act} data-cert={wide.certificate}>
-              <CinemaStage position={position} layout="wide" animate={animate} className="cs-graph--wide" />
-              <CinemaStage position={position} layout="tall" animate={animate} className="cs-graph--tall" />
+            <div className="cs-graph-frame" data-act={act} data-cert={c.certificate} data-chamber={c.chamber > 0.5 || undefined} style={depth}>
+              <CinemaStage c={c} layer="env" layout="wide" animate={animate} className="cs-graph--wide" />
+              <CinemaStage c={c} layer="env" layout="tall" animate={animate} className="cs-graph--tall" />
+              <CinemaStage c={c} layer="route" layout="wide" animate={animate} className="cs-graph--wide" />
+              <CinemaStage c={c} layer="route" layout="tall" animate={animate} className="cs-graph--tall" />
               <div className="cs-scrim" aria-hidden />
               <CinemaChrome position={position} onNext={jumpTo} />
-              <div className="cs-instrument" key={act}>
-                <StageInstrument scene={wide} />
+              <div className="cs-instrument" key={act} data-kind={act === 2 ? "chamber" : undefined}>
+                <StageInstrument c={c} />
               </div>
             </div>
             <nav className="cs-rail" aria-label="Story chapters">
@@ -76,7 +85,7 @@ export default function CinematicStory() {
                   aria-current={i === act ? "step" : undefined}
                 >
                   <span className="cs-rail-bar" aria-hidden>
-                    <span style={{ transform: `scaleX(${i < act ? 1 : i === act ? wide.local : 0})` }} />
+                    <span style={{ transform: `scaleX(${i < act ? 1 : i === act ? c.t : 0})` }} />
                   </span>
                   <span className="cs-rail-label">{a.label}</span>
                 </button>
@@ -84,10 +93,11 @@ export default function CinematicStory() {
             </nav>
           </div>
           <p className="sr-only">
-            Illustrative story of attack path AP-12 in a fictional AWS environment: an internet-facing load balancer forwards to web-frontend,
-            whose task role can assume role-batch-ops and read the prod/orders-db secret. XSEE validates the path with read-only collection and
-            policy simulation, your team approves and applies a trust-policy fix, a re-test verifies closure, and a later trust-policy change
-            revokes the closure record.
+            Simulated story of attack path AP-12 in a fictional AWS environment: an internet-facing load balancer forwards to web-frontend,
+            whose task role can assume role-batch-ops and read the prod/orders-db secret. The path starts as a candidate. XSEE validates it with
+            read-only collection and IAM policy simulation under one stated assumption, and shows one untested branch and one blocked check. Your
+            team approves and applies a trust-policy fix in AWS, an XSEE re-check verifies closure, and a later trust-policy change triggers
+            reassessment that re-validates the path and revokes the closure record.
           </p>
         </div>
 
@@ -96,16 +106,14 @@ export default function CinematicStory() {
           <article id="act-invisible" className={actClass(0, " cs-act--hero")}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>01</span> The invisible threat
+                <span>01</span> System awakening
               </p>
               <h1 id="cs-title" className="cs-h1 text-balance">
-                Your cloud has a story you cannot see.
+                {"You can't defend what you can't prove."}
               </h1>
-              <p className="cs-lede text-pretty">
-                XSEE reveals how identities, permissions, and infrastructure combine into real attack paths.
-              </p>
-              <p className="cs-mantra">
-                Trust nothing. <span>Prove everything.</span>
+              <p className="cs-lede cs-lede--strong text-pretty">Validate attack paths. Verify the fix.</p>
+              <p className="cs-support text-pretty">
+                XSEE reveals how identities, permissions, and infrastructure combine into real attack paths in AWS.
               </p>
               <div className="cs-actions">
                 <Link href="/demo" className="cs-btn cs-btn--primary" onClick={() => Analytics.ctaClicked("hero", "book_demo")}>
@@ -116,7 +124,7 @@ export default function CinematicStory() {
                 </a>
               </div>
               <a href="#act-connect" className="cs-scroll-cue" onClick={(e) => (e.preventDefault(), jumpTo(1))}>
-                <span>Scroll to follow the path</span>
+                <span>Scroll to enter the cloud</span>
                 <ArrowDown size={14} aria-hidden />
               </a>
             </div>
@@ -125,12 +133,10 @@ export default function CinematicStory() {
           <article id="act-connect" className={actClass(1)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>02</span> Connect the dots
+                <span>02</span> The path ignites
               </p>
-              <h2 className="cs-h2 text-balance">A finding is not an attack path.</h2>
-              <p className="cs-lede text-pretty">
-                XSEE connects the relationships that reveal how an attacker could move through your cloud.
-              </p>
+              <h2 className="cs-h2 text-balance">One connection changes everything.</h2>
+              <p className="cs-lede cs-beat text-pretty">But a possible path is not proof.</p>
               <a className="cs-link" href="#walkthrough">
                 Explore the attack path <ArrowRight size={15} aria-hidden />
               </a>
@@ -140,11 +146,11 @@ export default function CinematicStory() {
           <article id="act-prove" className={actClass(2)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>03</span> From possibility to proof
+                <span>03</span> The evidence chamber
               </p>
-              <h2 className="cs-h2 text-balance">Possible is not proven.</h2>
-              <p className="cs-lede text-pretty">XSEE turns attack-path hypotheses into evidence-backed security decisions.</p>
-              <p className="cs-note">Each hop is marked observed, assumed, or simulated. Nothing is changed in your account.</p>
+              <h2 className="cs-h2 text-balance">Follow the evidence.</h2>
+              <p className="cs-lede text-pretty">Every hop is observed, simulated, or stated as an assumption. Every gap stays visible.</p>
+              <p className="cs-note">Read-only collection and IAM policy simulation. Nothing changes in your account.</p>
               <a className="cs-link" href="#reactor">
                 Open the evidence reactor <ArrowRight size={15} aria-hidden />
               </a>
@@ -154,23 +160,22 @@ export default function CinematicStory() {
           <article id="act-close" className={actClass(3)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>04</span> Close the loop
+                <span>04</span> Verify the fix
               </p>
-              <h2 className="cs-h2 text-balance">From proof to closure.</h2>
-              <p className="cs-lede text-pretty">Move from validated exposure to remediation, revalidation, and documented closure.</p>
-              <p className="cs-note">A person on your team approves the fix and your pipeline applies it. XSEE re-checks the path and records the result.</p>
+              <h2 className="cs-h2 text-balance">{"The fix isn't the finish line."}</h2>
+              <p className="cs-lede cs-lede--strong cs-beat text-pretty">Verification is.</p>
+              <p className="cs-note">Your team approves and applies the change in AWS. XSEE re-checks the path and records the result.</p>
             </div>
           </article>
 
           <article id="act-drift" className={actClass(4)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>05</span> Trust is never permanent
+                <span>05</span> Drift
               </p>
-              <h2 className="cs-h2 text-balance">Security changes. Proof must keep up.</h2>
-              <p className="cs-lede text-pretty">
-                Continuous reassessment keeps security conclusions aligned with changing cloud environments.
-              </p>
+              <h2 className="cs-h2 text-balance">{"Yesterday's proof is not today's security."}</h2>
+              <p className="cs-lede cs-beat text-pretty">XSEE keeps the evidence connected to a changing cloud.</p>
+              <p className="cs-note">A change triggers reassessment. A closure record is revoked only when the path re-validates.</p>
               <ul className="cs-lifecycle" aria-label="Reassessment loop">
                 {LIFECYCLE.map((item) => (
                   <li key={item}>{item}</li>

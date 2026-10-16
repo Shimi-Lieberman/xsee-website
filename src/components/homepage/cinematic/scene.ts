@@ -291,21 +291,25 @@ export function sceneAt(position: number, layout: Layout): Scene {
   return scene;
 }
 
-export const VALIDATION_LOG = [
-  { verb: "collect", target: "alb-web-public listener :443", result: "observed" },
-  { verb: "collect", target: "target group → web-frontend", result: "observed" },
-  { verb: "assume", target: "code execution in web-frontend task", result: "assumed" },
-  { verb: "collect", target: "task role role-web-task", result: "observed" },
-  { verb: "simulate", target: "sts:AssumeRole → role-batch-ops", result: "allowed" },
-  { verb: "simulate", target: "GetSecretValue prod/orders-db", result: "allowed" },
-  { verb: "result", target: "AP-12 reachable under stated assumption", result: "validated" },
-] as const;
+export type EvidenceState = "observed" | "assumed" | "simulated" | "untested" | "blocked" | "validated";
+
+export const VALIDATION_LOG: { verb: string; target: string; result: string; state: EvidenceState }[] = [
+  { verb: "collect", target: "alb-web-public listener :443", result: "observed", state: "observed" },
+  { verb: "collect", target: "target group → web-frontend", result: "observed", state: "observed" },
+  { verb: "assume", target: "code execution in web-frontend task", result: "assumed", state: "assumed" },
+  { verb: "collect", target: "task role role-web-task", result: "observed", state: "observed" },
+  { verb: "simulate", target: "sts:AssumeRole → role-batch-ops", result: "allowed", state: "simulated" },
+  { verb: "simulate", target: "GetSecretValue prod/orders-db", result: "allowed", state: "simulated" },
+  { verb: "skip", target: "role-web-task → nw-exports", result: "untested", state: "untested" },
+  { verb: "collect", target: "kms-orders key policy", result: "blocked", state: "blocked" },
+  { verb: "result", target: "AP-12 reachable under 1 assumption", result: "validated", state: "validated" },
+];
 
 export const FIX_STEPS = [
-  { title: "Validated exposure", detail: "AP-12 reaches prod/orders-db." },
-  { title: "Proposed remediation", detail: "Narrow role-batch-ops trust to its pipeline only." },
-  { title: "Human approval", detail: "A person on your team reviews and approves it." },
-  { title: "Fix applied by your team", detail: "Your pipeline applies the change in AWS." },
-  { title: "Revalidation", detail: "sts:AssumeRole is now denied. The path stops." },
-  { title: "Evidence-backed closure", detail: "A closure record is issued for AP-12." },
+  { title: "Validated exposure", detail: "AP-12 reaches prod/orders-db under one assumption." },
+  { title: "Proposed change", detail: "Narrow role-batch-ops trust to its pipeline only." },
+  { title: "Approved by your team", detail: "A person on your team reviews and approves it." },
+  { title: "Applied in your AWS", detail: "Your pipeline makes the change. XSEE stays read-only." },
+  { title: "XSEE re-check", detail: "Policy simulation re-runs sts:AssumeRole against the new trust policy." },
+  { title: "Verification record", detail: "AssumeRole denied. AP-12 recorded as closed." },
 ] as const;
