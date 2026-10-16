@@ -130,6 +130,64 @@ function shape(kind: string, x: number, y: number, r: number) {
   return <rect x={x - r} y={y - r} width={r * 2} height={r * 2} rx={r * 0.3} />;
 }
 
+type Box = { x0: number; y0: number; x1: number; y1: number };
+type Lbl = {
+  key: string;
+  text: string;
+  x: number;
+  y: number;
+  fs: number;
+  cls: string;
+  pri: number;
+  anchor?: "start" | "middle" | "end";
+  wrap?: string;
+  opacity?: number;
+  /** letter-spacing in em, used to estimate rendered width */
+  ls?: number;
+  keep?: boolean;
+};
+
+const MONO_ADVANCE = 0.6;
+const hits = (a: Box, b: Box) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+
+function boxOf(l: Lbl, dy: number): Box {
+  const w = l.text.length * l.fs * (MONO_ADVANCE + (l.ls ?? 0.02));
+  const x0 = l.anchor === "middle" ? l.x - w / 2 : l.anchor === "end" ? l.x - w : l.x;
+  const y = l.y + dy;
+  return { x0: x0 - 3, x1: x0 + w + 3, y0: y - l.fs * 0.85 - 2, y1: y + l.fs * 0.25 + 2 };
+}
+
+/** Greedy placement: highest priority first, nudge vertically, drop what still collides. */
+function placeLabels(labels: Lbl[], obstacles: Box[]) {
+  const taken = [...obstacles];
+  return [...labels]
+    .sort((a, b) => b.pri - a.pri)
+    .map((l) => {
+      const step = l.fs * 1.3;
+      let dy: number | null = null;
+      for (const d of [0, -step, step]) {
+        const b = boxOf(l, d);
+        if (!taken.some((t) => hits(b, t))) {
+          dy = d;
+          taken.push(b);
+          break;
+        }
+      }
+      if (dy === null && l.keep) {
+        dy = 0;
+        taken.push(boxOf(l, 0));
+      }
+      if (dy === null) return null;
+      return (
+        <g key={l.key} className={l.wrap} opacity={l.opacity}>
+          <text className={l.cls} x={f1(l.x)} y={f1(l.y + dy)} fontSize={l.fs} textAnchor={l.anchor ?? "start"}>
+            {l.text}
+          </text>
+        </g>
+      );
+    });
+}
+
 type Props = {
   proof: Proof;
   layout: Layout;
@@ -180,6 +238,161 @@ function ProofStage({ proof: p, layout, selected, interactive, onSelect }: Props
     const u = clamp(p.pulse - i);
     return project([lerp(a.x, b.x, u), 0, lerp(a.z, b.z, u)]);
   })();
+
+  const labels: Lbl[] = [];
+  const obstacles: Box[] = [];
+
+  const nodeEls = Object.entries(POINTS).map(([k, a]) => {
+    const q = project(pos3(a, open));
+    if (!q) return null;
+    const r = clamp(7 * q.s, 4.5, 11);
+    const crown = a.kind === "SECRET";
+    const side = !ROUTE.includes(k);
+    const fs = font(q.s, 5.8);
+    const wrap = `pe-node${crown ? " is-crown" : ""}${side ? " is-side" : ""}`;
+    const nodeOpacity = side && p.stage < 2 ? 0.45 : 1;
+    const ext = r * 1.35;
+    obstacles.push({ x0: q.x - ext, x1: q.x + ext, y0: q.y - ext, y1: q.y + ext });
+    labels.push({
+      key: `n-${k}`,
+      text: a.label,
+      x: q.x,
+      y: q.y - r * 1.5 - 5,
+      fs,
+      cls: "pe-node-label",
+      wrap,
+      opacity: nodeOpacity,
+      anchor: "middle",
+      pri: crown ? 90 : side ? 55 : 80,
+      keep: crown,
+    });
+    if (!tall) {
+      labels.push({
+        key: `nk-${k}`,
+        text: a.kind,
+        x: q.x,
+        y: q.y - r * 1.5 - 5 - fs * 1.05,
+        fs: fs * 0.72,
+        cls: "pe-node-kind",
+        wrap,
+        opacity: nodeOpacity,
+        anchor: "middle",
+        ls: 0.2,
+        pri: 20,
+      });
+    }
+    return (
+      <g key={k} className={wrap} opacity={nodeOpacity}>
+        {crown ? <circle cx={q.x} cy={q.y} r={r * 6} fill={`url(#pe-core-${layout})`} className="pe-crown-glow" /> : null}
+        <g className="pe-node-shape">{shape(a.kind, q.x, q.y, r)}</g>
+      </g>
+    );
+  });
+
+  const claimEls = CLAIMS.map((c) => {
+    const phase = phaseOf(c, p);
+    const A = pos3(POINTS[c.a], open);
+    const pa = project(A);
+    if (!pa) return null;
+    const isSel = selected === c.id;
+    const dim = selected && !isSel ? " is-dim" : "";
+    const sel = isSel ? " is-selected" : "";
+    const showOutside = !c.onRoute && p.outside > 0;
+    const tag = isResolved(p, c) ? STATE_LABEL[c.state] : null;
+    const interactiveProps = interactive
+      ? {
+          role: "button" as const,
+          tabIndex: 0,
+          "aria-label": `${c.step}: ${STATE_LABEL[c.state]}`,
+          "aria-pressed": isSel,
+          onClick: () => onSelect(c.id),
+          onKeyDown: keyHandler(c.id),
+        }
+      : { "aria-hidden": true as const };
+
+    if (!c.b) {
+      const r = clamp(22 * pa.s, 12, 30);
+      const wrap = `pe-claim pe-claim--node is-${phase}${dim}${sel}`;
+      if (tag) {
+        labels.push({
+          key: `t-${c.id}`,
+          text: tag,
+          x: pa.x,
+          y: pa.y + r + font(pa.s) + 4,
+          fs: font(pa.s, 5.2),
+          cls: "pe-tag",
+          wrap,
+          anchor: "middle",
+          ls: 0.14,
+          pri: isSel ? 100 : 70,
+          keep: isSel,
+        });
+      }
+      return (
+        <g key={c.id} className={wrap} {...interactiveProps}>
+          <circle cx={pa.x} cy={pa.y} r={r + 10} className="pe-hit" />
+          <circle cx={pa.x} cy={pa.y} r={r} className="pe-ring" />
+        </g>
+      );
+    }
+
+    const B = pos3(POINTS[c.b], open);
+    const pb = project(B);
+    if (!pb) return null;
+    const mx = (pa.x + pb.x) / 2;
+    const my = (pa.y + pb.y) / 2;
+    const bend = c.onRoute ? 0 : -18 * Math.min(pa.s, pb.s);
+    const d = `M${f1(pa.x)} ${f1(pa.y)}Q${f1(mx)} ${f1(my + bend)} ${f1(pb.x)} ${f1(pb.y)}`;
+    const ms = (pa.s + pb.s) / 2;
+    const labelSide = c.onRoute ? (POINTS[c.b].x > POINTS[c.a].x ? 1 : -1) : 1;
+    const lx = mx + labelSide * clamp(14 * ms, 10, 22);
+    const anchor = labelSide > 0 ? "start" : "end";
+    const showLabel = !tall || p.stage <= 2 || isSel;
+    const wrap = `pe-claim is-${phase}${dim}${sel}${showOutside ? " is-outside" : ""}`;
+    if (showLabel) {
+      labels.push({
+        key: `e-${c.id}`,
+        text: c.label,
+        x: lx,
+        y: my - 2,
+        fs: font(ms, 5),
+        cls: "pe-edge-label",
+        wrap,
+        anchor,
+        ls: 0.04,
+        pri: isSel ? 99 : 40,
+        keep: isSel,
+      });
+    }
+    if (tag) {
+      labels.push({
+        key: `t-${c.id}`,
+        text: showOutside ? `${tag} · outside` : tag,
+        x: lx,
+        y: my + font(ms, 5) + (showLabel ? 2 : -2),
+        fs: font(ms, 4.8),
+        cls: "pe-tag",
+        wrap,
+        anchor,
+        ls: 0.14,
+        pri: isSel ? 100 : showOutside ? 50 : 70,
+        keep: isSel,
+      });
+    }
+    return (
+      <g key={c.id} className={wrap} {...interactiveProps}>
+        <path d={d} className="pe-hit" />
+        <path d={d} className="pe-halo" />
+        <path d={d} className="pe-line" />
+        {phase === "verifying" ? <path d={d} className="pe-sweep" pathLength={1} /> : null}
+        {c.state === "blocked" && tag ? (
+          <g className="pe-x" transform={`translate(${f1(mx)} ${f1(my + bend / 2)})`}>
+            <path d="M-5 -5L5 5M5 -5L-5 5" />
+          </g>
+        ) : null}
+      </g>
+    );
+  });
 
   return (
     <svg
@@ -262,108 +475,14 @@ function ProofStage({ proof: p, layout, selected, interactive, onSelect }: Props
           : null}
       </g>
 
-      <g className="pe-claims">
-        {CLAIMS.map((c) => {
-          const phase = phaseOf(c, p);
-          const A = pos3(POINTS[c.a], open);
-          const pa = project(A);
-          if (!pa) return null;
-          const dim = selected && selected !== c.id ? " is-dim" : "";
-          const sel = selected === c.id ? " is-selected" : "";
-          const showOutside = !c.onRoute && p.outside > 0;
-          const tag = isResolved(p, c) ? STATE_LABEL[c.state] : null;
-          const interactiveProps = interactive
-            ? {
-                role: "button" as const,
-                tabIndex: 0,
-                "aria-label": `${c.step}: ${STATE_LABEL[c.state]}`,
-                "aria-pressed": selected === c.id,
-                onClick: () => onSelect(c.id),
-                onKeyDown: keyHandler(c.id),
-              }
-            : { "aria-hidden": true as const };
-
-          if (!c.b) {
-            const r = clamp(22 * pa.s, 12, 30);
-            return (
-              <g key={c.id} className={`pe-claim pe-claim--node is-${phase}${dim}${sel}`} {...interactiveProps}>
-                <circle cx={pa.x} cy={pa.y} r={r + 10} className="pe-hit" />
-                <circle cx={pa.x} cy={pa.y} r={r} className="pe-ring" />
-                {tag && (!tall || p.stage < 3 || selected === c.id) ? (
-                  <text className="pe-tag" x={pa.x} y={pa.y + r + font(pa.s) + 4} fontSize={font(pa.s, 5.2)} textAnchor="middle">
-                    {tag}
-                  </text>
-                ) : null}
-              </g>
-            );
-          }
-
-          const B = pos3(POINTS[c.b], open);
-          const pb = project(B);
-          if (!pb) return null;
-          const mx = (pa.x + pb.x) / 2;
-          const my = (pa.y + pb.y) / 2;
-          const bend = c.onRoute ? 0 : -18 * Math.min(pa.s, pb.s);
-          const d = `M${f1(pa.x)} ${f1(pa.y)}Q${f1(mx)} ${f1(my + bend)} ${f1(pb.x)} ${f1(pb.y)}`;
-          const ms = (pa.s + pb.s) / 2;
-          const labelSide = c.onRoute ? (POINTS[c.b].x > POINTS[c.a].x ? 1 : -1) : 1;
-          const lx = mx + labelSide * clamp(14 * ms, 10, 22);
-          const showLabel = !tall || p.stage === 0;
-          return (
-            <g key={c.id} className={`pe-claim is-${phase}${dim}${sel}${showOutside ? " is-outside" : ""}`} {...interactiveProps}>
-              <path d={d} className="pe-hit" />
-              <path d={d} className="pe-halo" />
-              <path d={d} className="pe-line" />
-              {phase === "verifying" ? <path d={d} className="pe-sweep" pathLength={1} /> : null}
-              {c.state === "blocked" && tag ? (
-                <g className="pe-x" transform={`translate(${f1(mx)} ${f1(my + bend / 2)})`}>
-                  <path d="M-5 -5L5 5M5 -5L-5 5" />
-                </g>
-              ) : null}
-              {showLabel && (p.stage <= 2 || selected === c.id || !tall) ? (
-                <text className="pe-edge-label" x={lx} y={my - 2} fontSize={font(ms, 5)} textAnchor={labelSide > 0 ? "start" : "end"}>
-                  {c.label}
-                </text>
-              ) : null}
-              {tag ? (
-                <text
-                  className="pe-tag"
-                  x={lx}
-                  y={my + font(ms, 5) + (showLabel ? 2 : -2)}
-                  fontSize={font(ms, 4.8)}
-                  textAnchor={labelSide > 0 ? "start" : "end"}
-                >
-                  {showOutside ? `${tag} · outside` : tag}
-                </text>
-              ) : null}
-            </g>
-          );
-        })}
-      </g>
+      <g className="pe-claims">{claimEls}</g>
 
       <g className="pe-nodes" aria-hidden="true">
-        {Object.entries(POINTS).map(([k, a]) => {
-          const q = project(pos3(a, open));
-          if (!q) return null;
-          const r = clamp(7 * q.s, 4.5, 11);
-          const crown = a.kind === "SECRET";
-          const side = !ROUTE.includes(k);
-          const fs = font(q.s, 5.8);
-          return (
-            <g key={k} className={`pe-node${crown ? " is-crown" : ""}${side ? " is-side" : ""}`} opacity={side && p.stage < 2 ? 0.45 : 1}>
-              {crown ? <circle cx={q.x} cy={q.y} r={r * 6} fill={`url(#pe-core-${layout})`} className="pe-crown-glow" /> : null}
-              <g className="pe-node-shape">{shape(a.kind, q.x, q.y, r)}</g>
-              <text className="pe-node-label" x={q.x} y={q.y - r * 1.5 - 5} fontSize={fs} textAnchor="middle">
-                {a.label}
-              </text>
-              {!tall ? (
-                <text className="pe-node-kind" x={q.x} y={q.y - r * 1.5 - 5 - fs * 1.05} fontSize={fs * 0.72} textAnchor="middle">
-                  {a.kind}
-                </text>
-              ) : null}
-            </g>
-          );
-        })}
+        {nodeEls}
+      </g>
+
+      <g className="pe-labels" aria-hidden="true">
+        {placeLabels(labels, obstacles)}
       </g>
 
       {p.cards > 0.01 ? (
@@ -380,7 +499,7 @@ function ProofStage({ proof: p, layout, selected, interactive, onSelect }: Props
                 })()
               : pos3(POINTS[c.a], open);
             const pa = project(A);
-            const pc = project([A[0] + side * (tall ? 120 : 150), EVID * open, A[2]]);
+            const pc = project([A[0] + side * (tall ? 72 : 150), EVID * open, A[2]]);
             if (!pa || !pc) return null;
             const appear = seg(e, 0, 0.4);
             const travel = seg(e, 0.4, 1);
