@@ -28,12 +28,13 @@
 
 .cs-graph-frame .cn-env {
   filter: blur(calc(var(--cn-focus, 0) * 2.4px)) brightness(calc(1 - var(--cn-chamber, 0) * 0.35));
-  transform: scale(calc(1 - var(--cn-chamber, 0) * 0.05));
+  transform: scale(calc(1 + var(--atm-push, 0) * 0.035 - var(--cn-chamber, 0) * 0.05));
 }
 
+/* The route dollies further than the environment, so the push reads as depth rather than zoom. */
 .cs-graph-frame .cn-route-layer {
   filter: blur(calc(var(--cn-chamber, 0) * 0.9px)) brightness(calc(1 - var(--cn-chamber, 0) * 0.28));
-  transform: translateY(calc(var(--cn-chamber, 0) * 3%)) scale(calc(1 + var(--cn-chamber, 0) * 0.02));
+  transform: translateY(calc(var(--cn-chamber, 0) * 3%)) scale(calc(1 + var(--atm-push, 0) * 0.06 + var(--cn-chamber, 0) * 0.02));
 }
 
 .cn text {

@@ -8,6 +8,8 @@ import { DIRECTOR_SECONDS, DirectorBar, useDirector } from "./DirectorMode";
 import { Analytics } from "@/lib/analytics";
 import { ACTS } from "./scene";
 import { cinemaAt, type Cinema } from "./cinema";
+import { atmosphereAt, atmosphereVars } from "./atmosphere";
+import { AtmosphereBack, AtmosphereFront } from "./Atmosphere";
 import CinemaStage from "./CinemaStage";
 import CinemaChrome, { titleCardOpacity } from "./CinemaChrome";
 import { EvidenceChamber, FindingsCounter, FixStepper, ProofCertificate } from "./Instruments";
@@ -59,6 +61,7 @@ export default function CinematicStory() {
   const depth = {
     "--cn-focus": reducedMotion ? 0 : c.focus.toFixed(3),
     "--cn-chamber": reducedMotion ? 0 : c.chamber.toFixed(3),
+    ...atmosphereVars(atmosphereAt(position, c)),
   } as CSSProperties;
 
   const jumpTo = (index: number) => {
@@ -73,8 +76,10 @@ export default function CinematicStory() {
             <div className="cs-graph-frame" data-act={act} data-cert={c.certificate} data-chamber={c.chamber > 0.5 || undefined} style={depth}>
               <CinemaStage c={c} layer="env" layout="wide" animate={animate} className="cs-graph--wide" />
               <CinemaStage c={c} layer="env" layout="tall" animate={animate} className="cs-graph--tall" />
+              <AtmosphereBack />
               <CinemaStage c={c} layer="route" layout="wide" animate={animate} className="cs-graph--wide" />
               <CinemaStage c={c} layer="route" layout="tall" animate={animate} className="cs-graph--tall" />
+              <AtmosphereFront animate={animate} />
               <div className="cs-scrim" aria-hidden />
               <CinemaChrome position={position} onNext={jumpTo} />
               <div

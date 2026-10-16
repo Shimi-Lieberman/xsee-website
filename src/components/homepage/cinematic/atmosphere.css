@@ -1,0 +1,93 @@
+/*
+ * Atmosphere: the world stays dark throughout; only light, depth and pressure change.
+ * Every layer is a static gradient whose opacity follows a --atm-* channel set per frame.
+ */
+.atm {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.atm > div {
+  position: absolute;
+  inset: 0;
+}
+
+/* Restrained opening: the environment sits under a near-black veil that lifts as depth grows. */
+.atm-veil {
+  background: var(--cs-bg);
+  opacity: calc((1 - var(--atm-depth, 1)) * 0.62);
+}
+
+/* Deep navy fog pooling toward the viewer gives the ground plane distance. */
+.atm-floor {
+  background: linear-gradient(to top, rgb(6 12 30 / 0.85) 0%, rgb(6 12 30 / 0.35) 28%, transparent 55%);
+  opacity: var(--atm-depth, 1);
+}
+
+/* Electric-blue light along the horizon of the cloud estate. */
+.atm-horizon {
+  background:
+    radial-gradient(70% 16% at 50% 30%, color-mix(in oklab, var(--cs-cyan) 34%, transparent) 0%, transparent 100%),
+    radial-gradient(120% 40% at 50% 26%, rgb(40 90 220 / 0.22) 0%, transparent 70%);
+  opacity: var(--atm-blue, 0);
+}
+
+/* Magenta key light falling from above while XSEE is verifying. */
+.atm-key {
+  background:
+    radial-gradient(38% 60% at 50% -8%, color-mix(in oklab, var(--cs-magenta) 34%, transparent) 0%, transparent 100%),
+    radial-gradient(90% 70% at 50% 0%, color-mix(in oklab, var(--cs-magenta) 12%, transparent) 0%, transparent 75%);
+  opacity: var(--atm-magenta, 0);
+}
+
+/* Proof Engine: a faint measurement lattice, strongest at the centre of the frame. */
+.atm-lattice {
+  background:
+    repeating-linear-gradient(to bottom, color-mix(in oklab, var(--cs-magenta) 16%, transparent) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(to right, color-mix(in oklab, var(--cs-cyan) 7%, transparent) 0 1px, transparent 1px 56px);
+  mask-image: radial-gradient(60% 55% at 50% 50%, #000 0%, transparent 100%);
+  opacity: calc(var(--atm-lattice, 0) * 0.75);
+}
+
+/* The attack path lights the ground from below. */
+.atm-under {
+  background:
+    radial-gradient(60% 38% at 50% 78%, color-mix(in oklab, var(--cs-red) 30%, transparent) 0%, transparent 100%),
+    radial-gradient(110% 50% at 50% 100%, color-mix(in oklab, var(--cs-red) 14%, transparent) 0%, transparent 80%);
+  opacity: var(--atm-red, 0);
+}
+
+/* Verified closure settles the light. */
+.atm-calm {
+  background: radial-gradient(80% 60% at 50% 45%, color-mix(in oklab, var(--cs-green) 12%, transparent) 0%, transparent 75%);
+  opacity: var(--atm-calm, 0);
+}
+
+/* Drift: the frame closes in from the edges with a low red pressure. */
+.atm--front {
+  z-index: 1;
+}
+
+.atm-tension {
+  background:
+    radial-gradient(120% 95% at 50% 45%, transparent 48%, rgb(40 2 8 / 0.75) 100%),
+    linear-gradient(to bottom, color-mix(in oklab, var(--cs-red) 10%, transparent), transparent 22%, transparent 78%, color-mix(in oklab, var(--cs-red) 12%, transparent));
+  opacity: var(--atm-tension, 0);
+}
+
+.atm[data-animate] .atm-tension {
+  animation: atm-pressure 2.8s ease-in-out infinite;
+}
+
+@keyframes atm-pressure {
+  50% {
+    filter: brightness(1.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atm[data-animate] .atm-tension {
+    animation: none;
+  }
+}
