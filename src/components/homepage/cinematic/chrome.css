@@ -94,13 +94,14 @@ section.cs {
   .cs .cs-act-inner::before {
     content: "";
     position: absolute;
-    inset: -56px -20px -40px;
+    inset: -88px -20px -56px;
     z-index: -1;
     pointer-events: none;
-    background: radial-gradient(
-      120% 85% at 30% 60%,
-      rgb(2 3 6 / 0.88) 0%,
-      rgb(2 3 6 / 0.7) 45%,
+    background: linear-gradient(
+      to bottom,
+      rgb(2 3 6 / 0) 0%,
+      rgb(2 3 6 / 0.82) 32%,
+      rgb(2 3 6 / 0.86) 72%,
       rgb(2 3 6 / 0) 100%
     );
   }

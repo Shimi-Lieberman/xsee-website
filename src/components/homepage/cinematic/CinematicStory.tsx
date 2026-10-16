@@ -47,7 +47,9 @@ export default function CinematicStory() {
   const c = useMemo(() => cinemaAt(position), [position]);
   const act = c.act;
   const animate = !reducedMotion && inView;
-  const copyLive = act === 0 || titleCardOpacity(position) < 0.4;
+  // Each act's copy unsticks and slides up over the scene near the act's end; retire it first so the closing frame stays clear.
+  const copyExiting = act < 4 && position - act > 0.76;
+  const copyLive = (act === 0 || titleCardOpacity(position) < 0.4) && !copyExiting;
   const actClass = (i: number, extra = "") =>
     `cs-act${extra}${i === act && copyLive ? " is-active" : ""}${i === act && c.beat ? " is-beat" : ""}`;
   const depth = {
