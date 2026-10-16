@@ -585,7 +585,7 @@ function RouteLayer({ c, layout, animate, className }: Props) {
           const showName = c.act === 1 && c.reach >= i + 1;
           const showEvidence = c.scanned > i;
           if (!showName && !showEvidence) return null;
-          const scanning = layout === "tall" && c.act === 2 && c.scan >= 0;
+          const scanning = layout === "tall" && c.act === 2 && c.scan >= 0 && c.scanned < HOPS.length;
           const latest = scanning && i === c.scanned - 1;
           if (scanning && !latest) return null;
           const mid = project([(PATH_NODES[i].x + PATH_NODES[i + 1].x) / 2, 0, (i + 0.5) * HOP_Z]);
