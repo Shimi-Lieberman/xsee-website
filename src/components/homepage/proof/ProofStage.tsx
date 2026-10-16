@@ -191,16 +191,65 @@ function placeLabels(labels: Lbl[], obstacles: Box[]) {
 type Props = {
   proof: Proof;
   layout: Layout;
+  /** Pixel size of the graph area; on the tall layout the view is fitted to it. */
+  frame?: { w: number; h: number } | null;
   selected: string | null;
   interactive: boolean;
   onSelect: (id: string) => void;
 };
 
-function ProofStage({ proof: p, layout, selected, interactive, onSelect }: Props) {
+const FIT_PAD_PX = 14;
+const FIT_MIN_ZOOM = 0.7;
+const TALL_TEXT_PX = 0.95;
+
+const emptyBox = (): Box => ({ x0: Infinity, y0: Infinity, x1: -Infinity, y1: -Infinity });
+function grow(b: Box, x0: number, y0: number, x1: number, y1: number) {
+  b.x0 = Math.min(b.x0, x0);
+  b.y0 = Math.min(b.y0, y0);
+  b.x1 = Math.max(b.x1, x1);
+  b.y1 = Math.max(b.y1, y1);
+}
+
+/** Smallest view (in projector units) that holds `b` inside the frame with padding, centred on it. */
+function fitView(b: Box, frame: { w: number; h: number }, baseW: number) {
+  const aspect = frame.h / frame.w;
+  const padX = (2 * FIT_PAD_PX) / frame.w;
+  const kx = (b.x1 - b.x0) / (baseW * Math.max(0.2, 1 - padX));
+  const ky = (b.y1 - b.y0) / (baseW * Math.max(0.2, aspect - padX));
+  const k = Math.max(kx, ky, FIT_MIN_ZOOM);
+  const w = baseW * k;
+  const h = w * aspect;
+  return { k, x: (b.x0 + b.x1) / 2 - w / 2, y: (b.y0 + b.y1) / 2 - h / 2, w, h };
+}
+
+function ProofStage({ proof: p, layout, frame, selected, interactive, onSelect }: Props) {
   const tall = layout === "tall";
-  const dockRise = p.stage >= 4 ? 1 : p.stage === 3 ? seg(p.t, 0, 0.4) : 0;
-  const { project, fog, font, v } = makeProjector(p.cam, layout, tall ? -190 * dockRise : 0);
+  const { project, fog, font: baseFont, v } = makeProjector(p.cam, layout);
   const open = p.open;
+  const fitFrame = tall && frame && frame.w > 0 && frame.h > 0 ? frame : null;
+
+  const geometry = emptyBox();
+  if (fitFrame) {
+    for (const a of Object.values(POINTS)) {
+      const q = project(pos3(a, open));
+      if (q) grow(geometry, q.x - 16, q.y - 16, q.x + 16, q.y + 16);
+    }
+    for (const pt of BOUNDARY_OUTER) {
+      const q = project(pt);
+      if (q) grow(geometry, q.x - 6, q.y - 6, q.x + 6, q.y + 6);
+    }
+    for (let k = 0; k < EVIDENCE_CLAIMS.length; k++) {
+      const c = EVIDENCE_CLAIMS[k];
+      const a = POINTS[c.a];
+      const b = c.b ? POINTS[c.b] : a;
+      const side = k % 2 === 0 ? -1 : 1;
+      const q = project([(a.x + b.x) / 2 + side * 72, EVID * open, (a.z + b.z) / 2]);
+      if (q) grow(geometry, q.x - 16, q.y - 16, q.x + 16, q.y + 16);
+    }
+  }
+  const firstFit = fitFrame && Number.isFinite(geometry.x0) ? fitView(geometry, fitFrame, v.W) : null;
+  const textScale = firstFit && fitFrame ? (TALL_TEXT_PX * v.W * firstFit.k) / fitFrame.w : 1;
+  const font = (s: number, base?: number) => baseFont(s, base) * textScale;
 
   const bg = CONSTELLATION.pts.map((pt) => {
     const q = project([pt.x, pt.y, pt.z + 120]);
@@ -394,11 +443,23 @@ function ProofStage({ proof: p, layout, selected, interactive, onSelect }: Props
     );
   });
 
+  let viewBox = `0 0 ${v.W} ${v.H}`;
+  if (fitFrame && firstFit) {
+    const bounds = { ...geometry };
+    for (const l of labels) {
+      const b = boxOf(l, 0);
+      grow(bounds, b.x0, b.y0, b.x1, b.y1);
+    }
+    if (tagAt) grow(bounds, tagAt.x - 80 * textScale, tagAt.y - 14 * textScale, tagAt.x + 80 * textScale, tagAt.y + 4);
+    const fit = fitView(bounds, fitFrame, v.W);
+    viewBox = `${f1(fit.x)} ${f1(fit.y)} ${f1(fit.w)} ${f1(fit.h)}`;
+  }
+
   return (
     <svg
       className={`pe-svg pe-svg--${layout}`}
-      viewBox={`0 0 ${v.W} ${v.H}`}
-      preserveAspectRatio="xMidYMid slice"
+      viewBox={viewBox}
+      preserveAspectRatio={fitFrame ? "xMidYMid meet" : "xMidYMid slice"}
       role="group"
       aria-label="AP-12 attack path in the proof chamber"
       data-selected={selected ? "" : undefined}

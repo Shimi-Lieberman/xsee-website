@@ -38,6 +38,20 @@ export default function ProofEngine() {
   const [playing, setPlaying] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const startRef = useRef<number | null>(null);
+  const graphRef = useRef<HTMLDivElement>(null);
+  const [frame, setFrame] = useState<{ w: number; h: number } | null>(null);
+
+  useEffect(() => {
+    const el = graphRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const w = Math.round(entry.contentRect.width);
+      const h = Math.round(entry.contentRect.height);
+      setFrame((cur) => (cur && cur.w === w && cur.h === h ? cur : { w, h }));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   const update = (v: number) => {
     const next = Math.round((v * STAGE_COUNT) / QUANTUM) * QUANTUM;
@@ -137,8 +151,17 @@ export default function ProofEngine() {
       <span id="coverage" className="pe-anchor" aria-hidden />
       <div ref={trackRef} className="pe-track">
         <div className="pe-stage">
-          <ProofStage proof={proof} layout={layout} selected={activeSelection} interactive={interactive} onSelect={select} />
-          <div className="pe-vignette" aria-hidden />
+          <div ref={graphRef} className="pe-graph">
+            <ProofStage
+              proof={proof}
+              layout={layout}
+              frame={frame}
+              selected={activeSelection}
+              interactive={interactive}
+              onSelect={select}
+            />
+            <div className="pe-vignette" aria-hidden />
+          </div>
 
           <header className="pe-head">
             <p className="pe-kicker">
