@@ -3,7 +3,8 @@
 import { useMemo, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useInView, useMotionValueEvent, useReducedMotion, useScroll, useSpring } from "framer-motion";
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowDown, ArrowRight, Play } from "lucide-react";
+import { DIRECTOR_SECONDS, DirectorBar, useDirector } from "./DirectorMode";
 import { Analytics } from "@/lib/analytics";
 import { ACTS } from "./scene";
 import { cinemaAt, type Cinema } from "./cinema";
@@ -32,6 +33,7 @@ export default function CinematicStory() {
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
   const smooth = useSpring(scrollYProgress, { stiffness: 140, damping: 32, mass: 0.4 });
   const [position, setPosition] = useState(() => 0);
+  const director = useDirector(trackRef, inView);
 
   const update = (value: number) => {
     const next = Math.round((value * 5) / QUANTUM) * QUANTUM;
@@ -132,6 +134,12 @@ export default function CinematicStory() {
                   Explore the workflow
                 </a>
               </div>
+              <button type="button" className="cs-watch" onClick={director.play}>
+                <span className="cs-watch-icon" aria-hidden>
+                  <Play size={14} />
+                </span>
+                Watch the story <span className="cs-watch-time">{`· ${DIRECTOR_SECONDS}s`}</span>
+              </button>
               <a href="#act-connect" className="cs-scroll-cue" onClick={(e) => (e.preventDefault(), jumpTo(1))}>
                 <span>Scroll to enter the cloud</span>
                 <ArrowDown size={14} aria-hidden />
@@ -195,6 +203,7 @@ export default function CinematicStory() {
           <div className="cs-tail" aria-hidden />
         </div>
       </div>
+      <DirectorBar director={director} labels={ACTS.map((a) => a.label)} />
     </section>
   );
 }
