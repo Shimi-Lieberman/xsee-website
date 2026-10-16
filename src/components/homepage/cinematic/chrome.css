@@ -201,7 +201,7 @@ section.cs {
 /* ---------- Title cards ---------- */
 .cc-card {
   position: absolute;
-  top: 40%;
+  top: 79%;
   left: 50%;
   display: flex;
   width: min(92vw, 640px);
