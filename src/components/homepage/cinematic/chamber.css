@@ -262,11 +262,36 @@
   from { opacity: 0; transform: translateY(10px); }
 }
 
-/* Mobile: chamber takes the full stage width under the nav */
+/* Mobile: chamber becomes a one-line ticker so the graph's own tags carry the evidence */
 .cs-instrument[data-kind="chamber"] {
   left: 12px;
   right: 12px;
   width: auto;
+}
+
+@media (max-width: 1023px) {
+  .ec {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .ec-mode,
+  .ec-cursor,
+  .ec-verdict:not(.is-on) {
+    display: none !important;
+  }
+
+  .ec-log li:not(.is-latest) {
+    display: none;
+  }
+
+  .ec-log li {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .ec-verdict.is-on {
+    padding-top: 6px;
+  }
 }
 
 @media (min-width: 1024px) {

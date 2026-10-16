@@ -26,7 +26,10 @@ export function EvidenceChamber({ lines }: { lines: number }) {
       </div>
       <ol className="ec-log">
         {shown.map((line, i) => (
-          <li key={line.target} className={`${i === lines - 1 ? "is-new " : ""}is-${line.state}`}>
+          <li
+            key={line.target}
+            className={`${i === lines - 1 ? "is-new " : ""}${i === shown.length - 1 ? "is-latest " : ""}is-${line.state}`}
+          >
             <span className="ec-verb">{line.verb}</span>
             <span className="ec-target">{line.target}</span>
             <span className="ec-result">{lines > i ? line.result : ""}</span>
