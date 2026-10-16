@@ -89,7 +89,12 @@
 }
 
 .xsee-console-log[data-fading] {
-  opacity: 0;
+  opacity: 0.45;
+}
+
+.xsee-console-line.is-past {
+  opacity: 0.38;
+  transition: opacity 500ms ease;
 }
 
 .xsee-console-line {

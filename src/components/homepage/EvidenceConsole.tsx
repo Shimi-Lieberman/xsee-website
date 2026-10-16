@@ -34,7 +34,7 @@ const STATUS_ICONS: Record<ConsoleStatus, LucideIcon> = {
   reassess: AlertTriangle,
 };
 
-type RenderedLine = { id: number; event: ConsoleEvent };
+type RenderedLine = { id: number; event: ConsoleEvent; past?: boolean };
 
 type PlaybackState = {
   step: number;
@@ -46,7 +46,14 @@ type PlaybackState = {
 
 type PlaybackAction = { type: "startTyping" | "typeChar" | "commit" | "fade" | "reset" };
 
-const INITIAL_STATE: PlaybackState = { step: 0, phase: "wait", typed: 0, lines: [], nextId: 0 };
+// Seed with the previous run (dimmed) so the console never opens as an empty box.
+const INITIAL_STATE: PlaybackState = {
+  step: 0,
+  phase: "wait",
+  typed: 0,
+  lines: CONSOLE_STATIC_SNAPSHOT.map((event, id) => ({ id, event, past: true })),
+  nextId: CONSOLE_STATIC_SNAPSHOT.length,
+};
 
 function playbackReducer(state: PlaybackState, action: PlaybackAction): PlaybackState {
   switch (action.type) {
@@ -62,7 +69,11 @@ function playbackReducer(state: PlaybackState, action: PlaybackAction): Playback
     case "fade":
       return { ...state, phase: "fade" };
     case "reset":
-      return { ...INITIAL_STATE, nextId: state.nextId };
+      return {
+        ...INITIAL_STATE,
+        lines: state.lines.map((line) => ({ ...line, past: true })),
+        nextId: state.nextId,
+      };
   }
 }
 
@@ -101,7 +112,8 @@ function useInView(ref: React.RefObject<HTMLElement | null>) {
   return inView;
 }
 
-function ConsoleLine({ event, animate }: { event: ConsoleEvent; animate: boolean }) {
+function ConsoleLine({ event, animate, past }: { event: ConsoleEvent; animate: boolean; past?: boolean }) {
+  const className = past ? "xsee-console-line is-past" : "xsee-console-line";
   const body =
     event.kind === "command" ? (
       <>
@@ -114,12 +126,12 @@ function ConsoleLine({ event, animate }: { event: ConsoleEvent; animate: boolean
       <span className={`xsee-console-tone-${event.tone ?? "output"}`}>{event.text}</span>
     );
 
-  if (!animate) return <div className="xsee-console-line">{body}</div>;
+  if (!animate || past) return <div className={className}>{body}</div>;
 
   return (
     <motion.div
       layout="position"
-      className="xsee-console-line"
+      className={className}
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.28, ease: "easeOut", layout: { duration: 0.32, ease: "easeOut" } }}
@@ -161,7 +173,7 @@ export default function EvidenceConsole() {
 
   const activeEvent = CONSOLE_SCRIPT[state.step];
   const typing = state.phase === "type" && activeEvent?.kind === "command";
-  const lines = prefersReducedMotion
+  const lines: RenderedLine[] = prefersReducedMotion
     ? CONSOLE_STATIC_SNAPSHOT.map((event, id) => ({ id, event }))
     : state.lines;
 
@@ -191,7 +203,7 @@ export default function EvidenceConsole() {
           aria-hidden="true"
         >
           {lines.map((line) => (
-            <ConsoleLine key={line.id} event={line.event} animate={!prefersReducedMotion} />
+            <ConsoleLine key={line.id} event={line.event} past={line.past} animate={!prefersReducedMotion} />
           ))}
           {!prefersReducedMotion && (
             <div className="xsee-console-line xsee-console-active">
