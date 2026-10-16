@@ -455,14 +455,25 @@ function RouteLayer({ c, layout, animate, className }: Props) {
         <g className="cn-blocked" transform={`translate(${blockedP.x} ${blockedP.y})`}>
           <circle r={clamp(blockedP.s * 5, 4, 9)} />
           <line x1={-clamp(blockedP.s * 3.5, 3, 6)} y1={clamp(blockedP.s * 3.5, 3, 6)} x2={clamp(blockedP.s * 3.5, 3, 6)} y2={-clamp(blockedP.s * 3.5, 3, 6)} />
-          <text
-            x={(blockedP.x > v.W * 0.55 ? -1 : 1) * clamp(blockedP.s * 8, 8, 14)}
-            y={4}
-            textAnchor={blockedP.x > v.W * 0.55 ? "end" : "start"}
-            style={{ fontSize: font(blockedP.s, 3) }}
-          >
-            {layout === "wide" ? "CHECK BLOCKED · NO READ ACCESS" : "BLOCKED"}
-          </text>
+          {layout === "wide" ? (
+            <text
+              x={clamp(blockedP.s * 5, 4, 9) + 6}
+              y={-clamp(blockedP.s * 5, 4, 9) - 6}
+              textAnchor="start"
+              style={{ fontSize: font(blockedP.s, 3) }}
+            >
+              CHECK BLOCKED · NO READ ACCESS
+            </text>
+          ) : (
+            <text
+              x={(blockedP.x > v.W * 0.55 ? -1 : 1) * clamp(blockedP.s * 8, 8, 14)}
+              y={4}
+              textAnchor={blockedP.x > v.W * 0.55 ? "end" : "start"}
+              style={{ fontSize: font(blockedP.s, 3) }}
+            >
+              BLOCKED
+            </text>
+          )}
         </g>
       ) : null}
 
