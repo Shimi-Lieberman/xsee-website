@@ -131,7 +131,7 @@ export default function AttackPathWalkthrough() {
   const inspectorKey = [state.mode, state.step, state.selection?.id ?? "", !story && state.step === 1 ? focusEdgeId(state) : ""].join("-");
 
   return (
-    <section ref={sectionRef} id="walkthrough" className="apd" aria-labelledby="walkthrough-title">
+    <section ref={sectionRef} id="walkthrough" className="apd" aria-labelledby="walkthrough-title" data-nav-tone="dark">
       <div className="apd-shell">
         <header className="apd-intro">
           <p className="apd-kicker">Product walkthrough</p>

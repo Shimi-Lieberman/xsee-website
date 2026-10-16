@@ -1,0 +1,433 @@
+/*
+ * Film continuation layer for the homepage.
+ * Keeps every section after the opening story in the same dark, single-light
+ * cinematic language so the page reads as one continuous film.
+ */
+.hp-page {
+  --film-void: #05070c;
+  --film-panel: #0b0f18;
+  --film-ink: #eef1f6;
+  --film-ink2: #9aa3b2;
+  --film-ink3: #626b7c;
+  --film-line: rgba(238, 241, 246, 0.08);
+  --film-line-strong: rgba(238, 241, 246, 0.16);
+  --film-magenta: #ff1b8d;
+  --film-blue: #5b9dff;
+  --film-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  background: var(--film-void);
+}
+
+/* ---------- Shared section language ---------- */
+.hp-page .apd,
+.hp-page .xsee-journey-section,
+.hp-page .xsee-outcomes-section,
+.hp-page .xsee-security-section,
+.hp-page .xsee-pilot-section {
+  --hp-base: var(--film-void);
+  --hp-ink: var(--film-ink);
+  --hp-ink2: var(--film-ink2);
+  --hp-ink3: var(--film-ink3);
+  --hp-line: var(--film-line);
+  position: relative;
+  border: 0;
+  background: var(--film-void);
+  color: var(--film-ink);
+}
+
+/* A soft seam between scenes instead of a hard rule */
+.hp-page .xsee-journey-section::before,
+.hp-page .apd::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--film-line-strong) 30%, var(--film-line-strong) 70%, transparent);
+  pointer-events: none;
+}
+
+.hp-page .xsee-journey-section .hp-eyebrow,
+.hp-page .apd-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--film-ink2);
+  font: 500 11px/1.4 var(--font-mono, ui-monospace), monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.hp-page .xsee-journey-section .hp-eyebrow::before,
+.hp-page .apd-kicker::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 1px;
+  background: var(--film-magenta);
+  box-shadow: 0 0 12px rgba(255, 27, 141, 0.7);
+  transform: rotate(45deg);
+}
+
+.hp-page .xsee-section-heading h2,
+.hp-page .xsee-closure-copy h2,
+.hp-page .xsee-security-layout h2,
+.hp-page .apd-intro h2 {
+  color: var(--film-ink);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.hp-page .xsee-section-heading > p,
+.hp-page .xsee-closure-copy > p:not(.hp-eyebrow) {
+  color: var(--film-ink2);
+}
+
+.hp-page .xsee-text-link {
+  color: var(--film-ink);
+  border-bottom: 1px solid rgba(255, 27, 141, 0.5);
+  padding-bottom: 2px;
+  min-height: 44px;
+  transition: border-color 0.3s var(--film-ease), gap 0.3s var(--film-ease);
+}
+
+.hp-page .xsee-text-link:hover { gap: 11px; border-color: var(--film-magenta); }
+
+/* ---------- Walkthrough: sits in the dark room, framed as a screen ---------- */
+.hp-page .apd { padding-top: 72px; }
+
+.hp-page .apd-panel {
+  border-color: var(--film-line-strong);
+  box-shadow:
+    0 0 0 1px rgba(5, 7, 12, 0.9),
+    0 40px 120px -40px rgba(91, 157, 255, 0.18),
+    0 30px 80px -30px rgba(0, 0, 0, 0.9);
+}
+
+/* ---------- Workflow: the evidence spine ---------- */
+.xsee-film-workflow-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.hp-page .xsee-film-workflow .xsee-section-heading { margin-bottom: 0; }
+
+.hp-page .xsee-film-workflow .xsee-section-heading > p:not(.hp-eyebrow):not(.xsee-workflow-footnote) {
+  max-width: 58ch;
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.hp-page .xsee-film-workflow .xsee-workflow-footnote {
+  margin-top: 24px;
+  color: var(--film-ink3);
+}
+
+.hp-page .xsee-film-workflow .xsee-workflow-footnote svg { color: var(--film-blue); }
+
+.xsee-spine {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0 0 0 36px;
+  list-style: none;
+}
+
+/* the rail */
+.xsee-spine::before,
+.xsee-spine::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 11px;
+  width: 1px;
+}
+
+.xsee-spine::before { background: var(--film-line-strong); }
+
+/* the signal that travels the rail as you scroll */
+.xsee-spine::after {
+  background: linear-gradient(180deg, var(--film-blue), var(--film-magenta));
+  box-shadow: 0 0 14px rgba(255, 27, 141, 0.55);
+  transform-origin: top;
+}
+
+@supports (animation-timeline: view()) {
+  .xsee-spine::after {
+    animation: xsee-spine-fill linear both;
+    animation-timeline: view();
+    animation-range: entry 30% cover 65%;
+  }
+}
+
+@keyframes xsee-spine-fill {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+.xsee-spine-step {
+  position: relative;
+  padding: 0 0 32px;
+}
+
+.xsee-spine-step:last-child { padding-bottom: 0; }
+
+.xsee-spine-node {
+  position: absolute;
+  top: 4px;
+  left: -31px;
+  width: 13px;
+  height: 13px;
+  border: 1px solid var(--film-line-strong);
+  border-radius: 2px;
+  background: var(--film-void);
+  transform: rotate(45deg);
+  transition: border-color 0.5s var(--film-ease), box-shadow 0.5s var(--film-ease), background 0.5s var(--film-ease);
+}
+
+@supports (animation-timeline: view()) {
+  .xsee-spine-node {
+    animation: xsee-node-lit linear both;
+    animation-timeline: view();
+    animation-range: entry 60% cover 50%;
+  }
+  .xsee-spine-body {
+    animation: xsee-step-rise linear both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+}
+
+@keyframes xsee-node-lit {
+  from { border-color: var(--film-line-strong); background: var(--film-void); box-shadow: none; }
+  to { border-color: var(--film-blue); background: rgba(91, 157, 255, 0.18); box-shadow: 0 0 16px rgba(91, 157, 255, 0.6); }
+}
+
+@keyframes xsee-step-rise {
+  from { opacity: 0.25; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.xsee-spine-step[data-approval] .xsee-spine-node {
+  animation-name: xsee-node-gate;
+}
+
+@keyframes xsee-node-gate {
+  from { border-color: var(--film-line-strong); background: var(--film-void); box-shadow: none; }
+  to { border-color: var(--film-magenta); background: rgba(255, 27, 141, 0.22); box-shadow: 0 0 0 6px rgba(255, 27, 141, 0.1), 0 0 20px rgba(255, 27, 141, 0.7); }
+}
+
+.xsee-spine-index {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 8px;
+  color: var(--film-ink3);
+  font: 500 11px/1.4 var(--font-mono, ui-monospace), monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.xsee-spine-gate {
+  border: 1px solid rgba(255, 27, 141, 0.45);
+  border-radius: 999px;
+  padding: 3px 9px;
+  color: #ff7ab9;
+  letter-spacing: 0.12em;
+}
+
+.xsee-spine-body h3 {
+  margin: 0;
+  color: var(--film-ink);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.xsee-spine-body > p:last-child {
+  margin: 6px 0 0;
+  color: var(--film-ink2);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.xsee-spine-step[data-approval] .xsee-spine-body h3 { color: #fff; }
+
+@media (min-width: 900px) {
+  .xsee-film-workflow-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+  }
+  .xsee-film-workflow .xsee-section-heading {
+    position: sticky;
+    top: 120px;
+    flex: 0 0 42%;
+  }
+  .xsee-spine { flex: 1; padding-top: 8px; }
+  .xsee-spine-step { padding-bottom: 44px; }
+}
+
+/* ---------- Outcomes: instrument readouts ---------- */
+.hp-page .xsee-outcome-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--film-line);
+}
+
+.hp-page .xsee-outcome-card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  column-gap: 16px;
+  border-bottom: 1px solid var(--film-line);
+  padding: 24px 0;
+  transition: background 0.4s var(--film-ease);
+}
+
+.hp-page .xsee-outcome-card > svg {
+  grid-row: span 2;
+  box-sizing: content-box;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  border: 1px solid var(--film-line-strong);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--film-blue);
+  background: radial-gradient(circle at 50% 30%, rgba(91, 157, 255, 0.16), transparent 70%);
+}
+
+.hp-page .xsee-outcome-card h3 { color: var(--film-ink); font-size: 17px; }
+.hp-page .xsee-outcome-card p { color: var(--film-ink2); font-size: 15px; }
+
+@media (min-width: 900px) {
+  .hp-page .xsee-outcome-grid { flex-direction: row; border-top: 0; }
+  .hp-page .xsee-outcome-card {
+    flex: 1;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+    border-bottom: 0;
+    border-left: 1px solid var(--film-line);
+    padding: 8px 32px;
+  }
+  .hp-page .xsee-outcome-card:first-child { border-left: 0; padding-left: 0; }
+  .hp-page .xsee-outcome-card > svg { grid-row: auto; margin-bottom: 20px; }
+}
+
+/* ---------- Closure record: glass artifact ---------- */
+.hp-page .xsee-closure-panel {
+  position: relative;
+  border: 1px solid var(--film-line-strong);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(238, 241, 246, 0.04), transparent 40%),
+    var(--film-panel);
+  box-shadow: 0 30px 90px -40px rgba(255, 27, 141, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.hp-page .xsee-closure-panel-header { border-color: var(--film-line); color: var(--film-ink2); font-family: var(--font-mono, ui-monospace), monospace; letter-spacing: 0.14em; font-size: 10px; }
+.hp-page .xsee-closure-record { border-color: var(--film-line); }
+.hp-page .xsee-closure-record strong { font-size: 14px; }
+.hp-page .xsee-closure-record > div span { font-size: 13px; color: var(--film-ink2); }
+.hp-page .xsee-closure-state { font-family: var(--font-mono, ui-monospace), monospace; font-size: 10px; letter-spacing: 0.14em; }
+.hp-page .xsee-closure-record--handoff .xsee-closure-record-icon { background: rgba(91, 157, 255, 0.14); color: var(--film-blue); }
+.hp-page .xsee-closure-record--handoff .xsee-closure-state { color: var(--film-blue); }
+.hp-page .xsee-closure-panel-note { color: var(--film-ink3); font-size: 12px; }
+
+/* ---------- Security ---------- */
+.hp-page .xsee-security-list li { color: var(--film-ink2); font-size: 15px; }
+.hp-page .xsee-security-list strong { color: var(--film-ink); }
+.hp-page .xsee-security-list svg { color: var(--film-blue); }
+
+/* ---------- Pilot: the final frame, bracketed like a proof boundary ---------- */
+.hp-page .xsee-pilot-section { padding-top: clamp(24px, 4vw, 48px); }
+
+.hp-page .xsee-pilot-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--film-line-strong);
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(255, 27, 141, 0.16), transparent 60%),
+    var(--film-panel);
+  box-shadow: 0 50px 140px -50px rgba(255, 27, 141, 0.35);
+}
+
+/* corner brackets — the XSEE proof-boundary motif */
+.hp-page .xsee-pilot-panel::before,
+.hp-page .xsee-pilot-panel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 28px;
+  height: 28px;
+  border-color: rgba(255, 27, 141, 0.7);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.hp-page .xsee-pilot-panel::before { top: 14px; left: 14px; border-width: 1px 0 0 1px; border-top-left-radius: 8px; }
+.hp-page .xsee-pilot-panel::after { right: 14px; bottom: 14px; border-width: 0 1px 1px 0; border-bottom-right-radius: 8px; }
+
+.hp-page .xsee-pilot-eyebrow {
+  color: #ff7ab9;
+  font-family: var(--font-mono, ui-monospace), monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+
+.hp-page .xsee-pilot-cta {
+  min-height: 52px;
+  box-shadow: 0 12px 40px -12px rgba(255, 27, 141, 0.8);
+  transition: transform 0.3s var(--film-ease), box-shadow 0.3s var(--film-ease);
+}
+
+.hp-page .xsee-pilot-cta:hover { transform: translateY(-1px); box-shadow: 0 18px 50px -12px rgba(255, 27, 141, 0.95); }
+
+/* ---------- Footer (homepage only): the end credits ---------- */
+.hp-film-credits footer {
+  border-top: 1px solid var(--film-line) !important;
+  background: var(--film-void) !important;
+}
+
+.hp-film-credits footer a,
+.hp-film-credits footer p,
+.hp-film-credits footer li {
+  color: var(--film-ink2) !important;
+}
+
+.hp-film-credits footer a:hover { color: var(--film-ink) !important; }
+
+.hp-film-credits footer h3,
+.hp-film-credits footer h4,
+.hp-film-credits footer strong,
+.hp-film-credits footer [class*="uppercase"] {
+  color: var(--film-ink3) !important;
+}
+
+.hp-film-credits footer .nav-logo-mark-wrap {
+  border-color: var(--film-line-strong) !important;
+  background: var(--film-panel) !important;
+}
+
+.hp-film-credits footer a span,
+.hp-film-credits footer a div { color: var(--film-ink) !important; }
+
+/* ---------- Explore chapter polish ---------- */
+.cx-head .cs-eyebrow { flex-wrap: wrap; row-gap: 6px; letter-spacing: 0.14em; line-height: 1.5; }
+
+@media (prefers-reduced-motion: reduce) {
+  .xsee-spine::after,
+  .xsee-spine-node,
+  .xsee-spine-body { animation: none !important; }
+  .xsee-spine::after { transform: none; }
+}

@@ -34,24 +34,32 @@ const OUTCOMES = [
 
 function WorkflowSection() {
   return (
-    <section id="workflow" className="xsee-journey-section" aria-labelledby="workflow-title">
-      <div className="hp-container">
+    <section id="workflow" className="xsee-journey-section xsee-film-workflow" aria-labelledby="workflow-title" data-nav-tone="dark">
+      <div className="hp-container xsee-film-workflow-layout">
         <div className="xsee-section-heading">
           <p className="hp-eyebrow">One workflow, end to end</p>
           <h2 id="workflow-title">From a reachable path to a verified fix.</h2>
           <p>Human approval stays with your team. Remediation is handed back to your AWS workflow; XSEE does not apply the change.</p>
+          <p className="xsee-workflow-footnote"><Check size={15} aria-hidden /> Your team owns the change. XSEE supports validation and evidence—not autonomous remediation.</p>
         </div>
-        <ol className="xsee-workflow-grid">
-          {WORKFLOW.map((step, index) => (
-            <li className={`xsee-workflow-step${"approval" in step ? " xsee-workflow-step--approval" : ""}`} key={step.title}>
-              <span className="xsee-workflow-number">0{index + 1}</span>
-              {"approval" in step ? <span className="xsee-approval-label">HUMAN APPROVAL</span> : null}
-              <h3>{step.title}</h3>
-              <p>{step.copy}</p>
-            </li>
-          ))}
+        <ol className="xsee-spine">
+          {WORKFLOW.map((step, index) => {
+            const approval = "approval" in step;
+            return (
+              <li className="xsee-spine-step" data-approval={approval || undefined} key={step.title}>
+                <span className="xsee-spine-node" aria-hidden />
+                <div className="xsee-spine-body">
+                  <p className="xsee-spine-index">
+                    Step {String(index + 1).padStart(2, "0")}
+                    {approval ? <span className="xsee-spine-gate">Human approval</span> : null}
+                  </p>
+                  <h3>{step.title}</h3>
+                  <p>{step.copy}</p>
+                </div>
+              </li>
+            );
+          })}
         </ol>
-        <p className="xsee-workflow-footnote"><Check size={15} aria-hidden /> Your team owns the change. XSEE supports validation and evidence—not autonomous remediation.</p>
       </div>
     </section>
   );
@@ -59,7 +67,7 @@ function WorkflowSection() {
 
 function OutcomesSection() {
   return (
-    <section id="outcomes" className="xsee-journey-section xsee-outcomes-section" aria-labelledby="outcomes-title">
+    <section id="outcomes" className="xsee-journey-section xsee-outcomes-section" aria-labelledby="outcomes-title" data-nav-tone="dark">
       <div className="hp-container">
         <div className="xsee-section-heading">
           <p className="hp-eyebrow">For security and engineering</p>
@@ -81,7 +89,7 @@ function OutcomesSection() {
 
 function ClosureSection() {
   return (
-    <section id="closure" className="xsee-journey-section" aria-labelledby="closure-title">
+    <section id="closure" className="xsee-journey-section" aria-labelledby="closure-title" data-nav-tone="dark">
       <div className="hp-container">
         <div className="xsee-closure-layout">
           <div className="xsee-closure-copy">
@@ -117,7 +125,7 @@ function ClosureSection() {
 
 function SecuritySection() {
   return (
-    <section id="security" className="xsee-journey-section xsee-security-section" aria-labelledby="security-title">
+    <section id="security" className="xsee-journey-section xsee-security-section" aria-labelledby="security-title" data-nav-tone="dark">
       <div className="hp-container xsee-security-layout">
         <div>
           <p className="hp-eyebrow">Security and deployment</p>
