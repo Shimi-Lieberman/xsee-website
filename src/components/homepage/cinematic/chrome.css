@@ -304,7 +304,7 @@ section.cs {
   position: absolute;
   left: 16px;
   right: 16px;
-  bottom: max(14px, calc(var(--cc-bar-h) - 34px));
+  bottom: 14px;
   z-index: 4;
 }
 
@@ -377,14 +377,14 @@ section.cs {
   }
 
   .cs .cs-graph-frame .cs-instrument {
-    inset: auto 40px calc(var(--cc-bar-h) + 64px) auto;
-    width: min(420px, 34vw);
+    inset: auto 40px 72px auto;
+    width: min(440px, 34vw);
   }
 
   .cs .cs-rail {
     left: 40px;
     right: 40px;
-    bottom: max(20px, calc(var(--cc-bar-h) - 40px));
+    bottom: 24px;
   }
 }
 

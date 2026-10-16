@@ -292,10 +292,10 @@
     mask-size: 112px;
   }
 
-  .cs-instrument[data-kind="chamber"] {
+  .cs .cs-graph-frame .cs-instrument[data-kind="chamber"] {
     left: auto;
-    right: 24px;
-    width: min(480px, 40%);
+    right: 40px;
+    width: min(480px, 36vw);
   }
 
   .ec {
