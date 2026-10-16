@@ -311,8 +311,11 @@ function RouteLayer({ c, layout, animate, className }: Props) {
   const flicker = c.wallMode === "flicker" ? 0.3 + 0.7 * Math.abs(Math.sin(c.t * 150)) : 1;
   const verified = c.collapse > 0 || c.perimeter === "sealed";
 
+  const driftPhase = c.perimeter === "drift" || c.perimeter === "reassessing" || c.perimeter === "reopened";
+  const quietDrift = layout === "tall" && driftPhase;
+
   const shards =
-    c.wallMode === "broken" && c.breakF < 1
+    c.wallMode === "broken" && c.breakF < 1 && !quietDrift
       ? Array.from({ length: 10 }, (_, i) => {
           const fx = -1 + (i % 5) / 2;
           const fy = 0.2 + Math.floor(i / 5) * 0.5;
@@ -562,7 +565,7 @@ function RouteLayer({ c, layout, animate, className }: Props) {
           <line x1={wallOk[0].x} y1={wallOk[0].y} x2={wallOk[1].x} y2={wallOk[1].y} className="cn-wall-base-line" filter={`url(#${id("soft")})`} />
           <line x1={wallOk[0].x} y1={wallOk[0].y} x2={wallOk[1].x} y2={wallOk[1].y} className="cn-wall-base-line" />
           <line x1={wallOk[3].x} y1={wallOk[3].y} x2={wallOk[2].x} y2={wallOk[2].y} className="cn-wall-edge" />
-          {c.wall > 0.6 && c.wallLabel && c.wallLabel !== perimeterLabel ? (
+          {c.wall > 0.6 && c.wallLabel && c.wallLabel !== perimeterLabel && !quietDrift ? (
             <text x={(wallOk[3].x + wallOk[2].x) / 2} y={wallOk[3].y - 8} textAnchor="middle" className="cn-wall-label" style={{ fontSize: font(wallOk[0].s, 3.4) }}>
               {c.wallLabel.toUpperCase()}
             </text>
@@ -642,9 +645,9 @@ function RouteLayer({ c, layout, animate, className }: Props) {
           const d = clamp(base.s * 2.2, 3, 9);
           const groundRing = base.dz > 220 ? ring(n.x, z, 12) : null;
           const lit = nt !== "idle" && nt !== "dormant";
-          const drifted = n.id === "role-batch" && (c.perimeter === "drift" || c.perimeter === "reassessing" || c.perimeter === "reopened");
+          const drifted = n.id === "role-batch" && driftPhase;
           const finding = drifted ? "Trust: role-web-*" : n.finding;
-          const showFinding = (lit || drifted) && finding && (n.id !== "web" || c.foothold || c.act === 1);
+          const showFinding = (lit || drifted) && finding && (n.id !== "web" || c.foothold || c.act === 1) && !(drifted && layout === "tall");
           const flip = layout === "tall" && top.x > v.W / 2 + 4;
           const labelX = flip ? top.x - d - 8 : top.x + d + 8;
           const anchor = flip ? "end" : "start";
