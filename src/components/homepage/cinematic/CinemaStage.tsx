@@ -43,9 +43,26 @@ function seeded(n: number) {
 }
 const STARS = seeded(110);
 
+/**
+ * A portrait screen crops the scene to a narrow column, so pulled-back shots read as a small
+ * cluster in empty space. On the tall layout, wide shots move in, rise for depth separation
+ * and stretch horizontally; follow shots near START are left untouched.
+ */
+function frame(c: Cinema, layout: Layout) {
+  const base = VIEW[layout];
+  if (layout !== "tall") return { v: base, cam: c.cam };
+  const pulled = clamp((-170 - c.cam.z) / 130);
+  const far = c.cam.z < -300;
+  const z = far ? -300 + (c.cam.z + 300) * 0.35 : c.cam.z;
+  const h = (far ? 158 + (c.cam.h - 158) * 0.5 : c.cam.h) + 60 * pulled;
+  return {
+    v: { ...base, xs: base.xs + 0.55 * pulled, hz: base.hz - 45 * pulled },
+    cam: { x: c.cam.x, z, h },
+  };
+}
+
 function projector(c: Cinema, layout: Layout) {
-  const v = VIEW[layout];
-  const { cam } = c;
+  const { v, cam } = frame(c, layout);
   const project = ([x, y, z]: V3): P2 | null => {
     const dz = z - cam.z;
     if (dz < NEAR) return null;
@@ -96,15 +113,14 @@ function projector(c: Cinema, layout: Layout) {
     }
     return out;
   };
-  return { v, project, clipLine, fog, vis, font, ring, pieces };
+  return { v, cam, project, clipLine, fog, vis, font, ring, pieces };
 }
 
 type Props = { c: Cinema; layout: Layout; animate: boolean; className?: string };
 
 /** Far plane: sky, starfield, ground grid and the constellation of unrelated infrastructure. */
 function EnvironmentLayer({ c, layout, animate, className }: Props) {
-  const { v, project, clipLine, vis, font, ring } = projector(c, layout);
-  const { cam } = c;
+  const { v, cam, project, clipLine, vis, font, ring } = projector(c, layout);
   const id = (name: string) => `cne-${name}-${layout}`;
   const starShift = (cam.h - 62) * 0.06;
   const gridX = Array.from({ length: 17 }, (_, i) => -640 + i * 80);
