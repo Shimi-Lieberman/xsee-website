@@ -1,0 +1,325 @@
+/* Evidence Chamber: glass terminal with a synchronized evidence timeline */
+.ec {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(14 18 30 / 0.72), rgb(6 8 14 / 0.82));
+  box-shadow: 0 0 0 1px rgb(214 51 132 / 0.08), 0 24px 60px -20px rgb(0 0 0 / 0.9), inset 0 1px 0 rgb(255 255 255 / 0.06);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  font-family: var(--font-geist-mono, ui-monospace), monospace;
+}
+
+.ec-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cs-ink2);
+  font-size: 11px;
+}
+
+.ec-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cs-magenta);
+  box-shadow: 0 0 10px var(--cs-magenta);
+}
+
+.ec-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--cs-ink);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ec-mode {
+  color: var(--cs-ink3);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ec-log {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.ec-log li {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.ec-log li:not(:nth-last-child(-n + 4)) {
+  display: none;
+}
+
+.ec-log li.is-new {
+  animation: ec-type 320ms ease-out;
+}
+
+.ec-verb {
+  color: var(--cs-ink3);
+}
+
+.ec-target {
+  overflow: hidden;
+  color: var(--cs-ink2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ec-result {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ec-log .is-observed .ec-result { color: var(--cs-cyan); }
+.ec-log .is-simulated .ec-result { color: var(--cs-magenta); }
+.ec-log .is-assumed .ec-result { color: var(--cs-amber); }
+.ec-log .is-untested .ec-result,
+.ec-log .is-blocked .ec-result { color: var(--cs-ink3); }
+.ec-log .is-validated .ec-target,
+.ec-log .is-validated .ec-result { color: var(--cs-red); }
+
+.ec-cursor {
+  display: block !important;
+  width: 7px;
+  height: 12px;
+  background: var(--cs-magenta);
+  animation: ec-blink 1s steps(2) infinite;
+}
+
+.ec-timeline {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 3px;
+}
+
+.ec-timeline span {
+  height: 3px;
+  border-radius: 2px;
+  background: rgb(255 255 255 / 0.08);
+  transition: background-color 240ms ease, box-shadow 240ms ease;
+}
+
+.ec-timeline .is-on.is-observed { background: var(--cs-cyan); }
+.ec-timeline .is-on.is-simulated { background: var(--cs-magenta); box-shadow: 0 0 8px rgb(214 51 132 / 0.6); }
+.ec-timeline .is-on.is-assumed { background: var(--cs-amber); }
+.ec-timeline .is-on.is-untested,
+.ec-timeline .is-on.is-blocked { background: var(--cs-ink3); }
+.ec-timeline .is-on.is-validated { background: var(--cs-red); box-shadow: 0 0 8px rgb(255 59 79 / 0.6); }
+
+.ec-ledger {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--cs-ink3);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ec-ledger li {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  transition: color 240ms ease;
+}
+
+.ec-ledger b {
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.ec-ledger .is-on.is-observed { color: var(--cs-cyan); }
+.ec-ledger .is-on.is-simulated { color: var(--cs-magenta); }
+.ec-ledger .is-on.is-assumed { color: var(--cs-amber); }
+.ec-ledger .is-on.is-untested,
+.ec-ledger .is-on.is-blocked { color: var(--cs-ink2); }
+
+.ec-verdict {
+  margin: 0;
+  padding-top: 8px;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+  color: var(--cs-ink3);
+  font-size: 11px;
+}
+
+.ec-verdict.is-on {
+  color: var(--cs-ink);
+}
+
+@keyframes ec-type {
+  from { opacity: 0; transform: translateX(-4px); }
+}
+@keyframes ec-blink {
+  to { opacity: 0; }
+}
+
+/* Drift certificate state */
+.cs-cert.is-drift {
+  border-color: rgb(242 180 90 / 0.4);
+}
+.cs-cert.is-drift .cs-cert-seal,
+.cs-cert.is-drift .cs-cert-state {
+  color: var(--cs-amber);
+}
+
+/* Opening emblem: the eagle surfaces through controlled light, then the camera pulls back */
+.cc-emblem {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 140px;
+  height: 140px;
+  pointer-events: none;
+}
+
+.cc-emblem-glow {
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(150 175 255 / 0.22), transparent 62%);
+}
+
+.cc-emblem-mark {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  filter: brightness(0) invert(0.92) drop-shadow(0 0 18px rgb(150 175 255 / 0.55));
+  animation: cc-emerge 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.cc-emblem-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.35) 50%, transparent 65%);
+  mix-blend-mode: overlay;
+  -webkit-mask: url("/logo-symbol-only.svg") center / 84px no-repeat;
+  mask: url("/logo-symbol-only.svg") center / 84px no-repeat;
+  background-size: 300% 100%;
+  animation: cc-sweep 3.4s ease-in-out 1s infinite;
+}
+
+@keyframes cc-emerge {
+  from { opacity: 0; transform: scale(0.92); filter: brightness(0) invert(0.92) blur(6px); }
+}
+@keyframes cc-sweep {
+  from { background-position: 120% 0; }
+  60%, to { background-position: -20% 0; }
+}
+
+/* Copy: second beat inside an act */
+.cs-act .cs-beat {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+.cs-act.is-beat .cs-beat {
+  opacity: 1;
+  transform: none;
+}
+
+.cs-lede--strong {
+  color: var(--cs-ink);
+  font-weight: 500;
+}
+
+.cs-support {
+  display: none;
+  margin: 0;
+  color: var(--cs-ink3);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.cs-act--hero .cs-act-inner {
+  animation: cs-hero-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes cs-hero-in {
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+/* Mobile: chamber takes the full stage width under the nav */
+.cs-instrument[data-kind="chamber"] {
+  left: 12px;
+  right: 12px;
+  width: auto;
+}
+
+@media (min-width: 1024px) {
+  .cs-support {
+    display: block;
+    max-width: 440px;
+  }
+
+  .cc-emblem {
+    top: 34%;
+    left: 64%;
+    width: 180px;
+    height: 180px;
+  }
+
+  .cc-emblem-mark {
+    width: 112px;
+    height: 112px;
+  }
+
+  .cc-emblem-sweep {
+    -webkit-mask-size: 112px;
+    mask-size: 112px;
+  }
+
+  .cs .cs-graph-frame .cs-instrument[data-kind="chamber"] {
+    left: auto;
+    right: 40px;
+    width: min(480px, 36vw);
+  }
+
+  .ec {
+    padding: 16px;
+  }
+
+  .ec-log {
+    font-size: 12px;
+  }
+
+  .ec-log li:not(:nth-last-child(-n + 4)) {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ec-log li.is-new,
+  .ec-cursor,
+  .cc-emblem-mark,
+  .cc-emblem-sweep,
+  .cs-act--hero .cs-act-inner {
+    animation: none;
+  }
+  .cs-act .cs-beat {
+    transition: none;
+  }
+}

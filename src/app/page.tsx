@@ -4,7 +4,7 @@ import HomeNav from "@/components/homepage/HomeNav";
 import CinematicStory from "@/components/homepage/cinematic/CinematicStory";
 import ExploreChapter from "@/components/homepage/cinematic/ExploreChapter";
 import StoryFinale from "@/components/homepage/cinematic/StoryFinale";
-import CoverageMatrixSection from "@/components/homepage/CoverageMatrixSection";
+import ProofEngine from "@/components/homepage/proof/ProofEngine";
 import AttackPathWalkthrough from "@/components/homepage/AttackPathWalkthrough";
 import BuyerJourney from "@/components/homepage/BuyerJourney";
 import Footer from "@/components/Footer";
@@ -35,9 +35,7 @@ export default function Home() {
           <CinematicStory />
           <ExploreChapter />
           <AttackPathWalkthrough />
-          <div id="reactor">
-            <CoverageMatrixSection />
-          </div>
+          <ProofEngine />
           <StoryFinale />
           <BuyerJourney />
           <Footer />
