@@ -37,17 +37,12 @@ function StatFigure({ stat, play }: { stat: StatItem; play: boolean }) {
     const reduce =
       typeof window !== "undefined" &&
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
-      setValue(stat.target);
-      return;
-    }
-
-    const duration = 1100;
+    const duration = reduce ? 0 : 1100;
     const start = performance.now();
     let raf = 0;
 
     const tick = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
+      const t = duration ? Math.min(1, (now - start) / duration) : 1;
       // easeOutExpo for a confident, decelerating count
       const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
       setValue(stat.target * eased);
@@ -76,8 +71,8 @@ export default function HomepageStatsBand() {
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setPlay(true);
-      return;
+      const raf = requestAnimationFrame(() => setPlay(true));
+      return () => cancelAnimationFrame(raf);
     }
     const io = new IntersectionObserver(
       (entries) => {

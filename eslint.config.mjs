@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     "metronic-v9.4.7/**",
     "scripts/**",
+    "design_handoff_xsee_v2/**",
   ]),
 ]);
 
