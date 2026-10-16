@@ -41,9 +41,20 @@ section.pe {
   top: 0;
   height: 100svh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--pe-nav) 0 calc(10px + env(safe-area-inset-bottom));
   background:
     radial-gradient(120% 70% at 50% 48%, var(--pe-midnight) 0%, rgba(8, 18, 39, 0) 62%),
     var(--pe-bg);
+}
+
+/* The graph owns its own band on mobile; nothing is layered over it. */
+.pe-graph {
+  position: relative;
+  flex: 1 0 clamp(200px, 36svh, 520px);
+  min-height: 0;
 }
 
 .pe-svg {
@@ -59,8 +70,8 @@ section.pe {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, var(--pe-bg) 0%, rgba(3, 5, 10, 0.86) calc(var(--pe-nav) + 150px), rgba(3, 5, 10, 0) 44%),
-    linear-gradient(to top, var(--pe-bg) 0%, rgba(3, 5, 10, 0.9) 34%, rgba(3, 5, 10, 0) 56%);
+    linear-gradient(to bottom, var(--pe-bg) 0%, rgba(3, 5, 10, 0) 7%),
+    linear-gradient(to top, var(--pe-bg) 0%, rgba(3, 5, 10, 0) 7%);
 }
 
 /* ---------- Background infrastructure ---------- */
@@ -472,10 +483,9 @@ section.pe {
 
 /* ---------- Copy ---------- */
 .pe-head {
-  position: absolute;
-  top: calc(var(--pe-nav) + 14px);
-  left: 20px;
-  right: 20px;
+  position: relative;
+  flex: none;
+  padding: 14px 20px 0;
   pointer-events: none;
 }
 .pe-kicker {
@@ -541,15 +551,17 @@ section.pe {
 
 /* ---------- Dock (inspector + controls) ---------- */
 .pe-dock {
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom));
+  position: relative;
+  flex: 0 1 auto;
+  min-height: 0;
+  padding: 0 12px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 .pe-insp {
+  flex: 0 1 auto;
+  min-height: 0;
   background: var(--pe-glass);
   border: 1px solid var(--pe-glass-line);
   border-radius: 14px;
@@ -557,9 +569,35 @@ section.pe {
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 50px rgba(0, 0, 0, 0.45);
-  max-height: 36svh;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+.pe-controls {
+  flex: none;
+}
+
+/* Short phones: keep the title, drop the repeated kicker so the graph keeps its band. */
+@media (max-width: 959px) and (max-height: 760px) {
+  .pe-kicker {
+    display: none;
+  }
+  .pe-head {
+    padding-top: 8px;
+  }
+  .pe-h2 {
+    font-size: clamp(24px, 7vw, 30px);
+  }
+  .pe-h3 {
+    font-size: clamp(22px, 6.4vw, 28px);
+  }
+  .pe-support {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .pe-graph {
+    flex-basis: clamp(170px, 32svh, 300px);
+  }
 }
 .pe-insp-body,
 .pe-detail {
@@ -1079,6 +1117,14 @@ section.pe {
   .pe-track {
     height: calc(100svh + 5 * 110svh);
   }
+  .pe-stage {
+    display: block;
+    padding: 0;
+  }
+  .pe-graph {
+    position: absolute;
+    inset: 0;
+  }
   .pe-vignette {
     background:
       linear-gradient(to right, rgba(3, 5, 10, 0.92) 0%, rgba(3, 5, 10, 0) 34%),
@@ -1087,6 +1133,8 @@ section.pe {
       linear-gradient(to top, var(--pe-bg) 0%, rgba(3, 5, 10, 0) 22%);
   }
   .pe-head {
+    position: absolute;
+    padding: 0;
     top: calc(var(--pe-nav) + 40px);
     left: 56px;
     right: auto;
@@ -1124,6 +1172,7 @@ section.pe {
     position: absolute;
     inset: auto 0 0 0;
     display: block;
+    padding: 0;
   }
   .pe-insp {
     position: absolute;
