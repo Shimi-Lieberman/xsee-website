@@ -270,6 +270,11 @@
 }
 
 @media (max-width: 1023px) {
+  /* The graph carries each check beside its hop; the boundary tag carries the verdict. */
+  .cs .cs-graph-frame .cs-instrument[data-kind="chamber"] {
+    display: none;
+  }
+
   .ec {
     gap: 8px;
     padding: 10px 12px;
