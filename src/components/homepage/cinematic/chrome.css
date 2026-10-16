@@ -85,6 +85,27 @@ section.cs {
     filter 520ms ease;
 }
 
+/* On the tall layout the scene keeps flying behind the copy; a soft backdrop keeps the headline legible. */
+@media (max-width: 959px) {
+  .cs .cs-act-inner {
+    isolation: isolate;
+  }
+
+  .cs .cs-act-inner::before {
+    content: "";
+    position: absolute;
+    inset: -56px -20px -40px;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      120% 85% at 30% 60%,
+      rgb(2 3 6 / 0.88) 0%,
+      rgb(2 3 6 / 0.7) 45%,
+      rgb(2 3 6 / 0) 100%
+    );
+  }
+}
+
 .cs .cs-act.is-active .cs-act-inner {
   pointer-events: auto;
   opacity: 1;
