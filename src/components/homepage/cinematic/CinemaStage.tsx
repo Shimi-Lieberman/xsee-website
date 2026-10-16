@@ -36,6 +36,10 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 const pathPoint = (hop: number, y = 0): V3 => [pathX(hop), y, hop * HOP_Z];
 const f1 = (n: number) => n.toFixed(1);
 
+type Box = { x0: number; y0: number; x1: number; y1: number };
+const overlaps = (a: Box, b: Box) => a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+const textW = (s: string, fs: number) => s.length * fs * 0.62;
+
 function seeded(n: number) {
   let s = 1337;
   const rand = () => ((s = (s * 16807) % 2147483647) - 1) / 2147483646;
@@ -353,6 +357,35 @@ function RouteLayer({ c, layout, animate, className }: Props) {
     return i <= c.validatedTo ? "lit" : "candidate";
   };
 
+  const nodeBoxes: Box[] =
+    layout === "tall" && c.pathDistinct
+      ? PATH_NODES.flatMap((n, i) => {
+          const z = i * HOP_Z;
+          const base = project([n.x, 0, z]);
+          const top = project([n.x, PYLON, z]);
+          if (!base || !top || visZ(n.x, z) < 0.02) return [];
+          const fs = font(base.s);
+          const d = clamp(base.s * 2.2, 3, 9);
+          const flip = top.x > v.W / 2 + 4;
+          const w = Math.max(textW(n.label, fs), textW(n.finding ?? "", fs * 0.72), textW(n.kind, fs * 0.72));
+          return [
+            {
+              x0: flip ? top.x - d - 8 - w : top.x - d,
+              x1: flip ? top.x + d : top.x + d + 8 + w,
+              y0: top.y - fs * 1.1,
+              y1: top.y + fs * 2.3,
+            },
+          ];
+        })
+      : [];
+  const placedTags: Box[] = [];
+  const shownTags = new Set<string>();
+  // Tall uses preserveAspectRatio="slice", so a portrait phone only shows a centered strip of the 600-wide viewBox.
+  const visHalf = layout === "tall" ? Math.min(v.W / 2, v.H * 0.23) : v.W / 2;
+  const visX0 = v.W / 2 - visHalf;
+  const visX1 = v.W / 2 + visHalf;
+  const blockedOnScreen = !blockedP || layout !== "tall" || (blockedP.x > visX0 + 12 && blockedP.x < visX1 - 12);
+
   return (
     <svg
       className={`cs-graph cn cn-route-layer ${className ?? ""}`}
@@ -418,18 +451,29 @@ function RouteLayer({ c, layout, animate, className }: Props) {
         </g>
       ) : null}
 
-      {c.blockedTag && blockedP && blockedP.dz < 900 ? (
+      {c.blockedTag && blockedP && blockedP.dz < 900 && blockedOnScreen ? (
         <g className="cn-blocked" transform={`translate(${blockedP.x} ${blockedP.y})`}>
           <circle r={clamp(blockedP.s * 5, 4, 9)} />
           <line x1={-clamp(blockedP.s * 3.5, 3, 6)} y1={clamp(blockedP.s * 3.5, 3, 6)} x2={clamp(blockedP.s * 3.5, 3, 6)} y2={-clamp(blockedP.s * 3.5, 3, 6)} />
-          <text
-            x={(blockedP.x > v.W * 0.55 ? -1 : 1) * clamp(blockedP.s * 8, 8, 14)}
-            y={4}
-            textAnchor={blockedP.x > v.W * 0.55 ? "end" : "start"}
-            style={{ fontSize: font(blockedP.s, 3) }}
-          >
-            {layout === "wide" ? "CHECK BLOCKED · NO READ ACCESS" : "BLOCKED"}
-          </text>
+          {layout === "wide" ? (
+            <text
+              x={clamp(blockedP.s * 5, 4, 9) + 6}
+              y={-clamp(blockedP.s * 5, 4, 9) - 6}
+              textAnchor="start"
+              style={{ fontSize: font(blockedP.s, 3) }}
+            >
+              CHECK BLOCKED · NO READ ACCESS
+            </text>
+          ) : (
+            <text
+              x={(blockedP.x > v.W * 0.55 ? -1 : 1) * clamp(blockedP.s * 8, 8, 14)}
+              y={4}
+              textAnchor={blockedP.x > v.W * 0.55 ? "end" : "start"}
+              style={{ fontSize: font(blockedP.s, 3) }}
+            >
+              BLOCKED
+            </text>
+          )}
         </g>
       ) : null}
 
@@ -547,11 +591,27 @@ function RouteLayer({ c, layout, animate, className }: Props) {
           const denied = i === 3 && c.severedFrom !== null && c.severedFrom <= WALL_HOP && c.collapse > 0;
           const text = showEvidence ? (denied ? "denied · re-checked" : hop.evidence) : hop.label;
           const toneName = showEvidence ? (denied ? "denied" : hop.evidence) : "name";
-          const side = PATH_NODES[i].x + PATH_NODES[i + 1].x >= 0 ? -1 : 1;
+          let side = PATH_NODES[i].x + PATH_NODES[i + 1].x >= 0 ? -1 : 1;
+          const tag = showEvidence ? `■ ${text.toUpperCase()}` : text;
+          if (layout === "tall") {
+            if (shownTags.has(tag)) return null;
+            const w = textW(tag, fs);
+            const boxFor = (s: number): Box => {
+              const x = mid.x + s * 10;
+              return { x0: s < 0 ? x - w : x, x1: s < 0 ? x : x + w, y0: mid.y - fs * 0.7, y1: mid.y + fs * 0.7 };
+            };
+            const fits = (b: Box) => b.x0 >= visX0 + 8 && b.x1 <= visX1 - 8 && !nodeBoxes.some((o) => overlaps(b, o)) && !placedTags.some((o) => overlaps(b, o));
+            if (!fits(boxFor(side))) {
+              if (!fits(boxFor(-side))) return null;
+              side = -side;
+            }
+            placedTags.push(boxFor(side));
+            shownTags.add(tag);
+          }
           return (
             <g key={hop.label} className={`cn-hop is-${toneName}`} transform={`translate(${mid.x + side * 10} ${mid.y})`}>
               <text textAnchor={side < 0 ? "end" : "start"} y={fs * 0.35} style={{ fontSize: fs }}>
-                {showEvidence ? `■ ${text.toUpperCase()}` : text}
+                {tag}
               </text>
             </g>
           );
