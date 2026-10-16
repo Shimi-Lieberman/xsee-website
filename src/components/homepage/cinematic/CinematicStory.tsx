@@ -48,7 +48,9 @@ export default function CinematicStory() {
   const act = c.act;
   const animate = !reducedMotion && inView;
   // Each act's copy unsticks and slides up over the scene near the act's end; retire it first so the closing frame stays clear.
-  const copyExiting = act < 4 && position - act > 0.76;
+  // The last act ends on a pull-back to the whole infrastructure, so its copy and record step aside for that shot.
+  const finalPullback = act === 4 && c.t > 0.84;
+  const copyExiting = (act < 4 && position - act > 0.76) || finalPullback;
   const copyLive = (act === 0 || titleCardOpacity(position) < 0.4) && !copyExiting;
   const actClass = (i: number, extra = "") =>
     `cs-act${extra}${i === act && copyLive ? " is-active" : ""}${i === act && c.beat ? " is-beat" : ""}`;
@@ -73,7 +75,12 @@ export default function CinematicStory() {
               <CinemaStage c={c} layer="route" layout="tall" animate={animate} className="cs-graph--tall" />
               <div className="cs-scrim" aria-hidden />
               <CinemaChrome position={position} onNext={jumpTo} />
-              <div className="cs-instrument" key={act} data-kind={act === 2 ? "chamber" : undefined}>
+              <div
+                className="cs-instrument"
+                key={act}
+                data-kind={act === 2 ? "chamber" : undefined}
+                style={{ opacity: finalPullback ? 0 : undefined, transition: "opacity 0.5s ease" }}
+              >
                 <StageInstrument c={c} />
               </div>
             </div>
