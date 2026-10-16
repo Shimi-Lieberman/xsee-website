@@ -111,6 +111,8 @@ export type Cinema = {
   act: number;
   t: number;
   cam: Cam;
+  /** Portrait override: follows the evidence scan hop by hop so each check has room beside its hop. */
+  tallCam: Cam | null;
   /** The world materialises outward from the route as the system wakes. */
   revealR: number;
   awakening: number;
@@ -177,6 +179,7 @@ export function cinemaAt(position: number): Cinema {
     act,
     t,
     cam: START,
+    tallCam: null,
     revealR: 5000,
     awakening: 1,
     env: 1,
@@ -255,6 +258,9 @@ export function cinemaAt(position: number): Cinema {
     c.blockedTag = Math.floor(s) >= 8;
     if (s >= LOG_LENGTH) c.perimeter = "exposed";
     c.cam = blend({ x: 0, z: 5 * HOP_Z - 170, h: 62 }, OVERVIEW, seg(t, 0, 0.25));
+    const hopPos = Math.min(4, s < LOG_LENGTH ? Math.max(0.5, c.scan - 0.5) : 5);
+    const trail: Cam = { x: pathX(hopPos) * 0.5, z: hopPos * HOP_Z - 300, h: 74 };
+    c.tallCam = blend(blend(OVERVIEW, trail, seg(t, 0.02, 0.14)), OVERVIEW, seg(s, 7, 8.6));
     c.beat = t > 0.86;
     return c;
   }

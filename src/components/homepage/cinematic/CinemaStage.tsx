@@ -55,13 +55,14 @@ const STARS = seeded(110);
 function frame(c: Cinema, layout: Layout) {
   const base = VIEW[layout];
   if (layout !== "tall") return { v: base, cam: c.cam };
-  const pulled = clamp((-170 - c.cam.z) / 130);
-  const far = c.cam.z < -300;
-  const z = far ? -300 + (c.cam.z + 300) * 0.35 : c.cam.z;
-  const h = (far ? 158 + (c.cam.h - 158) * 0.5 : c.cam.h) + 60 * pulled;
+  const src = c.tallCam ?? c.cam;
+  const pulled = clamp((-170 - src.z) / 130);
+  const far = src.z < -300;
+  const z = far ? -300 + (src.z + 300) * 0.35 : src.z;
+  const h = (far ? 158 + (src.h - 158) * 0.5 : src.h) + 60 * pulled;
   return {
     v: { ...base, xs: base.xs + 0.55 * pulled, hz: base.hz - 45 * pulled },
-    cam: { x: c.cam.x, z, h },
+    cam: { x: src.x, z, h },
   };
 }
 
@@ -584,35 +585,46 @@ function RouteLayer({ c, layout, animate, className }: Props) {
           const showName = c.act === 1 && c.reach >= i + 1;
           const showEvidence = c.scanned > i;
           if (!showName && !showEvidence) return null;
+          const scanning = layout === "tall" && c.act === 2 && c.scan >= 0;
+          const latest = scanning && i === c.scanned - 1;
+          if (scanning && !latest) return null;
           const mid = project([(PATH_NODES[i].x + PATH_NODES[i + 1].x) / 2, 0, (i + 0.5) * HOP_Z]);
-          const maxDz = layout === "wide" ? 820 : 520;
+          const maxDz = layout === "wide" || latest ? 820 : 520;
           if (!mid || mid.dz > maxDz || mid.dz < 150 || mid.y > v.H * 0.58) return null;
           const fs = font(mid.s, 3.3);
           const denied = i === 3 && c.severedFrom !== null && c.severedFrom <= WALL_HOP && c.collapse > 0;
           const text = showEvidence ? (denied ? "denied · re-checked" : hop.evidence) : hop.label;
           const toneName = showEvidence ? (denied ? "denied" : hop.evidence) : "name";
           let side = PATH_NODES[i].x + PATH_NODES[i + 1].x >= 0 ? -1 : 1;
+          let dy = 0;
           const tag = showEvidence ? `■ ${text.toUpperCase()}` : text;
           if (layout === "tall") {
             if (shownTags.has(tag)) return null;
-            const w = textW(tag, fs);
-            const boxFor = (s: number): Box => {
+            const w = Math.max(textW(tag, fs), latest ? textW(hop.label, fs * 0.85) : 0);
+            const boxFor = (s: number, oy: number): Box => {
               const x = mid.x + s * 10;
-              return { x0: s < 0 ? x - w : x, x1: s < 0 ? x : x + w, y0: mid.y - fs * 0.7, y1: mid.y + fs * 0.7 };
+              const y = mid.y + oy;
+              return { x0: s < 0 ? x - w : x, x1: s < 0 ? x : x + w, y0: y - fs * 0.7, y1: y + fs * (latest ? 1.9 : 0.7) };
             };
             const fits = (b: Box) => b.x0 >= visX0 + 8 && b.x1 <= visX1 - 8 && !nodeBoxes.some((o) => overlaps(b, o)) && !placedTags.some((o) => overlaps(b, o));
-            if (!fits(boxFor(side))) {
-              if (!fits(boxFor(-side))) return null;
-              side = -side;
-            }
-            placedTags.push(boxFor(side));
+            const offsets = latest ? [0, fs * 1.4, -fs * 2.6, fs * 2.8] : [0];
+            const spot = offsets.flatMap((oy) => [side, -side].map((s) => ({ s, oy }))).find(({ s, oy }) => fits(boxFor(s, oy)));
+            if (!spot) return null;
+            side = spot.s;
+            dy = spot.oy;
+            placedTags.push(boxFor(side, dy));
             shownTags.add(tag);
           }
           return (
-            <g key={hop.label} className={`cn-hop is-${toneName}`} transform={`translate(${mid.x + side * 10} ${mid.y})`}>
+            <g key={latest ? `${hop.label}-latest` : hop.label} className={`cn-hop is-${toneName}${latest ? " is-latest" : ""}`} transform={`translate(${mid.x + side * 10} ${mid.y + dy})`}>
               <text textAnchor={side < 0 ? "end" : "start"} y={fs * 0.35} style={{ fontSize: fs }}>
                 {tag}
               </text>
+              {latest ? (
+                <text textAnchor={side < 0 ? "end" : "start"} y={fs * 1.55} className="cn-hop-check" style={{ fontSize: fs * 0.85 }}>
+                  {hop.label}
+                </text>
+              ) : null}
             </g>
           );
         })}
