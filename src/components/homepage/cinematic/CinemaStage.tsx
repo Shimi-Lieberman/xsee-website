@@ -22,7 +22,7 @@ type P2 = { x: number; y: number; s: number; dz: number };
 
 const VIEW: Record<Layout, { W: number; H: number; f: number; hz: number; xs: number; type: number }> = {
   wide: { W: 1000, H: 620, f: 540, hz: 200, xs: 1, type: 1 },
-  tall: { W: 600, H: 780, f: 470, hz: 175, xs: 0.6, type: 1.1 },
+  tall: { W: 600, H: 780, f: 560, hz: 175, xs: 0.95, type: 1.15 },
 };
 
 const NEAR = 30;
@@ -292,11 +292,11 @@ function RouteLayer({ c, layout, animate, className }: Props) {
 
   const shards =
     c.wallMode === "broken" && c.breakF < 1
-      ? Array.from({ length: 16 }, (_, i) => {
-          const fx = -1 + (i % 8) / 3.5;
-          const fy = 0.2 + Math.floor(i / 8) * 0.5;
-          const spread = c.breakF * 90;
-          const p = project([wallCx + fx * wallHalf * 0.8 + fx * spread, 96 * fy + c.breakF * 40 * (i % 3), WALL_Z - c.breakF * 60 * ((i % 4) + 1)]);
+      ? Array.from({ length: 10 }, (_, i) => {
+          const fx = -1 + (i % 5) / 2;
+          const fy = 0.2 + Math.floor(i / 5) * 0.5;
+          const spread = c.breakF * 28;
+          const p = project([wallCx + fx * wallHalf * 0.8 + fx * spread, 96 * fy + c.breakF * 14 * (i % 3), WALL_Z + c.breakF * 30 * ((i % 3) + 1)]);
           return p ? { p, rot: c.breakF * 240 * (i % 2 ? 1 : -1) + i * 25, k: i } : null;
         })
       : [];
@@ -501,7 +501,7 @@ function RouteLayer({ c, layout, animate, className }: Props) {
           <line x1={wallOk[0].x} y1={wallOk[0].y} x2={wallOk[1].x} y2={wallOk[1].y} className="cn-wall-base-line" filter={`url(#${id("soft")})`} />
           <line x1={wallOk[0].x} y1={wallOk[0].y} x2={wallOk[1].x} y2={wallOk[1].y} className="cn-wall-base-line" />
           <line x1={wallOk[3].x} y1={wallOk[3].y} x2={wallOk[2].x} y2={wallOk[2].y} className="cn-wall-edge" />
-          {c.wall > 0.6 && c.wallLabel ? (
+          {c.wall > 0.6 && c.wallLabel && c.wallLabel !== perimeterLabel ? (
             <text x={(wallOk[3].x + wallOk[2].x) / 2} y={wallOk[3].y - 8} textAnchor="middle" className="cn-wall-label" style={{ fontSize: font(wallOk[0].s, 3.4) }}>
               {c.wallLabel.toUpperCase()}
             </text>
@@ -557,7 +557,9 @@ function RouteLayer({ c, layout, animate, className }: Props) {
           const drifted = n.id === "role-batch" && (c.perimeter === "drift" || c.perimeter === "reassessing" || c.perimeter === "reopened");
           const finding = drifted ? "Trust: role-web-*" : n.finding;
           const showFinding = (lit || drifted) && finding && (n.id !== "web" || c.foothold || c.act === 1);
-          const labelX = top.x + d + 8;
+          const flip = layout === "tall" && top.x > v.W / 2 + 4;
+          const labelX = flip ? top.x - d - 8 : top.x + d + 8;
+          const anchor = flip ? "end" : "start";
           const sky = lit ? project([n.x, PYLON + 130, z]) : null;
           const w = clamp(base.s * 2.4, 1, 6);
           const emitting = c.act >= 2 && i <= c.validatedTo && nt === "lit";
@@ -570,7 +572,7 @@ function RouteLayer({ c, layout, animate, className }: Props) {
               {emitting ? <circle cx={top.x} cy={top.y} r={d * 1.6} className="cn-emit" style={{ animationDelay: `${i * -0.4}s` }} /> : null}
               <path d={`M ${top.x} ${top.y - d} L ${top.x + d} ${top.y} L ${top.x} ${top.y + d} L ${top.x - d} ${top.y} Z`} className="cn-node-mark" />
               {c.pathDistinct ? (
-                <g className="cn-node-text">
+                <g className="cn-node-text" textAnchor={anchor}>
                   <text x={labelX} y={top.y - fs * 0.25} className="cn-node-kind" style={{ fontSize: fs * 0.72 }}>
                     {n.kind}
                   </text>

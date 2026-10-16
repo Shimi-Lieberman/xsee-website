@@ -272,7 +272,7 @@ export function cinemaAt(position: number): Cinema {
     c.fixStep = t < 0.06 ? 0 : t < 0.2 ? 1 : t < 0.34 ? 2 : t < 0.5 ? 3 : t < 0.7 ? 4 : 5;
     c.wall = seg(t, 0.36, 0.48);
     c.wallMode = c.wall > 0 ? "up" : "none";
-    c.wallLabel = "Change applied by your team";
+    c.wallLabel = "";
     if (t >= 0.48) c.perimeter = "pending";
     if (t >= 0.5 && t < 0.66) {
       c.scanTone = "recheck";
