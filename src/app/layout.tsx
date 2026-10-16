@@ -41,11 +41,15 @@ export const metadata: Metadata = {
     "XSEE helps AWS security teams analyze attack paths across identities, permissions and network exposure, with each step labeled by what was checked. Read-only IAM, no agents.",
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
       { url: "/logo-symbol-only.svg", type: "image/svg+xml" },
-      { url: "/logo-symbol-only.svg", sizes: "any", type: "image/svg+xml" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
     ],
-    apple: "/logo-symbol-only.svg",
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     title: "XSEE — AWS attack path analysis with evidence",
     description:
