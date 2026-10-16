@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./homepage.css";
+import "./film.css";
 import HomeNav from "@/components/homepage/HomeNav";
 import CinematicStory from "@/components/homepage/cinematic/CinematicStory";
 import ExploreChapter from "@/components/homepage/cinematic/ExploreChapter";
@@ -38,7 +39,9 @@ export default function Home() {
           <ProofEngine />
           <StoryFinale />
           <BuyerJourney />
-          <Footer />
+          <div className="hp-film-credits" data-nav-tone="dark">
+            <Footer />
+          </div>
         </main>
       </div>
     </>

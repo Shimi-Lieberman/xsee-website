@@ -741,6 +741,10 @@ section.pe {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
+  color: var(--pe-ink);
+}
+.pe-labels {
+  pointer-events: none;
 }
 .pe-split small {
   font-size: 12px;

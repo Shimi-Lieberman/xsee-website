@@ -11,7 +11,7 @@ export const PILOT_STAGES = [
 
 export default function PilotSection() {
   return (
-    <section id="pilot" className="xsee-pilot-section" aria-labelledby="pilot-title">
+    <section id="pilot" className="xsee-pilot-section" aria-labelledby="pilot-title" data-nav-tone="dark">
       <div className="hp-container">
         <div className="xsee-pilot-panel">
           <div className="xsee-pilot-intro">
