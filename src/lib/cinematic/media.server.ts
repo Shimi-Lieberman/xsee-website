@@ -90,7 +90,16 @@ export type AssembledFilm = {
   boundaries: { start: number; end: number }[];
 };
 
-export async function assembleFilm(clips: Clip[], joins: FilmJoin[], endCard: string, dir: string): Promise<AssembledFilm> {
+const CAPTION_FADE_SECONDS = 0.4;
+const CAPTION_DELAY_SECONDS = 0.3;
+
+export async function assembleFilm(
+  clips: Clip[],
+  joins: FilmJoin[],
+  endCard: string,
+  captions: string[],
+  dir: string,
+): Promise<AssembledFilm> {
   const fitted = clips.map((clip, i) => fitToShot(clip.duration, clip.slot, joins[i - 1] === "cut", joins[i] === "cut"));
   const cardInput = clips.length;
   const filters = fitted.map(
@@ -117,8 +126,24 @@ export async function assembleFilm(clips: Clip[], joins: FilmJoin[], endCard: st
   }
 
   const cardStart = Math.max(0, length - END_CARD_DISSOLVE_SECONDS);
+  let captionDurations: number[] = [];
+  filters.push(`[${current}]${FILM_GRADE},fade=t=in:st=0:d=${FADE_IN_SECONDS}[base]`);
+
+  captionDurations = captions.map((_, i) => (i + 1 < starts.length ? starts[i + 1] : cardStart) - starts[i]);
+  captions.forEach((_, i) => {
+    const span = captionDurations[i];
+    const outAt = Math.max(CAPTION_DELAY_SECONDS + CAPTION_FADE_SECONDS, span - CAPTION_FADE_SECONDS - 0.1);
+    filters.push(
+      `[${cardInput + 1 + i}:v]format=yuva420p,fps=${FILM_FPS},settb=AVTB,setpts=PTS-STARTPTS,fade=t=in:st=${CAPTION_DELAY_SECONDS}:d=${CAPTION_FADE_SECONDS}:alpha=1,fade=t=out:st=${outAt.toFixed(3)}:d=${CAPTION_FADE_SECONDS}:alpha=1[c${i}]`,
+    );
+  });
+  if (captions.length) {
+    filters.push(`${captions.map((_, i) => `[c${i}]`).join("")}concat=n=${captions.length}:v=1:a=0[captions]`);
+    filters.push(`[base][captions]overlay=0:0:eof_action=pass:format=yuv420,format=yuv420p[graded]`);
+  } else {
+    filters.push(`[base]null[graded]`);
+  }
   starts.push(cardStart);
-  filters.push(`[${current}]${FILM_GRADE},fade=t=in:st=0:d=${FADE_IN_SECONDS}[graded]`);
   filters.push(
     `[${cardInput}:v]scale=${FILM_WIDTH}:${FILM_HEIGHT},fps=${FILM_FPS},format=yuv420p,setsar=1,settb=AVTB[card]`,
   );
@@ -136,6 +161,7 @@ export async function assembleFilm(clips: Clip[], joins: FilmJoin[], endCard: st
   await ffmpeg([
     ...clips.flatMap((clip) => ["-i", clip.file]),
     "-loop", "1", "-framerate", String(FILM_FPS), "-t", String(END_CARD_SECONDS), "-i", endCard,
+    ...captions.flatMap((file, i) => ["-loop", "1", "-framerate", String(FILM_FPS), "-t", captionDurations[i].toFixed(3), "-i", file]),
     "-filter_complex",
     filters.join(";"),
     "-map", "[hd]", ...encode, "-crf", "21", master,

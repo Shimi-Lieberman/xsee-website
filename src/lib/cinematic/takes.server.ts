@@ -4,6 +4,7 @@ import path from "node:path";
 import { download, extractLastFrame, withWorkdir, assembleFilm, probeDuration, ffmpegAvailable } from "./media.server";
 import { checkGeneration, describeGatewayError, gatewayStatus, invalidateGatewayStatus, submitGeneration } from "./gateway.server";
 import { renderEndCard } from "./endcard.server";
+import { renderCaptions } from "./captions.server";
 import { composePrompt, END_CARD, estimateCredits, formatUsd, isModelId, MODELS, previousShot, SHOTS, VIDEO_MIN_BALANCE, type ModelId, type Shot } from "./shots";
 import { blobConfigured, deleteAssets, getTake, listTakes, putAsset, readFilm, removeTake, saveTake, writeFilm } from "./store.server";
 import { isActive, type Film, type FilmJoin, type LabSnapshot, type Take } from "./types";
@@ -175,7 +176,8 @@ export async function buildFilm(): Promise<Film> {
         return { file, duration: await probeDuration(file), slot: SHOTS[i].seconds };
       }),
     );
-    return assembleFilm(clips, joins, await renderEndCard(dir), dir);
+    const [endCard, captions] = await Promise.all([renderEndCard(dir), renderCaptions(SHOTS, dir)]);
+    return assembleFilm(clips, joins, endCard, captions, dir);
   });
 
   const stamp = Date.now();
