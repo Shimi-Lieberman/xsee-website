@@ -48,14 +48,9 @@ type Submission = {
   startFrameUrl?: string;
 };
 
-async function fetchImage(url: string) {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`Could not load the chained start frame (${response.status}).`);
-  return new Uint8Array(await response.arrayBuffer());
-}
-
 export async function submitGeneration({ model, duration, promptText, startFrameUrl }: Submission) {
-  const prompt = startFrameUrl ? { image: await fetchImage(startFrameUrl), text: promptText } : promptText;
+  // Gateway async video jobs reject inline image data over 300KB, so chained frames go by hosted URL.
+  const prompt = startFrameUrl ? { image: startFrameUrl, text: promptText } : promptText;
   const { operation } = await experimental_startVideo({
     model: MODELS[model].gatewayId,
     prompt,
