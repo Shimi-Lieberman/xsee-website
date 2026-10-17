@@ -315,7 +315,7 @@ const SHOT_DEFS: ShotDef[] = [
       { label: "The loop", value: STEPS.map((step) => step.title).join(" → ") },
     ],
     prompt:
-      "Continuous with the previous shot. Close on a titanium gate with a thin seam of deep red light. A fresh, fine magenta verification ring forms around the red seam and a magenta test pulse runs along the conduit through it, retracing the route, while the red glow stays held inside the ring. Then the camera pulls back and rises smoothly, revealing the whole three-tier lattice of graphite towers, prisms and vaults as a slow, continuous loop of magenta light circles the entire structure, steady and watchful. Camera: smooth pull back and crane up to a wide hero view. Lighting: low-key, magenta loop as the key light. Motion: calm, continuous. Ends on the full lattice encircled by the slow magenta loop, with dark negative space around it.",
+      "Continuous with the previous shot. Close on a titanium gate with a thin seam of soft red light. A fine ring of magenta light gently forms around the gate and glows steadily. The camera then pulls back and rises smoothly, revealing the whole three-tier architectural lattice of graphite towers, glass prisms and stone vaults. A slow, thin line of magenta light travels in a continuous loop around the outside of the structure. Camera: smooth pull back and crane up to a wide, calm hero view. Lighting: low-key, soft steel-blue haze, magenta as the key light. Motion: calm and continuous. Ends on the full lattice encircled by the slow magenta loop, surrounded by dark empty space.",
   },
 ];
 
