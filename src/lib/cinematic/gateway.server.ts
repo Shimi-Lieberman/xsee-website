@@ -51,11 +51,13 @@ type Submission = {
 export async function submitGeneration({ model, duration, promptText, startFrameUrl }: Submission) {
   // Gateway async video jobs reject inline image data over 300KB, so chained frames go by hosted URL.
   const prompt = startFrameUrl ? { image: startFrameUrl, text: promptText } : promptText;
+  const isKling = MODELS[model].gatewayId.startsWith("klingai/");
+  if (isKling && !startFrameUrl) throw new Error("Kling image-to-video needs a start frame from the previous approved shot.");
   const { operation } = await experimental_startVideo({
     model: MODELS[model].gatewayId,
     prompt,
     aspectRatio: FILM_RATIO,
-    resolution: GENERATION_RESOLUTION,
+    ...(isKling ? { providerOptions: { klingai: { mode: "pro" } } } : { resolution: GENERATION_RESOLUTION }),
     duration,
     generateAudio: false,
   });

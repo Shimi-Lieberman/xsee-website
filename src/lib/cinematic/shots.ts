@@ -18,7 +18,7 @@ export const PROMPT_LIMIT = 2000;
 export const FILM_RATIO = "16:9" as const;
 export const GENERATION_RESOLUTION = "1920x1080" as const;
 
-export type ModelId = "veo3.1-fast" | "veo3.1";
+export type ModelId = "veo3.1-fast" | "veo3.1" | "kling3.0-pro";
 
 export type ModelSpec = {
   id: ModelId;
@@ -52,14 +52,24 @@ export const MODELS: Record<ModelId, ModelSpec> = {
     recommended: true,
     note: "Veo 3.1 Standard at 1080p through Vercel AI Gateway, $0.20 per second with audio off. Highest quality; can start from the previous take's last frame.",
   },
+  "kling3.0-pro": {
+    id: "kling3.0-pro",
+    gatewayId: "klingai/kling-v3.0-i2v",
+    label: "Kling 3.0 Pro (silent)",
+    creditsPerSecond: 22.4,
+    durations: [4, 6, 8],
+    supportsNegativePrompt: false,
+    recommended: false,
+    note: "Kling 3.0 image-to-video in pro mode (1080p) through Vercel AI Gateway, $0.224 per second with audio off. Fallback for shots Veo will not render; needs the previous take's last frame as its start.",
+  },
 };
 
 export function isModelId(value: unknown): value is ModelId {
-  return value === "veo3.1-fast" || value === "veo3.1";
+  return typeof value === "string" && value in MODELS;
 }
 
 export function estimateCredits(model: ModelId, duration: number) {
-  return MODELS[model].creditsPerSecond * duration;
+  return Math.ceil(MODELS[model].creditsPerSecond * duration);
 }
 
 export function formatUsd(credits: number) {
@@ -315,7 +325,7 @@ const SHOT_DEFS: ShotDef[] = [
       { label: "The loop", value: STEPS.map((step) => step.title).join(" → ") },
     ],
     prompt:
-      "Continuous with the previous shot. Close on a titanium gate with a thin seam of soft red light. A fine ring of magenta light gently forms around the gate and glows steadily. The camera then pulls back and rises smoothly, revealing the whole three-tier architectural lattice of graphite towers, glass prisms and stone vaults. A slow, thin line of magenta light travels in a continuous loop around the outside of the structure. Camera: smooth pull back and crane up to a wide, calm hero view. Lighting: low-key, soft steel-blue haze, magenta as the key light. Motion: calm and continuous. Ends on the full lattice encircled by the slow magenta loop, surrounded by dark empty space.",
+      "Continuous with the previous shot. Close on a titanium gate with a thin seam of deep red light. A fresh, fine magenta verification ring forms around the red seam and a magenta test pulse runs along the conduit through it, retracing the route, while the red glow stays held inside the ring. Then the camera pulls back and rises smoothly, revealing the whole three-tier lattice of graphite towers, prisms and vaults as a slow, continuous loop of magenta light circles the entire structure, steady and watchful. Camera: smooth pull back and crane up to a wide hero view. Lighting: low-key, magenta loop as the key light. Motion: calm, continuous. Ends on the full lattice encircled by the slow magenta loop, with dark negative space around it.",
   },
 ];
 
