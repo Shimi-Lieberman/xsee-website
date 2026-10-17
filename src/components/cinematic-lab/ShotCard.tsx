@@ -9,6 +9,7 @@ import {
   previousShot,
   type ModelId,
   type Shot,
+  VIDEO_MIN_BALANCE,
 } from "@/lib/cinematic/shots";
 import type { LabSnapshot } from "@/lib/cinematic/types";
 import { labFetch } from "./api";
@@ -35,7 +36,8 @@ export function ShotCard({ shot, snapshot, onChange }: Props) {
   const gateway = snapshot?.status.gateway;
   const balance = gateway?.state === "ready" ? gateway.creditBalance : null;
   const blocked = gateway?.state !== "ready" || !snapshot?.status.blob;
-  const short = balance !== null && balance < credits;
+  const belowMinimum = balance !== null && balance < VIDEO_MIN_BALANCE;
+  const short = belowMinimum || (balance !== null && balance < credits);
 
   function pickModel(next: ModelId) {
     setModel(next);
@@ -151,7 +153,11 @@ export function ShotCard({ shot, snapshot, onChange }: Props) {
             </>
           ) : (
             <button type="button" className="lab-btn" onClick={() => setConfirming(true)} disabled={blocked || short}>
-              {short ? "Not enough balance" : "Review cost to generate"}
+              {belowMinimum
+            ? `Gateway needs ${formatUsd(VIDEO_MIN_BALANCE)} minimum`
+            : short
+              ? "Not enough balance"
+              : "Review cost to generate"}
             </button>
           )}
         </div>

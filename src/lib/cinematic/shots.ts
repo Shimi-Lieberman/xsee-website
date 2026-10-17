@@ -4,6 +4,8 @@ import { NEGATIVE_PROMPT, PROMPT_AVOID, PROMPT_LOOK } from "./bible";
 export const FILM_TITLE = "XSEE — Inside the Attack";
 
 export const CREDIT_USD = 0.01;
+/** AI Gateway refuses to start any video job below this balance (in credits), regardless of the job's price. */
+export const VIDEO_MIN_BALANCE = 1000;
 export const PROMPT_LIMIT = 2000;
 export const FILM_RATIO = "16:9" as const;
 export const GENERATION_RESOLUTION = "1920x1080" as const;

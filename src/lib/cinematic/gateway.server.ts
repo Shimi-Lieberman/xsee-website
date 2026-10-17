@@ -1,6 +1,6 @@
 import "server-only";
 import { experimental_getVideoStatus, experimental_startVideo, gateway, type JSONValue } from "ai";
-import { CREDIT_USD, FILM_RATIO, GENERATION_RESOLUTION, MODELS, type ModelId } from "./shots";
+import { CREDIT_USD, FILM_RATIO, formatUsd, GENERATION_RESOLUTION, MODELS, VIDEO_MIN_BALANCE, type ModelId } from "./shots";
 import type { GatewayState } from "./types";
 
 const STATUS_TTL_MS = 30_000;
@@ -10,6 +10,9 @@ export function describeGatewayError(error: unknown) {
   if (error instanceof Error) {
     if (error.name === "GatewayAuthenticationError") return "AI Gateway rejected the request. Check the Vercel project's AI Gateway access.";
     if (error.name === "GatewayRateLimitError") return "AI Gateway rate limit reached. Wait a minute and try again.";
+    if (/minimum balance/i.test(error.message)) {
+      return `AI Gateway requires a balance of at least ${formatUsd(VIDEO_MIN_BALANCE)} before it will start any video generation. Top up credits on Vercel.`;
+    }
     if (error.name === "GatewayInsufficientFundsError" || /insufficient/i.test(error.message)) {
       return "The AI Gateway balance is too low for this generation. Top up credits on Vercel.";
     }

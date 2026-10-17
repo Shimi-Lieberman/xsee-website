@@ -3,7 +3,7 @@ import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { download, extractLastFrame, withWorkdir, assembleFilm, probeDuration, ffmpegAvailable } from "./media.server";
 import { checkGeneration, describeGatewayError, gatewayStatus, invalidateGatewayStatus, submitGeneration } from "./gateway.server";
-import { composePrompt, estimateCredits, formatUsd, isModelId, MODELS, previousShot, SHOTS, type ModelId, type Shot } from "./shots";
+import { composePrompt, estimateCredits, formatUsd, isModelId, MODELS, previousShot, SHOTS, VIDEO_MIN_BALANCE, type ModelId, type Shot } from "./shots";
 import { blobConfigured, deleteAssets, getTake, listTakes, putAsset, readFilm, removeTake, saveTake, writeFilm } from "./store.server";
 import { isActive, type Film, type FilmJoin, type LabSnapshot, type Take } from "./types";
 
@@ -87,6 +87,12 @@ export async function createTake({ shot, model, duration, chain, approvedCredits
 
   const gateway = await gatewayStatus(true);
   if (gateway.state !== "ready") throw new LabError(gateway.message, 503);
+  if (gateway.creditBalance < VIDEO_MIN_BALANCE) {
+    throw new LabError(
+      `AI Gateway only starts video generation with a balance of at least ${formatUsd(VIDEO_MIN_BALANCE)}. Current balance: ${formatUsd(gateway.creditBalance)}. This take would cost ${formatUsd(credits)}.`,
+      402,
+    );
+  }
   if (gateway.creditBalance < credits) {
     throw new LabError(`Not enough AI Gateway balance: ${formatUsd(credits)} needed, ${formatUsd(gateway.creditBalance)} available.`, 402);
   }
