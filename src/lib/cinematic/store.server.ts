@@ -1,3 +1,4 @@
+import "server-only";
 import { del, get, list, put } from "@vercel/blob";
 import type { Film, Take } from "./types";
 

@@ -1,14 +1,14 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { SHOTS } from "@/lib/cinematic/shots";
 import type { LabSnapshot } from "@/lib/cinematic/types";
 import { labFetch } from "./api";
+import { FilmPlayer } from "./FilmPlayer";
 
 type Props = { snapshot: LabSnapshot | undefined; onChange: () => void };
 
 export function FilmPreview({ snapshot, onChange }: Props) {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const [active, setActive] = useState(0);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -19,19 +19,6 @@ export function FilmPreview({ snapshot, onChange }: Props) {
   ).length;
   const ready = approvedCount === SHOTS.length && Boolean(snapshot?.status.ffmpeg);
   const shot = SHOTS[active];
-
-  function sync() {
-    const time = videoRef.current?.currentTime ?? 0;
-    const index = film?.segments.findIndex((segment) => time >= segment.start && time < segment.end) ?? -1;
-    const next = index === -1 ? (film && time >= film.duration - 0.05 ? SHOTS.length - 1 : 0) : index;
-    if (next !== active) setActive(next);
-  }
-
-  function seek(index: number) {
-    setActive(index);
-    const segment = film?.segments[index];
-    if (videoRef.current && segment) videoRef.current.currentTime = segment.start + 0.01;
-  }
 
   async function assemble() {
     setBusy(true);
@@ -60,49 +47,37 @@ export function FilmPreview({ snapshot, onChange }: Props) {
       </div>
 
       {film ? (
-        <video
-          key={film.url}
-          ref={videoRef}
-          poster={film.posterUrl}
-          controls
-          muted
-          playsInline
-          preload="metadata"
-          onTimeUpdate={sync}
-          onSeeked={sync}
-        >
-          <source src={film.mobileUrl} type="video/mp4" media="(max-width: 767px)" />
-          <source src={film.url} type="video/mp4" />
-        </video>
-      ) : null}
-
-      <div className="lab-panel" aria-live="polite">
-        <span className="lab-meta">
-          {shot.window} · {shot.panelTitle}
-        </span>
-        <p className="lab-panel-title">{shot.panelBody}</p>
-        <ul className="lab-facts">
-          {shot.facts.map((fact) => (
-            <li key={fact.label}>
-              <strong>{fact.label}:</strong> {fact.value}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="lab-actions" role="group" aria-label="Jump to shot">
-        {SHOTS.map((item, index) => (
-          <button
-            key={item.id}
-            type="button"
-            className={index === active ? "lab-btn lab-btn--primary" : "lab-btn"}
-            aria-pressed={index === active}
-            onClick={() => seek(index)}
-          >
-            {item.index + 1}. {item.title}
-          </button>
-        ))}
-      </div>
+        <FilmPlayer key={film.url} film={film} />
+      ) : (
+        <>
+          <div className="lab-panel">
+            <span className="lab-meta">
+              {shot.window} · {shot.panelTitle}
+            </span>
+            <p className="lab-panel-title">{shot.panelBody}</p>
+            <ul className="lab-facts">
+              {shot.facts.map((fact) => (
+                <li key={fact.label}>
+                  <strong>{fact.label}:</strong> {fact.value}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="lab-actions" role="group" aria-label="Preview shot information">
+            {SHOTS.map((item, index) => (
+              <button
+                key={item.id}
+                type="button"
+                className={index === active ? "lab-btn lab-btn--primary" : "lab-btn"}
+                aria-pressed={index === active}
+                onClick={() => setActive(index)}
+              >
+                {item.index + 1}. {item.title}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       {error ? (
         <p className="lab-notice" role="alert">

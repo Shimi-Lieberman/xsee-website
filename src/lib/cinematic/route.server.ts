@@ -1,3 +1,4 @@
+import "server-only";
 import { hasLabAccess, notFoundResponse } from "./access.server";
 import { LabError } from "./takes.server";
 
