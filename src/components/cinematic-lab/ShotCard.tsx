@@ -17,8 +17,8 @@ import { TakeCard } from "./TakeCard";
 type Props = { shot: Shot; snapshot: LabSnapshot | undefined; onChange: () => void };
 
 export function ShotCard({ shot, snapshot, onChange }: Props) {
-  const [model, setModel] = useState<ModelId>("veo3.1-fast");
-  const [duration, setDuration] = useState(MODELS["veo3.1-fast"].defaultDuration);
+  const [model, setModel] = useState<ModelId>("veo3.1");
+  const [duration, setDuration] = useState(MODELS["veo3.1"].defaultDuration);
   const [chain, setChain] = useState(shot.index > 0);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);

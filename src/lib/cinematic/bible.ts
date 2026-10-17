@@ -92,9 +92,10 @@ export const FILM_GRADE =
 
 export const DISSOLVE_SECONDS = 0.5;
 export const FADE_IN_SECONDS = 0.6;
-export const FILM_WIDTH = 1280;
-export const FILM_HEIGHT = 720;
+export const FILM_WIDTH = 1920;
+export const FILM_HEIGHT = 1080;
 export const FILM_FPS = 24;
+export const SHOT_SECONDS = 5;
 
 export type FilmChapter = {
   index: number;

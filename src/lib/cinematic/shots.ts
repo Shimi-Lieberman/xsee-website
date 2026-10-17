@@ -4,8 +4,9 @@ import { NEGATIVE_PROMPT, PROMPT_AVOID, PROMPT_LOOK } from "./bible";
 export const FILM_TITLE = "XSEE — Inside the Attack";
 
 export const CREDIT_USD = 0.01;
-export const PROMPT_LIMIT = 1000;
+export const PROMPT_LIMIT = 2000;
 export const FILM_RATIO = "16:9" as const;
+export const GENERATION_RESOLUTION = "1920x1080" as const;
 
 export type ModelId = "veo3.1-fast" | "veo3.1";
 
@@ -30,8 +31,8 @@ export const MODELS: Record<ModelId, ModelSpec> = {
     durations: [4, 6, 8],
     defaultDuration: 6,
     supportsNegativePrompt: false,
-    recommended: true,
-    note: "Veo 3.1 Fast through Vercel AI Gateway at $0.10 per second with audio off. Can start from the previous take's last frame.",
+    recommended: false,
+    note: "Veo 3.1 Fast at 1080p through Vercel AI Gateway, $0.10 per second with audio off. Cheaper drafts; can start from the previous take's last frame.",
   },
   "veo3.1": {
     id: "veo3.1",
@@ -41,8 +42,8 @@ export const MODELS: Record<ModelId, ModelSpec> = {
     durations: [4, 6, 8],
     defaultDuration: 6,
     supportsNegativePrompt: false,
-    recommended: false,
-    note: "Full-quality Veo 3.1 through Vercel AI Gateway at $0.20 per second with audio off.",
+    recommended: true,
+    note: "Veo 3.1 Standard at 1080p through Vercel AI Gateway, $0.20 per second with audio off. Highest quality; can start from the previous take's last frame.",
   },
 };
 

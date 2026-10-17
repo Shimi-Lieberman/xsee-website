@@ -1,6 +1,6 @@
 import "server-only";
 import { experimental_getVideoStatus, experimental_startVideo, gateway, type JSONValue } from "ai";
-import { CREDIT_USD, FILM_RATIO, MODELS, type ModelId } from "./shots";
+import { CREDIT_USD, FILM_RATIO, GENERATION_RESOLUTION, MODELS, type ModelId } from "./shots";
 import type { GatewayState } from "./types";
 
 const STATUS_TTL_MS = 30_000;
@@ -57,6 +57,7 @@ export async function submitGeneration({ model, duration, promptText, startFrame
     model: MODELS[model].gatewayId,
     prompt,
     aspectRatio: FILM_RATIO,
+    resolution: GENERATION_RESOLUTION,
     duration,
     generateAudio: false,
   });

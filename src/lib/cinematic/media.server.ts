@@ -13,12 +13,30 @@ import {
   FILM_GRADE,
   FILM_HEIGHT,
   FILM_WIDTH,
+  SHOT_SECONDS,
 } from "./bible";
 import type { FilmJoin } from "./types";
 
 const run = promisify(execFile);
-const MOBILE_WIDTH = 854;
-const MOBILE_HEIGHT = 480;
+const MOBILE_WIDTH = 1280;
+const MOBILE_HEIGHT = 720;
+
+/**
+ * Fits a clip to SHOT_SECONDS without breaking frame-chained cuts: a chained
+ * clip's first frame continues the previous clip's last frame, so those frames
+ * must survive. Free ends are trimmed; a clip bound at both ends is retimed.
+ */
+function fitToShot(duration: number, startBound: boolean, endBound: boolean) {
+  const target = Math.min(SHOT_SECONDS, duration);
+  if (duration - target < 0.05) return { filter: "setpts=PTS-STARTPTS", length: duration };
+  if (startBound && endBound) {
+    return { filter: `setpts=${(target / duration).toFixed(5)}*(PTS-STARTPTS)`, length: target };
+  }
+  if (endBound) {
+    return { filter: `trim=start=${(duration - target).toFixed(3)},setpts=PTS-STARTPTS`, length: target };
+  }
+  return { filter: `trim=duration=${target.toFixed(3)},setpts=PTS-STARTPTS`, length: target };
+}
 
 export function ffmpegAvailable() {
   return Boolean(ffmpegPath && existsSync(ffmpegPath));
@@ -72,25 +90,26 @@ export type AssembledFilm = {
 };
 
 export async function assembleFilm(clips: Clip[], joins: FilmJoin[], dir: string): Promise<AssembledFilm> {
-  const filters = clips.map(
-    (_, i) =>
-      `[${i}:v]scale=${FILM_WIDTH}:${FILM_HEIGHT}:force_original_aspect_ratio=increase,crop=${FILM_WIDTH}:${FILM_HEIGHT},fps=${FILM_FPS},format=yuv420p,setsar=1,settb=AVTB[s${i}]`,
+  const fitted = clips.map((clip, i) => fitToShot(clip.duration, joins[i - 1] === "cut", joins[i] === "cut"));
+  const filters = fitted.map(
+    (fit, i) =>
+      `[${i}:v]${fit.filter},scale=${FILM_WIDTH}:${FILM_HEIGHT}:force_original_aspect_ratio=increase,crop=${FILM_WIDTH}:${FILM_HEIGHT},fps=${FILM_FPS},format=yuv420p,setsar=1,settb=AVTB[s${i}]`,
   );
   const starts = [0];
   let current = "s0";
-  let length = clips[0].duration;
+  let length = fitted[0].length;
 
   for (let i = 1; i < clips.length; i += 1) {
     const next = `j${i}`;
     if (joins[i - 1] === "cut") {
       filters.push(`[${current}][s${i}]concat=n=2:v=1:a=0[${next}]`);
       starts.push(length);
-      length += clips[i].duration;
+      length += fitted[i].length;
     } else {
       const offset = Math.max(0, length - DISSOLVE_SECONDS);
       filters.push(`[${current}][s${i}]xfade=transition=fade:duration=${DISSOLVE_SECONDS}:offset=${offset.toFixed(3)}[${next}]`);
       starts.push(offset + DISSOLVE_SECONDS / 2);
-      length += clips[i].duration - DISSOLVE_SECONDS;
+      length += fitted[i].length - DISSOLVE_SECONDS;
     }
     current = next;
   }
@@ -98,8 +117,8 @@ export async function assembleFilm(clips: Clip[], joins: FilmJoin[], dir: string
   filters.push(`[${current}]${FILM_GRADE},fade=t=in:st=0:d=${FADE_IN_SECONDS},split=2[hd][sd0]`);
   filters.push(`[sd0]scale=${MOBILE_WIDTH}:${MOBILE_HEIGHT}[sd]`);
 
-  const master = path.join(dir, "film-1280.mp4");
-  const mobile = path.join(dir, "film-854.mp4");
+  const master = path.join(dir, "film-1080p.mp4");
+  const mobile = path.join(dir, "film-720p.mp4");
   const poster = path.join(dir, "poster.jpg");
   const encode = ["-c:v", "libx264", "-preset", "slow", "-profile:v", "high", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "-an"];
 

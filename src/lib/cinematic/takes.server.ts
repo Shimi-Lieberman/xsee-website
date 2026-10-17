@@ -173,8 +173,8 @@ export async function buildFilm(): Promise<Film> {
 
   const stamp = Date.now();
   const [url, mobileUrl, posterUrl] = await Promise.all([
-    putAsset(`film/inside-the-attack-${stamp}-1280.mp4`, assembled.master, "video/mp4"),
-    putAsset(`film/inside-the-attack-${stamp}-854.mp4`, assembled.mobile, "video/mp4"),
+    putAsset(`film/inside-the-attack-${stamp}-1080p.mp4`, assembled.master, "video/mp4"),
+    putAsset(`film/inside-the-attack-${stamp}-720p.mp4`, assembled.mobile, "video/mp4"),
     putAsset(`film/inside-the-attack-${stamp}-poster.jpg`, assembled.poster, "image/jpeg"),
   ]);
 
