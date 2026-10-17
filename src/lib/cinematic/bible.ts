@@ -57,7 +57,8 @@ export const BIBLE: BibleSection[] = [
       "A tentative magenta pulse means a candidate relationship. It is being traced, not proven.",
       "The magenta verification ring means evidence is being evaluated, never that exploitation succeeded.",
       "No shot depicts a verified compromise. Observed, simulated, untested and assumed are carried by the overlay text, sourced from the scenario data.",
-      "Red is reserved for configuration drift in a later chapter.",
+      "Red is reserved for configuration drift in chapter five, and only on the drifted seam.",
+      "Re-verification is shown as a test pulse stopping against the closed gate. Closure is never shown before the re-test.",
     ],
   },
   {
@@ -79,7 +80,12 @@ export const BIBLE: BibleSection[] = [
 ];
 
 export const PROMPT_LOOK =
-  "Look: low-key near-black and midnight-navy world, steel-blue ambient light, magenta as the only saturated colour, soft volumetric haze for depth, physically based materials, fine film grain, 35mm lens, no camera shake.";
+  "Look: low-key near-black and midnight-navy world, steel-blue ambient light, soft volumetric haze for depth, physically based materials, fine film grain, 35mm lens, no camera shake.";
+
+export const PROMPT_PALETTE = {
+  proof: "Magenta is the only saturated colour.",
+  drift: "Magenta and one deep, controlled red are the only saturated colours; red appears only where the configuration has drifted.",
+} as const;
 
 export const PROMPT_AVOID =
   "No text, numbers, logos, interfaces, falling code, holograms, lens flares, particle storms, people or explosions.";
@@ -95,50 +101,7 @@ export const FADE_IN_SECONDS = 0.6;
 export const FILM_WIDTH = 1920;
 export const FILM_HEIGHT = 1080;
 export const FILM_FPS = 24;
-export const SHOT_SECONDS = 5;
-
-export type FilmChapter = {
-  index: number;
-  title: string;
-  window: string;
-  story: string;
-  status: "prototype" | "planned";
-};
-
-export const FILM_CHAPTERS: FilmChapter[] = [
-  {
-    index: 1,
-    title: "Inside the Attack",
-    window: "00:00–00:15",
-    story: "Enter the cloud, trace a candidate attack path, arrive at the Proof Engine.",
-    status: "prototype",
-  },
-  {
-    index: 2,
-    title: "Evidence",
-    window: "00:15–00:30",
-    story: "Each relationship is tested. Observed and simulated evidence separate visibly.",
-    status: "planned",
-  },
-  {
-    index: 3,
-    title: "Remediation",
-    window: "00:30–00:45",
-    story: "The weakest proven link is cut, with a human approving the change.",
-    status: "planned",
-  },
-  {
-    index: 4,
-    title: "Re-verification",
-    window: "00:45–01:00",
-    story: "The path is re-tested and the closure is proven, not assumed.",
-    status: "planned",
-  },
-  {
-    index: 5,
-    title: "Drift-aware closure",
-    window: "01:00–01:15",
-    story: "The environment keeps changing. XSEE watches for drift and reopens what moves.",
-    status: "planned",
-  },
-];
+export const END_CARD_SECONDS = 5;
+export const END_CARD_DISSOLVE_SECONDS = 1;
+export const END_CARD_BACKGROUND = "#05070C";
+export const END_CARD_INK = "#E9EDF4";

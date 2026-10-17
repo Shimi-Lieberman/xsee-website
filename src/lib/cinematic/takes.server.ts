@@ -3,7 +3,8 @@ import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { download, extractLastFrame, withWorkdir, assembleFilm, probeDuration, ffmpegAvailable } from "./media.server";
 import { checkGeneration, describeGatewayError, gatewayStatus, invalidateGatewayStatus, submitGeneration } from "./gateway.server";
-import { composePrompt, estimateCredits, formatUsd, isModelId, MODELS, previousShot, SHOTS, VIDEO_MIN_BALANCE, type ModelId, type Shot } from "./shots";
+import { renderEndCard } from "./endcard.server";
+import { composePrompt, END_CARD, estimateCredits, formatUsd, isModelId, MODELS, previousShot, SHOTS, VIDEO_MIN_BALANCE, type ModelId, type Shot } from "./shots";
 import { blobConfigured, deleteAssets, getTake, listTakes, putAsset, readFilm, removeTake, saveTake, writeFilm } from "./store.server";
 import { isActive, type Film, type FilmJoin, type LabSnapshot, type Take } from "./types";
 
@@ -171,10 +172,10 @@ export async function buildFilm(): Promise<Film> {
     const clips = await Promise.all(
       approved.map(async (take, i) => {
         const file = await download(take.videoUrl!, path.join(dir, `clip-${i}.mp4`));
-        return { file, duration: await probeDuration(file) };
+        return { file, duration: await probeDuration(file), slot: SHOTS[i].seconds };
       }),
     );
-    return assembleFilm(clips, joins, dir);
+    return assembleFilm(clips, joins, await renderEndCard(dir), dir);
   });
 
   const stamp = Date.now();
@@ -190,7 +191,7 @@ export async function buildFilm(): Promise<Film> {
     mobileUrl,
     posterUrl,
     duration: assembled.duration,
-    segments: assembled.boundaries.map((boundary, i) => ({ shotId: SHOTS[i].id, ...boundary })),
+    segments: assembled.boundaries.map((boundary, i) => ({ shotId: SHOTS[i]?.id ?? END_CARD.id, ...boundary })),
     joins,
     takeIds: approved.map((take) => take.id),
     createdAt: new Date().toISOString(),

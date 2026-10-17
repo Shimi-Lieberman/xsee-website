@@ -1,8 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { FILM_CHAPTERS } from "@/lib/cinematic/bible";
-import { FILM_TITLE, SHOTS } from "@/lib/cinematic/shots";
+import { CHAPTERS, FILM_SECONDS, FILM_TITLE, SHOTS } from "@/lib/cinematic/shots";
 import { isActive, type LabSnapshot } from "@/lib/cinematic/types";
 import { LAB_KEY, labFetch } from "./api";
 import { BibleView } from "./BibleView";
@@ -20,11 +19,11 @@ export function LabClient() {
     <main className="lab">
       <div className="lab-wrap">
         <header className="lab-head">
-          <p className="lab-eyebrow">Cinematic Lab · Phase 1</p>
+          <p className="lab-eyebrow">Cinematic Lab · Experience V5</p>
           <h1 className="lab-h1">{FILM_TITLE}</h1>
           <p className="lab-lede">
-            A 15-second proof of concept and the opening of the 75-second film. Generate takes per shot, approve one each,
-            then assemble. Every paid generation shows its cost and waits for your approval.
+            The {Math.round(FILM_SECONDS)}-second film in {SHOTS.length} chained shots and a closing card. Generate takes per
+            shot, approve one each, then assemble. Every paid generation shows its cost and waits for your approval.
           </p>
         </header>
 
@@ -47,12 +46,12 @@ export function LabClient() {
           <h2 id="lab-roadmap" className="lab-h2">
             The 75-second film
           </h2>
-          <p className="lab-muted">This prototype is chapter one. The other four chapters reuse the same bible.</p>
+          <p className="lab-muted">Five chapters, one production bible, one continuous chain of frames.</p>
           <ol className="lab-chapters">
-            {FILM_CHAPTERS.map((chapter) => (
-              <li key={chapter.index} className="lab-chapter" data-status={chapter.status}>
+            {CHAPTERS.map((chapter) => (
+              <li key={chapter.index} className="lab-chapter">
                 <span className="lab-meta">
-                  {chapter.window} · {chapter.status === "prototype" ? "This prototype" : "Planned"}
+                  {chapter.window} · {chapter.shotIds.length} {chapter.shotIds.length === 1 ? "shot" : "shots"}
                 </span>
                 <strong>{chapter.title}</strong>
                 <span className="lab-muted">{chapter.story}</span>

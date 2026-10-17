@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Maximize, Pause, Play, RotateCcw, Search, Volume2, VolumeX } from "lucide-react";
-import { SHOTS } from "@/lib/cinematic/shots";
+import { segmentInfo, SHOTS } from "@/lib/cinematic/shots";
 import type { Film } from "@/lib/cinematic/types";
 
 type Props = { film: Pick<Film, "url" | "mobileUrl" | "posterUrl" | "duration" | "segments"> };
@@ -75,7 +75,7 @@ export function FilmPlayer({ film }: Props) {
     video?.webkitEnterFullscreen?.();
   }
 
-  const shot = SHOTS.find((item) => item.id === film.segments[active]?.shotId) ?? SHOTS[active];
+  const shot = segmentInfo(film.segments[active]?.shotId ?? SHOTS[0].id) ?? SHOTS[0];
   const progress = film.duration > 0 ? Math.min(1, time / film.duration) : 0;
 
   return (
@@ -87,7 +87,7 @@ export function FilmPlayer({ film }: Props) {
           muted
           playsInline
           preload="metadata"
-          aria-label="XSEE cinematic film, 15-second prototype"
+          aria-label={`XSEE cinematic film, ${Math.round(film.duration)} seconds`}
           onClick={toggle}
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
@@ -134,7 +134,7 @@ export function FilmPlayer({ film }: Props) {
 
       <div className="lab-chapter-nav" role="group" aria-label="Chapters">
         {film.segments.map((segment, index) => {
-          const item = SHOTS.find((entry) => entry.id === segment.shotId);
+          const item = segmentInfo(segment.shotId);
           return (
             <button
               key={segment.shotId}

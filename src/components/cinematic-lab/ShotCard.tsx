@@ -19,7 +19,7 @@ type Props = { shot: Shot; snapshot: LabSnapshot | undefined; onChange: () => vo
 
 export function ShotCard({ shot, snapshot, onChange }: Props) {
   const [model, setModel] = useState<ModelId>("veo3.1");
-  const [duration, setDuration] = useState(MODELS["veo3.1"].defaultDuration);
+  const [duration, setDuration] = useState(shot.generateSeconds);
   const [chain, setChain] = useState(shot.index > 0);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -41,7 +41,7 @@ export function ShotCard({ shot, snapshot, onChange }: Props) {
 
   function pickModel(next: ModelId) {
     setModel(next);
-    setDuration(MODELS[next].defaultDuration);
+    setDuration(MODELS[next].durations.includes(shot.generateSeconds) ? shot.generateSeconds : MODELS[next].durations[0]);
     setConfirming(false);
   }
 
@@ -66,7 +66,7 @@ export function ShotCard({ shot, snapshot, onChange }: Props) {
     <article className="lab-card" aria-labelledby={`shot-${shot.id}`}>
       <div className="lab-shot-head">
         <span className="lab-meta">
-          Shot {shot.index + 1} · {shot.window}
+          Shot {shot.index + 1} · {shot.window} · {shot.seconds}s in the film
         </span>
         <h3 id={`shot-${shot.id}`} className="lab-h2">
           {shot.title}

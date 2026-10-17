@@ -1,5 +1,5 @@
 import type { JSONValue } from "ai";
-import type { ModelId, ShotId } from "./shots";
+import type { ModelId, SegmentId, ShotId } from "./shots";
 
 export type TakeStatus =
   | "pending"
@@ -38,7 +38,7 @@ export type Take = {
 
 export type FilmJoin = "cut" | "dissolve";
 
-export type FilmSegment = { shotId: ShotId; start: number; end: number };
+export type FilmSegment = { shotId: SegmentId; start: number; end: number };
 
 export type Film = {
   url: string;
