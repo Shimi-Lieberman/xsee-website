@@ -21,6 +21,11 @@ const securityHeadersBase = [
 ] as const;
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["ffmpeg-static"],
+  outputFileTracingIncludes: {
+    "/api/cinematic-lab/**": ["./node_modules/ffmpeg-static/ffmpeg"],
+    "/cinematic-lab": ["./node_modules/ffmpeg-static/ffmpeg"],
+  },
   async headers() {
     return [
       {
