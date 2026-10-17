@@ -38,7 +38,7 @@ export function TakeCard({ take, onChange }: Props) {
 
   function remove() {
     const message = active
-      ? "Cancel this generation and delete it? Runway may still bill credits already used."
+      ? "Cancel this generation and delete it? The Gateway may still bill for generation already in progress."
       : "Delete this take and its video?";
     if (window.confirm(message)) act({ method: "DELETE" });
   }

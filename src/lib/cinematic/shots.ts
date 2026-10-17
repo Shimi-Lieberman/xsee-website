@@ -5,12 +5,13 @@ export const FILM_TITLE = "XSEE — Inside the Attack";
 
 export const CREDIT_USD = 0.01;
 export const PROMPT_LIMIT = 1000;
-export const FILM_RATIO = "1280:720" as const;
+export const FILM_RATIO = "16:9" as const;
 
-export type ModelId = "gen4.5" | "veo3.1";
+export type ModelId = "veo3.1-fast" | "veo3.1";
 
 export type ModelSpec = {
   id: ModelId;
+  gatewayId: string;
   label: string;
   creditsPerSecond: number;
   durations: number[];
@@ -21,30 +22,32 @@ export type ModelSpec = {
 };
 
 export const MODELS: Record<ModelId, ModelSpec> = {
-  "gen4.5": {
-    id: "gen4.5",
-    label: "Runway Gen-4.5",
-    creditsPerSecond: 12,
-    durations: [2, 3, 4, 5, 6, 7, 8, 9, 10],
-    defaultDuration: 5,
+  "veo3.1-fast": {
+    id: "veo3.1-fast",
+    gatewayId: "google/veo-3.1-fast-generate-001",
+    label: "Google Veo 3.1 Fast (silent)",
+    creditsPerSecond: 10,
+    durations: [4, 6, 8],
+    defaultDuration: 6,
     supportsNegativePrompt: false,
     recommended: true,
-    note: "Runway's flagship text and image to video model. Strongest camera-move consistency per credit, and it can start from the previous take's last frame. No negative prompt field, so exclusions are written into the prompt.",
+    note: "Veo 3.1 Fast through Vercel AI Gateway at $0.10 per second with audio off. Can start from the previous take's last frame.",
   },
   "veo3.1": {
     id: "veo3.1",
+    gatewayId: "google/veo-3.1-generate-001",
     label: "Google Veo 3.1 (silent)",
     creditsPerSecond: 20,
     durations: [4, 6, 8],
     defaultDuration: 6,
-    supportsNegativePrompt: true,
+    supportsNegativePrompt: false,
     recommended: false,
-    note: "Alternative look via Runway. Audio is switched off so it bills at the silent rate. Durations are 4, 6 or 8 seconds only.",
+    note: "Full-quality Veo 3.1 through Vercel AI Gateway at $0.20 per second with audio off.",
   },
 };
 
 export function isModelId(value: unknown): value is ModelId {
-  return value === "gen4.5" || value === "veo3.1";
+  return value === "veo3.1-fast" || value === "veo3.1";
 }
 
 export function estimateCredits(model: ModelId, duration: number) {

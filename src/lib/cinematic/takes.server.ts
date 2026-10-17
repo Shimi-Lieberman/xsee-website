@@ -2,10 +2,10 @@ import "server-only";
 import { randomUUID } from "node:crypto";
 import path from "node:path";
 import { download, extractLastFrame, withWorkdir, assembleFilm, probeDuration, ffmpegAvailable } from "./media.server";
-import { describeRunwayError, invalidateRunwayStatus, retrieveTask, runwayStatus, submitGeneration, cancelTask } from "./runway.server";
-import { composePrompt, estimateCredits, MODELS, previousShot, SHOTS, type ModelId, type Shot } from "./shots";
+import { checkGeneration, describeGatewayError, gatewayStatus, invalidateGatewayStatus, submitGeneration } from "./gateway.server";
+import { composePrompt, estimateCredits, formatUsd, isModelId, MODELS, previousShot, SHOTS, type ModelId, type Shot } from "./shots";
 import { blobConfigured, deleteAssets, getTake, listTakes, putAsset, readFilm, removeTake, saveTake, writeFilm } from "./store.server";
-import { isActive, type Film, type FilmJoin, type LabSnapshot, type Take, type TakeStatus } from "./types";
+import { isActive, type Film, type FilmJoin, type LabSnapshot, type Take } from "./types";
 
 const TAKE_TIMEOUT_MS = 20 * 60 * 1000;
 const SAVING_STALE_MS = 3 * 60 * 1000;
@@ -17,21 +17,14 @@ export class LabError extends Error {
   }
 }
 
-const RUNWAY_STATUS: Record<string, TakeStatus> = {
-  PENDING: "pending",
-  THROTTLED: "throttled",
-  RUNNING: "running",
-  CANCELLED: "cancelled",
-  FAILED: "failed",
-};
-
-async function persistOutput(take: Take, outputUrl: string) {
+async function persistOutput(take: Take, video: Buffer) {
   return withWorkdir(async (dir) => {
-    const video = await download(outputUrl, path.join(dir, "take.mp4"));
-    const frame = await extractLastFrame(video, dir);
-    const { readFile } = await import("node:fs/promises");
+    const { writeFile } = await import("node:fs/promises");
+    const file = path.join(dir, "take.mp4");
+    await writeFile(file, video);
+    const frame = await extractLastFrame(file, dir);
     const [videoUrl, lastFrameUrl] = await Promise.all([
-      putAsset(`assets/${take.shotId}-${take.id}.mp4`, await readFile(video), "video/mp4"),
+      putAsset(`assets/${take.shotId}-${take.id}.mp4`, video, "video/mp4"),
       putAsset(`assets/${take.shotId}-${take.id}-last.jpg`, frame, "image/jpeg"),
     ]);
     return { videoUrl, lastFrameUrl };
@@ -41,33 +34,29 @@ async function persistOutput(take: Take, outputUrl: string) {
 async function refreshTake(take: Take): Promise<Take> {
   if (!isActive(take.status) || inFlight.has(take.id)) return take;
   if (take.status === "saving" && Date.now() - Date.parse(take.updatedAt) < SAVING_STALE_MS) return take;
+  if (!take.operation || !isModelId(take.model)) {
+    return saveTake({ ...take, status: "failed", error: "Started with the old Runway setup and can no longer be checked." });
+  }
   inFlight.add(take.id);
   try {
     if (Date.now() - Date.parse(take.createdAt) > TAKE_TIMEOUT_MS) {
       return await saveTake({ ...take, status: "failed", error: "Timed out after 20 minutes. No output was saved." });
     }
-    const task = await retrieveTask(take.runwayTaskId);
-    if (task.status === "SUCCEEDED") {
-      const outputUrl = task.output[0];
-      if (!outputUrl) return await saveTake({ ...take, status: "failed", error: "Runway finished without a video." });
-      await saveTake({ ...take, status: "saving", progress: 1 });
-      const assets = await persistOutput(take, outputUrl);
-      invalidateRunwayStatus();
-      return await saveTake({ ...take, ...assets, status: "succeeded", progress: 1, error: null });
+    const result = await checkGeneration(take.model, take.operation);
+    if (result.status === "error") return await saveTake({ ...take, status: "failed", error: result.error });
+    if (result.status === "pending") {
+      if (take.status === "running") return take;
+      return await saveTake({ ...take, status: "running", progress: null });
     }
-    if (task.status === "FAILED") {
-      const code = task.failureCode ? ` (${task.failureCode})` : "";
-      return await saveTake({ ...take, status: "failed", error: `${task.failure}${code}` });
-    }
-    const status = RUNWAY_STATUS[task.status] ?? take.status;
-    const progress = task.status === "RUNNING" ? task.progress : null;
-    if (status === take.status && progress === take.progress) return take;
-    return await saveTake({ ...take, status, progress });
+    await saveTake({ ...take, status: "saving", progress: 1 });
+    const assets = await persistOutput(take, result.video);
+    invalidateGatewayStatus();
+    return await saveTake({ ...take, ...assets, status: "succeeded", progress: 1, error: null });
   } catch (error) {
     if (take.status === "saving") {
-      return await saveTake({ ...take, status: "failed", error: `Saving the video failed: ${describeRunwayError(error)}` });
+      return await saveTake({ ...take, status: "failed", error: `Saving the video failed: ${describeGatewayError(error)}` });
     }
-    return { ...take, error: describeRunwayError(error) };
+    return { ...take, error: describeGatewayError(error) };
   } finally {
     inFlight.delete(take.id);
   }
@@ -75,14 +64,14 @@ async function refreshTake(take: Take): Promise<Take> {
 
 export async function snapshot(): Promise<LabSnapshot> {
   const blob = blobConfigured();
-  const [runway, stored, film] = await Promise.all([
-    runwayStatus(),
+  const [gateway, stored, film] = await Promise.all([
+    gatewayStatus(),
     blob ? listTakes() : Promise.resolve([]),
     blob ? readFilm() : Promise.resolve(null),
   ]);
   const takes = await Promise.all(stored.map(refreshTake));
   return {
-    status: { runway, blob, ffmpeg: ffmpegAvailable(), production: process.env.NODE_ENV === "production" },
+    status: { gateway, blob, ffmpeg: ffmpegAvailable(), production: process.env.NODE_ENV === "production" },
     takes,
     film,
   };
@@ -96,9 +85,11 @@ export async function createTake({ shot, model, duration, chain, approvedCredits
   const credits = estimateCredits(model, duration);
   if (approvedCredits !== credits) throw new LabError("The approved cost does not match this generation. Review it and approve again.", 409);
 
-  const runway = await runwayStatus(true);
-  if (runway.state !== "ready") throw new LabError(runway.state === "missing" ? "RUNWAYML_API_SECRET is not set." : runway.message, 503);
-  if (runway.creditBalance < credits) throw new LabError(`Not enough Runway credits: ${credits} needed, ${runway.creditBalance} available.`, 402);
+  const gateway = await gatewayStatus(true);
+  if (gateway.state !== "ready") throw new LabError(gateway.message, 503);
+  if (gateway.creditBalance < credits) {
+    throw new LabError(`Not enough AI Gateway balance: ${formatUsd(credits)} needed, ${formatUsd(gateway.creditBalance)} available.`, 402);
+  }
 
   let chainedFrom: Take | null = null;
   if (chain) {
@@ -109,20 +100,19 @@ export async function createTake({ shot, model, duration, chain, approvedCredits
     if (!chainedFrom) throw new LabError(`Approve a take of “${prior.title}” first, so this shot can start on its last frame.`);
   }
 
-  const { promptText, negativePrompt } = composePrompt(shot, model);
-  let runwayTaskId: string;
+  const { promptText } = composePrompt(shot, model);
+  let operation: Awaited<ReturnType<typeof submitGeneration>>;
   try {
-    runwayTaskId = await submitGeneration({
+    operation = await submitGeneration({
       model,
       duration,
       promptText,
-      negativePrompt,
-      promptImage: chainedFrom?.lastFrameUrl ?? undefined,
+      startFrameUrl: chainedFrom?.lastFrameUrl ?? undefined,
     });
   } catch (error) {
-    throw new LabError(describeRunwayError(error), 502);
+    throw new LabError(describeGatewayError(error), 502);
   }
-  invalidateRunwayStatus();
+  invalidateGatewayStatus();
 
   const now = new Date().toISOString();
   return saveTake({
@@ -133,7 +123,7 @@ export async function createTake({ shot, model, duration, chain, approvedCredits
     credits,
     chainedFromTakeId: chainedFrom?.id ?? null,
     promptText,
-    runwayTaskId,
+    operation,
     status: "pending",
     progress: null,
     error: null,
@@ -159,9 +149,6 @@ export async function approveTake(id: string, approved: boolean) {
 export async function deleteTake(id: string) {
   const take = await getTake(id);
   if (!take) throw new LabError("Take not found.", 404);
-  if (isActive(take.status)) {
-    await cancelTask(take.runwayTaskId).catch(() => undefined);
-  }
   await removeTake(take);
 }
 

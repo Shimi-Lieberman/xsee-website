@@ -3,11 +3,10 @@ import type { LabStatus } from "@/lib/cinematic/types";
 
 type Props = { status: LabStatus | undefined; error: string | null };
 
-function runwayLabel(status: LabStatus) {
-  const { runway } = status;
-  if (runway.state === "ready") return `${runway.creditBalance} credits (${formatUsd(runway.creditBalance)})`;
-  if (runway.state === "missing") return "Secret not set";
-  return runway.message;
+function gatewayLabel(status: LabStatus) {
+  const { gateway } = status;
+  if (gateway.state === "ready") return `${formatUsd(gateway.creditBalance)} balance`;
+  return gateway.message;
 }
 
 export function StatusBar({ status, error }: Props) {
@@ -21,7 +20,7 @@ export function StatusBar({ status, error }: Props) {
   if (!status) return <p className="lab-muted">Checking connections…</p>;
 
   const items = [
-    { label: "Runway", value: runwayLabel(status), ok: status.runway.state === "ready" },
+    { label: "AI Gateway", value: gatewayLabel(status), ok: status.gateway.state === "ready" },
     { label: "Storage", value: status.blob ? "Blob connected" : "Not connected", ok: status.blob },
     { label: "Assembly", value: status.ffmpeg ? "ffmpeg ready" : "ffmpeg missing", ok: status.ffmpeg },
     { label: "Mode", value: status.production ? "Production" : "Preview", ok: true },
@@ -37,12 +36,10 @@ export function StatusBar({ status, error }: Props) {
           </div>
         ))}
       </dl>
-      {status.runway.state === "missing" ? (
-        <p className="lab-notice">
-          Add <code>RUNWAYML_API_SECRET</code> in the Vars panel to enable generation. Nothing is billed until you approve
-          a take&apos;s cost.
-        </p>
-      ) : null}
+      <p className="lab-muted">
+        Clips are generated through Vercel AI Gateway and billed to this team&apos;s Gateway balance. Nothing is billed
+        until you approve a take&apos;s cost.
+      </p>
     </section>
   );
 }

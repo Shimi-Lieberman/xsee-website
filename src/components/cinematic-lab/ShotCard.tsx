@@ -17,8 +17,8 @@ import { TakeCard } from "./TakeCard";
 type Props = { shot: Shot; snapshot: LabSnapshot | undefined; onChange: () => void };
 
 export function ShotCard({ shot, snapshot, onChange }: Props) {
-  const [model, setModel] = useState<ModelId>("gen4.5");
-  const [duration, setDuration] = useState(MODELS["gen4.5"].defaultDuration);
+  const [model, setModel] = useState<ModelId>("veo3.1-fast");
+  const [duration, setDuration] = useState(MODELS["veo3.1-fast"].defaultDuration);
   const [chain, setChain] = useState(shot.index > 0);
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -32,9 +32,9 @@ export function ShotCard({ shot, snapshot, onChange }: Props) {
     ? snapshot?.takes.find((take) => take.shotId === prior.id && take.approved && take.lastFrameUrl)
     : undefined;
   const chainActive = chain && Boolean(priorApproved);
-  const runway = snapshot?.status.runway;
-  const balance = runway?.state === "ready" ? runway.creditBalance : null;
-  const blocked = runway?.state !== "ready" || !snapshot?.status.blob;
+  const gateway = snapshot?.status.gateway;
+  const balance = gateway?.state === "ready" ? gateway.creditBalance : null;
+  const blocked = gateway?.state !== "ready" || !snapshot?.status.blob;
   const short = balance !== null && balance < credits;
 
   function pickModel(next: ModelId) {
@@ -131,8 +131,8 @@ export function ShotCard({ shot, snapshot, onChange }: Props) {
 
       <div className="lab-cost">
         <p className="lab-cost-figure">
-          <strong>{formatUsd(credits)}</strong> · {credits} credits ({spec.creditsPerSecond}/s × {duration}s)
-          {balance !== null ? ` · balance ${balance}` : ""}
+          <strong>{formatUsd(credits)}</strong> · {formatUsd(spec.creditsPerSecond)}/s × {duration}s
+          {balance !== null ? ` · balance ${formatUsd(balance)}` : ""}
         </p>
         {error ? (
           <p className="lab-notice" role="alert">
@@ -151,7 +151,7 @@ export function ShotCard({ shot, snapshot, onChange }: Props) {
             </>
           ) : (
             <button type="button" className="lab-btn" onClick={() => setConfirming(true)} disabled={blocked || short}>
-              {short ? "Not enough credits" : "Review cost to generate"}
+              {short ? "Not enough balance" : "Review cost to generate"}
             </button>
           )}
         </div>

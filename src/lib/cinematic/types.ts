@@ -1,3 +1,4 @@
+import type { JSONValue } from "ai";
 import type { ModelId, ShotId } from "./shots";
 
 export type TakeStatus =
@@ -23,7 +24,8 @@ export type Take = {
   credits: number;
   chainedFromTakeId: string | null;
   promptText: string;
-  runwayTaskId: string;
+  operation?: JSONValue | null;
+  runwayTaskId?: string;
   status: TakeStatus;
   progress: number | null;
   error: string | null;
@@ -49,13 +51,12 @@ export type Film = {
   createdAt: string;
 };
 
-export type RunwayState =
-  | { state: "missing" }
+export type GatewayState =
   | { state: "ready"; creditBalance: number }
   | { state: "unauthorized" | "error"; message: string };
 
 export type LabStatus = {
-  runway: RunwayState;
+  gateway: GatewayState;
   blob: boolean;
   ffmpeg: boolean;
   production: boolean;
