@@ -1,0 +1,569 @@
+/*
+ * XSEE film: a 3D cinema screen that feathers into the homepage's dark film palette.
+ * Uses the --film-* tokens defined in src/app/film.css.
+ */
+.xf-section {
+  --xf-void: var(--film-void, #05070c);
+  --xf-ink: var(--film-ink, #eef1f6);
+  --xf-ink2: var(--film-ink2, #9aa3b2);
+  --xf-line: var(--film-line-strong, rgba(238, 241, 246, 0.16));
+  --xf-magenta: var(--film-magenta, #ff1b8d);
+  --xf-ease: var(--film-ease, cubic-bezier(0.22, 1, 0.36, 1));
+  --xf-mono: var(--font-geist-mono, ui-monospace), monospace;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 72px 0 88px;
+  background: var(--xf-void);
+  color: var(--xf-ink);
+  overflow: hidden;
+}
+
+.xf-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.xf-kicker {
+  font: 500 11px/1.4 var(--xf-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--xf-ink2);
+}
+
+.xf-accent {
+  color: var(--xf-magenta);
+}
+
+.xf-heading {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* ---------- Stage ---------- */
+.xf-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding-bottom: 64px;
+  perspective: 1100px;
+  perspective-origin: 50% 85%;
+}
+
+.xf-glow {
+  position: absolute;
+  inset: -64px 0 0;
+  width: 100%;
+  height: calc(100% + 64px);
+  transform: scale(1.25);
+  opacity: 0.5;
+  filter: blur(64px) saturate(1.5);
+  mask-image: radial-gradient(ellipse at center, #000 25%, transparent 70%);
+  pointer-events: none;
+}
+
+.xf-screen {
+  position: relative;
+  transform-origin: 50% 100%;
+  transform: rotateX(4deg);
+  animation: xf-enter 2.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.xf-feather {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 0.35) 10%, #000 30%, #000 66%, rgb(0 0 0 / 0.35) 88%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in;
+}
+
+.xf-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.xf-scanlines {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background-image: repeating-linear-gradient(to bottom, rgb(5 7 12 / 0.35) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+
+.xf-caption {
+  position: absolute;
+  inset: auto 24px 12% 24px;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 16px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.55;
+  text-wrap: balance;
+  pointer-events: none;
+}
+
+.xf-caption span {
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgb(5 7 12 / 0.7);
+}
+
+/* ---------- HUD ---------- */
+.xf-hud {
+  position: absolute;
+  inset: 14% 10%;
+  pointer-events: none;
+}
+
+.xf-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: rgb(238 241 246 / 0.35);
+  border-style: solid;
+  border-width: 0;
+}
+
+.xf-corner[data-pos="tl"] { left: 0; top: 0; border-left-width: 1px; border-top-width: 1px; }
+.xf-corner[data-pos="tr"] { right: 0; top: 0; border-right-width: 1px; border-top-width: 1px; }
+.xf-corner[data-pos="bl"] { left: 0; bottom: 0; border-left-width: 1px; border-bottom-width: 1px; }
+.xf-corner[data-pos="br"] { right: 0; bottom: 0; border-right-width: 1px; border-bottom-width: 1px; }
+
+.xf-hud-top {
+  position: absolute;
+  inset: 14% 10% auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  transform: translateY(-100%);
+  font: 500 10px/1 var(--xf-mono);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgb(238 241 246 / 0.8);
+  text-shadow: 0 1px 6px var(--xf-void);
+  pointer-events: none;
+}
+
+.xf-hud-top > span:first-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.xf-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--xf-magenta);
+}
+
+.xf-dot[data-live="true"] {
+  animation: xf-pulse 1.6s ease-in-out infinite;
+}
+
+.xf-tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.xf-muted {
+  font: 500 12px/1 var(--xf-mono);
+  color: var(--xf-ink2);
+  flex-shrink: 0;
+}
+
+/* ---------- Overlays ---------- */
+.xf-panel {
+  position: absolute;
+  inset: 18% 12% auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.xf-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--xf-line);
+  border-radius: 6px;
+  background: rgb(5 7 12 / 0.85);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.5s var(--xf-ease), transform 0.5s var(--xf-ease);
+}
+
+.xf-step[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.xf-step > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.xf-step-icon {
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+  color: var(--xf-magenta);
+}
+
+.xf-step-label {
+  font: 500 11px/1.4 var(--xf-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.xf-step-detail {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--xf-ink2);
+}
+
+.xf-record {
+  padding: 6px 10px;
+  border: 1px solid rgb(238 241 246 / 0.6);
+  border-radius: 6px;
+  background: rgb(5 7 12 / 0.9);
+  font: 500 11px/1.4 var(--xf-mono);
+}
+
+.xf-record[data-tone="alert"] {
+  border-color: var(--xf-magenta);
+  color: var(--xf-magenta);
+}
+
+.xf-illustrative {
+  align-self: flex-end;
+  font: 500 9px/1 var(--xf-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--xf-ink2);
+}
+
+.xf-endcard {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgb(5 7 12 / 0.8);
+  pointer-events: none;
+}
+
+.xf-endcard-logo {
+  font-size: 2.25rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+}
+
+.xf-endcard-tag {
+  font: 500 12px/1.4 var(--xf-mono);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--xf-magenta);
+}
+
+/* ---------- Buttons on the screen ---------- */
+.xf-sound {
+  position: absolute;
+  right: 10%;
+  bottom: 14%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  transform: translateY(100%);
+  border: 1px solid rgb(238 241 246 / 0.25);
+  border-radius: 999px;
+  background: rgb(5 7 12 / 0.4);
+  backdrop-filter: blur(12px);
+  color: var(--xf-ink);
+  font: 500 11px/1 var(--xf-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 0.3s var(--xf-ease);
+}
+
+.xf-sound:hover,
+.xf-sound:focus-visible {
+  border-color: var(--xf-magenta);
+}
+
+.xf-sound svg,
+.xf-round svg {
+  width: 16px;
+  height: 16px;
+}
+
+.xf-bigplay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.xf-bigplay-ring,
+.xf-bigplay-disc {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 999px;
+}
+
+.xf-bigplay-ring {
+  border: 1px solid rgb(255 27 141 / 0.6);
+  animation: xf-ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.xf-bigplay-disc {
+  border: 1px solid rgb(238 241 246 / 0.4);
+  background: rgb(5 7 12 / 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.xf-bigplay-icon {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+  color: var(--xf-ink);
+  fill: var(--xf-ink);
+}
+
+/* ---------- Floor ---------- */
+.xf-floor-wrap {
+  position: absolute;
+  inset: auto 0 0;
+  height: 96px;
+  perspective: 420px;
+  perspective-origin: 50% 0%;
+  pointer-events: none;
+}
+
+.xf-reflection {
+  position: absolute;
+  top: 0;
+  left: 5%;
+  width: 90%;
+  height: 300%;
+  opacity: 0.7;
+  filter: blur(40px) saturate(1.5);
+  transform-origin: 50% 0%;
+  transform: rotateX(72deg) scaleY(-1);
+  mask-image: radial-gradient(ellipse 55% 100% at 50% 0%, #000 0%, transparent 70%);
+}
+
+.xf-floor {
+  position: absolute;
+  top: 0;
+  left: -50%;
+  right: -50%;
+  height: 400%;
+  opacity: 0.8;
+  transform-origin: 50% 0%;
+  transform: rotateX(72deg);
+  background-image:
+    linear-gradient(to right, rgb(255 27 141 / 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 27 141 / 0.35) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: center top;
+  mask-image: radial-gradient(ellipse 60% 100% at 50% 0%, #000 0%, transparent 75%);
+}
+
+.xf-houselights {
+  position: absolute;
+  inset: 0;
+  background: rgb(238 241 246 / 0.1);
+  animation: xf-lights-down 2.4s ease-out both;
+  pointer-events: none;
+}
+
+/* ---------- Controls ---------- */
+.xf-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.xf-transport {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.xf-round {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid rgb(238 241 246 / 0.2);
+  border-radius: 999px;
+  background: rgb(5 7 12 / 0.4);
+  color: var(--xf-ink);
+  cursor: pointer;
+}
+
+.xf-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 44px;
+}
+
+.xf-segments {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+.xf-segment {
+  position: relative;
+  flex-basis: 0;
+  height: 2px;
+  overflow: hidden;
+  background: rgb(238 241 246 / 0.15);
+}
+
+.xf-segment-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--xf-magenta);
+  box-shadow: 0 0 8px var(--xf-magenta);
+}
+
+.xf-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.xf-chapters {
+  display: flex;
+  justify-content: space-between;
+  overflow-x: auto;
+}
+
+.xf-chapter {
+  min-height: 44px;
+  flex-shrink: 0;
+  padding: 0 2px;
+  border: 0;
+  background: transparent;
+  color: var(--xf-ink2);
+  font: 500 12px/1 var(--xf-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.3s var(--xf-ease);
+}
+
+.xf-chapter[aria-current="step"],
+.xf-chapter:hover {
+  color: var(--xf-ink);
+}
+
+.xf-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.xf-info-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.xf-info-body {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--xf-ink2);
+  text-wrap: pretty;
+}
+
+@media (min-width: 768px) {
+  .xf-section { padding: 112px 0 128px; gap: 32px; }
+  .xf-stage { padding: 0 32px 96px; }
+  .xf-feather { aspect-ratio: 2 / 1; }
+  .xf-corner { width: 20px; height: 20px; }
+  .xf-hud-top { font-size: 12px; }
+  .xf-caption { inset: auto 64px 12% 64px; font-size: 16px; }
+  .xf-panel { inset: 18% 14% auto auto; width: 18rem; }
+  .xf-endcard-logo { font-size: 3.75rem; }
+  .xf-endcard-tag { font-size: 14px; }
+  .xf-floor-wrap { height: 144px; }
+  .xf-chapters { justify-content: flex-start; gap: 16px; }
+  .xf-chapter { padding: 0 12px; letter-spacing: 0.2em; }
+}
+
+@keyframes xf-enter {
+  from { transform: translateZ(-260px) rotateX(16deg); opacity: 0; }
+  to { transform: translateZ(0) rotateX(4deg); opacity: 1; }
+}
+
+@keyframes xf-lights-down {
+  from { opacity: 0.55; }
+  to { opacity: 0; }
+}
+
+@keyframes xf-pulse {
+  50% { opacity: 0.35; }
+}
+
+@keyframes xf-ping {
+  75%, 100% { transform: scale(1.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xf-screen,
+  .xf-houselights,
+  .xf-dot,
+  .xf-bigplay-ring {
+    animation: none;
+  }
+}

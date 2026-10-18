@@ -4,6 +4,7 @@ import "./film.css";
 import HomeNav from "@/components/homepage/HomeNav";
 import CinematicStory from "@/components/homepage/cinematic/CinematicStory";
 import ExploreChapter from "@/components/homepage/cinematic/ExploreChapter";
+import XseeFilm from "@/components/homepage/film/XseeFilm";
 import StoryFinale from "@/components/homepage/cinematic/StoryFinale";
 import ProofEngine from "@/components/homepage/proof/ProofEngine";
 import AttackPathWalkthrough from "@/components/homepage/AttackPathWalkthrough";
@@ -34,6 +35,7 @@ export default function Home() {
         <HomeNav />
         <main className="hp-page-main mx-auto w-full max-w-[100vw]">
           <CinematicStory />
+          <XseeFilm />
           <ExploreChapter />
           <AttackPathWalkthrough />
           <ProofEngine />

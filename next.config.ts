@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const cspDenyFrame =
-  "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://cdn.paddle.com https://www.clarity.ms https://scripts.clarity.ms https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.clarity.ms; connect-src 'self' https://app.xsee.io https://api.anthropic.com https://api.paddle.com https://cdn.paddle.com https://*.clarity.ms; frame-src 'self' https://www.xsee.io https://buy.paddle.com https://customer-portal.paddle.com; frame-ancestors 'none';";
+  "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://cdn.paddle.com https://www.clarity.ms https://scripts.clarity.ms https://public.profitwell.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.paddle.com; font-src 'self' https://fonts.gstatic.com; media-src 'self' https://nrxpnt6eu0asmp4i.public.blob.vercel-storage.com; img-src 'self' data: https: https://*.clarity.ms; connect-src 'self' https://app.xsee.io https://api.anthropic.com https://api.paddle.com https://cdn.paddle.com https://*.clarity.ms; frame-src 'self' https://www.xsee.io https://buy.paddle.com https://customer-portal.paddle.com; frame-ancestors 'none';";
 
 /** Same CSP as global; demo page needs identical frame-src / connect-src for iframe + Paddle. */
 const cspDemoPage = cspDenyFrame;
