@@ -1,18 +1,74 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
+import "./journey-proof.css";
 import { ArrowRight, Check, CircleHelp, FileCheck2, ShieldCheck, Waypoints } from "lucide-react";
 import { Analytics } from "@/lib/analytics";
 import PilotSection from "@/components/homepage/PilotSection";
 
 const WORKFLOW = [
-  { title: "Discover", copy: "Map AWS resources and the relationships between them." },
-  { title: "Validate", copy: "Check whether an attack path is reachable." },
-  { title: "Prioritize", copy: "Focus review on paths with meaningful exposure." },
-  { title: "Approve remediation", copy: "A person on your team chooses what to change.", approval: true },
-  { title: "Verify closure", copy: "Re-check the path after your team applies the change." },
-  { title: "Monitor drift", copy: "Compare later environment changes with verified closure." },
+  { title: "Proposed", copy: "XSEE proposes the smallest change that breaks the path, with the evidence behind it." },
+  { title: "Approved by your team", copy: "A person on your team decides whether to make the change.", approval: true },
+  { title: "Applied by your pipeline", copy: "Your team applies it in its own AWS workflow, outside XSEE." },
+  { title: "Verified closed", copy: "XSEE re-checks the same path and records what it found." },
+  { title: "Validity re-assessed on change", copy: "When ongoing monitoring is configured, a relevant change prompts a fresh review." },
 ] as const;
+
+const BEFORE_AFTER = {
+  before: {
+    label: "Before",
+    status: "Path reachable",
+    hops: ["Public endpoint", "Workload role", "Assumable admin role", "Customer data bucket"],
+    broken: -1,
+  },
+  after: {
+    label: "After",
+    status: "Path broken at the trust policy",
+    hops: ["Public endpoint", "Workload role", "Assumable admin role", "Customer data bucket"],
+    broken: 2,
+  },
+} as const;
+
+type View = keyof typeof BEFORE_AFTER;
+
+function BeforeAfter() {
+  const [view, setView] = useState<View>("before");
+  const current = BEFORE_AFTER[view];
+  return (
+    <div className="xj-ba">
+      <div className="xj-ba-toggle" role="group" aria-label="Compare the path before and after the fix">
+        {(Object.keys(BEFORE_AFTER) as View[]).map((key) => (
+          <button
+            key={key}
+            type="button"
+            aria-pressed={view === key}
+            className="xj-ba-btn"
+            onClick={() => setView(key)}
+          >
+            {BEFORE_AFTER[key].label}
+          </button>
+        ))}
+      </div>
+      <p className={`xj-ba-status is-${view}`} aria-live="polite">
+        {current.status}
+      </p>
+      <ol className="xj-ba-path">
+        {current.hops.map((hop, index) => {
+          const cut = current.broken >= 0 && index >= current.broken;
+          return (
+            <li key={hop} className={`xj-ba-hop${cut ? " is-cut" : ""}`}>
+              <span className="xj-ba-dot" aria-hidden />
+              <span>{hop}</span>
+              {index === current.broken ? <span className="xj-ba-note">Trust no longer granted</span> : null}
+            </li>
+          );
+        })}
+      </ol>
+      <p className="xj-ba-foot">Synthetic demonstration environment.</p>
+    </div>
+  );
+}
 
 const OUTCOMES = [
   {
@@ -37,10 +93,11 @@ function WorkflowSection() {
     <section id="workflow" className="xsee-journey-section xsee-film-workflow" aria-labelledby="workflow-title" data-nav-tone="dark">
       <div className="hp-container xsee-film-workflow-layout">
         <div className="xsee-section-heading">
-          <p className="hp-eyebrow">One workflow, end to end</p>
-          <h2 id="workflow-title">From a reachable path to a verified fix.</h2>
+          <p className="hp-eyebrow">From exposure to outcome</p>
+          <h2 id="workflow-title">A path is closed when it is verified, not when a ticket is.</h2>
           <p>Human approval stays with your team. Remediation is handed back to your AWS workflow; XSEE does not apply the change.</p>
-          <p className="xsee-workflow-footnote"><Check size={15} aria-hidden /> Your team owns the change. XSEE supports validation and evidence—not autonomous remediation.</p>
+          <BeforeAfter />
+          <p className="xsee-workflow-footnote"><Check size={15} aria-hidden /> Lifecycle coverage varies by technique and environment.</p>
         </div>
         <ol className="xsee-spine">
           {WORKFLOW.map((step, index) => {
@@ -50,7 +107,7 @@ function WorkflowSection() {
                 <span className="xsee-spine-node" aria-hidden />
                 <div className="xsee-spine-body">
                   <p className="xsee-spine-index">
-                    Step {String(index + 1).padStart(2, "0")}
+                    State {index + 1} of {WORKFLOW.length}
                     {approval ? <span className="xsee-spine-gate">Human approval</span> : null}
                   </p>
                   <h3>{step.title}</h3>
@@ -87,37 +144,56 @@ function OutcomesSection() {
   );
 }
 
+const RECORD = [
+  { term: "What was checked", value: "Path XP-0142: public endpoint to customer data bucket, four steps." },
+  { term: "When", value: "Re-checked after your team reported the change as applied." },
+  { term: "Against which configuration", value: "The read-only snapshot collected at verification time." },
+  { term: "What was not tested", value: "Runtime behaviour, and any account XSEE was not granted read access to." },
+  { term: "When it stops being valid", value: "When a relevant identity, trust or network change is detected, if monitoring is configured." },
+] as const;
+
 function ClosureSection() {
   return (
     <section id="closure" className="xsee-journey-section" aria-labelledby="closure-title" data-nav-tone="dark">
       <div className="hp-container">
         <div className="xsee-closure-layout">
           <div className="xsee-closure-copy">
-            <p className="hp-eyebrow">Closure and drift</p>
-            <h2 id="closure-title">A fix is verified after the change—not assumed.</h2>
-            <p>Once your team makes a remediation change in AWS, XSEE can re-check the path and retain evidence of the updated state. When ongoing monitoring is configured, drift can prompt a fresh review.</p>
+            <p className="hp-eyebrow">Trust and evidence</p>
+            <h2 id="closure-title">Every verification says what it covers, and what it does not.</h2>
+            <p>A closure record is scoped to one path, one configuration and one point in time. Its limits are written down next to its result.</p>
             <Link href="/security" className="xsee-text-link">Review security details <ArrowRight size={15} aria-hidden /></Link>
           </div>
-          <div className="xsee-closure-panel" aria-label="Illustrative closure verification and drift flow">
-            <div className="xsee-closure-panel-header"><span>VERIFICATION RECORD</span><span>ILLUSTRATIVE</span></div>
-            <div className="xsee-closure-record">
-              <span className="xsee-closure-record-icon"><Check size={15} aria-hidden /></span>
-              <div><strong>Path validated</strong><span>Evidence retained for review</span></div>
-              <span className="xsee-closure-state">RECORDED</span>
-            </div>
-            <div className="xsee-closure-record xsee-closure-record--handoff">
-              <span className="xsee-closure-record-icon"><ArrowRight size={15} aria-hidden /></span>
-              <div><strong>Change applied by your team</strong><span>Outside XSEE, in your AWS workflow</span></div>
-              <span className="xsee-closure-state">HANDOFF</span>
-            </div>
-            <div className="xsee-closure-record">
-              <span className="xsee-closure-record-icon"><ShieldCheck size={15} aria-hidden /></span>
-              <div><strong>Closure re-checked</strong><span>Later drift can trigger a new review</span></div>
-              <span className="xsee-closure-state">REVISIT</span>
-            </div>
-            <p className="xsee-closure-panel-note">Monitoring cadence and scope are confirmed during pilot planning.</p>
-          </div>
+          <article className="xj-record" aria-labelledby="xj-record-title">
+            <header className="xj-record-head">
+              <ShieldCheck size={18} aria-hidden />
+              <h3 id="xj-record-title">Closure record</h3>
+              <span className="xj-record-tag">Synthetic example</span>
+            </header>
+            <dl className="xj-record-list">
+              {RECORD.map((row) => (
+                <div key={row.term} className="xj-record-row">
+                  <dt>{row.term}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="xj-record-foot">Monitoring cadence and scope are confirmed during pilot planning.</p>
+          </article>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function BeyondSection() {
+  return (
+    <section id="beyond" className="xsee-journey-section xj-beyond" aria-labelledby="beyond-title" data-nav-tone="dark">
+      <div className="hp-container xj-beyond-inner">
+        <p className="hp-eyebrow">Beyond today&apos;s security model</p>
+        <h2 id="beyond-title" className="text-balance">
+          Beyond detection. Toward continuous assurance.
+        </h2>
+        <p className="text-pretty">Where XSEE goes next is a conversation we have in person.</p>
       </div>
     </section>
   );
@@ -148,6 +224,7 @@ export default function BuyerJourney() {
       <OutcomesSection />
       <ClosureSection />
       <SecuritySection />
+      <BeyondSection />
       <PilotSection />
     </>
   );

@@ -5,7 +5,7 @@ import { MessageCircle, X, Send } from "lucide-react";
 import Image from "next/image";
 
 const OPENING_MESSAGE =
-  "Hi! I'm XSEE's AI assistant. I can help you understand how XSEE proves which attack paths in your cloud are actually exploitable. What would you like to know?";
+  "Hi! I'm XSEE's AI assistant. I can help you understand how XSEE shows which attack paths in your AWS environment are reachable, and the evidence behind each step. What would you like to know?";
 
 type Message = { role: "user" | "assistant"; content: string };
 

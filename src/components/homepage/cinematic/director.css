@@ -148,3 +148,12 @@
     animation: none;
   }
 }
+
+.cs-h1-line {
+  display: block;
+}
+
+.cs-watch--quiet {
+  color: var(--cs-ink3);
+  font-size: 10px;
+}

@@ -1,0 +1,217 @@
+/* Outcome lifecycle, closure record and Beyond section. Colours mirror the cinematic stage tokens. */
+.xj-ba,
+.xj-record,
+.xj-beyond {
+  --xj-panel: #111a30;
+  --xj-ink: #eef1f6;
+  --xj-ink2: #9aa3b2;
+  --xj-ink3: #5d6677;
+  --xj-line: #1f2a44;
+  --xj-green: #3ddc97;
+  --xj-red: #ff4d5e;
+  --xj-magenta: var(--color-primary, #ff1b8d);
+}
+
+.xj-ba {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid var(--xj-line);
+  border-radius: 14px;
+  background: var(--xj-panel);
+  color: var(--xj-ink);
+}
+
+.xj-ba-toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--xj-line);
+  border-radius: 999px;
+}
+
+.xj-ba-btn {
+  min-width: 88px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--xj-ink2);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.xj-ba-btn[aria-pressed="true"] {
+  background: var(--xj-ink);
+  color: var(--xj-panel);
+}
+
+.xj-ba-btn:focus-visible {
+  outline: 2px solid var(--xj-magenta);
+  outline-offset: 2px;
+}
+
+.xj-ba-status {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.xj-ba-status.is-before {
+  color: var(--xj-red);
+}
+
+.xj-ba-status.is-after {
+  color: var(--xj-green);
+}
+
+.xj-ba-path {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.xj-ba-hop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+  transition: opacity 0.25s ease;
+}
+
+.xj-ba-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--xj-red);
+}
+
+.xj-ba-hop.is-cut {
+  opacity: 0.45;
+}
+
+.xj-ba-hop.is-cut .xj-ba-dot {
+  border: 2px dashed var(--xj-ink3);
+  background: transparent;
+}
+
+.xj-ba-note {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--xj-green) 16%, transparent);
+  color: var(--xj-green);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.xj-ba-foot,
+.xj-record-foot {
+  margin: 0;
+  color: var(--xj-ink3);
+  font-size: 14px;
+}
+
+.xj-record {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--xj-line);
+  border-radius: 14px;
+  background: var(--xj-panel);
+  color: var(--xj-ink);
+}
+
+.xj-record-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  color: var(--xj-green);
+}
+
+.xj-record-head h3 {
+  margin: 0;
+  color: var(--xj-ink);
+  font-size: 17px;
+}
+
+.xj-record-tag {
+  margin-left: auto;
+  color: var(--xj-ink3);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.xj-record-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.xj-record-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-top: 1px solid var(--xj-line);
+}
+
+.xj-record-row dt {
+  color: var(--xj-ink2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.xj-record-row dd {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.xj-beyond-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.xj-beyond h2 {
+  max-width: 18ch;
+  margin: 0;
+}
+
+.xj-beyond p:not(.hp-eyebrow) {
+  margin: 0;
+  color: var(--xj-ink2);
+}
+
+@media (min-width: 768px) {
+  .xj-record-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xj-ba-btn,
+  .xj-ba-hop {
+    transition: none;
+  }
+}

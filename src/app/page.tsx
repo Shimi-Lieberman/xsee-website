@@ -35,12 +35,12 @@ export default function Home() {
         <HomeNav />
         <main className="hp-page-main mx-auto w-full max-w-[100vw]">
           <CinematicStory />
-          <XseeFilm />
           <ExploreChapter />
           <AttackPathWalkthrough />
           <ProofEngine />
-          <StoryFinale />
+          <XseeFilm />
           <BuyerJourney />
+          <StoryFinale />
           <div className="hp-film-credits" data-nav-tone="dark">
             <Footer />
           </div>

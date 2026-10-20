@@ -134,7 +134,7 @@ export default function AttackPathWalkthrough() {
     <section ref={sectionRef} id="walkthrough" className="apd" aria-labelledby="walkthrough-title" data-nav-tone="dark">
       <div className="apd-shell">
         <header className="apd-intro">
-          <p className="apd-kicker">Product walkthrough</p>
+          <p className="apd-kicker">Step through it yourself</p>
           <h2 id="walkthrough-title" className="text-balance">
             See what changed, why the path closed, and what drift does to the result.
           </h2>
@@ -143,7 +143,7 @@ export default function AttackPathWalkthrough() {
         <div className="apd-panel" data-mode={state.mode}>
           <div className="apd-panel-head">
             <div className="apd-panel-title">
-              <span className="apd-env-badge">Illustrative environment</span>
+              <span className="apd-env-badge">Synthetic demonstration environment</span>
               <h3>
                 <span className="apd-path-id">{SCENARIO.pathId}</span> {SCENARIO.pathTitle}
               </h3>
