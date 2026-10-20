@@ -1,14 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, Pause, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
+import { Pause, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import {
   FILM_ACTS,
   FILM_DURATION,
   FILM_POSTER,
-  FILM_REMEDIATION,
   FILM_SRC,
-  FILM_T,
   filmActAt,
   filmCaptionAt,
   formatFilmTime,
@@ -42,66 +40,6 @@ function useScreenLight(videoRef: React.RefObject<HTMLVideoElement | null>, acti
   }, [videoRef, active]);
 
   return { glowRef, floorRef };
-}
-
-function Overlays({ t }: { t: number }) {
-  const inRemediation = t >= FILM_T.impact - 0.5 && t < FILM_T.drift - 1;
-  const inDrift = t >= FILM_T.drift && t < FILM_T.endCard;
-  const endOpacity = Math.min(1, Math.max(0, (t - FILM_T.endCard) / 1.2));
-  const titleOpacity = Math.min(
-    Math.max(0, (t - FILM_T.titleIn) / 0.8),
-    Math.max(0, (FILM_T.titleOut - t) / 0.6),
-    1,
-  );
-
-  return (
-    <>
-      {titleOpacity > 0 && (
-        <div className="xf-titlecard" style={{ opacity: titleOpacity }}>
-          <span className="xf-titlecard-logo">XSEE</span>
-          <span className="xf-titlecard-tag">
-            <span>See the path.</span> <span>Prove the risk.</span> <span>Verify the fix.</span>
-          </span>
-        </div>
-      )}
-      {inRemediation && (
-        <div className="xf-panel">
-          {FILM_REMEDIATION.map((step) => (
-            <div key={step.label} className="xf-step" data-shown={t >= step.at}>
-              <Check className="xf-step-icon" aria-hidden="true" />
-              <div>
-                <span className="xf-step-label">{step.label}</span>
-                <span className="xf-step-detail">{step.detail}</span>
-              </div>
-            </div>
-          ))}
-          {t >= FILM_T.closure && <div className="xf-record">Closure record · path verified closed</div>}
-          <span className="xf-illustrative">Illustrative example</span>
-        </div>
-      )}
-      {inDrift && (
-        <div className="xf-panel">
-          <div className="xf-step" data-shown="true">
-            <span className="xf-step-detail">Configuration change detected · trust policy widened</span>
-          </div>
-          {t >= FILM_T.reopen && (
-            <div className="xf-record" data-tone="alert">
-              Reassessment · path re-validates · closure record revoked
-            </div>
-          )}
-          <span className="xf-illustrative">Illustrative example</span>
-        </div>
-      )}
-      {endOpacity > 0 && (
-        <div className="xf-endcard" style={{ opacity: endOpacity }}>
-          <span className="xf-endcard-logo">XSEE</span>
-          <span className="xf-endcard-tag">
-            <span>Trust nothing.</span> <span>Prove everything.</span>
-          </span>
-        </div>
-      )}
-    </>
-  );
 }
 
 export default function XseeFilm() {
@@ -220,10 +158,9 @@ export default function XseeFilm() {
               onPause={() => setPlaying(false)}
               onPlay={() => setPlaying(true)}
               onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
-              aria-label="XSEE film: from finding to proof"
+              aria-label="XSEE film: from exposure to proof"
             />
             <div className="xf-scanlines" aria-hidden="true" />
-            <Overlays t={t} />
             <p className="xf-caption" aria-live="off">
               {caption ? <span>{caption.text}</span> : null}
             </p>
