@@ -109,3 +109,12 @@ export function formatFilmTime(s: number) {
   const sec = Math.floor(s % 60);
   return `${m}:${sec.toString().padStart(2, "0")}`;
 }
+
+const LOOP_BASE = "https://nrxpnt6eu0asmp4i.public.blob.vercel-storage.com/film2/loop";
+
+export const LOOP_SOURCES = {
+  desktop: `${LOOP_BASE}/loop-desktop.mp4`,
+  mobile: `${LOOP_BASE}/loop-mobile.mp4`,
+  posterDesktop: `${LOOP_BASE}/poster-desktop.jpg`,
+  posterMobile: `${LOOP_BASE}/poster-mobile.jpg`,
+};
