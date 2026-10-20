@@ -91,7 +91,7 @@ export async function GET() {
             position: "relative",
           }}
         >
-          Live AWS API validation · Cryptographic evidence per hop · AI attack simulation
+          Discover what matters · Prove what is reachable · Verify the outcome
         </div>
         <div
           style={{

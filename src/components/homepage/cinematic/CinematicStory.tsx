@@ -122,35 +122,31 @@ export default function CinematicStory() {
           <article id="act-invisible" className={actClass(0, " cs-act--hero")}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>XSEE</span> Cloud attack intelligence
+                <span>XSEE</span> Trust nothing. Prove everything.
               </p>
               <h1 id="cs-title" className="cs-h1 text-balance">
-                <span className="cs-h1-line">See the path.</span> <span className="cs-h1-line">Prove the risk.</span>{" "}
-                <span className="cs-h1-line">Verify the fix.</span>
+                <span className="cs-h1-line">Attack paths are</span> <span className="cs-h1-line">just the beginning.</span>
               </h1>
               <p className="cs-support text-pretty">
-                From fragmented cloud findings to evidence-backed attack intelligence and verified security outcomes.
+                Discover what matters. Prove what is reachable. Act with confidence. Verify the outcome.
               </p>
               <div className="cs-actions">
                 <a
                   className="cs-btn cs-btn--primary"
-                  href="#experience"
-                  onClick={() => Analytics.ctaClicked("hero", "experience_film")}
+                  href="#experience-the-proof"
+                  onClick={() => Analytics.ctaClicked("hero", "explore_proof")}
                 >
-                  <Play size={15} aria-hidden /> Experience XSEE
+                  Explore the proof <ArrowRight size={15} aria-hidden />
                 </a>
-                <a className="cs-btn cs-btn--ghost" href="#reactor" onClick={() => Analytics.ctaClicked("hero", "explore_proof")}>
-                  Explore the proof
-                </a>
+                <Link className="cs-btn cs-btn--ghost" href="/demo" onClick={() => Analytics.ctaClicked("hero", "private_walkthrough")}>
+                  Request a private walkthrough
+                </Link>
               </div>
-              <Link href="/demo" className="cs-watch" onClick={() => Analytics.ctaClicked("hero", "evaluate")}>
-                Evaluate XSEE <ArrowRight size={14} aria-hidden />
-              </Link>
               <button type="button" className="cs-watch cs-watch--quiet" onClick={director.play}>
-                Or let the story scroll itself <span className="cs-watch-time">{`· ${DIRECTOR_SECONDS}s`}</span>
+                <Play size={13} aria-hidden /> Let the story play <span className="cs-watch-time">{`· ${DIRECTOR_SECONDS}s`}</span>
               </button>
               <a href="#act-connect" className="cs-scroll-cue" onClick={(e) => (e.preventDefault(), jumpTo(1))}>
-                <span>Scroll to enter the cloud</span>
+                <span>Scroll to follow the path</span>
                 <ArrowDown size={14} aria-hidden />
               </a>
             </div>
@@ -159,11 +155,14 @@ export default function CinematicStory() {
           <article id="act-connect" className={actClass(1)}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>02</span> The path ignites
+                <span>02</span> The problem
               </p>
-              <h2 className="cs-h2 text-balance">One connection changes everything.</h2>
-              <p className="cs-lede cs-beat text-pretty">But a possible path is not proof.</p>
-              <a className="cs-link" href="#walkthrough">
+              <h2 className="cs-h2 text-balance">A finding is not a path.</h2>
+              <p className="cs-lede cs-beat text-pretty">And a path is not proof.</p>
+              <p className="cs-note">
+                Three findings look minor in isolation. Connected, they describe what an attacker could actually reach.
+              </p>
+              <a className="cs-link" href="#experience-the-proof">
                 Explore the attack path <ArrowRight size={15} aria-hidden />
               </a>
             </div>
@@ -175,9 +174,9 @@ export default function CinematicStory() {
                 <span>03</span> The evidence chamber
               </p>
               <h2 className="cs-h2 text-balance">Follow the evidence.</h2>
-              <p className="cs-lede text-pretty">Every hop is observed, simulated, or stated as an assumption. Every gap stays visible.</p>
+              <p className="cs-lede text-pretty">Every step is marked proven, inferred, or unverified. Every gap stays visible.</p>
               <p className="cs-note">Read-only collection and IAM policy simulation. Nothing changes in your account.</p>
-              <a className="cs-link" href="#reactor">
+              <a className="cs-link" href="#experience-the-proof">
                 Enter the proof engine <ArrowRight size={15} aria-hidden />
               </a>
             </div>
@@ -201,7 +200,10 @@ export default function CinematicStory() {
               </p>
               <h2 className="cs-h2 text-balance">{"Yesterday's proof is not today's security."}</h2>
               <p className="cs-lede cs-beat text-pretty">XSEE keeps the evidence connected to a changing cloud.</p>
-              <p className="cs-note">A change triggers reassessment. A closure record is revoked only when the path re-validates.</p>
+              <p className="cs-note">
+                When ongoing monitoring is configured, a relevant change triggers reassessment. A closure record is revoked only when
+                the path re-validates.
+              </p>
               <ul className="cs-lifecycle" aria-label="Reassessment loop">
                 {LIFECYCLE.map((item) => (
                   <li key={item}>{item}</li>

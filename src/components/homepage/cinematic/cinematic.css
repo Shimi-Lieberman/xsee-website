@@ -1,12 +1,12 @@
 /* XSEE cinematic story — dark stage. Brand magenta comes from the global --color-primary token. */
 .cs,
 .cx {
-  --cs-bg: #05070c;
-  --cs-panel: #0b0f18;
+  --cs-bg: #0b1224;
+  --cs-panel: #111a30;
   --cs-ink: #eef1f6;
   --cs-ink2: #9aa3b2;
   --cs-ink3: #5d6677;
-  --cs-line: #1b2232;
+  --cs-line: #1f2a44;
   --cs-magenta: var(--color-primary, #ff1b8d);
   --cs-cyan: #5ccfe6;
   --cs-red: #ff4d5e;
@@ -83,7 +83,7 @@
   overflow: hidden;
   border: 1px solid var(--cs-line);
   border-radius: 14px;
-  background: radial-gradient(120% 90% at 60% 40%, #0a0f1a 0%, var(--cs-bg) 70%);
+  background: radial-gradient(120% 90% at 60% 40%, #121c38 0%, var(--cs-bg) 70%);
 }
 
 .cs-graph {
@@ -889,7 +889,77 @@ header[data-tone="dark"] {
   }
 
   .cx-head,
-  .cx-terminal {
+.cx-head .cx-synthetic {
+  color: var(--cs-ink3);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.cx-legend {
+  display: flex;
+  max-width: 40rem;
+  flex-direction: column;
+  gap: 10px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cx-legend-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--cs-ink2);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.cx-legend-item strong {
+  color: var(--cs-ink);
+  font-weight: 600;
+}
+
+.cx-legend-mark {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  margin-top: 5px;
+  border-radius: 999px;
+}
+
+.cx-legend-item.is-proven .cx-legend-mark {
+  background: var(--cs-green);
+}
+
+.cx-legend-item.is-inferred .cx-legend-mark {
+  border: 2px solid var(--cs-cyan);
+}
+
+.cx-legend-item.is-unverified .cx-legend-mark {
+  border: 2px dashed var(--cs-ink3);
+}
+
+.cx-finale-note {
+  margin: 4px 0 0;
+  color: var(--cs-ink3);
+  font-size: 14px;
+  text-align: center;
+}
+
+.cx-watch {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  color: var(--cs-ink);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.cx-terminal {
     padding-left: 40px;
     padding-right: 40px;
   }

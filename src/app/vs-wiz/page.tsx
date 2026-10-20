@@ -3,72 +3,27 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
-import { COMPARISON_ROWS } from "@/components/ComparisonTable";
 
 // Unlisted pending sourced, dated competitor claims (see docs/internal/public-copy-review.md).
 export const metadata: Metadata = {
-  title: "XSEE comparison",
+  title: "XSEE alongside your cloud security platform",
   robots: { index: false, follow: false },
 };
 
-const VS_WIZ_EXTRA = [
+const FIT = [
   {
-    cap: "Proof of exploitability (per hop)",
-    xsee: "Live AWS API confirmation each hop",
-    wiz: "Theoretical graph edges",
-    prisma: "Theoretical only",
-    xseeChk: true,
-    wizChk: false,
-    prismaChk: false,
+    title: "Your platform finds and ranks issues",
+    copy: "Posture, configuration and vulnerability findings stay where your team already manages them.",
   },
   {
-    cap: "Cryptographic evidence package",
-    xsee: "Signed, exportable evidence per path",
-    wiz: null,
-    prisma: null,
-    xseeChk: true,
-    wizChk: false,
-    prismaChk: false,
+    title: "XSEE asks whether a path is reachable",
+    copy: "From read-only configuration, XSEE assesses whether findings connect into a path to something that matters.",
   },
   {
-    cap: "Detection Coverage Score",
-    xsee: "% of attack steps visible to your detectors",
-    wiz: null,
-    prisma: null,
-    xseeChk: true,
-    wizChk: false,
-    prismaChk: false,
-  },
-  {
-    cap: "Before/after verification after fix",
-    xsee: "L2 re-validation + proof delta",
-    wiz: null,
-    prisma: null,
-    xseeChk: true,
-    wizChk: false,
-    prismaChk: false,
-  },
-  {
-    cap: "AI attacker simulation (validated paths)",
-    xsee: "Human + AI models on proven paths",
-    wiz: "Partial",
-    prisma: null,
-    xseeChk: true,
-    wizChk: false,
-    prismaChk: false,
-  },
-  {
-    cap: "Pricing transparency",
-    xsee: "Published from $1,800/mo",
-    wiz: "Enterprise quote only",
-    prisma: "Enterprise quote only",
-    xseeChk: true,
-    wizChk: false,
-    prismaChk: false,
+    title: "Your team decides and applies the change",
+    copy: "XSEE proposes a fix and re-checks the path afterwards. It does not make changes in your AWS environment.",
   },
 ] as const;
-
-const ALL_ROWS = [...COMPARISON_ROWS, ...VS_WIZ_EXTRA];
 
 export default function VsWizPage() {
   return (
@@ -79,81 +34,30 @@ export default function VsWizPage() {
         <section className="section sec-navy" style={{ paddingTop: 48, paddingBottom: 64 }}>
           <div className="xsee-container xsee-section">
             <div className="mx-auto max-w-3xl text-center">
-              <span className="eyebrow mb-4 inline-block">Comparison</span>
-              <h1 className="display-lg mb-6">
-                Why security teams use XSEE
-                <br />
-                alongside Wiz — not instead of it.
-              </h1>
-              <p className="text-lg text-slate-400">
-                Wiz is excellent at cloud posture and hygiene. XSEE proves exploitability. They answer different questions. Smart teams use both.
+              <span className="eyebrow mb-4 inline-block">Working together</span>
+              <h1 className="display-lg mb-6 text-balance">XSEE works alongside your cloud security platform.</h1>
+              <p className="text-lg leading-relaxed text-slate-400 text-pretty">
+                Platforms like Wiz and Prisma Cloud answer what is misconfigured or vulnerable. XSEE answers a narrower
+                question: which of those findings combine into a path an attacker could follow, and whether a fix
+                actually closed it.
               </p>
             </div>
 
-            <div className="mx-auto mt-16 grid max-w-5xl gap-6 md:grid-cols-2">
-              <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_6px_20px_-16px_rgba(11,18,32,0.18)]">
-                <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-slate-500">Wiz</h2>
-                <p className="text-slate-600">
-                  Finds 4,000 issues. Ranks by CVSS. Draws a theoretical attack graph. Tells you it could happen.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-[#FF1B8D]/30 bg-[#FF1B8D]/[0.05] p-8">
-                <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#FF1B8D]">XSEE</h2>
-                <p className="text-slate-700">
-                  Finds the 3 paths that actually reach your database. Calls live AWS APIs to prove each hop. Generates cryptographic evidence. Tells you it
-                  will happen — with proof.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+            <ol className="mx-auto mt-12 flex max-w-3xl flex-col gap-4">
+              {FIT.map((item) => (
+                <li key={item.title} className="rounded-2xl border border-slate-700 p-6">
+                  <h2 className="mb-2 text-lg font-semibold">{item.title}</h2>
+                  <p className="leading-relaxed text-slate-400">{item.copy}</p>
+                </li>
+              ))}
+            </ol>
 
-        <section className="section sec-navy" style={{ paddingTop: 0 }}>
-          <div className="xsee-container xsee-section">
-            <div className="section-head reveal mb-10 text-center">
-              <h2 className="display-md">Full comparison</h2>
-              <p className="text-slate-400">Same table as the homepage, expanded with capabilities Wiz can&apos;t match.</p>
-              <div className="section-rule mx-auto" />
-            </div>
-            <div className="cmp-wrap reveal-on-scroll">
-              <table className="cmp-table">
-                <thead>
-                  <tr>
-                    <th style={{ width: "36%" }}>Capability</th>
-                    <th className="xsee-col xsee-col-head">XSEE</th>
-                    <th>Wiz</th>
-                    <th>Prisma Cloud</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {ALL_ROWS.map((row) => (
-                    <tr key={row.cap}>
-                      <td>{row.cap}</td>
-                      <td className="xsee-val">
-                        <span className="chk">✓</span> {row.xsee}
-                      </td>
-                      <td>
-                        {row.wizChk ? <span className="chk">✓</span> : <span className="cx">✗</span>}{" "}
-                        {row.wiz != null ? (row.wiz === "Partial" ? <span className="pt">Partial</span> : row.wiz) : ""}
-                      </td>
-                      <td>
-                        {row.prismaChk ? <span className="chk">✓</span> : <span className="cx">✗</span>}{" "}
-                        {row.prisma != null
-                          ? row.prisma === "Partial"
-                            ? <span className="pt">Partial</span>
-                            : row.prisma
-                          : ""}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <div className="mx-auto mt-16 max-w-2xl rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-[0_10px_30px_-18px_rgba(11,18,32,0.2)]">
-              <p className="mb-6 text-xl font-semibold text-[#0b1220]">Don&apos;t cancel Wiz. Add the layer it can&apos;t provide.</p>
-              <Link href="/free-scan" className="btn btn-primary btn-lg btn-shimmer inline-flex">
-                <span className="relative z-[2]">Request free assessment →</span>
+            <div className="mx-auto mt-12 flex max-w-3xl flex-col items-center gap-3 text-center">
+              <p className="leading-relaxed text-slate-400">
+                How XSEE fits your existing tooling is covered in a private technical walkthrough.
+              </p>
+              <Link href="/demo" className="btn btn-primary inline-flex min-h-11 items-center px-6">
+                Request a private technical walkthrough
               </Link>
             </div>
           </div>
