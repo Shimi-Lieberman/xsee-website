@@ -122,28 +122,32 @@ export default function CinematicStory() {
           <article id="act-invisible" className={actClass(0, " cs-act--hero")}>
             <div className="cs-act-inner">
               <p className="cs-eyebrow">
-                <span>01</span> System awakening
+                <span>XSEE</span> Cloud attack intelligence
               </p>
               <h1 id="cs-title" className="cs-h1 text-balance">
-                {"You can't defend what you can't prove."}
+                <span className="cs-h1-line">See the path.</span> <span className="cs-h1-line">Prove the risk.</span>{" "}
+                <span className="cs-h1-line">Verify the fix.</span>
               </h1>
-              <p className="cs-lede cs-lede--strong text-pretty">Validate attack paths. Verify the fix.</p>
               <p className="cs-support text-pretty">
-                XSEE reveals how identities, permissions, and infrastructure combine into real attack paths in AWS.
+                From fragmented cloud findings to evidence-backed attack intelligence and verified security outcomes.
               </p>
               <div className="cs-actions">
-                <Link href="/demo" className="cs-btn cs-btn--primary" onClick={() => Analytics.ctaClicked("hero", "book_demo")}>
-                  Book a demo <ArrowRight size={16} aria-hidden />
-                </Link>
-                <a className="cs-btn cs-btn--ghost" href="#workflow">
-                  Explore the workflow
+                <a
+                  className="cs-btn cs-btn--primary"
+                  href="#experience"
+                  onClick={() => Analytics.ctaClicked("hero", "experience_film")}
+                >
+                  <Play size={15} aria-hidden /> Experience XSEE
+                </a>
+                <a className="cs-btn cs-btn--ghost" href="#reactor" onClick={() => Analytics.ctaClicked("hero", "explore_proof")}>
+                  Explore the proof
                 </a>
               </div>
-              <button type="button" className="cs-watch" onClick={director.play}>
-                <span className="cs-watch-icon" aria-hidden>
-                  <Play size={14} />
-                </span>
-                Watch the story <span className="cs-watch-time">{`· ${DIRECTOR_SECONDS}s`}</span>
+              <Link href="/demo" className="cs-watch" onClick={() => Analytics.ctaClicked("hero", "evaluate")}>
+                Evaluate XSEE <ArrowRight size={14} aria-hidden />
+              </Link>
+              <button type="button" className="cs-watch cs-watch--quiet" onClick={director.play}>
+                Or let the story scroll itself <span className="cs-watch-time">{`· ${DIRECTOR_SECONDS}s`}</span>
               </button>
               <a href="#act-connect" className="cs-scroll-cue" onClick={(e) => (e.preventDefault(), jumpTo(1))}>
                 <span>Scroll to enter the cloud</span>

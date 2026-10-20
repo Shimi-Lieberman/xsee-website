@@ -48,9 +48,22 @@ function Overlays({ t }: { t: number }) {
   const inRemediation = t >= FILM_T.impact - 0.5 && t < FILM_T.drift - 1;
   const inDrift = t >= FILM_T.drift && t < FILM_T.endCard;
   const endOpacity = Math.min(1, Math.max(0, (t - FILM_T.endCard) / 1.2));
+  const titleOpacity = Math.min(
+    Math.max(0, (t - FILM_T.titleIn) / 0.8),
+    Math.max(0, (FILM_T.titleOut - t) / 0.6),
+    1,
+  );
 
   return (
     <>
+      {titleOpacity > 0 && (
+        <div className="xf-titlecard" style={{ opacity: titleOpacity }}>
+          <span className="xf-titlecard-logo">XSEE</span>
+          <span className="xf-titlecard-tag">
+            <span>See the path.</span> <span>Prove the risk.</span> <span>Verify the fix.</span>
+          </span>
+        </div>
+      )}
       {inRemediation && (
         <div className="xf-panel">
           {FILM_REMEDIATION.map((step) => (
@@ -182,9 +195,9 @@ export default function XseeFilm() {
   const ended = t >= duration - 0.05;
 
   return (
-    <section className="xf-section" aria-labelledby="xf-heading" data-nav-tone="dark">
+    <section id="experience" className="xf-section" aria-labelledby="xf-heading" data-nav-tone="dark">
       <header className="xf-intro">
-        <span className="xf-kicker">The film · {formatFilmTime(duration)}</span>
+        <span className="xf-kicker">Experience XSEE · {formatFilmTime(duration)}</span>
         <h2 id="xf-heading" className="xf-heading">
           From finding to proof, in one story.
         </h2>

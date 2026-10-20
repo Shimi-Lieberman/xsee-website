@@ -3,10 +3,10 @@ import "./cinematic.css";
 
 export default function ExploreChapter() {
   return (
-    <section className="cx" aria-labelledby="cx-title" data-nav-tone="dark">
+    <section id="explore" className="cx" aria-labelledby="cx-title" data-nav-tone="dark">
       <div className="cx-head">
         <p className="cs-eyebrow">
-          <span>Explore</span> The evidence behind the story
+          <span>Explore the proof</span> The evidence behind the story
         </p>
         <h2 id="cx-title" className="text-balance">
           Every state you just saw has a record behind it.

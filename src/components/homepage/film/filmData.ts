@@ -1,5 +1,5 @@
-export const FILM_SRC = "https://nrxpnt6eu0asmp4i.public.blob.vercel-storage.com/film/xsee-film.mp4";
-export const FILM_POSTER = "https://nrxpnt6eu0asmp4i.public.blob.vercel-storage.com/film/poster.jpg";
+export const FILM_SRC = "https://nrxpnt6eu0asmp4i.public.blob.vercel-storage.com/film/xsee-film-v2.mp4";
+export const FILM_POSTER = "https://nrxpnt6eu0asmp4i.public.blob.vercel-storage.com/film/poster-v2.jpg";
 export const FILM_DURATION = 76.21;
 
 export type FilmAct = { id: string; start: number; end: number; step: string; title: string; summary: string };
@@ -10,9 +10,9 @@ export const FILM_ACTS: FilmAct[] = [
     start: 0,
     end: 12,
     step: "Discover",
-    title: "Findings are not reachability",
+    title: "Exposure hides in the connections",
     summary:
-      "An AWS environment produces thousands of isolated signals. On their own, they do not show what an attacker can actually reach.",
+      "The most dangerous cloud exposures are not visible in a single finding. They emerge from how identities, permissions and resources connect.",
   },
   {
     id: "prioritize",
@@ -56,13 +56,13 @@ export type FilmCaption = { start: number; end: number; text: string };
 
 /** Timed from the measured length of every narrated sentence. */
 export const FILM_CAPTIONS: FilmCaption[] = [
-  { start: 0.5, end: 3.39, text: "Cloud security has never lacked findings." },
-  { start: 3.84, end: 5.86, text: "But knowing what might be exposed," },
-  { start: 5.86, end: 9.96, text: "is not the same as knowing what an attacker can actually reach." },
-  { start: 12.5, end: 15.44, text: "Risk rarely lives in a single finding." },
-  { start: 15.44, end: 18.11, text: "It lives in the connections between them." },
-  { start: 18.46, end: 22.26, text: "XSEE maps identities, permissions, networks, and resources," },
-  { start: 22.26, end: 26.53, text: "to uncover the attack paths hidden between isolated findings." },
+  { start: 0.5, end: 2.49, text: "The most dangerous cloud exposures" },
+  { start: 2.49, end: 5.3, text: "aren't always visible in a single finding." },
+  { start: 5.45, end: 8.39, text: "They emerge from the connections between them." },
+  { start: 12.5, end: 15.77, text: "On their own, findings show what might be exposed," },
+  { start: 15.77, end: 19.16, text: "not what an attacker can actually reach." },
+  { start: 19.51, end: 23.31, text: "XSEE maps identities, permissions, networks, and resources," },
+  { start: 23.31, end: 27.58, text: "to uncover the attack paths hidden between isolated findings." },
   { start: 28.5, end: 30.82, text: "Then comes the critical difference:" },
   { start: 30.92, end: 31.83, text: "Proof." },
   { start: 32.28, end: 35.93, text: "XSEE evaluates each step against the available evidence," },
@@ -77,7 +77,7 @@ export const FILM_CAPTIONS: FilmCaption[] = [
   { start: 72.92, end: 74.36, text: "It should be proven." },
 ];
 
-export const FILM_T = { impact: 46, closure: 56.5, drift: 64, reopen: 67, endCard: 72 } as const;
+export const FILM_T = { titleIn: 8.6, titleOut: 11.8, impact: 46, closure: 56.5, drift: 64, reopen: 67, endCard: 72 } as const;
 
 /** Mirrors the site's remediation model: your team applies the fix, XSEE re-validates. */
 export const FILM_REMEDIATION = [

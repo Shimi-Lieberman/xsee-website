@@ -60,13 +60,14 @@ export default function StoryFinale() {
         <span>Trust nothing.</span> <span>Prove everything.</span>
       </h2>
 
+      <p className="cx-finale-kicker">Evaluate XSEE</p>
       <div className="cs-actions">
         <Link href="/demo" className="cs-btn cs-btn--primary" onClick={() => Analytics.ctaClicked("finale", "book_demo")}>
-          See XSEE in action <ArrowRight size={16} aria-hidden />
+          Request a technical demonstration <ArrowRight size={16} aria-hidden />
         </Link>
-        <Link href="/product" className="cs-btn cs-btn--ghost">
-          Explore the technology
-        </Link>
+        <a href="#pilot" className="cs-btn cs-btn--ghost" onClick={() => Analytics.ctaClicked("finale", "evaluation")}>
+          Discuss an early-stage evaluation
+        </a>
       </div>
     </section>
   );
