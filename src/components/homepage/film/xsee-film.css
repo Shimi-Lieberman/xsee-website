@@ -62,7 +62,7 @@
   inset: 0;
   background:
     radial-gradient(120% 80% at 50% 45%, transparent 55%, color-mix(in srgb, var(--xf-bg) 70%, transparent) 100%),
-    linear-gradient(to top, var(--xf-bg) 0%, color-mix(in srgb, var(--xf-bg) 75%, transparent) 26%, transparent 52%);
+    linear-gradient(to top, var(--xf-void) 0%, color-mix(in srgb, var(--xf-void) 80%, transparent) 14%, color-mix(in srgb, var(--xf-bg) 70%, transparent) 30%, transparent 54%);
 }
 
 .xf-copy {
@@ -77,10 +77,12 @@
 
 .xf-kicker {
   font-family: var(--xf-mono);
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--xf-magenta);
+  color: color-mix(in srgb, var(--xf-magenta) 82%, var(--xf-ink));
+  text-shadow: 0 1px 12px color-mix(in srgb, var(--xf-void) 90%, transparent), 0 0 2px var(--xf-void);
 }
 
 .xf-heading {
@@ -181,7 +183,7 @@
     .xf-copy {
       animation: xf-rise linear both;
       animation-timeline: view();
-      animation-range: entry 10% cover 45%;
+      animation-range: entry 0% entry 100%;
     }
   }
 }
@@ -204,7 +206,7 @@
     mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 58%, transparent 92%);
   }
   .xf-vignette {
-    background: linear-gradient(to top, var(--xf-bg) 0%, color-mix(in srgb, var(--xf-bg) 85%, transparent) 34%, transparent 60%);
+    background: linear-gradient(to top, var(--xf-void) 0%, color-mix(in srgb, var(--xf-void) 85%, transparent) 16%, color-mix(in srgb, var(--xf-bg) 80%, transparent) 36%, transparent 62%);
   }
 }
 
