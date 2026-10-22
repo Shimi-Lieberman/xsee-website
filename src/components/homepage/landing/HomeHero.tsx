@@ -13,7 +13,7 @@ export default function HomeHero() {
           Attack-path validation for AWS
         </p>
         <h1 id="lp-hero-title" className="lp-hero-title text-balance">
-          Know which attack paths are real. Fix what matters first.
+          Thousands of findings. A handful of real attack paths. XSEE shows you which.
         </h1>
         <p className="lp-hero-lede text-pretty">
           XSEE connects exposures across your AWS environment, shows the evidence behind each reachable path, and checks the path

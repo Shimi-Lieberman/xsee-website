@@ -11,17 +11,17 @@ import ClosingInvite from "@/components/homepage/landing/ClosingInvite";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "XSEE — Know which attack paths are real",
+  title: "XSEE — Thousands of findings. A handful of real attack paths.",
   description:
     "XSEE connects exposures across your AWS environment, shows the evidence behind each reachable path, and checks the path again after your team makes a change.",
   openGraph: {
-    title: "XSEE — Know which attack paths are real",
+    title: "XSEE — Thousands of findings. A handful of real attack paths.",
     description:
       "Connect AWS exposures, prioritize remediation with evidence, and confirm the relevant path after a change.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "XSEE — Know which attack paths are real",
+    title: "XSEE — Thousands of findings. A handful of real attack paths.",
     description: "Connect AWS exposures, prioritize remediation with evidence, and confirm the relevant path after a change.",
   },
 };
