@@ -81,10 +81,6 @@ export default function Footer() {
           </div>
           {[
             { label: "Product", href: "/product" },
-            { label: "Workflow", href: "/#workflow" },
-            { label: "Outcomes", href: "/#outcomes" },
-            { label: "Closure verification", href: "/#closure" },
-            { label: "Enterprise pilot", href: "/#pilot" },
             { label: "Changelog", href: "/changelog" },
             { label: "Request assessment", href: "/free-scan" },
             { label: "Under attack?", href: "/under-attack" },
@@ -170,24 +166,6 @@ export default function Footer() {
       >
         <div style={{ fontSize: "12px", color: "#6a7388" }}>
           © 2026 XSEE. All rights reserved.
-        </div>
-        <div className="flex items-center gap-5 flex-wrap">
-          {[
-            { label: "Changelog", href: "/changelog" },
-            { label: "Privacy Policy", href: "/privacy" },
-            { label: "Terms of Service", href: "/terms" },
-            { label: "Security", href: "/security" },
-            { label: "Refunds", href: "/refunds" },
-          ].map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              style={{ fontSize: "12px", color: "#3A4658" }}
-              className="hover:text-[#0b1220] transition-colors max-sm:min-h-[44px] max-sm:inline-flex max-sm:items-center"
-            >
-              {link.label}
-            </Link>
-          ))}
         </div>
       </div>
     </footer>

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronRight } from "lucide-react";
 import { PATH_EDGES } from "@/lib/attackPathScenario";
 import { edgeById, edgeStatus, focusSet, litEdges, nodeById, type DemoState, type Selection } from "./demoState";
 import { NODE_ICON, StatusChip } from "./parts";
@@ -11,6 +11,7 @@ type Props = {
   onSelect: (selection: Selection) => void;
 };
 
+/** Mobile: one connected vertical path. Selecting a node or relationship opens its evidence below. */
 export default function MobilePath({ state, onSelect }: Props) {
   const focus = focusSet(state);
   const lit = litEdges(state);
@@ -25,14 +26,15 @@ export default function MobilePath({ state, onSelect }: Props) {
         type="button"
         className={`apd-m-node apd-node-${node.kind}${selected ? " is-selected" : ""}${focus.active && !focus.nodes.has(id) ? " is-dim" : ""}`}
         aria-pressed={selected}
+        aria-label={`${node.label}, ${node.typeLabel}${node.tag ? `, ${node.tag}` : ""}`}
         onClick={() => onSelect(selected ? null : { kind: "node", id })}
       >
         <span className="apd-node-icon">
           <Icon aria-hidden />
         </span>
         <span className="apd-node-copy">
-          <strong>{node.name}</strong>
-          <small>{node.resource}</small>
+          <strong>{node.label}</strong>
+          <small>{node.typeLabel}</small>
         </span>
         {node.tag ? <span className="apd-m-tag">{node.tag}</span> : null}
       </button>
@@ -55,7 +57,7 @@ export default function MobilePath({ state, onSelect }: Props) {
         <span className="apd-m-edge-copy">
           {withEndpoints ? (
             <small>
-              {nodeById(edge.from)!.name} <ChevronRight aria-hidden /> {nodeById(edge.to)!.name}
+              {nodeById(edge.from)!.label} <ChevronRight aria-hidden /> {nodeById(edge.to)!.label}
             </small>
           ) : null}
           <strong>{edge.label}</strong>
@@ -67,8 +69,7 @@ export default function MobilePath({ state, onSelect }: Props) {
 
   return (
     <div className="apd-mobile">
-      <p className="apd-m-heading">Path AP-12</p>
-      <ol className="apd-m-path">
+      <ol className="apd-m-path" aria-label="Path AP-12, from assumed foothold to data store credentials">
         {pathNodes.map((id, index) => (
           <Fragment key={id}>
             <li>{nodeButton(id)}</li>
@@ -76,12 +77,17 @@ export default function MobilePath({ state, onSelect }: Props) {
           </Fragment>
         ))}
       </ol>
-      <p className="apd-m-heading">Other relationships</p>
-      <ul className="apd-m-context">
-        {CONTEXT_EDGES.map((id) => (
-          <li key={id}>{edgeButton(id, true)}</li>
-        ))}
-      </ul>
+      <details className="apd-m-more">
+        <summary>
+          Other relationships <span>({CONTEXT_EDGES.length})</span>
+          <ChevronDown aria-hidden />
+        </summary>
+        <ul className="apd-m-context">
+          {CONTEXT_EDGES.map((id) => (
+            <li key={id}>{edgeButton(id, true)}</li>
+          ))}
+        </ul>
+      </details>
     </div>
   );
 }

@@ -63,12 +63,12 @@ function Facts({ rows }: { rows: [string, string][] }) {
 function edgeResult(edgeId: string, state: DemoState) {
   const edge = edgeById(edgeId)!;
   const status = edgeStatus(edge, state);
-  if (status === "blocked") return "Re-check after the change: sts:AssumeRole is denied by the trust policy. Traversal stops here.";
-  if (status === "changed" || status === "reassess") return "The trust policy changed after verification. The earlier blocked result may no longer hold.";
-  if (status === "rechecking") return "A new simulation is running against the changed trust policy.";
-  if (status === "reopened") return "New check: sts:AssumeRole is allowed again via the role-web-* principal.";
-  if (status === "candidate") return "Candidate. Not yet inspected.";
-  return edge.result;
+  if (status === "blocked") return "Policy simulation after the change denies this permission. Within the stated scope, the path stops here.";
+  if (status === "changed" || status === "reassess") return "The trust policy changed after the re-check. The earlier blocked result may no longer hold.";
+  if (status === "rechecking") return "A new policy simulation is running against the changed trust policy.";
+  if (status === "reopened") return "Policy simulation supports this permission again via the role-web-* principal. No role was assumed.";
+  if (status === "candidate") return "Not yet reviewed. Open the evidence stage to see what supports it.";
+  return edge.assessment;
 }
 
 function EdgeDetail({ state, edgeId, onClose }: { state: DemoState; edgeId: string; onClose?: () => void }) {
@@ -80,17 +80,25 @@ function EdgeDetail({ state, edgeId, onClose }: { state: DemoState; edgeId: stri
     <div className="apd-insp-body">
       <PanelHead overline="Relationship" title={edge.label} onClose={onClose} />
       <p className="apd-endpoints">
-        {from.name} <ChevronRight aria-hidden /> {to.name}
+        {from.label} <ChevronRight aria-hidden /> {to.label}
       </p>
-      <StatusChip status={status} />
-      <Facts
-        rows={[
-          ["Evidence", edge.evidence],
-          ["Method", edge.method],
-          ["Result", edgeResult(edgeId, state)],
-          ["Limitations", edge.limitations],
-        ]}
-      />
+      <div className="apd-basis">
+        <span className="apd-basis-label">Evidence basis</span>
+        <StatusChip status={edge.base} />
+        {status !== edge.base && status !== "candidate" ? <StatusChip status={status} /> : null}
+      </div>
+      <p className="apd-assessment">{edgeResult(edgeId, state)}</p>
+      <details className="apd-more">
+        <summary>What was checked</summary>
+        <Facts
+          rows={[
+            ["Checked", edge.evidence],
+            ["Method", edge.method],
+            ["Limits", edge.limitations],
+            ["Technical detail", `${edge.action} · ${from.name} → ${to.name}`],
+          ]}
+        />
+      </details>
     </div>
   );
 }
@@ -101,7 +109,7 @@ function NodeDetail({ nodeId, onClose }: { nodeId: string; onClose: () => void }
   const related = EDGES.filter((edge) => edge.from === nodeId || edge.to === nodeId);
   return (
     <div className="apd-insp-body">
-      <PanelHead overline={node.typeLabel} title={node.name} onClose={onClose} />
+      <PanelHead overline={node.typeLabel} title={node.label} onClose={onClose} />
       <p className="apd-node-summary">
         <span className="apd-node-icon">
           <Icon aria-hidden />
@@ -110,7 +118,7 @@ function NodeDetail({ nodeId, onClose }: { nodeId: string; onClose: () => void }
       </p>
       <Facts
         rows={[
-          ["Resource", node.resource],
+          ["Synthetic name", `${node.name} · ${node.resource}`],
           ["Relationships", related.map((edge) => edge.label).join(" · ")],
         ]}
       />
@@ -121,18 +129,18 @@ function NodeDetail({ nodeId, onClose }: { nodeId: string; onClose: () => void }
 function DiscoverPanel() {
   return (
     <div className="apd-insp-body">
-      <PanelHead overline="Step 1 · Discover" title="Resources and candidate relationships" />
+      <PanelHead overline="Understand the path" title="Four relationships connect an assumed foothold to production credentials" />
       <p className="apd-copy">
-        A read-only collection maps {NODES.length - 1} resources and {EDGES.length} relationships. Dashed lines are candidates: nothing has been
-        evaluated yet.
+        The scenario maps {NODES.length - 1} resources and {EDGES.length} relationships. The highlighted route is the one under review. Nothing
+        has been assessed yet.
       </p>
       <Facts
         rows={[
-          ["Sensitive target", "prod/orders-db (Secrets Manager)"],
-          ["Starting condition", "Assumed code execution in web-frontend. Public exposure alone is not treated as compromise."],
+          ["Sensitive target", "Data store credentials (Secrets Manager)"],
+          ["Starting condition", "Code execution in the application is assumed. Public exposure alone is not treated as compromise."],
         ]}
       />
-      <p className="apd-hint">Select any resource or relationship to inspect it.</p>
+      <p className="apd-hint">Select any resource or relationship to see what it depends on.</p>
     </div>
   );
 }
@@ -154,7 +162,7 @@ function EvidenceList({ state }: { state: DemoState }) {
   const focused = focusEdgeId(state);
   return (
     <div className="apd-insp-body">
-      <PanelHead overline="Step 2 · Validate" title="Evidence behind each relationship" />
+      <PanelHead overline="Inspect the evidence" title="What supports each relationship" />
       <ul className="apd-evidence">
         {INSPECT_ORDER.map((id) => {
           const edge = edgeById(id)!;
@@ -164,9 +172,9 @@ function EvidenceList({ state }: { state: DemoState }) {
             <li key={id} className={`${id === focused ? "is-current" : ""}${revealed ? " is-revealed" : ""}`}>
               <div>
                 <strong>{edge.label}</strong>
-                <small>{revealed ? edge.result : "Pending review"}</small>
+                <small>{revealed ? edge.assessment : "Pending review"}</small>
               </div>
-              <StatusChip status={status} />
+              <StatusChip status={edge.base} />
             </li>
           );
         })}
@@ -200,7 +208,7 @@ function ReviewPanel({ state, dispatch }: Props) {
   const after = state.compare === "after";
   return (
     <div className="apd-insp-body">
-      <PanelHead overline="Step 3 · Review fix" title="Narrow the role-batch-ops trust policy" />
+      <PanelHead overline="Reassessment · Proposed change" title="Narrow the operations role's trust policy" />
       <div className="apd-segmented" role="group" aria-label="Compare configuration">
         {(["before", "after"] as const).map((value) => (
           <button
@@ -222,8 +230,8 @@ function ReviewPanel({ state, dispatch }: Props) {
           <CircleDashed aria-hidden /> Predicted · not verified
         </span>
         <p>
-          Only <strong>batch-scheduler</strong> can assume role-batch-ops. role-web-task loses sts:AssumeRole, so {SCENARIO.pathId} should stop at hop 3.
-          Other relationships are unchanged.
+          Only <strong>batch-scheduler</strong> could assume the operations role. The application role would lose sts:AssumeRole, so{" "}
+          {SCENARIO.pathId} should stop at hop 3. This is a prediction until it is re-checked. Other relationships are unchanged.
         </p>
       </div>
     </div>
@@ -235,7 +243,7 @@ function ApprovePanel({ state, dispatch }: Props) {
   const applied = state.approval === "applied";
   return (
     <div className="apd-insp-body">
-      <PanelHead overline="Step 4 · Approve" title="A person decides. Your pipeline applies." />
+      <PanelHead overline="Reassessment · Approval" title="A person decides. In this scenario, the customer's pipeline applies it." />
       <ol className="apd-timeline">
         <li className="is-done">
           <span className="apd-timeline-icon">
@@ -270,7 +278,7 @@ function ApprovePanel({ state, dispatch }: Props) {
           <UserCheck aria-hidden /> Approve change (demo)
         </button>
       )}
-      <p className="apd-boundary">XSEE has read-only access. It prepares the change and evidence; it cannot apply the change.</p>
+      <p className="apd-boundary">This illustration depicts read-only collection and a change applied by the customer. Access requirements, action permissions and evaluation scope are agreed before onboarding.</p>
     </div>
   );
 }
@@ -280,7 +288,7 @@ function VerifyPanel({ state }: { state: DemoState }) {
   const hops = TRAVERSE_ORDER.map((id) => edgeById(id)!);
   return (
     <div className="apd-insp-body">
-      <PanelHead overline="Step 5 · Verify" title={`Replay ${SCENARIO.pathId} against the new configuration`} />
+      <PanelHead overline="Reassessment · Re-check" title={`Re-check ${SCENARIO.pathId} against the new configuration`} />
       <ol className="apd-hops">
         {hops.map((edge, index) => {
           const reached = state.beat > index;
@@ -305,22 +313,22 @@ function VerifyPanel({ state }: { state: DemoState }) {
       </ol>
       {verified ? (
         <div className="apd-verdict apd-tone-verified">
-          <strong>Closure record · {SCENARIO.pathId} verified closed</strong>
+          <strong>Bounded result · {SCENARIO.pathId} blocked at hop 3</strong>
           <dl className="apd-mini-record">
             <div>
-              <dt>Scope</dt>
-              <dd>Assumed foothold in web-frontend → prod/orders-db</dd>
+              <dt>Changed</dt>
+              <dd>Trust policy on the operations role</dd>
             </div>
             <div>
-              <dt>Result</dt>
-              <dd>Re-check stopped at sts:AssumeRole</dd>
+              <dt>Re-checked</dt>
+              <dd>sts:AssumeRole by the application role: denied in policy simulation</dd>
             </div>
             <div>
-              <dt>Verified</dt>
+              <dt>Checked at</dt>
               <dd>{TIMESTAMPS.verified}</dd>
             </div>
           </dl>
-          <p>Unchanged: public exposure via alb-web-public is still observed, and s3:GetObject on nw-exports is still untested.</p>
+          <p>Still assumed: code execution in the application. Unchanged: public exposure is still observed and the storage bucket is not assessed. This result covers this path only.</p>
         </div>
       ) : null}
     </div>
@@ -328,10 +336,10 @@ function VerifyPanel({ state }: { state: DemoState }) {
 }
 
 const DRIFT_STAGES = [
-  { key: "changed", label: "Configuration change detected" },
-  { key: "reassess", label: "Previous verification needs reassessment" },
-  { key: "rechecking", label: "New check against the changed policy" },
-  { key: "reopened", label: "Result: path reopened" },
+  { key: "changed", label: "What changed: the trust policy now allows role-web-*" },
+  { key: "reassess", label: "The earlier blocked result is marked for reassessment" },
+  { key: "rechecking", label: "What is rechecked: sts:AssumeRole against the new policy" },
+  { key: "reopened", label: "Result: permission supported again under stated conditions" },
 ] as const;
 
 function DriftPanel({ state, dispatch }: Props) {
@@ -339,20 +347,20 @@ function DriftPanel({ state, dispatch }: Props) {
   if (state.drift === "none") {
     return (
       <div className="apd-insp-body">
-        <PanelHead overline="Step 6 · Drift" title="Closure holds only while the configuration holds" />
+        <PanelHead overline="Reassessment · Later change" title="A result holds only while the configuration holds" />
         <p className="apd-copy">
-          {SCENARIO.pathId} is verified closed as of {TIMESTAMPS.verified}. Introduce an illustrative change to see how the earlier result is
-          handled.
+          {SCENARIO.pathId} was blocked at re-check as of {TIMESTAMPS.verified}. Introduce an illustrative change to see how the earlier result is
+          reassessed.
         </p>
         <button type="button" className="apd-primary is-drift" onClick={() => dispatch({ type: "introduceDrift" })}>
-          <TriangleAlert aria-hidden /> Introduce demo drift
+          <TriangleAlert aria-hidden /> Introduce a demo change
         </button>
       </div>
     );
   }
   return (
     <div className="apd-insp-body">
-      <PanelHead overline={`Step 6 · Drift · ${TIMESTAMPS.drift}`} title="Trust policy changed by a later deploy" />
+      <PanelHead overline={`Later change · ${TIMESTAMPS.drift}`} title="Trust policy changed by a later deploy" />
       <PolicyBlock lines={POLICY.drifted} label="role-batch-ops · Principal.AWS" />
       <ol className="apd-drift-stages">
         {DRIFT_STAGES.map((stage, index) => (
@@ -364,8 +372,8 @@ function DriftPanel({ state, dispatch }: Props) {
       </ol>
       {state.drift === "reopened" ? (
         <div className="apd-verdict apd-tone-drift">
-          <strong>{SCENARIO.pathId} reopened</strong>
-          <p>role-web-task matches role-web-* and can assume role-batch-ops again. The closure record is updated below.</p>
+          <strong>{SCENARIO.pathId} reopened within the stated scope</strong>
+          <p>role-web-task matches role-web-* and policy simulation supports sts:AssumeRole again. Code execution in the application is still an assumption, not a test. The assessment record below is updated.</p>
         </div>
       ) : null}
     </div>

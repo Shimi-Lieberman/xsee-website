@@ -6,8 +6,8 @@ export const SALES_EMAIL = "sales@xsee.io";
 
 export const NAV_LINKS = [
   { href: "/product", label: "Product" },
-  { href: "/#workflow", label: "Workflow" },
-  { href: "/#pilot", label: "Pilot" },
+  { href: "/#value", label: "Why XSEE" },
+  { href: "/#experience", label: "Film" },
   { href: "/security", label: "Security" },
   { href: "/about", label: "About" },
 ] as const;

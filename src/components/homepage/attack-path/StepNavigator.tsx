@@ -1,7 +1,7 @@
 import type { Dispatch } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play, RotateCcw, Search } from "lucide-react";
-import { STEPS } from "@/lib/attackPathScenario";
-import { LAST_STEP, STORY_MS, STORY_PHASES, storyPhaseIndex, type DemoAction, type DemoState } from "./demoState";
+import { STAGES, STEPS } from "@/lib/attackPathScenario";
+import { LAST_STEP, STORY_MS, STORY_PHASES, stageIndex, storyPhaseIndex, type DemoAction, type DemoState } from "./demoState";
 
 type Props = { state: DemoState; dispatch: Dispatch<DemoAction> };
 
@@ -16,7 +16,7 @@ export function StoryControls({ state, dispatch }: Props) {
       <div className="apd-story-bar">
         {ended ? (
           <button type="button" className="apd-control is-primary" onClick={() => dispatch({ type: "storyReplay" })}>
-            <RotateCcw aria-hidden /> <span>Replay story</span>
+            <RotateCcw aria-hidden /> <span>Replay</span>
           </button>
         ) : (
           <button
@@ -48,7 +48,7 @@ export function StoryControls({ state, dispatch }: Props) {
           })}
         </div>
         <button type="button" className="apd-control" onClick={() => dispatch({ type: "explore" })}>
-          <Search aria-hidden /> <span>Explore this path</span>
+          <Search aria-hidden /> <span>Explore</span>
         </button>
       </div>
       <ol className="apd-seg-labels" aria-hidden>
@@ -63,8 +63,41 @@ export function StoryControls({ state, dispatch }: Props) {
 }
 
 export function ExploreControls({ state, dispatch }: Props) {
+  const currentStage = stageIndex(state.step);
+  const stage = STAGES[currentStage];
   return (
     <div className="apd-nav">
+      <ol className="apd-stages" aria-label="Walkthrough stages">
+        {STAGES.map((item, index) => (
+          <li key={item.key}>
+            <button
+              type="button"
+              className={`apd-stage-tab${index === currentStage ? " is-active" : ""}${index < currentStage ? " is-past" : ""}`}
+              aria-current={index === currentStage ? "step" : undefined}
+              onClick={() => dispatch({ type: "goTo", step: item.steps[0] })}
+            >
+              <span className="apd-step-index">{index + 1}</span>
+              <span>{item.title}</span>
+            </button>
+          </li>
+        ))}
+      </ol>
+      {stage.steps.length > 1 ? (
+        <ol className="apd-substeps" aria-label={`${stage.title} steps`}>
+          {stage.steps.map((step) => (
+            <li key={step}>
+              <button
+                type="button"
+                className={`apd-substep${step === state.step ? " is-active" : ""}${step < state.step ? " is-past" : ""}`}
+                aria-current={step === state.step ? "step" : undefined}
+                onClick={() => dispatch({ type: "goTo", step })}
+              >
+                {STEPS[step].title}
+              </button>
+            </li>
+          ))}
+        </ol>
+      ) : null}
       <div className="apd-controls" role="group" aria-label="Step navigation">
         <button type="button" className="apd-control" onClick={() => dispatch({ type: "prev" })} disabled={state.step === 0}>
           <ChevronLeft aria-hidden /> <span>Previous</span>
@@ -72,28 +105,10 @@ export function ExploreControls({ state, dispatch }: Props) {
         <button type="button" className="apd-control" onClick={() => dispatch({ type: "next" })} disabled={state.step === LAST_STEP}>
           <span>Next</span> <ChevronRight aria-hidden />
         </button>
-        <button type="button" className="apd-control is-primary apd-control-replay" onClick={() => dispatch({ type: "storyReplay" })}>
-          <RotateCcw aria-hidden /> <span>Replay story</span>
+        <button type="button" className="apd-control is-quiet apd-control-replay" onClick={() => dispatch({ type: "storyReplay" })}>
+          <Play aria-hidden /> <span>Play walkthrough</span>
         </button>
       </div>
-      <ol className="apd-steps" aria-label="Walkthrough steps">
-        {STEPS.map((step, index) => (
-          <li key={step.key}>
-            <button
-              type="button"
-              className={`apd-step${index === state.step ? " is-active" : ""}${index < state.step ? " is-past" : ""}`}
-              aria-current={index === state.step ? "step" : undefined}
-              onClick={() => dispatch({ type: "goTo", step: index })}
-            >
-              <span className="apd-step-index">{index + 1}</span>
-              <span className="apd-step-copy">
-                <strong>{step.title}</strong>
-                <small>{step.detail}</small>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ol>
     </div>
   );
 }

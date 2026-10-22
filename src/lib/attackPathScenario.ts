@@ -3,6 +3,8 @@ export type NodeKind = "internet" | "alb" | "foothold" | "ecs" | "role" | "secre
 export type ScenarioNode = {
   id: string;
   kind: NodeKind;
+  /** Friendly default label. The synthetic technical name lives in `name`. */
+  label: string;
   name: string;
   resource: string;
   typeLabel: string;
@@ -17,13 +19,16 @@ export type ScenarioEdge = {
   from: string;
   to: string;
   label: string;
+  /** Technical action name, shown in optional detail. */
+  action: string;
   base: BaseEdgeStatus;
   evidence: string;
   method: string;
   result: string;
+  /** Plain-language, scoped conclusion. */
+  assessment: string;
   limitations: string;
 };
-
 
 export const SCENARIO = {
   name: "Northwind Retail (fictional)",
@@ -36,6 +41,7 @@ export const SCENARIO = {
 export const NODES: ScenarioNode[] = [
   {
     id: "internet",
+    label: "Internet",
     kind: "internet",
     name: "Internet",
     resource: "0.0.0.0/0",
@@ -45,6 +51,7 @@ export const NODES: ScenarioNode[] = [
   },
   {
     id: "alb",
+    label: "Load balancer",
     kind: "alb",
     name: "alb-web-public",
     resource: "Application Load Balancer",
@@ -53,6 +60,7 @@ export const NODES: ScenarioNode[] = [
   },
   {
     id: "web",
+    label: "Application",
     kind: "ecs",
     name: "web-frontend",
     resource: "ECS service · Fargate",
@@ -61,6 +69,7 @@ export const NODES: ScenarioNode[] = [
   },
   {
     id: "foothold",
+    label: "Assumed foothold",
     kind: "foothold",
     name: "Assumed foothold",
     resource: "Code execution in task",
@@ -71,6 +80,7 @@ export const NODES: ScenarioNode[] = [
   },
   {
     id: "role-web",
+    label: "Application role",
     kind: "role",
     name: "role-web-task",
     resource: "IAM role · task role",
@@ -79,6 +89,7 @@ export const NODES: ScenarioNode[] = [
   },
   {
     id: "role-batch",
+    label: "Operations role",
     kind: "role",
     name: "role-batch-ops",
     resource: "IAM role · batch jobs",
@@ -87,6 +98,7 @@ export const NODES: ScenarioNode[] = [
   },
   {
     id: "bucket",
+    label: "Storage bucket",
     kind: "bucket",
     name: "nw-exports",
     resource: "S3 bucket",
@@ -95,6 +107,7 @@ export const NODES: ScenarioNode[] = [
   },
   {
     id: "secret",
+    label: "Data store credentials",
     kind: "secret",
     name: "prod/orders-db",
     resource: "Secrets Manager secret",
@@ -109,22 +122,26 @@ export const EDGES: ScenarioEdge[] = [
     id: "e-ingress",
     from: "internet",
     to: "alb",
-    label: "HTTPS :443 open",
+    label: "Public HTTPS",
+    action: "HTTPS :443",
     base: "observed",
     evidence: "Listener on :443 with security group sg-alb allowing 0.0.0.0/0.",
     method: "Read-only configuration collection (ELB and EC2 describe calls).",
     result: "Public exposure observed. This is context, not evidence of compromise.",
+    assessment: "The load balancer is reachable from the internet. Exposure alone is not evidence of compromise.",
     limitations: "Does not assess application vulnerabilities behind the listener.",
   },
   {
     id: "e-forward",
     from: "alb",
     to: "web",
-    label: "Forwards to target group",
+    label: "Routes traffic",
+    action: "Listener forward rule",
     base: "observed",
     evidence: "Listener rule forwards to target group tg-web, registered to web-frontend tasks.",
     method: "Read-only configuration collection.",
     result: "Traffic route observed.",
+    assessment: "Configuration shows traffic is routed to the application. No traffic was sent.",
     limitations: "Configuration only. No traffic was sent.",
   },
   {
@@ -132,55 +149,65 @@ export const EDGES: ScenarioEdge[] = [
     from: "foothold",
     to: "web",
     label: "Assumed code execution",
+    action: "Precondition",
     base: "assumed",
     evidence: "None. This relationship is an analysis assumption, not a finding.",
     method: "Stated as a precondition for evaluating AP-12.",
     result: "Assumed, not validated.",
+    assessment: "This is the condition the path is evaluated under. It is stated, not tested.",
     limitations: "If no code-execution weakness exists, this path has no realistic entry point.",
   },
   {
     id: "e-web-role",
     from: "web",
     to: "role-web",
-    label: "Task role credentials",
+    label: "Receives role credentials",
+    action: "ECS taskRoleArn",
     base: "observed",
     evidence: "Task definition web-frontend:42 sets taskRoleArn to role-web-task.",
     method: "Read-only configuration collection (ECS describe calls).",
     result: "Code in the task can obtain role-web-task credentials.",
+    assessment: "Configuration shows code in the application could obtain the application role's credentials, under the stated assumption. No credentials were retrieved.",
     limitations: "Assumes the foothold above. No credentials were retrieved.",
   },
   {
     id: "e-assume",
     from: "role-web",
     to: "role-batch",
-    label: "sts:AssumeRole",
+    label: "Can assume role",
+    action: "sts:AssumeRole",
     base: "simulated",
     evidence:
       "role-web-task allows sts:AssumeRole on *. The role-batch-ops trust policy trusts the account root principal.",
     method: "IAM policy simulation across identity policy, trust policy, SCPs, and permission boundary.",
     result: "Simulated: allowed.",
+    assessment: "Policy simulation supports this permission under the stated conditions. No role was assumed and no exploit was executed.",
     limitations: "Simulation only. No role was assumed.",
   },
   {
     id: "e-secret",
     from: "role-batch",
     to: "secret",
-    label: "GetSecretValue",
+    label: "Can read secret",
+    action: "secretsmanager:GetSecretValue",
     base: "simulated",
     evidence: "role-batch-ops policy grants secretsmanager:GetSecretValue on prod/*. No resource policy denies it.",
     method: "IAM policy simulation including the secret's resource policy and KMS key policy.",
     result: "Simulated: allowed.",
+    assessment: "Policy simulation supports reading this secret under the stated conditions. The secret was not read.",
     limitations: "Simulation only. The secret was not read.",
   },
   {
     id: "e-exports",
     from: "role-web",
     to: "bucket",
-    label: "s3:GetObject",
+    label: "Read objects",
+    action: "s3:GetObject",
     base: "untested",
     evidence: "A policy statement references nw-exports. It has not been evaluated yet.",
     method: "Not yet run.",
     result: "Untested. No result is implied.",
+    assessment: "Not assessed. No conclusion is drawn about this relationship.",
     limitations: "Outside the scope of AP-12 in this illustration.",
   },
 ];
@@ -190,12 +217,19 @@ export const INSPECT_ORDER = ["e-foothold", "e-web-role", "e-assume", "e-secret"
 export const TRAVERSE_ORDER = ["e-foothold", "e-web-role", "e-assume"] as const;
 
 export const STEPS = [
-  { key: "discover", title: "Discover", detail: "Map resources" },
-  { key: "inspect", title: "Inspect", detail: "Review evidence" },
-  { key: "review", title: "Review fix", detail: "Predicted effect" },
-  { key: "approve", title: "Approve", detail: "Human decision" },
-  { key: "verify", title: "Verify", detail: "Replay the path" },
-  { key: "drift", title: "Drift", detail: "Reassess" },
+  { key: "understand", title: "The path", detail: "What connects" },
+  { key: "inspect", title: "Evidence", detail: "What supports it" },
+  { key: "review", title: "Proposed change", detail: "Predicted effect" },
+  { key: "approve", title: "Approval", detail: "Human decision" },
+  { key: "verify", title: "Re-check", detail: "Bounded result" },
+  { key: "drift", title: "Later change", detail: "Reassess" },
+] as const;
+
+/** Three stages group the six steps for presentation. */
+export const STAGES = [
+  { key: "understand", title: "Understand the path", steps: [0] },
+  { key: "inspect", title: "Inspect the evidence", steps: [1] },
+  { key: "reassess", title: "Review the reassessment", steps: [2, 3, 4, 5] },
 ] as const;
 
 /** Durations (ms) of each beat inside a step. After the last beat the step is settled. */

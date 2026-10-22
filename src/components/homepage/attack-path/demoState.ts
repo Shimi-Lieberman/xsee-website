@@ -4,6 +4,7 @@ import {
   NODES,
   PATH_EDGES,
   SCENARIO,
+  STAGES,
   STEP_BEATS,
   STEPS,
   TIMESTAMPS,
@@ -56,12 +57,12 @@ export const LAST_STEP = STEPS.length - 1;
 export const STORY_MS = 30000;
 
 export const STORY_PHASES = [
-  { step: 0, start: 0, end: 4000, label: "Discover", caption: "Identify the route that needs investigation." },
-  { step: 1, start: 4000, end: 9000, label: "Validate", caption: "Inspect the evidence behind each step." },
-  { step: 2, start: 9000, end: 14000, label: "Review the fix", caption: "Review the change intended to break the path." },
-  { step: 3, start: 14000, end: 18000, label: "Approval and change", caption: "Approve the proposed remediation." },
-  { step: 4, start: 18000, end: 24000, label: "Verify closure", caption: "Re-test the original path after the change." },
-  { step: 5, start: 24000, end: 30000, label: "Detect drift", caption: "Reassess closure when the environment changes." },
+  { step: 0, start: 0, end: 4000, label: "The path", caption: "One route connects an assumed foothold to production credentials." },
+  { step: 1, start: 4000, end: 9000, label: "Evidence", caption: "Each relationship shows what supports it, and what does not." },
+  { step: 2, start: 9000, end: 14000, label: "Change", caption: "A narrower trust policy is proposed. Its effect is predicted, not yet checked." },
+  { step: 3, start: 14000, end: 18000, label: "Approval", caption: "A person approves. In this scenario, the customer's pipeline applies it." },
+  { step: 4, start: 18000, end: 24000, label: "Re-check", caption: "The original path is checked again against the new configuration." },
+  { step: 5, start: 24000, end: 30000, label: "Later change", caption: "When the configuration changes again, the earlier result is reassessed." },
 ] as const;
 
 const countPassed = (t: number, marks: number[]) => marks.filter((mark) => t >= mark).length;
@@ -114,13 +115,19 @@ function enterStep(state: DemoState, step: number): DemoState {
   };
 }
 
+/** Opens on the complete, settled path in explore mode. Playback is optional. */
 export const INITIAL_STATE: DemoState = {
-  mode: "story",
+  mode: "explore",
   story: "idle",
   storyMs: 0,
   ...storyFrame(0),
+  beat: STEP_BEATS[0].length,
   selection: null,
 };
+
+export function stageIndex(step: number) {
+  return STAGES.findIndex((stage) => (stage.steps as readonly number[]).includes(step));
+}
 
 function toExplore(state: DemoState): DemoState {
   if (state.mode === "explore") return state;
@@ -196,18 +203,21 @@ export type EdgeStatus =
   | "rechecking"
   | "reopened";
 
+/** Evidence basis (observed, simulated, assumed, untested) and lifecycle events are separate concepts. */
 export const EDGE_STATUS_LABEL: Record<EdgeStatus, string> = {
-  candidate: "Candidate",
-  assumed: "Assumed",
-  observed: "Observed",
-  simulated: "Simulated",
-  untested: "Untested",
-  blocked: "Blocked · verified",
-  changed: "Changed",
-  reassess: "Reassess",
+  candidate: "Not yet reviewed",
+  assumed: "Stated assumption",
+  observed: "Observed configuration",
+  simulated: "Policy simulation",
+  untested: "Not assessed",
+  blocked: "Re-check: denied",
+  changed: "Changed after check",
+  reassess: "Needs reassessment",
   rechecking: "Re-checking",
-  reopened: "Reopened",
+  reopened: "Re-check: allowed",
 };
+
+export const EVIDENCE_BASIS: EdgeStatus[] = ["observed", "simulated", "assumed", "untested"];
 
 export function edgeStatus(edge: ScenarioEdge, s: DemoState): EdgeStatus {
   if (s.step === 0) return "candidate";
@@ -284,17 +294,17 @@ export function focusSet(s: DemoState) {
 export type PathResult = { label: string; tone: "risk" | "pending" | "verified" | "drift" | "neutral" };
 
 export function pathResult(s: DemoState): PathResult {
-  if (s.step <= 1) return { label: s.step === 0 ? "Candidate path" : "Open · evidence reviewed", tone: "risk" };
-  if (s.step === 2) return { label: "Fix proposed · not applied", tone: "pending" };
+  if (s.step <= 1) return { label: s.step === 0 ? "Open · to review" : "Open · evidence reviewed", tone: "risk" };
+  if (s.step === 2) return { label: "Change proposed · not applied", tone: "pending" };
   if (s.step === 3) {
     if (s.approval === "pending") return { label: "Awaiting approval", tone: "pending" };
     if (s.approval === "approved") return { label: "Approved · not yet applied", tone: "pending" };
-    return { label: "Applied · not yet verified", tone: "pending" };
+    return { label: "Applied · not yet re-checked", tone: "pending" };
   }
-  if (s.step === 4) return s.beat >= 4 ? { label: "Verified closed", tone: "verified" } : { label: "Verifying…", tone: "neutral" };
+  if (s.step === 4) return s.beat >= 4 ? { label: "Blocked at re-check", tone: "verified" } : { label: "Re-checking…", tone: "neutral" };
   switch (s.drift) {
     case "none":
-      return { label: "Verified closed", tone: "verified" };
+      return { label: "Blocked at re-check", tone: "verified" };
     case "changed":
       return { label: "Configuration changed", tone: "drift" };
     case "reassess":
@@ -302,7 +312,7 @@ export function pathResult(s: DemoState): PathResult {
     case "rechecking":
       return { label: "Re-checking…", tone: "drift" };
     case "reopened":
-      return { label: "Reopened", tone: "drift" };
+      return { label: "Reopened after change", tone: "drift" };
   }
 }
 
@@ -310,22 +320,22 @@ export type HistoryEvent = { time: string; label: string; tone: PathResult["tone
 
 export function closureHistory(s: DemoState): HistoryEvent[] {
   const events: HistoryEvent[] = [
-    { time: TIMESTAMPS.discovered, label: `${SCENARIO.pathId} identified as a candidate path`, tone: "risk" },
+    { time: TIMESTAMPS.discovered, label: `${SCENARIO.pathId} identified for review`, tone: "risk" },
   ];
-  if (s.step >= 2) events.push({ time: TIMESTAMPS.discovered, label: "Trust-policy fix proposed (predicted effect)", tone: "pending" });
+  if (s.step >= 2) events.push({ time: TIMESTAMPS.discovered, label: "Trust-policy change proposed (predicted effect)", tone: "pending" });
   if (s.approval !== "pending") events.push({ time: TIMESTAMPS.approved, label: "Approved by a security reviewer (demo)", tone: "pending" });
-  if (s.approval === "applied") events.push({ time: TIMESTAMPS.applied, label: "Applied by the customer's IaC pipeline, outside XSEE", tone: "pending" });
+  if (s.approval === "applied") events.push({ time: TIMESTAMPS.applied, label: "Applied by the customer's IaC pipeline in this scenario", tone: "pending" });
   if (s.step === 5 || (s.step === 4 && s.beat >= 4)) {
-    events.push({ time: TIMESTAMPS.verified, label: "Re-check stopped at sts:AssumeRole · verified closed", tone: "verified" });
+    events.push({ time: TIMESTAMPS.verified, label: "Re-check: sts:AssumeRole denied · blocked within stated scope", tone: "verified" });
   }
   if (s.step === 5 && s.drift !== "none") {
     events.push({ time: TIMESTAMPS.drift, label: "Trust policy changed: role-web-* principal added", tone: "drift" });
   }
   if (s.step === 5 && ["reassess", "rechecking", "reopened"].includes(s.drift)) {
-    events.push({ time: TIMESTAMPS.drift, label: "Previous verification marked for reassessment", tone: "drift" });
+    events.push({ time: TIMESTAMPS.drift, label: "Earlier result marked for reassessment", tone: "drift" });
   }
   if (s.step === 5 && s.drift === "reopened") {
-    events.push({ time: TIMESTAMPS.recheck, label: "New check: sts:AssumeRole allowed again · path reopened", tone: "drift" });
+    events.push({ time: TIMESTAMPS.recheck, label: "New check: sts:AssumeRole allowed again under stated conditions", tone: "drift" });
   }
   return events;
 }
