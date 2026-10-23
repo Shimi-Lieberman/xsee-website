@@ -1,51 +1,45 @@
 import type { Metadata } from "next";
 import "./homepage.css";
 import "./film.css";
+import "@/components/homepage/landing/landing.css";
 import HomeNav from "@/components/homepage/HomeNav";
-import CinematicStory from "@/components/homepage/cinematic/CinematicStory";
-import ExploreChapter from "@/components/homepage/cinematic/ExploreChapter";
+import HomeHero from "@/components/homepage/landing/HomeHero";
+import GraphShowcase from "@/components/homepage/landing/GraphShowcase";
+import ValueSection from "@/components/homepage/landing/ValueSection";
 import XseeFilm from "@/components/homepage/film/XseeFilm";
-import StoryFinale from "@/components/homepage/cinematic/StoryFinale";
-import ProofEngine from "@/components/homepage/proof/ProofEngine";
-import AttackPathWalkthrough from "@/components/homepage/AttackPathWalkthrough";
-import BuyerJourney from "@/components/homepage/BuyerJourney";
+import ClosingInvite from "@/components/homepage/landing/ClosingInvite";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "XSEE — Validate attack paths. Verify the fix.",
+  title: "XSEE — Thousands of findings. A handful of real attack paths.",
   description:
-    "XSEE helps AWS security teams validate reachable attack paths, prioritize remediation, and verify closure with evidence that can be revisited as the environment changes.",
+    "XSEE connects exposures across your AWS environment, shows the evidence behind each reachable path, and checks the path again after your team makes a change.",
   openGraph: {
-    title: "XSEE — Validate attack paths. Verify the fix.",
+    title: "XSEE — Thousands of findings. A handful of real attack paths.",
     description:
-      "Validate reachable AWS attack paths, prioritize remediation, and verify closure with evidence your team can revisit as the environment changes.",
+      "Connect AWS exposures, prioritize remediation with evidence, and confirm the relevant path after a change.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "XSEE — Validate attack paths. Verify the fix.",
-    description:
-      "Validate reachable AWS attack paths, prioritize remediation, and verify closure with revisitable evidence.",
+    title: "XSEE — Thousands of findings. A handful of real attack paths.",
+    description: "Connect AWS exposures, prioritize remediation with evidence, and confirm the relevant path after a change.",
   },
 };
 
 export default function Home() {
   return (
-    <>
-      <div className="hp-page min-h-screen">
-        <HomeNav />
-        <main className="hp-page-main mx-auto w-full max-w-[100vw]">
-          <CinematicStory />
-          <ExploreChapter />
-          <AttackPathWalkthrough />
-          <ProofEngine />
-          <XseeFilm />
-          <BuyerJourney />
-          <StoryFinale />
-          <div className="hp-film-credits" data-nav-tone="dark">
-            <Footer />
-          </div>
-        </main>
-      </div>
-    </>
+    <div className="hp-page lp-root min-h-screen">
+      <HomeNav />
+      <main className="hp-page-main mx-auto w-full max-w-[100vw]">
+        <HomeHero />
+        <GraphShowcase />
+        <ValueSection />
+        <XseeFilm />
+        <ClosingInvite />
+        <div className="hp-film-credits" data-nav-tone="dark">
+          <Footer />
+        </div>
+      </main>
+    </div>
   );
 }

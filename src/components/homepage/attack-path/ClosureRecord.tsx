@@ -9,18 +9,18 @@ export default function ClosureRecord({ state }: { state: DemoState }) {
   const regionId = useId();
   const result = pathResult(state);
   const history = closureHistory(state);
-  const verifiedAt = state.step === 5 || (state.step === 4 && state.beat >= 4) ? TIMESTAMPS.verified : "Not yet verified";
+  const verifiedAt = state.step === 5 || (state.step === 4 && state.beat >= 4) ? TIMESTAMPS.verified : "Not yet re-checked";
   const limitation =
     state.step === 5 && state.drift !== "none"
-      ? "The earlier closure applied to the configuration as of the verification time. It does not hold after the trust-policy change."
-      : "Covers configuration and policy simulation only. Does not test application vulnerabilities. nw-exports is untested.";
+      ? "The earlier blocked result applied to the configuration at the time of the re-check. It does not hold after the trust-policy change."
+      : "Covers configuration and policy simulation for this path only. Application vulnerabilities are not tested. The storage bucket is not assessed.";
 
   return (
-    <section className="apd-record" aria-label="Closure record">
+    <section className="apd-record" aria-label="Assessment record">
       <button type="button" className="apd-record-toggle" aria-expanded={open} aria-controls={regionId} onClick={() => setOpen((value) => !value)}>
         <History aria-hidden />
         <span className="apd-record-title">
-          Closure record <span>· {SCENARIO.pathId}</span>
+          Assessment record <span>· {SCENARIO.pathId}</span>
         </span>
         <ResultChip result={result} />
         <ChevronDown aria-hidden className="apd-record-chevron" />
@@ -49,7 +49,7 @@ export default function ClosureRecord({ state }: { state: DemoState }) {
               <dd>Read-only configuration collection and IAM policy simulation. No role assumed, no secret read.</dd>
             </div>
             <div>
-              <dt>Verified</dt>
+              <dt>Last re-check</dt>
               <dd>{verifiedAt}</dd>
             </div>
             <div>

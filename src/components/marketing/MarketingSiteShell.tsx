@@ -21,7 +21,7 @@ export default function MarketingSiteShell({ children }: { children: React.React
           </Link>
           <nav className="marketing-nav" aria-label="Main navigation">
             <Link href="/#how-it-works">How it works</Link>
-            <Link href="/#proof-points">Proof points</Link>
+            <Link href="/#value">Why XSEE</Link>
             <Link href="/#coverage">Coverage roadmap</Link>
           </nav>
           <div className="marketing-header-actions">
@@ -52,7 +52,7 @@ export default function MarketingSiteShell({ children }: { children: React.React
         </div>
         <nav id="marketing-mobile-nav" className="marketing-mobile-nav" aria-label="Mobile navigation" hidden={!menuOpen}>
           <Link href="/#how-it-works" onClick={() => setMenuOpen(false)}>How it works</Link>
-          <Link href="/#proof-points" onClick={() => setMenuOpen(false)}>Proof points</Link>
+          <Link href="/#value" onClick={() => setMenuOpen(false)}>Why XSEE</Link>
           <Link href="/#coverage" onClick={() => setMenuOpen(false)}>Coverage roadmap</Link>
           <Link href={LOGIN_URL} onClick={() => setMenuOpen(false)}>Sign in</Link>
           <Link href="/assessment" onClick={() => setMenuOpen(false)}>Request an assessment</Link>

@@ -102,8 +102,8 @@ export default function PathGraph({ state, onSelect }: Props) {
         const focused = focus.edges.has(edge.id);
         const selected = state.selection?.kind === "edge" && state.selection.id === edge.id;
         const Icon = STATUS_ICON[status];
-        const from = NODES.find((node) => node.id === edge.from)?.name;
-        const to = NODES.find((node) => node.id === edge.to)?.name;
+        const from = NODES.find((node) => node.id === edge.from)?.label;
+        const to = NODES.find((node) => node.id === edge.to)?.label;
         return (
           <button
             key={edge.id}
@@ -111,7 +111,7 @@ export default function PathGraph({ state, onSelect }: Props) {
             className={`apd-edge-label apd-status-${status}${focused ? " is-focus" : ""}${focus.active && !focused ? " is-dim" : ""}${pos.align === "start" ? " is-start" : ""}`}
             style={{ left: pct(pos.x, VW), top: pct(pos.y, VH) }}
             aria-pressed={selected}
-            aria-label={`Relationship ${from} to ${to}: ${edge.label}. Status: ${EDGE_STATUS_LABEL[status]}`}
+            aria-label={`Relationship ${from} to ${to}: ${edge.label}. ${EDGE_STATUS_LABEL[status]}`}
             onClick={() => onSelect(selected ? null : { kind: "edge", id: edge.id })}
           >
             <Icon aria-hidden />
@@ -145,7 +145,7 @@ export default function PathGraph({ state, onSelect }: Props) {
               } as CSSProperties
             }
             aria-pressed={selected}
-            aria-label={`${node.name}, ${node.typeLabel}${node.tag ? `, ${node.tag}` : ""}`}
+            aria-label={`${node.label}, ${node.typeLabel}${node.tag ? `, ${node.tag}` : ""}`}
             onClick={() => onSelect(selected ? null : { kind: "node", id: node.id })}
           >
             {node.tag ? <span className="apd-node-tag">{node.tag}</span> : null}
@@ -153,16 +153,16 @@ export default function PathGraph({ state, onSelect }: Props) {
               <Icon aria-hidden />
             </span>
             <span className="apd-node-copy">
-              <strong>{node.name}</strong>
-              <small>{node.resource}</small>
+              <strong>{node.label}</strong>
+              <small>{node.typeLabel}</small>
             </span>
           </button>
         );
       })}
 
       <p className="sr-only">
-        Path {SCENARIO.pathId}: assumed foothold in web-frontend, task role credentials to role-web-task, sts:AssumeRole to
-        role-batch-ops, GetSecretValue on prod/orders-db.
+        Path {SCENARIO.pathId}: assumed foothold in the application, which receives the application role&apos;s credentials. The application
+        role can assume the operations role, which can read the data store credentials.
       </p>
     </div>
   );
