@@ -9,16 +9,22 @@ export default function GraphShowcase() {
   const sectionRef = useRef<HTMLElement>(null);
   const [onScreen, setOnScreen] = useState(true);
   const [paused, setPaused] = useState(false);
+  const [tabVisible, setTabVisible] = useState(true);
 
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
     const observer = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), { threshold: 0.05 });
     observer.observe(node);
-    return () => observer.disconnect();
+    const onVisibility = () => setTabVisible(document.visibilityState === "visible");
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
 
-  const running = onScreen && !paused;
+  const running = onScreen && tabVisible && !paused;
 
   return (
     <section
@@ -42,9 +48,9 @@ export default function GraphShowcase() {
         </p>
       </div>
 
-      <p className="lp-showcase-tag">Illustrative example</p>
+      <p className="lp-showcase-tag">Illustrative visualization</p>
       <p className="sr-only">
-        Animated illustration: a public endpoint connects through a load balancer, a web service and a workload role to customer data.
+        Animated illustration: an entry point connects through a workload and an identity to a data store, while unrelated parts of the environment recede.
       </p>
 
       <button
