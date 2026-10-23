@@ -1,19 +1,17 @@
 const POINTS = [
   {
-    title: "See how exposures connect.",
-    body: "A single misconfiguration rarely tells the whole story. XSEE shows how exposures link together across your AWS environment, so priorities reflect what can actually be reached.",
+    title: "Understand connected exposures.",
+    body: "XSEE shows how individual AWS exposures link together, so priorities reflect what can be reached.",
   },
   {
     title: "Prioritize with evidence.",
-    body: "Each path comes with the evidence that supports it and any gaps clearly marked. Your team can decide what to fix first and explain why.",
+    body: "Each path includes the evidence behind it, with any gaps clearly marked.",
   },
   {
-    title: "Confirm the change worked.",
-    body: "After your team applies a fix, XSEE reassesses the relevant path and records the result. When monitoring is configured, a later relevant change prompts a fresh review.",
+    title: "Reassess after a change.",
+    body: "After your team applies a fix, XSEE reassesses the relevant path and records the result.",
   },
 ];
-
-const OUTPUTS = ["Prioritized reachable paths", "Evidence for each path", "Recorded re-check after remediation"];
 
 export default function ValueSection() {
   return (
@@ -34,15 +32,6 @@ export default function ValueSection() {
             </li>
           ))}
         </ul>
-
-        <div className="lp-outputs">
-          <p className="lp-outputs-label">You receive</p>
-          <ul>
-            {OUTPUTS.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
       </div>
     </section>
   );

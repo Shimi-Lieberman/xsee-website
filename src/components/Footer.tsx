@@ -117,7 +117,7 @@ export default function Footer() {
           {[
             { label: "About", href: "/about" },
             { label: "Security", href: "/security" },
-            { label: "Book a demo", href: "/demo" },
+            { label: "Request a demo", href: "/demo" },
             { label: "sales@xsee.io", href: "mailto:sales@xsee.io" },
           ].map((link) => (
             <Link

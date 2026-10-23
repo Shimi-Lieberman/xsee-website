@@ -34,17 +34,17 @@ export default function GraphShowcase() {
       data-nav-tone="dark"
     >
       <div className="lp-showcase-stage">
-        <GraphScene composition={DESKTOP} className="lp-graph--desktop" />
-        <GraphScene composition={MOBILE} className="lp-graph--mobile" />
+        <GraphScene composition={DESKTOP} className="lp-graph--desktop" fit="slice" />
+        <GraphScene composition={MOBILE} className="lp-graph--mobile" fit="meet" />
         <div className="lp-showcase-scrim" aria-hidden="true" />
       </div>
 
       <div className="lp-showcase-copy">
         <h2 id="lp-showcase-title" className="lp-showcase-title text-balance">
-          Connected exposures. <span>Consequential decisions.</span>
+          See how exposures connect.
         </h2>
         <p className="lp-showcase-lede text-pretty">
-          Findings that look minor on their own can combine into a route to what matters most.
+          Separate findings can form a path to critical resources.
         </p>
       </div>
 

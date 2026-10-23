@@ -13,17 +13,15 @@ export default function HomeHero() {
           Attack-path validation for AWS
         </p>
         <h1 id="lp-hero-title" className="lp-hero-title text-balance">
-          Thousands of findings. A handful of real attack paths. XSEE shows you which.
+          Know which attack paths matter.
         </h1>
         <p className="lp-hero-lede text-pretty">
-          XSEE connects exposures across your AWS environment, shows the evidence behind each reachable path, and checks the path
-          again after your team makes a change.
+          Assess connected AWS exposures, prioritize remediation with evidence, and reassess the path after a change.
         </p>
         <div className="lp-hero-actions">
           <Link href="/demo" className="lp-btn lp-btn--primary" onClick={() => Analytics.ctaClicked("hero", "request_demo")}>
             Request a demo <ArrowRight size={16} aria-hidden />
           </Link>
-          <span className="lp-hero-note">Read-only access. Nothing changes in your account.</span>
         </div>
       </div>
     </section>

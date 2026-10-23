@@ -79,15 +79,21 @@ export default function HomeNav() {
       >
         <div className="mx-auto box-border flex h-[64px] max-w-[1400px] items-center justify-between gap-3 px-6 max-[420px]:px-4 lg:px-10">
           <Link href="/#top" className="group flex shrink-0 items-center gap-2.5" aria-label="XSEE home">
-            <Image
-              src="/logo-symbol-only.svg"
-              width={22}
-              height={22}
-              alt=""
-              className="h-[22px] w-[22px] shrink-0 transition-transform duration-300 group-hover:rotate-3"
-              style={{ background: "transparent" }}
-            />
-            <span className="text-[15px] font-semibold tracking-tight text-[var(--v2-ink)]">xsee</span>
+            {dark ? (
+              <Image src="/logo-primary-transparent.svg" width={85} height={27} alt="" priority className="h-[27px] w-[85px] shrink-0" />
+            ) : (
+              <>
+                <Image
+                  src="/logo-symbol-only.svg"
+                  width={22}
+                  height={22}
+                  alt=""
+                  className="h-[22px] w-[22px] shrink-0 transition-transform duration-300 group-hover:rotate-3"
+                  style={{ background: "transparent" }}
+                />
+                <span className="text-[15px] font-semibold tracking-tight text-[var(--v2-ink)]">xsee</span>
+              </>
+            )}
           </Link>
 
           <nav className="hidden items-center gap-4 md:flex lg:gap-9" aria-label="Primary">
@@ -112,10 +118,9 @@ export default function HomeNav() {
             <Link
               href={DEMO_HREF}
               className="btn-pink inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full px-4 text-[13px] font-medium text-[var(--v2-ink)] max-[420px]:px-3 max-[420px]:text-[12px]"
-              onClick={() => Analytics.ctaClicked("nav", "book_demo")}
+              onClick={() => Analytics.ctaClicked("nav", "request_demo")}
             >
-              <span className="max-[420px]:hidden">Book a demo</span>
-              <span className="hidden max-[420px]:inline">Demo</span>
+              <span>Request a demo</span>
               <ArrowRight className="h-3.5 w-3.5 shrink-0 max-[360px]:hidden" aria-hidden />
             </Link>
             <button
@@ -124,7 +129,7 @@ export default function HomeNav() {
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav-panel"
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--v2-line)] text-[var(--v2-ink2)] transition-colors duration-200 hover:text-[var(--v2-ink)] md:hidden"
+              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--v2-line)] text-[var(--v2-ink)] transition-colors duration-200 md:hidden"
             >
               {menuOpen ? <X className="h-5 w-5" aria-hidden /> : <Menu className="h-5 w-5" aria-hidden />}
             </button>
