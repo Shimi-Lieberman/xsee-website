@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 export const metadata: Metadata = {
   title: "Changelog — XSEE",
   description: "What shipped in XSEE. Public shiplog of platform releases.",
+  alternates: { canonical: "/changelog" },
 };
 
 const BADGE_STYLE = {

@@ -61,7 +61,7 @@ export const metadata: Metadata = {
         url: "/og",
         width: 1200,
         height: 630,
-        alt: "XSEE — Cloud Attack Intelligence",
+        alt: "XSEE — Trust Nothing. Prove Everything.",
       },
     ],
     locale: "en_US",

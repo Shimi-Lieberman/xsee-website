@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Responding to an AWS incident — XSEE",
   description:
     "If you are responding to a suspected AWS incident, XSEE can help your team map which identities and resources are reachable. Contact our team to discuss.",
+  alternates: { canonical: "/under-attack" },
 };
 
 const CONTACT_URL = "mailto:security@xsee.io?subject=AWS%20incident%20%E2%80%94%20request%20for%20help";
