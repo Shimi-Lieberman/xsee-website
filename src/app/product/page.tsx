@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "XSEE Product — Attack Path Validation and Evidence",
   description:
     "Explore XSEE product demonstrations for attack path analysis, evidence review, and verification. Demonstration data is illustrative and not a live customer environment.",
+  alternates: { canonical: "/product" },
 };
 
 export default function ProductPage() {

@@ -4,6 +4,7 @@ import { LegalSection } from "@/components/LegalSection";
 export const metadata = {
   title: "Refund Policy | XSEE",
   description: "XSEE 14-day refund policy. All plans.",
+  alternates: { canonical: "/refunds" },
 };
 
 const TOC = [

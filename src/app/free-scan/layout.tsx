@@ -4,6 +4,7 @@ export const metadata: Metadata = {
   title: "Free Risk Assessment | XSEE",
   description:
     "Request a read-only AWS risk assessment. We'll contact you to schedule it.",
+  alternates: { canonical: "/free-scan" },
 };
 
 export default function FreeScanLayout({

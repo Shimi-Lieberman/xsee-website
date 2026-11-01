@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Security & Trust — XSEE",
   description:
     "How XSEE connects to your AWS account with a read-only IAM role, what it can read, and how to report a vulnerability.",
+  alternates: { canonical: "/security" },
 };
 
 const H2 = "text-xl font-bold text-[#0b1220] mb-6";

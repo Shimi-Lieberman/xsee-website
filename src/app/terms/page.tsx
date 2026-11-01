@@ -7,6 +7,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 export const metadata: Metadata = {
   title: "Terms of Service | XSEE",
   description: "Terms of Service for the XSEE website and services.",
+  alternates: { canonical: "/terms" },
 };
 
 const wrap = { maxWidth: 720, margin: "0 auto", padding: "0 24px" } as const;

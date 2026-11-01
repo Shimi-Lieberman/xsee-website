@@ -7,6 +7,7 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 export const metadata: Metadata = {
   title: "Privacy Policy | XSEE",
   description: "How XSEE collects, stores, and protects your data.",
+  alternates: { canonical: "/privacy" },
 };
 
 const wrap = { maxWidth: 720, margin: "0 auto", padding: "0 24px" } as const;
