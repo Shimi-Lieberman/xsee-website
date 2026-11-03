@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import Nav from "@/components/Nav";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import Footer from "@/components/Footer";
 import CopyEmailButton from "@/components/CopyEmailButton";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Security & Trust | XSEE",
   description:
     "How XSEE connects to your AWS account with a read-only IAM role, what it can read, and how to report a vulnerability.",
-  alternates: { canonical: "/security" },
-};
+  path: "/security",
+});
 
 const H2 = "text-xl font-bold text-[#0b1220] mb-6";
 

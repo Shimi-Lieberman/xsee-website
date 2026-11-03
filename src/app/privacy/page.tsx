@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Privacy Policy | XSEE",
-  description: "How XSEE collects, stores, and protects your data.",
-  alternates: { canonical: "/privacy" },
-};
+  description:
+    "How XSEE collects, stores, and protects your data.",
+  path: "/privacy",
+});
 
 const wrap = { maxWidth: 720, margin: "0 auto", padding: "0 24px" } as const;
 const h2 = {

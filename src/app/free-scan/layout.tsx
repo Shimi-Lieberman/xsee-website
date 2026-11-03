@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Free Risk Assessment | XSEE",
   description:
     "Request a read-only AWS risk assessment. We'll contact you to schedule it.",
-  alternates: { canonical: "/free-scan" },
-};
+  path: "/free-scan",
+});
 
 export default function FreeScanLayout({
   children,

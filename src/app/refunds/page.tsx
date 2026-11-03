@@ -1,11 +1,14 @@
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import LegalPageLayout from "@/components/LegalPageLayout";
 import { LegalSection } from "@/components/LegalSection";
 
-export const metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Refund Policy | XSEE",
-  description: "XSEE 14-day refund policy. All plans.",
-  alternates: { canonical: "/refunds" },
-};
+  description:
+    "XSEE 14-day refund policy. All plans.",
+  path: "/refunds",
+});
 
 const TOC = [
   { id: "1", num: "1", label: "14-Day Guarantee" },

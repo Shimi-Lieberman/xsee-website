@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import "../homepage.css";
@@ -6,12 +7,12 @@ import HomeNav from "@/components/homepage/HomeNav";
 import Footer from "@/components/Footer";
 import { DEMO_HREF, SALES_EMAIL } from "@/lib/navigation";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About XSEE | AWS Cloud Security",
   description:
     "XSEE is an early-stage cloud security company founded by Shimi Lieberman, focused on evidence-led attack-path validation for AWS.",
-  alternates: { canonical: "/about" },
-};
+  path: "/about",
+});
 
 const mail = (subject: string) => `mailto:${SALES_EMAIL}?subject=${encodeURIComponent(subject)}`;
 
