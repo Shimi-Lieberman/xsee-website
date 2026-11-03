@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CopyEmailButton from "@/components/CopyEmailButton";
 
 export const metadata: Metadata = {
-  title: "Security & Trust — XSEE",
+  title: "Security & Trust | XSEE",
   description:
     "How XSEE connects to your AWS account with a read-only IAM role, what it can read, and how to report a vulnerability.",
   alternates: { canonical: "/security" },

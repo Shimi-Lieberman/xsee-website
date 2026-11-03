@@ -50,12 +50,12 @@ export default function Footer() {
                   marginTop: "3px",
                 }}
               >
-                Cloud Attack Intelligence
+                Trust Nothing. Prove Everything.
               </span>
             </div>
           </Link>
           <p className="text-base leading-relaxed max-w-md mb-5 text-[#3A4658]">
-            Discover and validate AWS attack paths. Verify closure with evidence your team can revisit as the environment changes.
+            XSEE is an early-stage cloud security company focused on attack-path validation for AWS.
           </p>
           <Link
             href="/security"
@@ -119,10 +119,12 @@ export default function Footer() {
             { label: "Security", href: "/security" },
             { label: "Request a demo", href: "/demo" },
             { label: "sales@xsee.io", href: "mailto:sales@xsee.io" },
+            { label: "LinkedIn", href: "https://www.linkedin.com/company/xsee-cybersecurity/" },
           ].map((link) => (
             <Link
               key={link.label}
               href={link.href}
+              {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
               className="block mb-2.5 text-[13px] text-[#3A4658] transition-colors hover:text-[#0b1220] max-sm:min-h-[44px] max-sm:flex max-sm:items-center"
             >
               {link.label}

@@ -16,7 +16,7 @@ export default function HomeHero() {
           Know which attack paths matter.
         </h1>
         <p className="lp-hero-lede text-pretty">
-          Assess connected AWS exposures, prioritize remediation with evidence, and reassess the path after a change.
+          XSEE helps your team assess connected AWS exposures, prioritize attack paths with evidence, and reassess them after a change.
         </p>
         <div className="lp-hero-actions">
           <Link href="/demo" className="lp-btn lp-btn--primary" onClick={() => Analytics.ctaClicked("hero", "request_demo")}>

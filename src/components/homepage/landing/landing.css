@@ -268,3 +268,10 @@
 
 #value,
 #experience { scroll-margin-top: 72px; }
+
+/* FAQ */
+.lp-faq { padding-top: 0; }
+@media (min-width: 900px) {
+  .lp-faq { padding-top: 0; }
+  .lp-value-list.lp-faq-list { grid-template-columns: repeat(2, 1fr); }
+}

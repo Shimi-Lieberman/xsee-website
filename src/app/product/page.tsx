@@ -5,7 +5,7 @@ import AttackGraphCinematic from "@/components/homepage/AttackGraphCinematic";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "XSEE Product — Attack Path Validation and Evidence",
+  title: "XSEE Product | AWS Attack-Path Validation",
   description:
     "Explore XSEE product demonstrations for attack path analysis, evidence review, and verification. Demonstration data is illustrative and not a live customer environment.",
   alternates: { canonical: "/product" },
