@@ -7,9 +7,9 @@ import Footer from "@/components/Footer";
 import { DEMO_HREF, SALES_EMAIL } from "@/lib/navigation";
 
 export const metadata: Metadata = {
-  title: "About — XSEE",
+  title: "About XSEE | AWS Cloud Security",
   description:
-    "XSEE helps AWS security teams validate reachable attack paths, prioritize remediation, and verify closure with evidence.",
+    "XSEE is an early-stage cloud security company founded by Shimi Lieberman, focused on evidence-led attack-path validation for AWS.",
   alternates: { canonical: "/about" },
 };
 
@@ -58,6 +58,10 @@ export default function AboutPage() {
                 XSEE helps security teams validate whether AWS attack paths are reachable, prioritize what to review,
                 and re-check a path after their team applies a change, with evidence they can revisit as the
                 environment evolves.
+              </p>
+              <p>
+                Founded by Shimi Lieberman, XSEE is developing an evidence-led approach to AWS attack-path validation,
+                helping security teams understand connected exposures and prioritize what to review.
               </p>
             </div>
             <ul className="xsee-about-facts">
