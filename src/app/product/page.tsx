@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import "../homepage.css";
 import HomeNav from "@/components/homepage/HomeNav";
 import AttackGraphCinematic from "@/components/homepage/AttackGraphCinematic";
 import Footer from "@/components/Footer";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "XSEE Product | AWS Attack-Path Validation",
   description:
     "Explore XSEE product demonstrations for attack path analysis, evidence review, and verification. Demonstration data is illustrative and not a live customer environment.",
-  alternates: { canonical: "/product" },
-};
+  path: "/product",
+});
 
 export default function ProductPage() {
   return (

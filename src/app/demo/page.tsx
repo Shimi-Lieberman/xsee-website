@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import "../homepage.css";
 import HomeNav from "@/components/homepage/HomeNav";
 import Footer from "@/components/Footer";
 import DemoRequestForm, { type RequestType } from "@/components/DemoRequestForm";
 import { PILOT_STAGES } from "@/components/homepage/PilotSection";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Book a demo — XSEE",
-  description: "Request an XSEE demo or discuss a focused pilot in your AWS environment.",
-  alternates: { canonical: "/demo" },
-};
+  description:
+    "Request an XSEE demo or discuss a focused pilot in your AWS environment.",
+  path: "/demo",
+});
 
 export default async function DemoPage({
   searchParams,

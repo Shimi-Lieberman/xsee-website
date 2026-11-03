@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/pageMetadata";
 import Nav from "@/components/Nav";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
 import Footer from "@/components/Footer";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Changelog — XSEE",
-  description: "What shipped in XSEE. Public shiplog of platform releases.",
-  alternates: { canonical: "/changelog" },
-};
+  description:
+    "What shipped in XSEE. Public shiplog of platform releases.",
+  path: "/changelog",
+});
 
 const BADGE_STYLE = {
   display: "inline-block",

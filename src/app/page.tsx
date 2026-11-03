@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata, SITE_URL } from "@/lib/pageMetadata";
 import "./homepage.css";
 import "./film.css";
 import "@/components/homepage/landing/landing.css";
@@ -11,7 +12,6 @@ import HomeFaq from "@/components/homepage/landing/HomeFaq";
 import ClosingInvite from "@/components/homepage/landing/ClosingInvite";
 import Footer from "@/components/Footer";
 
-const SITE_URL = "https://www.xsee.io";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -45,27 +45,12 @@ const structuredData = {
   ],
 };
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "XSEE | AWS Cloud Security & Attack-Path Validation",
   description:
     "XSEE helps AWS security teams assess connected exposures, prioritize attack paths with evidence, and reassess them after changes. Request a private demo.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    url: SITE_URL,
-    siteName: "XSEE",
-    type: "website",
-    images: [{ url: "/og", width: 1200, height: 630, alt: "XSEE — Trust Nothing. Prove Everything." }],
-    title: "XSEE | AWS Cloud Security & Attack-Path Validation",
-    description:
-      "XSEE helps AWS security teams assess connected exposures, prioritize attack paths with evidence, and reassess them after changes. Request a private demo.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "XSEE | AWS Cloud Security & Attack-Path Validation",
-    description: "XSEE helps AWS security teams assess connected exposures, prioritize attack paths with evidence, and reassess them after changes. Request a private demo.",
-    images: ["/og"],
-  },
-};
+  path: "/",
+});
 
 export default function Home() {
   return (
